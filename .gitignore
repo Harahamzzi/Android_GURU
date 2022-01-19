@@ -191,4 +191,9 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,kotlin
+
+
+# 추가
+
 GURU_Hemjee/app/build.gradle
+
