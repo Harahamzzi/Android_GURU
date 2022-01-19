@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BrightYellow"
+    tools:context=".LockActivity">
+
+    <ImageButton
+        android:id="@+id/appListButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_list_icon" />
+
+    <TextView
+        android:id="@+id/seedPointView"
+        android:layout_width="86dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/custom_outline_button"
+        android:drawableLeft="@drawable/seed_resize"
+        android:gravity="center|end"
+        android:paddingRight="12dp"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appListButton">
+
+        <ImageView
+            android:id="@+id/hamsteBackground"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/lock_background_circle" />
+
+        <ImageView
+            android:id="@+id/hamster"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/hamster" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/remainTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="-0.02"
+        android:text="00 : 00 : 00"
+        android:textColor="@color/Black"
+        android:textStyle="bold"
+        android:textSize="96px"
+        app:layout_constraintEnd_toStartOf="@+id/plusButton"
+        app:layout_constraintStart_toEndOf="@+id/minusButton"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <ImageButton
+        android:id="@+id/minusButton"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:srcCompat="@drawable/minus_circle" />
+
+    <ImageButton
+        android:id="@+id/plusButton"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:srcCompat="@drawable/plus_circle" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/Orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remainTimeTextView" />
+
+    <ScrollView
+        android:id="@+id/lock_goalListView"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/phoneButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/phone_background"
+        android:paddingLeft="10dp"
+        android:paddingTop="22dp"
+        android:paddingRight="22dp"
+        android:paddingBottom="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lock_goalListView"
+        app:srcCompat="@drawable/phone_icon" />
+
+    <ImageButton
+        android:id="@+id/messageButton"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/message_background"
+        android:paddingLeft="24dp"
+        android:paddingTop="22dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lock_goalListView"
+        app:srcCompat="@drawable/message_icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
