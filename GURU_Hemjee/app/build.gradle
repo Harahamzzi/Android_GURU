@@ -48,4 +48,7 @@ dependencies {
     // 햄버거 메뉴를 위한 Navigation..
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
+
+    //원형 프로그래스바를 위한 라이브러리 추가
+    implementation 'com.dinuscxj:circleprogressbar:1.3.0' // CircleProgressBar
 }
