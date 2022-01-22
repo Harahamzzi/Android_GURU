@@ -29,16 +29,16 @@
 
                 <ImageView
                     android:id="@+id/menuButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="13dp"
                     android:src="@drawable/menu_icon" />
 
                 <ImageView
                     android:id="@+id/titleImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="27dp"
+                    android:layout_width="77dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="110dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/title_image" />
 
