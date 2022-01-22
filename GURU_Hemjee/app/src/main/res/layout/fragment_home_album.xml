@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeAlbumActivity">
+    tools:context=".HomeAlbumFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55.6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_width="84.6dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="17dp"
             android:text="2022.01.20"
             android:textColor="@color/Black"
-            android:textSize="18sp"
+            android:textSize="16dp"
+            android:lineSpacingExtra="65.38px"
+            android:fontFamily="@font/noto_sans"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,11 +33,14 @@
             android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="17dp"
+            android:fontFamily="@font/noto_sans"
             android:letterSpacing="-0.02"
+            android:lineSpacingExtra="81.72px"
             android:text="0 : 00 : 00"
+            android:textAlignment="textEnd"
             android:textColor="@color/Black"
-            android:textSize="30sp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,18 +49,19 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="240dp"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dayAlbumLayout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="250dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,14 +138,14 @@
             <Space
                 android:id="@+id/space"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="46dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dayAlbumLayout" />
 
             <LinearLayout
                 android:id="@+id/goalAlbumLayout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,14 +182,14 @@
             <Space
                 android:id="@+id/space2"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="46dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/goalAlbumLayout" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
