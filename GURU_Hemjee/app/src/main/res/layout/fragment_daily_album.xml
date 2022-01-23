@@ -96,7 +96,7 @@
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/prevButton" />
+                android:src="@drawable/prev_button" />
 
             <TextView
                 android:id="@+id/timeTextView"
@@ -116,7 +116,7 @@
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/nextButton" />
+                android:src="@drawable/next_button" />
 
         </LinearLayout>
 
