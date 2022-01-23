@@ -22,6 +22,7 @@
         android:textColor="@color/black"
         android:textSize="12dp"
         android:lineSpacingExtra="49.03px"
+        android:textFontWeight="500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +35,7 @@
         android:textColor="@color/Black"
         android:textSize="12dp"
         android:lineSpacingExtra="49.03px"
+        android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seedPointView" />
@@ -53,7 +55,7 @@
         android:text="알고리즘 공부하기"
         android:textColor="@color/black"
         android:textSize="12dp"
-        android:textStyle="bold"
+        android:textFontWeight="700"
         android:lineSpacingExtra="49.03px"
         android:gravity="left|center"
         app:backgroundTint="@null"
@@ -75,7 +77,7 @@
         android:text="0시 00분 00초"
         android:textColor="@color/Black"
         android:textSize="24dp"
-        android:textStyle="bold"
+        android:textFontWeight="700"
         android:lineSpacingExtra="98.06px"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +95,7 @@
         android:fontFamily="@font/noto_sans"
         android:text="인생 뭐 말아먹든가.."
         android:textSize="12dp"
+        android:textFontWeight="400"
         android:textColor="@color/Black"
         android:lineSpacingExtra="49.03px"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +123,7 @@
         android:textColor="@color/Black"
         android:textSize="20dp"
         android:lineSpacingExtra="81.72px"
+        android:textFontWeight="700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />

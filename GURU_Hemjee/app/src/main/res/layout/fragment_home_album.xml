@@ -24,6 +24,7 @@
             android:textColor="@color/Black"
             android:textSize="16dp"
             android:lineSpacingExtra="65.38px"
+            android:textFontWeight="600"
             android:fontFamily="@font/noto_sans"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="81.72px"
             android:text="0 : 00 : 00"
+            android:textFontWeight="500"
             android:textAlignment="textEnd"
             android:textColor="@color/Black"
             android:textSize="20dp"
@@ -178,6 +180,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:lineSpacingExtra="49.03px"
                         android:text="알고리즘 마스터하기"
+                        android:textFontWeight="600"
                         android:textAlignment="textStart"
                         android:textColor="@color/Black"
                         android:textSize="12dp" />
@@ -193,6 +196,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:lineSpacingExtra="81.72px"
                         android:text="0 : 00 : 00"
+                        android:textFontWeight="500"
                         android:textColor="@color/Black"
                         android:textSize="20dp" />
                 </FrameLayout>
@@ -222,6 +226,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:lineSpacingExtra="49.03px"
                         android:text="매일 운동하기"
+                        android:textFontWeight="600"
                         android:textAlignment="textStart"
                         android:textColor="@color/Black"
                         android:textSize="12dp" />
@@ -237,6 +242,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:lineSpacingExtra="81.72px"
                         android:text="0 : 00 : 00"
+                        android:textFontWeight="500"
                         android:textColor="@color/Black"
                         android:textSize="20dp" />
                 </FrameLayout>
@@ -294,6 +300,7 @@
                         android:text="공부"
                         android:textSize="12dp"
                         android:lineSpacingExtra="49.03px"
+                        android:textFontWeight="600"
                         android:textColor="@color/Black"
                         android:fontFamily="@font/noto_sans"
                         />
@@ -309,6 +316,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:lineSpacingExtra="81.72px"
                         android:text="0 : 00 : 00"
+                        android:textFontWeight="500"
                         android:textColor="@color/Black"
                         android:textSize="20dp" />
                 </FrameLayout>
