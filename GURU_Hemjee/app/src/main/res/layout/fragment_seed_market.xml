@@ -225,7 +225,7 @@
                 android:background="@color/Black" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/toBeUsedSeedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
@@ -239,7 +239,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/buyImageButton"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="1dp"
