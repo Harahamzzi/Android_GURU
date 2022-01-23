@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="270dp"
+    android:layout_height="351dp"
+    android:background="@drawable/pop_up_bg" >
+
+    <TextView
+        android:id="@+id/popTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="팝업 제목"
+        android:textColor="@color/Black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/mainImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintBottom_toTopOf="@+id/cancelImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/popTitleTextView"
+        app:srcCompat="@drawable/hamster_small" />
+
+    <ImageButton
+        android:id="@+id/cancelImageButton"
+        android:layout_width="90dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginBottom="17dp"
+        android:background="#FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/cancel_button" />
+
+    <Button
+        android:id="@+id/confirmImageButton"
+        android:layout_width="90dp"
+        android:layout_height="27dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/ok_button_bg"
+        android:drawableLeft="@drawable/seed_resize"
+        android:fontFamily="@font/noto_sans"
+        android:padding="0dp"
+        android:text="-10          "
+        android:textColor="@color/Black"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
