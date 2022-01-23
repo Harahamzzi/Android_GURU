@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DailyAlbumFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/headToolBar4"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/BrightYellow"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp">
+
+            <ImageView
+                android:id="@+id/backImageButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_outline_west_24"
+                android:src="@drawable/menu_icon"
+                app:srcCompat="@drawable/ic_outline_west_24" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="나의 성취 앨범"
+                android:textColor="@color/Black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headToolBar4">
+
+        <Spinner
+            android:id="@+id/albumMenuSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="84.6dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/noto_sans"
+            android:lineSpacingExtra="65.38px"
+            android:text="2022.01.20"
+            android:textColor="@color/Black"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/albumMenuSpinner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTextView">
+
+            <ImageButton
+                android:id="@+id/prevButton"
+                android:layout_width="11dp"
+                android:layout_height="22dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/prevButton" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:text="0 : 00 : 00"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="11dp"
+                android:layout_height="22dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/nextButton" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dayAlbumLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/dailyAlbumView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:flow_horizontalBias="0.5"
+                    app:layout_constraintEnd_toStartOf="@+id/dailyAlbumView2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/dailyAlbumView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:flow_horizontalBias="0.5"
+                    app:layout_constraintEnd_toStartOf="@+id/dailyAlbumView3"
+                    app:layout_constraintStart_toEndOf="@+id/dailyAlbumView1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/dailyAlbumView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:flow_horizontalBias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dailyAlbumView2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dayAlbumLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

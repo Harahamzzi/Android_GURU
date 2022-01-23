@@ -123,11 +123,12 @@
 
     <ImageView
         android:id="@+id/plusGoalIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="33dp"
         android:src="@drawable/ic_outline_control_point_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="200dp" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

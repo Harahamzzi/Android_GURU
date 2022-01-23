@@ -7,6 +7,46 @@
     tools:context=".BigGoalSetupFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/headToolBar2"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:contentInsetStart="0dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/BrightYellow"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="17dp"
+            android:paddingEnd="17dp">
+
+            <ImageView
+                android:id="@+id/backImageButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_outline_west_24"
+                android:src="@drawable/menu_icon"
+                app:srcCompat="@drawable/ic_outline_west_24" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="대표 목표"
+                android:textColor="@color/Black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -15,21 +55,22 @@
         android:layout_marginTop="28dp"
         android:text="목표"
         android:textColor="@color/Black"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/headToolBar2" />
 
     <EditText
         android:id="@+id/bigGoalEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="17dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -38,31 +79,175 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="32dp"
         android:text="색상"
         android:textColor="@color/Black"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bigGoalEditText" />
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+    <RadioGroup
+        android:id="@+id/colorRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="17dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="27dp" />
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/orangeRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/Orange"
+            android:checked="true" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="27dp" />
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/YellowRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/Yellow"
+            android:checked="false" />
 
-    </TableLayout>
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/noteYellowRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/NoteYellow"
+            android:checked="false" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/apricotRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/Apricot"
+            android:checked="false" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/seedBrownRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/SeedBrown"
+            android:checked="false" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/darkBrownRadioBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/selector_color_radio_button"
+            android:button="@drawable/ic_colorselectionicon"
+            android:buttonTint="@color/DarkBrown"
+            android:checked="false" />
+
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/lightGreenRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/LightGreen"
+        android:checked="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/greenRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/Green"
+        android:checked="false"
+        app:layout_constraintStart_toEndOf="@+id/lightGreenRadioBtn"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/lightBlueRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/LightBlue"
+        android:checked="false"
+        app:layout_constraintStart_toEndOf="@+id/greenRadioBtn"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/blueRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/Blue"
+        android:checked="false"
+        app:layout_constraintStart_toEndOf="@+id/lightBlueRadioBtn"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/purpleRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/Purple"
+        android:checked="false"
+        app:layout_constraintStart_toEndOf="@+id/blueRadioBtn"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/pinkRadioBtn"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/selector_color_radio_button"
+        android:button="@drawable/ic_colorselectionicon"
+        android:buttonTint="@color/Pink"
+        android:checked="false"
+        app:layout_constraintStart_toEndOf="@+id/blueRadioBtn"
+        app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="32dp"
+        android:text="목표 잠금 시간"
+        android:textColor="@color/Black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lightGreenRadioBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

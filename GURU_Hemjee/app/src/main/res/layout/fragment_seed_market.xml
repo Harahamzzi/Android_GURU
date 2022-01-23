@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/headToolBar3"
+            android:id="@+id/headToolBar1"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:contentInsetStart="0dp"
@@ -60,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headToolBar3">
+            app:layout_constraintTop_toBottomOf="@+id/headToolBar1">
 
             <ImageView
                 android:id="@+id/marketBackgroundImageView"
