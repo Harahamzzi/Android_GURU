@@ -11,6 +11,8 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
+import androidx.core.view.isInvisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar: Toolbar = findViewById(R.id.toolBar)
         toolbar.setContentInsetsAbsolute(0, 0); // 왼쪽 여백 제거
         setActionBar(toolbar)
+        
 
         // 드로어를 꺼낼 홈 버튼 비활성화(이미 툴바에 있기 때문)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -88,36 +91,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.replace(R.id.fragment_main, SetupFragment())
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
             R.id.action_report -> {
                 // 목표 리포트 탭으로 전환
                 transaction.replace(R.id.fragment_main, DailyReportFragment())
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
             R.id.action_album -> {
                 // 나의 성취 앨범 탭으로 전환
                 transaction.replace(R.id.fragment_main, DailyAlbumFragment())
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
             R.id.action_store -> {
                 // 씨앗 상점 탭으로 전환
                 transaction.replace(R.id.fragment_main, SeedMarket())
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
                 transaction.replace(R.id.fragment_main, HamsterEditFragment())
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
             R.id.action_preference -> {
                 // 설정 탭으로 전환
 //                transaction.replace(R.id.fragment_main, 설정탭..())
 //                transaction.addToBackStack(null)
 //                transaction.commit()
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
             }
         }
         return false
