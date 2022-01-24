@@ -1,23 +1,13 @@
 package com.example.guru_hemjee
 
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.media.Image
+
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
-import androidx.core.view.isInvisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.navigation.NavigationView
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,7 +26,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar: Toolbar = findViewById(R.id.toolBar)
         toolbar.setContentInsetsAbsolute(0, 0); // 왼쪽 여백 제거
         setActionBar(toolbar)
-        
+
 
         // 드로어를 꺼낼 홈 버튼 비활성화(이미 툴바에 있기 때문)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
