@@ -7,7 +7,7 @@
     android:background="@drawable/pop_up_bg">
 
     <ImageButton
-        android:id="@+id/cancelImageButton4"
+        android:id="@+id/lockCancelImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginStart="34dp"
