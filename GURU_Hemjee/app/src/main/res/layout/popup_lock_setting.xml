@@ -108,6 +108,7 @@
             android:id="@+id/hourTimeEditText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:ems="2"
             android:gravity="bottom|center"
             android:inputType="textPersonName"
             android:text="00"
@@ -130,6 +131,7 @@
             android:id="@+id/minTimeEditText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:ems="2"
             android:gravity="bottom|center"
             android:inputType="textPersonName"
             android:text="00"
@@ -152,6 +154,7 @@
             android:id="@+id/secTimeEditText"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:ems="2"
             android:gravity="bottom|center"
             android:inputType="textPersonName"
             android:text="00"
@@ -241,10 +244,12 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/imageView19"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:background="@drawable/add_app_button"
+                    android:scaleType="fitCenter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

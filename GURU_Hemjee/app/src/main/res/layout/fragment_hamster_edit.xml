@@ -86,7 +86,7 @@
                 android:textSize="11sp" />
 
             <ImageButton
-                android:id="@+id/imageView7"
+                android:id="@+id/myHNameEditImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
