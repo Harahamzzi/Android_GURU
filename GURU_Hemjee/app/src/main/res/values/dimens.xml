@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--시간 스크롤바 구현을 위해서 텍스트뷰 사이즈 지정-->
+    <dimen name="scroll_center_font_width">62dp</dimen>
+    <dimen name="scroll_center_font_height">35dp</dimen>
+</resources>
