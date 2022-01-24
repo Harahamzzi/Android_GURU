@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="270dp"
+    android:layout_height="220dp"
+    android:background="@drawable/detail_goal_move_bg"
+    android:layoutDirection="locale">
+
+    <TextView
+        android:id="@+id/moveDetailGoalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="목표 이동"
+        android:textColor="@color/Black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="8dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/prev_button"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/prev_button" />
+
+    <TextView
+        android:id="@+id/totalGoalCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="19dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="총 0개"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="119dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalGoalCountTextView">
+
+        <RadioGroup
+            android:id="@+id/goalRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:buttonTint="@color/DarkBrown"
+                android:drawableLeft="@drawable/goal_dot_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/Orange"
+                android:gravity="center|left"
+                android:layoutDirection="rtl"
+                android:text="대목표 제목"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:buttonTint="@color/DarkBrown"
+                android:drawableLeft="@drawable/goal_dot_small"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/DarkBrown"
+                android:gravity="center|left"
+                android:layoutDirection="rtl"
+                android:text="대목표 제목"
+                android:textSize="12sp" />
+
+        </RadioGroup>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
