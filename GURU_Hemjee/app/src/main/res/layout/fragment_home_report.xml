@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".HomeReportFragment">
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/goalSpinner"
+        android:background="@drawable/spinner_select_background"
+        android:layout_width="80dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/dailyTextView"
         android:layout_width="40dp"
@@ -20,7 +30,7 @@
         android:textFontWeight="300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/goalSpinner" />
 
     <TextView
         android:id="@+id/dayTextView"
