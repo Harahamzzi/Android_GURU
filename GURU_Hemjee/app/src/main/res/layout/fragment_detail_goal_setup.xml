@@ -102,7 +102,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/toBeUsedSeedTextView"
+                android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -133,7 +133,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toBeUsedSeedTextView">
+                app:layout_constraintTop_toBottomOf="parent">
 
                 <LinearLayout
                     android:id="@+id/detailGoalLayout2"
@@ -150,8 +150,8 @@
                         android:layout_marginTop="3dp"
                         android:background="@android:color/transparent"
                         android:src="@null"
-                        app:tint="@color/Apricot"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:tint="@color/Apricot" />
 
                     <TextView
                         android:id="@+id/detailGoalTextView"

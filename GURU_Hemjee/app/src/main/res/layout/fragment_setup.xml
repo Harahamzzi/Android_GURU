@@ -42,7 +42,7 @@
                 android:layout_gravity="center"
                 android:text="30분"
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:text="1시간"
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:text="1시간 30분"
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -72,7 +72,7 @@
                 android:layout_weight="1"
                 android:text="2시간"
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:text="2시간 30분"
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
         </LinearLayout>
     </HorizontalScrollView>
 
