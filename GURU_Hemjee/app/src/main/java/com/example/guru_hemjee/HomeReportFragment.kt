@@ -36,14 +36,19 @@ class HomeReportFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(position){
-                    // 대표 목표 선택
+                    // 일간 선택
                     0 -> {
-                        // 대표 목표 클릭했을 때의..동작
+
                     }
 
-                    // 세부 목표 선택
+                    // 목표 선택
                     1 -> {
-                        // 세부 목표 클릭했을 때의 동작..
+
+                    }
+
+                    // 카테고리 선택
+                    2 -> {
+
                     }
 
                     // 일치하는 게 없을 경우

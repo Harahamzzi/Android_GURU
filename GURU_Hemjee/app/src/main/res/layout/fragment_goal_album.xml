@@ -57,13 +57,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headToolBar6">
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/albumMenuSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/spinner_select_background"
+            android:layout_width="80dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
