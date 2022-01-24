@@ -6,113 +6,643 @@
     android:layout_height="match_parent"
     tools:context=".HomeReportFragment">
 
-    <TextView
-        android:id="@+id/dailyTextView"
-        android:layout_width="40dp"
-        android:layout_height="20dp"
-        android:background="@drawable/outline_round_button"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:text="일간"
-        android:textAlignment="center"
-        android:textSize="10dp"
-        android:textFontWeight="300"
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/goalSpinner"
+        android:background="@drawable/spinner_select_background"
+        android:layout_width="80dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="17dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dayTextView"
-        android:layout_width="98.3dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="7dp"
-        android:text="1월 1일 월요일"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:textAlignment="center"
-        android:textSize="12dp"
-        android:textFontWeight="400"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyTextView" />
-
-    <TextView
-        android:id="@+id/todayTimeTextView"
-        android:layout_width="100dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="1dp"
-        android:text="0시간 00분"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:textAlignment="center"
-        android:textSize="21dp"
-        android:textFontWeight="700"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dayTextView" />
-
-    <ProgressBar
-        android:id="@+id/totalProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="327dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="17dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todayTimeTextView" />
-
-    <ImageView
-        android:id="@+id/goalColorImageView"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="19dp"
-        android:src="@drawable/ic_colorselectionicon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalProgressBar" />
-
-    <TextView
-        android:id="@+id/goalTextView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="17dp"
-        android:fontFamily="@font/noto_sans"
-        android:includeFontPadding="false"
-        android:text="알고리즘 마스터하기"
-        android:textAlignment="textStart"
-        android:textFontWeight="400"
-        android:textSize="12dp"
-        app:layout_constraintStart_toEndOf="@+id/goalColorImageView"
-        app:layout_constraintTop_toBottomOf="@+id/totalProgressBar" />
-
-    <TextView
-        android:id="@+id/timeTextView1"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/homeReportScrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
-        android:layout_marginEnd="17dp"
-        android:fontFamily="@font/noto_sans"
-        android:includeFontPadding="false"
-        android:text="0시간 00분"
-        android:textAlignment="textEnd"
-        android:textFontWeight="700"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalProgressBar" />
-
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="327dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalTextView1" />
+        app:layout_constraintTop_toBottomOf="@+id/goalSpinner">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <!-- ***** 일간 ***** -->
+            <TextView
+                android:id="@+id/dailyTextView"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:background="@drawable/outline_round_button"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="일간"
+                android:textAlignment="center"
+                android:textFontWeight="300"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/dayTextView"
+                android:layout_width="98.3dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="1월 1일 월요일"
+                android:textAlignment="center"
+                android:textFontWeight="400"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dailyTextView" />
+
+            <TextView
+                android:id="@+id/todayTimeTextView"
+                android:layout_width="100dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="0시간 00분"
+                android:textAlignment="center"
+                android:textFontWeight="700"
+                android:textSize="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dayTextView" />
+
+            <ProgressBar
+                android:id="@+id/totalProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="327dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todayTimeTextView" />
+
+            <!-- 일간 목표들 목록.. -->
+            <LinearLayout
+                android:id="@+id/dailyGoalListLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalProgressBar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/dayGoalColorImageView1"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dayGoalTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/dayGoalColorImageView1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dayTimeTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/dayProgressBar1"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dayGoalTextView1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/dayGoalColorImageView2"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dayGoalTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/dayGoalColorImageView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dayTimeTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/dayProgressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dayGoalTextView2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+            <!-- ***** 주간 ***** -->
+            <TextView
+                android:id="@+id/weekTextView"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="67dp"
+                android:background="@drawable/outline_round_button"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="주간"
+                android:textAlignment="center"
+                android:textFontWeight="300"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dailyGoalListLayout" />
+
+            <TextView
+                android:id="@+id/periodDayTextView"
+                android:layout_width="98.3dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="1월 1일 - 1월 7일"
+                android:textAlignment="center"
+                android:textFontWeight="400"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weekTextView" />
+
+            <TextView
+                android:id="@+id/weekTimeTextView"
+                android:layout_width="100dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="0시간 00분"
+                android:textAlignment="center"
+                android:textFontWeight="700"
+                android:textSize="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/periodDayTextView" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/weekBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weekTimeTextView" />
+
+            <!-- 주간 목표들 목록.. -->
+            <LinearLayout
+                android:id="@+id/weekGoalListLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/weekBarChart">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/weekGoalColorImageView1"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekGoalTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/weekGoalColorImageView1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekTimeTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/weekPercentTextView1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekPercentTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0%"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="500"
+                        android:textSize="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/weekProgressBar1"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/weekGoalTextView1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/weekGoalColorImageView2"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekGoalTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/weekGoalColorImageView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekTimeTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/weekPercentTextView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/weekPercentTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0%"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="500"
+                        android:textSize="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/weekProgressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/weekGoalTextView2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+            <!-- ***** 월간 ***** -->
+            <TextView
+                android:id="@+id/monthTextView"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="67dp"
+                android:background="@drawable/outline_round_button"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="주간"
+                android:textAlignment="center"
+                android:textFontWeight="300"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weekGoalListLayout" />
+
+            <TextView
+                android:id="@+id/monthDayTextView"
+                android:layout_width="98.3dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="2022년 1월"
+                android:textAlignment="center"
+                android:textFontWeight="400"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monthTextView" />
+
+            <TextView
+                android:id="@+id/monthTimeTextView"
+                android:layout_width="100dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="0시간 00분"
+                android:textAlignment="center"
+                android:textFontWeight="700"
+                android:textSize="21dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monthDayTextView" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/monthBarChart"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/monthTimeTextView" />
+
+            <!-- 월간 목표들 목록.. -->
+            <LinearLayout
+                android:id="@+id/monthGoalListLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/monthBarChart">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/monthGoalColorImageView1"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthGoalTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/monthGoalColorImageView1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthTimeTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/monthPercentTextView1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthPercentTextView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0%"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="500"
+                        android:textSize="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/monthProgressBar1"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/monthGoalTextView1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp">
+
+                    <ImageView
+                        android:id="@+id/monthGoalColorImageView2"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:src="@drawable/ic_colorselectionicon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthGoalTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="알고리즘 마스터하기"
+                        android:textAlignment="textStart"
+                        android:textFontWeight="400"
+                        android:textSize="12dp"
+                        app:layout_constraintStart_toEndOf="@+id/monthGoalColorImageView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthTimeTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0시간 00분"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="700"
+                        android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/monthPercentTextView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/monthPercentTextView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="17dp"
+                        android:fontFamily="@font/noto_sans"
+                        android:includeFontPadding="false"
+                        android:text="0%"
+                        android:textAlignment="textEnd"
+                        android:textFontWeight="500"
+                        android:textSize="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/monthProgressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="327dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="17dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/monthGoalTextView2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
