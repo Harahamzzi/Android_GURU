@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <androidx.appcompat.widget.Toolbar
+        <Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
@@ -43,7 +43,7 @@
                     android:src="@drawable/title_image" />
 
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
+        </Toolbar>
 
         <fragment
             android:id="@+id/fragment_main"
