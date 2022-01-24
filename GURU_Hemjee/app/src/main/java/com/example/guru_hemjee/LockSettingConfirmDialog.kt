@@ -16,8 +16,8 @@ class LockSettingConfirmDialog(context: Context) {
 
         val lock = dialog.findViewById<ImageButton>(R.id.settingOkImageButton)
         lock.setOnClickListener {
-            var intent = Intent(Intent.,LockActivity::class.java)
-            startActivity(intent)
+//            var intent = Intent(Intent.,LockActivity::class.java)
+//            startActivity(intent)
             dialog.dismiss()
         }
 //

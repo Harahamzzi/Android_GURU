@@ -3,17 +3,16 @@ package com.example.guru_hemjee
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.navigation.NavigationView
 import org.w3c.dom.Text
@@ -22,8 +21,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
+    lateinit var menuButton: ImageView
 
-    lateinit var startButton: Button
+//    lateinit var startButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +35,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toolbar.setContentInsetsAbsolute(0, 0); // 왼쪽 여백 제거
         setActionBar(toolbar)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)   // 드로어를 꺼낼 홈 버튼 활성화
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.menu_icon)    //홈 버튼 이미지 변경
-        supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안 보이게 설정
+        // 드로어를 꺼낼 홈 버튼 비활성화(이미 툴바에 있기 때문)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+//        // 이미 타이틀은 없애놓은 상태라..필요없는 구문이므로 주석 처리함
+//        supportActionBar?.setDisplayShowTitleEnabled(false) // 툴바에 타이틀 안 보이게 설정
 
         // 네비게이션 드로어 생성
         drawerLayout = findViewById(R.id.home_drawerLayout)
@@ -44,50 +46,85 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
 
-        //lock 화면 연결
-        startButton = findViewById(R.id.startButton)
-        startButton.setOnClickListener {
-            showSettingConfirmPopUp()
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item!!.itemId) {
-            // 햄버거 버튼 클릭시 네비게이션 드로어 열기
-            android.R.id.home -> {
-                drawerLayout.openDrawer(GravityCompat.START)
-            }
+        // menuButton 리스너 연결
+        // (메뉴 버튼 클릭으로 네비게이션 드로어 열기)
+        menuButton = findViewById(R.id.menuButton)
+        menuButton.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        return super.onOptionsItemSelected(item)
+
+//        //lock 화면 연결
+//        startButton = findViewById(R.id.startButton)
+//        startButton.setOnClickListener {
+//            showSettingConfirmPopUp()
+//        }
+
+
+        // fragment 전환을 위한 transaction 생성
+        val transaction = supportFragmentManager.beginTransaction()
+
+        // 홈 fragment 띄우기
+        transaction.replace(R.id.fragment_main, HomeFragment())
+        transaction.commit()
     }
 
+    // Navigation drawer가 열려있을 때 뒤로가기를 처리하는 함수
+    override fun onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawers()
+        else
+            super.onBackPressed()
+    }
+
+    // 햄버거 메뉴를 통한 화면 이동
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // fragment 전환을 위한 transaction 생성
+        val transaction = supportFragmentManager.beginTransaction()
+
         when(item.itemId) {
             R.id.action_goalAndTime -> {
                 // 목표 및 잠금 시간 설정 탭으로 전환
+                transaction.replace(R.id.fragment_main, SetupFragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             R.id.action_report -> {
                 // 목표 리포트 탭으로 전환
+                transaction.replace(R.id.fragment_main, DailyReportFragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             R.id.action_album -> {
                 // 나의 성취 앨범 탭으로 전환
+                transaction.replace(R.id.fragment_main, DailyAlbumFragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             R.id.action_store -> {
                 // 씨앗 상점 탭으로 전환
+                transaction.replace(R.id.fragment_main, SeedMarket())
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
+                transaction.replace(R.id.fragment_main, HamsterEditFragment())
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             R.id.action_preference -> {
                 // 설정 탭으로 전환
+//                transaction.replace(R.id.fragment_main, 설정탭..())
+//                transaction.addToBackStack(null)
+//                transaction.commit()
             }
         }
         return false
     }
 
-    private fun showSettingConfirmPopUp(){
-        //1차 시도
+//    private fun showSettingConfirmPopUp(){
+//        //1차 시도
 //        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 //        val view = inflater.inflate(R.layout.popup_lock_setting_confirm, null)
 //        //val hour: TextView = view.findViewById<TextView>(R.id.hourTimeTextView)
@@ -104,8 +141,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            startActivity(intent)
 //            alertDialog.dismiss()
 //        }
-
-        //2차 시도
+//
+//        //2차 시도
 //        var builder = AlertDialog.Builder(this)
 //        builder.setTitle("Setting Confirm")
 //        builder.setIcon(R.mipmap.ic_launcher)
@@ -120,10 +157,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        }
 //
 //        builder.show()
-
-        val dialog = LockSettingConfirmDialog(this)
-        dialog.myDig()
-
-
-    }
+//
+//        val dialog = LockSettingConfirmDialog(this)
+//        dialog.myDig()
+//
+//
+//    }
 }
