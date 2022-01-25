@@ -275,10 +275,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="17dp"
@@ -288,15 +288,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView21">
 
                 <!-- 시간 리스트가 보여질 list 레이아웃 -->
-                <androidx.recyclerview.widget.RecyclerView
+                <!--<androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_big_goal_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center" />
+                    android:gravity="center" />-->
 
-            </LinearLayout>
+                <EditText
+                    android:id="@+id/hourEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="값이"
+                    android:inputType="number"
+                    android:text="00" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/okBuyImageButton"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -304,9 +312,9 @@
                 android:src="@drawable/setup_triangle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />-->
 
-            <View
+            <!--<View
                 android:id="@+id/view3"
                 android:layout_width="0dp"
                 android:layout_height="3dp"
@@ -317,7 +325,7 @@
                 android:layerType="software"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/okBuyImageButton" />
+                app:layout_constraintTop_toBottomOf="@+id/okBuyImageButton" />-->
 
             <TextView
                 android:id="@+id/textView22"
@@ -329,7 +337,7 @@
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
             <LinearLayout
                 android:id="@+id/linearLayout6"
