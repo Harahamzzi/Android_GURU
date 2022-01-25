@@ -6,53 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".BigGoalSetupFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/headToolBar2"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:contentInsetStart="0dp"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@color/BrightYellow"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="17dp"
-            android:paddingEnd="17dp">
-
-            <ImageView
-                android:id="@+id/backImageButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_outline_west_24"
-                android:src="@drawable/menu_icon"
-                app:srcCompat="@drawable/ic_outline_west_24" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:text="대표 목표"
-                android:textColor="@color/Black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headToolBar2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -64,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="28dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="목표"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
@@ -78,7 +38,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="17dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:fontFamily="@font/noto_sans"
+                android:hint="얼마나 작은 글씨일까"
+                android:inputType="text"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,166 +52,135 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="색상"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bigGoalEditText" />
 
-            <RadioGroup
-                android:id="@+id/colorRadioGroup"
+            <LinearLayout
+                android:id="@+id/radioLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7">
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/colorRadioGroup1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="35dp"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/orangeRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
+                        android:layout_marginRight="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
                         android:buttonTint="@color/Orange"
                         android:checked="true" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/lightGreenRadioBtn"
+                        android:id="@+id/yellowRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/LightGreen"
-                        android:checked="false" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/YellowRadioBtn"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
-                        android:background="@drawable/selector_color_radio_button"
-                        android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Yellow"
-                        android:checked="false" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/greenRadioBtn"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@drawable/selector_color_radio_button"
-                        android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Green"
-                        android:checked="false" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
-                    android:orientation="vertical">
+                        android:buttonTint="@color/Yellow" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/noteYellowRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
+                        android:layout_marginRight="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/NoteYellow"
-                        android:checked="false" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/lightBlueRadioBtn"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@drawable/selector_color_radio_button"
-                        android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/LightBlue"
-                        android:checked="false" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
-                    android:orientation="vertical">
+                        android:buttonTint="@color/NoteYellow" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/apricotRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
+                        android:layout_marginRight="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Apricot"
-                        android:checked="false" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/blueRadioBtn"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@drawable/selector_color_radio_button"
-                        android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Blue"
-                        android:checked="false" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
-                    android:orientation="vertical">
+                        android:buttonTint="@color/Apricot" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/seedBrownRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
+                        android:layout_marginRight="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/SeedBrown"
-                        android:checked="false" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/purpleRadioBtn"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:background="@drawable/selector_color_radio_button"
-                        android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Purple"
-                        android:checked="false" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        android:buttonTint="@color/SeedBrown" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/darkBrownRadioBtn"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
-                        android:layout_marginBottom="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/DarkBrown"
-                        android:checked="false" />
+                        android:buttonTint="@color/DarkBrown" />
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/colorRadioGroup2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/lightGreenRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/LightGreen" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/greenRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Green" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/lightBlueRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/LightBlue" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/blueRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Blue" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/purpleRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Purple" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:id="@+id/pinkRadioBtn"
@@ -257,11 +188,9 @@
                         android:layout_height="33dp"
                         android:background="@drawable/selector_color_radio_button"
                         android:button="@drawable/ic_colorselectionicon"
-                        android:buttonTint="@color/Pink"
-                        android:checked="false" />
-                </LinearLayout>
-
-            </RadioGroup>
+                        android:buttonTint="@color/Pink" />
+                </RadioGroup>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView21"
@@ -273,59 +202,74 @@
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/colorRadioGroup" />
+                app:layout_constraintTop_toBottomOf="@+id/radioLayout" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout5"
+            <LinearLayout
+                android:id="@+id/linearLayout9"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="17dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/textView21"
+                tools:layout_editor_absoluteX="-16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="74dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="시간"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="분 "
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView21">
-
-                <!-- 시간 리스트가 보여질 list 레이아웃 -->
-                <!--<androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_big_goal_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center" />-->
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
                 <EditText
-                    android:id="@+id/hourEditText"
+                    android:id="@+id/todayLockHourView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="값이"
-                    android:inputType="number"
-                    android:text="00" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginRight="33dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:hint="01"
+                    android:textColor="@color/Black"
+                    android:textSize="22sp" />
 
-            <!--<ImageView
-                android:id="@+id/okBuyImageButton"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/setup_triangle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="33dp"
+                    android:text=":"
+                    android:textColor="@color/Black"
+                    android:textSize="22sp" />
 
-            <!--<View
-                android:id="@+id/view3"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="-4dp"
-                android:layout_marginEnd="17dp"
-                android:background="@drawable/dot_line_horizontal"
-                android:layerType="software"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/okBuyImageButton" />-->
+                <EditText
+                    android:id="@+id/todayLockMinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:hint="00"
+                    android:textColor="@color/Black"
+                    android:textSize="22sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView22"
@@ -333,11 +277,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="사용 가능한 앱"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
             <LinearLayout
                 android:id="@+id/linearLayout6"
@@ -363,7 +308,7 @@
                         android:layout_marginRight="33dp">
 
                         <ImageButton
-                            android:id="@+id/imageButton9"
+                            android:id="@+id/plusPossibleAppBtn"
                             android:layout_width="33dp"
                             android:layout_height="33dp"
                             android:layout_marginBottom="2dp"
@@ -380,13 +325,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
+                            android:fontFamily="@font/noto_sans"
                             android:text="앱 추가"
                             android:textColor="@color/SeedBrown"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imageButton9" />
+                            app:layout_constraintTop_toBottomOf="@+id/plusPossibleAppBtn" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -394,6 +340,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout26"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -424,6 +371,15 @@
                     android:textColor="@color/Black"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <Space
+                android:id="@+id/bottomSpace"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout26"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
