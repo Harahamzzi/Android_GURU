@@ -14,13 +14,13 @@ class HomeReportFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home_report, container, false)
+
 
         // spinner 연결
         val spinner: Spinner = requireView().findViewById(R.id.goalSpinner)

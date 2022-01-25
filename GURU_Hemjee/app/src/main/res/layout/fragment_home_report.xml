@@ -8,6 +8,7 @@
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/goalSpinner"
+        android:entries="@array/spinnerGoalList"
         android:background="@drawable/spinner_select_background"
         android:layout_width="80dp"
         android:layout_height="23dp"
@@ -19,11 +20,12 @@
     <ScrollView
         android:id="@+id/homeReportScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalSpinner">
+        app:layout_constraintTop_toBottomOf="@+id/goalSpinner"
+        app:layout_constraintBottom_toBottomOf="parent" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
