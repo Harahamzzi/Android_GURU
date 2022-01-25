@@ -1,4 +1,5 @@
 package com.example.guru_hemjee
+
 import android.app.PendingIntent.getActivity
 import android.widget.Toast
 
@@ -8,10 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+
+// fragment 페이지 수(슬라이드 전환시)
+private const val NUM_PAGES = 3
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,6 +30,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var titleButton: ImageView
     lateinit var titleImage: ImageView
     lateinit var titleText: TextView
+
+    lateinit var viewPager: ViewPager2
 
 //    lateinit var startButton: Button
 
@@ -70,12 +80,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // fragment 전환을 위한 transaction 생성
         val transaction = supportFragmentManager.beginTransaction()
 
-        // 홈 fragment 띄우기
-        transaction.replace(R.id.fragment_main, HomeFragment(), "home")
+        // 빈 fragment 화면 띄우기 (홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
+        transaction.replace(R.id.fragment_main, BlankFragment())
         transaction.commit()
+
+        // ViewPager 연결
+        viewPager = findViewById(R.id.viewPager)
+        viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL   // 방향을 가로로
     }
 
+    // 내부 클래스 선언
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        // 페이지 수 리턴하는 함수
+        override fun getItemCount(): Int = NUM_PAGES
 
+        override fun createFragment(position: Int): Fragment {
+            // 페이지 포지션에 따라 그에 알맞은 fragment 보이기
+            return when(position) {
+                0 -> HomeFragment()
+                1 -> HomeReportFragment()
+                2 -> HomeAlbumFragment()
+                else -> HomeFragment()
+            }
+        }
+    }
 
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {
@@ -93,7 +122,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             var fragment: Fragment? = supportFragmentManager.findFragmentByTag("home")
 
             // 돌아간 화면이 home이라면(HomeFragment가 현재 열려있다면)
-            if (fragment != null && fragment.isVisible)
+            if (fragment != null && fragment == HomeFragment())
             {
                 // titleImage 보이기
                 titleImage.visibility = View.VISIBLE
@@ -139,8 +168,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // 타이틀 초기화
             titleText.setText("")
 
-            // 홈 화면으로 전환
-            transaction.replace(R.id.fragment_main, HomeFragment())
+            // 빈 화면으로 전환(홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
+            transaction.replace(R.id.fragment_main, BlankFragment())
             transaction.addToBackStack(null)
             transaction.commit()
 
@@ -149,6 +178,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             icon.setOnClickListener {
                 drawerLayout.openDrawer(GravityCompat.START)
             }
+
+            // ViewPager adapter 생성
+            viewPager.adapter = ScreenSlidePagerAdapter(this)
+            // ViewPager 스와이프 터치 활성화
+            viewPager.isUserInputEnabled = true
         }
     }
 
@@ -210,7 +244,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
-                transaction.replace(R.id.fragment_main, HamsterEditFragment(), "hamsterEdit")
+                transaction.replace(R.id.fragment_main, HamsterEditFragment(baseContext), "hamsterEdit")
                 transaction.addToBackStack(null)
                 transaction.commit()
 
@@ -234,10 +268,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        // 각 탭으로 전환시 툴바 내 이미지 조정(변경)
+        // Navigation Drawer를 통해 각 탭으로 전환시 동작(변경사항)
         when(item.itemId) {
             R.id.action_goalAndTime, R.id.action_report, R.id.action_album,
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
+
+                // ViewPager 스와이프 터치 비활성화
+                viewPager.isUserInputEnabled = false
+                // ViewPager adapter 없애기
+                viewPager.adapter = null
 
                 // title 이미지 숨기기
                 titleImage.visibility = View.GONE

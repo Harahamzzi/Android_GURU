@@ -54,4 +54,7 @@ dependencies {
 
     // 스택바 차트를 위함
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // ViewPager2 사용을 위함(스와이프로 화면 전환)
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha04'
 }
