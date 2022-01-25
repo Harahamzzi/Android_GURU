@@ -16,18 +16,27 @@ class LockSettingConfirmDialog(context: Context) {
 
         val lock = dialog.findViewById<ImageButton>(R.id.settingOkImageButton)
         lock.setOnClickListener {
-//            var intent = Intent(Intent.,LockActivity::class.java)
-//            startActivity(intent)
+            onClickListener.onClicked(true)
             dialog.dismiss()
         }
-//
-//        val cancel = dialog.findViewById<ImageButton>(R.id.lockCancelImageButton)
-//        cancel.setOnClickListener {
-//            isConfrim = false
-//            dialog.dismiss()
-//        }
-//
-//        return isConfrim
+
+        val cancel = dialog.findViewById<ImageButton>(R.id.lockCancelImageButton)
+        cancel.setOnClickListener {
+            onClickListener.onClicked(false)
+            dialog.dismiss()
+        }
+
+
     }
 
+
+    interface ButtonClickListener {
+        fun onClicked(isLock: Boolean)
+    }
+
+    private lateinit var onClickListener: ButtonClickListener
+
+    fun setOnClickedListener(listener: ButtonClickListener) {
+        onClickListener = listener
+    }
 }

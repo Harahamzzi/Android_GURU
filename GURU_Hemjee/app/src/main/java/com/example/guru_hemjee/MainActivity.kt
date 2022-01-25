@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
-                transaction.replace(R.id.fragment_main, HamsterEditFragment())
+                transaction.replace(R.id.fragment_main, HamsterEditFragment(requireContext()))
                 transaction.addToBackStack(null)
                 transaction.commit()
 
