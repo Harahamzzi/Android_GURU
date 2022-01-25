@@ -1,19 +1,27 @@
 package com.example.guru_hemjee
+import android.app.PendingIntent.getActivity
+import android.widget.Toast
 
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
-    lateinit var menuButton: ImageView
+
+    // title 관련 위젯
+    lateinit var titleButton: ImageView
+    lateinit var titleImage: ImageView
+    lateinit var titleText: TextView
 
 //    lateinit var startButton: Button
 
@@ -41,11 +49,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // menuButton 리스너 연결
         // (메뉴 버튼 클릭으로 네비게이션 드로어 열기)
-        menuButton = findViewById(R.id.menuButton)
-        menuButton.setOnClickListener {
+        titleButton = findViewById(R.id.titleButton)
+        titleButton.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        // titleImage 연결
+        titleImage = findViewById(R.id.titleImageView)
+
+        // titleText 연결
+        titleText = findViewById(R.id.titleTextView)
 
 //        //lock 화면 연결
 //        startButton = findViewById(R.id.startButton)
@@ -58,16 +71,85 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val transaction = supportFragmentManager.beginTransaction()
 
         // 홈 fragment 띄우기
-        transaction.replace(R.id.fragment_main, HomeFragment())
+        transaction.replace(R.id.fragment_main, HomeFragment(), "home")
         transaction.commit()
     }
 
-    // Navigation drawer가 열려있을 때 뒤로가기를 처리하는 함수
+
+
+    // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {
+        // 만일 드로어가 열려있는 상태라면 드로어를 닫음
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawers()
+        // 그렇지 않다면 이전 화면으로 돌아가기
         else
+        {
             super.onBackPressed()
+
+
+            // TODO: 현재 띄워진 fragment의 Tag 가져와서 비교 & 동작하기(수정 필요)
+            // 돌아간 화면 가져오기
+            var fragment: Fragment? = supportFragmentManager.findFragmentByTag("home")
+
+            // 돌아간 화면이 home이라면(HomeFragment가 현재 열려있다면)
+            if (fragment != null && fragment.isVisible)
+            {
+                // titleImage 보이기
+                titleImage.visibility = View.VISIBLE
+                // titleText 숨기기
+                titleText.visibility = View.INVISIBLE
+
+                // 툴바 좌측 이미지 변경(드로어 열기)
+                titleButton.setImageResource(R.drawable.menu_icon)
+                // 드로어 열기 리스너로 교체
+                titleButton.setOnClickListener {
+                    drawerLayout.openDrawer(GravityCompat.START)
+                }
+            }
+            else
+            {
+                // TODO: 각 태그에 따라 title text 조정하기
+
+                // titleImage 숨기기
+                titleImage.visibility = View.INVISIBLE
+                // titleText 보이기
+                titleText.visibility = View.VISIBLE
+
+                // 툴바 좌측 이미지 변경(뒤로가기)
+                titleButton.setImageResource(R.drawable.ic_outline_west_24)
+                // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
+                backHomeListener(titleButton)
+            }
+
+        }
+    }
+
+    // 툴바 좌측 이미지를 눌렀을 때 홈 화면으로 가기를 처리하는 함수(리스너)
+    private fun backHomeListener(icon: ImageView) {
+        icon.setOnClickListener {
+            val transaction = supportFragmentManager.beginTransaction()
+
+            // title 이미지 보이기
+            titleImage.visibility = View.VISIBLE
+
+            // 타이틀 텍스트 숨기기
+            titleText.visibility = View.INVISIBLE
+
+            // 타이틀 초기화
+            titleText.setText("")
+
+            // 홈 화면으로 전환
+            transaction.replace(R.id.fragment_main, HomeFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+            // 툴바 좌측 이미지 햄버거로 변경/리스너 변경
+            icon.setImageResource(R.drawable.menu_icon)
+            icon.setOnClickListener {
+                drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
     }
 
     // 햄버거 메뉴를 통한 화면 이동
@@ -75,62 +157,101 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // fragment 전환을 위한 transaction 생성
         val transaction = supportFragmentManager.beginTransaction()
 
+        // 각 탭으로 전환
         when(item.itemId) {
+
             R.id.action_goalAndTime -> {
                 // 목표 및 잠금 시간 설정 탭으로 전환
-                transaction.replace(R.id.fragment_main, SetupFragment())
+                transaction.replace(R.id.fragment_main, SetupFragment(), "setUp")
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("목표/잠금 시간 설정")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
             R.id.action_report -> {
                 // 목표 리포트 탭으로 전환
-                transaction.replace(R.id.fragment_main, DailyReportFragment())
+                transaction.replace(R.id.fragment_main, DailyReportFragment(), "dailyReport")
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("목표 리포트")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
             R.id.action_album -> {
                 // 나의 성취 앨범 탭으로 전환
-                transaction.replace(R.id.fragment_main, DailyAlbumFragment())
+                transaction.replace(R.id.fragment_main, DailyAlbumFragment(), "dailyAlbum")
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("나의 성취 앨범")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
             R.id.action_store -> {
                 // 씨앗 상점 탭으로 전환
-                transaction.replace(R.id.fragment_main, SeedMarket())
+                transaction.replace(R.id.fragment_main, SeedMarket(), "seedMarket")
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("씨앗 상점")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
-                transaction.replace(R.id.fragment_main, HamsterEditFragment(requireContext()))
+                transaction.replace(R.id.fragment_main, HamsterEditFragment(), "hamsterEdit")
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("나의 햄찌 관리")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
             R.id.action_preference -> {
                 // 설정 탭으로 전환
-//                transaction.replace(R.id.fragment_main, 설정탭..())
+//                transaction.replace(R.id.fragment_main, 설정탭..(), "설정탭 태그")
 //                transaction.addToBackStack(null)
 //                transaction.commit()
+
+                // 타이틀 텍스트 변경
+                titleText.setText("설정")
 
                 // Navigation Drawer 닫기
                 drawerLayout.closeDrawers()
             }
         }
+
+        // 각 탭으로 전환시 툴바 내 이미지 조정(변경)
+        when(item.itemId) {
+            R.id.action_goalAndTime, R.id.action_report, R.id.action_album,
+            R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
+
+                // title 이미지 숨기기
+                titleImage.visibility = View.GONE
+
+                // 타이틀 텍스트 보이기
+                titleText.visibility = View.VISIBLE
+
+                // 툴바 좌측 이미지 변경(뒤로가기)
+                titleButton.setImageResource(R.drawable.ic_outline_west_24)
+                // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
+                backHomeListener(titleButton)
+            }
+        }
+
         return false
     }
 
