@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
-                transaction.replace(R.id.fragment_main, HamsterEditFragment(this), "hamsterEdit")
+                transaction.replace(R.id.fragment_main, HamsterEditFragment(), "hamsterEdit")
                 transaction.addToBackStack(null)
                 transaction.commit()
 
@@ -294,44 +294,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
-//    private fun showSettingConfirmPopUp(){
-//        //1차 시도
-//        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        val view = inflater.inflate(R.layout.popup_lock_setting_confirm, null)
-//        //val hour: TextView = view.findViewById<TextView>(R.id.hourTimeTextView)
-//        //val min: TextView = view.findViewById(R.id.minTimeEditText)
-//        //val sec: TextView = view.findViewById(R.id.secTimeTextView)
-//
-//        val alertDialog = AlertDialog.Builder(this)
-//            .setTitle("Setting Confirm")
-//            .create()
-//
-//        val settingOkImageButton: ImageButton = view.findViewById(R.id.settingOkImageButton)
-//        settingOkImageButton.setOnClickListener {
-//            val intent = Intent(this, LockActivity::class.java)
-//            startActivity(intent)
-//            alertDialog.dismiss()
-//        }
-//
-//        //2차 시도
-//        var builder = AlertDialog.Builder(this)
-//        builder.setTitle("Setting Confirm")
-//        builder.setIcon(R.mipmap.ic_launcher)
-//
-//        val settingConfirmed = layoutInflater.inflate(R.layout.popup_lock_setting_confirm, null)
-//        builder.setView(settingConfirmed)
-//
-//        var listener = DialogInterface.OnClickListener { dialogInterface, i ->
-//            var aler = dialogInterface as AlertDialog
-//
-//            var settingConfirmButton: ImageButton =
-//        }
-//
-//        builder.show()
-//
-//        val dialog = LockSettingConfirmDialog(this)
-//        dialog.myDig()
-//
-//
-//    }
 }

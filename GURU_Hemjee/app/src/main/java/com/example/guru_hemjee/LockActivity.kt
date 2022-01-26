@@ -1,19 +1,20 @@
 package com.example.guru_hemjee
 
-import android.app.Dialog
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.os.Handler
+import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.ContentProviderCompat.requireContext
 
 class LockActivity : AppCompatActivity() {
 
     lateinit var appListButton: ImageButton
     lateinit var timeMinusImageButton: ImageButton
     lateinit var timePlusImageButton: ImageButton
+
+    lateinit var lockExitImageButton: ImageButton
+    lateinit var exitImageButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +28,40 @@ class LockActivity : AppCompatActivity() {
         timeMinusImageButton = findViewById(R.id.timeMinusImageButton)
         timePlusImageButton = findViewById(R.id.timePlusImageButton)
 
+        lockExitImageButton = findViewById(R.id.lockExitImageButton)
+        exitImageButton = findViewById(R.id.exitImageButton)
+        exitImageButton.visibility = View.GONE
+
+        //사용 가능 한 앱
         appListButton.setOnClickListener {
             showAppListPopup()
         }
 
+        //시간 감소 버튼
         timeMinusImageButton.setOnClickListener {
             showTimeMinusPopUp()
         }
 
+        //시간 추가 버튼
         timePlusImageButton.setOnClickListener {
             showTimePlusPopUp()
         }
+
+        //나가기 버튼들
+        lockExitImageButton.setOnClickListener {
+            exitImageButton.visibility = View.VISIBLE
+            lockExitImageButton.visibility = View.GONE
+
+            Handler().postDelayed({
+                exitImageButton.visibility = View.GONE;
+                lockExitImageButton.visibility = View.VISIBLE;
+            }, 3000L)
+        }
+
+        exitImageButton.setOnClickListener {
+            showExitPop()
+        }
+
     }
 
     private fun showAppListPopup() {
@@ -50,9 +74,9 @@ class LockActivity : AppCompatActivity() {
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
-            override fun onClicked(isReduced: Boolean) {
-                if(isReduced){
-                    finalOK("10분 줄이기", "확인", false)
+            override fun onClicked(isConfirm: Boolean) {
+                if(isConfirm){
+                    finalOK("10분 줄이기", "확인", false,false)
                 }
             }
         })
@@ -63,17 +87,42 @@ class LockActivity : AppCompatActivity() {
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
-            override fun onClicked(isReduced: Boolean) {
-                if(isReduced){
-                    finalOK("10분 늘리기", "확인", false)
+            override fun onClicked(isConfirm: Boolean) {
+                if(isConfirm){
+                    finalOK("10분 늘리기", "확인", false, false)
                 }
             }
         })
     }
 
-    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOK(this,title, okString, isNeedDrawable)
+    private fun showExitPop(){
+        val dialog = AlertDialog(this,"잠금 종료하기", "나가기", false)
         dialog.AlertDialog()
+
+        dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
+            override fun onClicked(isConfirm: Boolean) {
+                if(isConfirm){
+                    finalOK("잠금 종료하기", "확인", false, true)
+                }
+            }
+        })
     }
 
+    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isLockFinished: Boolean) {
+        val dialog = FinalOK(this,title, okString, isNeedDrawable)
+        dialog.alertDialog()
+
+        dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
+            override fun onClicked(isConfirm: Boolean) {
+                if(isConfirm && isLockFinished){
+                    //잠금 종료시 필요한 연산
+
+                    //잠금 종료
+                    finish()
+                }
+            }
+        })
+    }
 }
+
+

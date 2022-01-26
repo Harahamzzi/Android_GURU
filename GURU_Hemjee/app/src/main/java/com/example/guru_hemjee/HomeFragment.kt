@@ -33,7 +33,9 @@ class HomeFragment : Fragment() {
         //lock 화면 연결
         startButton = requireView().findViewById(R.id.startButton)
         startButton.setOnClickListener {
-            showSettingConfirmPopUp()
+            //showSettingConfirmPopUp()
+            var intent = Intent(requireContext(), LockActivity::class.java)
+            startActivity(intent)
         }
     }
 

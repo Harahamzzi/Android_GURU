@@ -2,25 +2,24 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.widget.ImageButton
-import androidx.core.content.ContextCompat.startActivity
-import java.util.*
 
-class LockSettingConfirmDialog(context: Context) {
+class ReceiptDialog(context: Context, itemNames: Array<String>?) {
     private val dialog = Dialog(context)
 
-    fun myDig(){
+    fun receiptPop(){
         dialog.show()
-        dialog.setContentView(R.layout.popup_lock_setting_confirm)
+        dialog.setContentView(R.layout.popup_receipt)
 
-        val lock = dialog.findViewById<ImageButton>(R.id.settingOkImageButton)
-        lock.setOnClickListener {
+        //영수증에 띄울 것 추가해야함
+
+        val buy = dialog.findViewById<ImageButton>(R.id.okBuyImageButton)
+        buy.setOnClickListener {
             onClickListener.onClicked(true)
             dialog.dismiss()
         }
 
-        val cancel = dialog.findViewById<ImageButton>(R.id.lockCancelImageButton)
+        val cancel = dialog.findViewById<ImageButton>(R.id.receiptCancelImageButton)
         cancel.setOnClickListener {
             onClickListener.onClicked(false)
             dialog.dismiss()

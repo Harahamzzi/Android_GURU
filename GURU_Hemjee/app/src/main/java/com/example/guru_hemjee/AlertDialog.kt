@@ -21,7 +21,7 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
 
     fun AlertDialog(){
         dialog.show()
-        dialog.setContentView(R.layout.popup_available_apps)
+        dialog.setContentView(R.layout.popup_alert)
 
         popTitleTextView = dialog.findViewById(R.id.popTitleTextView)
         cancelImageButton = dialog.findViewById(R.id.cancelImageButton)
@@ -40,6 +40,11 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
         } else {
             confirmSeedButton.visibility = View.GONE
             confirmButton.text = okString
+
+            confirmButton.setOnClickListener{
+                onClickListener.onClicked(true)
+                dialog.dismiss()
+            }
         }
 
         cancelImageButton.setOnClickListener {
@@ -51,7 +56,7 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
     }
 
     interface ButtonClickListener {
-        fun onClicked(isReduced: Boolean)
+        fun onClicked(isConfirm: Boolean)
     }
 
     private lateinit var onClickListener: ButtonClickListener

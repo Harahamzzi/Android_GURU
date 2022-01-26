@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 
-class HamsterEditFragment(requireContext: Context) : Fragment() {
+class HamsterEditFragment() : Fragment() {
 
-    lateinit var myHNameEditImageButton: ImageButton
+    private lateinit var myHNameEditImageButton: ImageButton
+    private lateinit var myHamsterApplyImageButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +31,38 @@ class HamsterEditFragment(requireContext: Context) : Fragment() {
         //이름 변경 팝업 연결
         myHNameEditImageButton = requireView().findViewById(R.id.myHNameEditImageButton)
         myHNameEditImageButton.setOnClickListener {
+            hNameEditPopUp()
+        }
 
+        //적용 버튼
+        myHamsterApplyImageButton = requireView().findViewById(R.id.myHamsterApplyImageButton)
+        myHamsterApplyImageButton.setOnClickListener {
+            hChangeImagePopUp()
         }
     }
 
     private fun hNameEditPopUp() {
-        val dialog = HamsterEditFragment(requireContext())
-        dialog.hNameEditPopUp()
+        val dialog = HamsterEditNameDialog(requireContext())
+        dialog.EditName()
 
-        //이름 받아오는거 해야함..
-//        dialog.setOn
+        dialog.setOnClickedListener(object : HamsterEditNameDialog.ButtonClickListener{
+            override fun onClicked(isChanged: Boolean, name: String?) {
+                if(isChanged){
+                    //이름 변경한거 db에 반영
+                }
+            }
+        })
+    }
+
+    private fun hChangeImagePopUp() {
+        val dialog = FinalOK(requireContext(), "적용 완료", "확인", false)
+        dialog.alertDialog()
+
+        //햄찌 데코 반영
+        dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
+            override fun onClicked(isConfirm: Boolean) {
+                //생략
+            }
+        })
     }
 }

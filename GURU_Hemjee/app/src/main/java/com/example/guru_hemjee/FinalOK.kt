@@ -9,17 +9,17 @@ import android.widget.TextView
 class FinalOK(context: Context, title: String, okString: String, isNeedDrawable: Boolean) {
     private val dialog = Dialog(context)
 
-    var title: String = title
-    var okString: String = okString
-    var isNeedDrawable: Boolean = isNeedDrawable
+    private var title: String = title
+    private var okString: String = okString
+    private var isNeedDrawable: Boolean = isNeedDrawable
 
-    lateinit var popTitleTextView: TextView
-    lateinit var confirmSeedButton: Button
-    lateinit var confirmButton: Button
+    private lateinit var popTitleTextView: TextView
+    private lateinit var confirmSeedButton: Button
+    private lateinit var confirmButton: Button
 
-    fun AlertDialog(){
+    fun alertDialog(){
         dialog.show()
-        dialog.setContentView(R.layout.popup_available_apps)
+        dialog.setContentView(R.layout.popup_final_ok)
 
         popTitleTextView = dialog.findViewById(R.id.finalOkTitleTextView)
         confirmSeedButton = dialog.findViewById(R.id.okButton)
@@ -31,13 +31,28 @@ class FinalOK(context: Context, title: String, okString: String, isNeedDrawable:
             confirmSeedButton.text = okString
 
             confirmSeedButton.setOnClickListener {
+                onClickListener.onClicked(true)
                 dialog.dismiss()
             }
         } else {
             confirmSeedButton.visibility = View.GONE
             confirmButton.text = okString
+
+            confirmButton.setOnClickListener{
+                onClickListener.onClicked(true)
+                dialog.dismiss()
+            }
         }
+    }
 
 
+    interface ButtonClickListener {
+        fun onClicked(isConfirm: Boolean)
+    }
+
+    private lateinit var onClickListener: ButtonClickListener
+
+    fun setOnClickedListener(listener: ButtonClickListener) {
+        onClickListener = listener
     }
 }

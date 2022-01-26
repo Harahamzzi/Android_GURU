@@ -8,9 +8,9 @@ import android.widget.ImageButton
 class HamsterEditNameDialog(context: Context) {
     private val dialog = Dialog(context)
 
-    lateinit var editNameEditText: EditText
-    lateinit var hamsterCancelImageButton: ImageButton
-    lateinit var nameEditImageButton: ImageButton
+    private lateinit var editNameEditText: EditText
+    private lateinit var hamsterCancelImageButton: ImageButton
+    private lateinit var nameEditImageButton: ImageButton
 
     fun EditName() {
         dialog.show()
@@ -32,7 +32,7 @@ class HamsterEditNameDialog(context: Context) {
     }
 
     interface ButtonClickListener {
-        fun onClicked(isReduced: Boolean, name: String?)
+        fun onClicked(isChanged: Boolean, name: String?)
     }
 
     private lateinit var onClickListener: ButtonClickListener
