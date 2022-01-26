@@ -6,11 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 
 class SeedMarket : Fragment() {
 
-    lateinit var buyImageButton: ImageButton
+    //구매 버튼
+    private lateinit var buyImageButton: ImageButton
+
+    //인벤토리 관련
+    private lateinit var bgImageView: ImageView
+    private lateinit var clothImageButton: ImageButton
+    private lateinit var furnitureImageButton: ImageButton
+    private lateinit var wallPaperImageButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +36,29 @@ class SeedMarket : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //구매 버튼
         buyImageButton = requireView().findViewById(R.id.buyImageButton)
         buyImageButton.setOnClickListener {
             receiptPopUp()
+        }
+
+        //인벤토리 관련
+        bgImageView = requireView().findViewById(R.id.marketInventorybgImageView)
+        clothImageButton = requireView().findViewById(R.id.marketClothImageButton)
+        furnitureImageButton = requireView().findViewById(R.id.marketFurnitureImageButton)
+        wallPaperImageButton = requireView().findViewById(R.id.marketWallPaparImageButton)
+
+        clothImageButton.setOnClickListener {
+            upDateInventory("cloth")
+            bgImageView.setImageResource(R.drawable.inventory_cloth)
+        }
+        furnitureImageButton.setOnClickListener {
+            upDateInventory("furniture")
+            bgImageView.setImageResource(R.drawable.inventory_furniture)
+        }
+        wallPaperImageButton.setOnClickListener {
+            upDateInventory("wallpaper")
+            bgImageView.setImageResource(R.drawable.inventory_wallpapare)
         }
     }
 
@@ -60,4 +89,12 @@ class SeedMarket : Fragment() {
         })
     }
 
+    private fun upDateInventory(name: String) {
+        //인벤토리 변환
+        when(name){
+            "cloth"-> Toast.makeText(requireContext(),"옷이당",Toast.LENGTH_SHORT).show()
+            "furniture" -> Toast.makeText(requireContext(),"가구당",Toast.LENGTH_SHORT).show()
+            "wallpaper" -> Toast.makeText(requireContext(),"벽지당",Toast.LENGTH_SHORT).show()
+        }
+    }
 }

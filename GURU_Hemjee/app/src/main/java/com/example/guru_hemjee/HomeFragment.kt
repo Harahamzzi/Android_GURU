@@ -12,10 +12,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.material.button.MaterialButton
 
 class HomeFragment : Fragment() {
 
-    lateinit var startButton: Button
+    //시작 버튼
+    private lateinit var startButton: Button
+    //잠금 수정 버튼
+    private lateinit var goalSelectButton: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +37,35 @@ class HomeFragment : Fragment() {
         //lock 화면 연결
         startButton = requireView().findViewById(R.id.startButton)
         startButton.setOnClickListener {
-            //showSettingConfirmPopUp()
-            var intent = Intent(requireContext(), LockActivity::class.java)
-            startActivity(intent)
+            showSettingConfirmPopUp()
+        }
+
+        //잠금 수정
+        goalSelectButton = requireView().findViewById(R.id.goalSelectButton)
+        goalSelectButton.setOnClickListener {
+            showLockSettingPopUp()
         }
     }
 
     private fun showSettingConfirmPopUp() {
         val dialog = LockSettingConfirmDialog(requireContext())
         dialog.myDig()
+
+        dialog.setOnClickedListener(object : LockSettingConfirmDialog.ButtonClickListener{
+            override fun onClicked(isLock: Boolean) {
+                if(isLock){
+                    var intent = Intent(requireContext(), LockActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
+    }
+
+    private fun showLockSettingPopUp() {
+        val dialog = LockSettingDialog(requireContext(), null, null)
+        dialog.lockSetting()
+
+
     }
 
 }

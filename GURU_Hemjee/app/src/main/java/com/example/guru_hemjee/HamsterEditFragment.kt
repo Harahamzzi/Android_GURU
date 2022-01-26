@@ -2,16 +2,27 @@ package com.example.guru_hemjee
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 
 class HamsterEditFragment() : Fragment() {
 
+    //변경 관련 버튼들
     private lateinit var myHNameEditImageButton: ImageButton
     private lateinit var myHamsterApplyImageButton: ImageButton
+
+    //인벤토리 관련 요소들
+    private lateinit var myHInventorybgImageView: ImageView
+    private lateinit var myHClothImageButton: ImageButton
+    private lateinit var myHFurnitureImageButton: ImageButton
+    private lateinit var myHWallpaperImageButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +50,26 @@ class HamsterEditFragment() : Fragment() {
         myHamsterApplyImageButton.setOnClickListener {
             hChangeImagePopUp()
         }
+
+        //인벤토리 버튼에 따라 인벤토리 변화
+        myHClothImageButton = requireView().findViewById(R.id.myHClothImageButton)
+        myHFurnitureImageButton = requireView().findViewById(R.id.myHFurnitureImageButton)
+        myHWallpaperImageButton = requireView().findViewById(R.id.myHWallPaperImageButton)
+
+        myHInventorybgImageView = requireView().findViewById(R.id.myHInventoryImageView)
+
+        myHClothImageButton.setOnClickListener {
+            upDateInventory("cloth")
+            myHInventorybgImageView.setImageResource(R.drawable.inventory_cloth)
+        }
+        myHFurnitureImageButton.setOnClickListener {
+            upDateInventory("furniture")
+            myHInventorybgImageView.setImageResource(R.drawable.inventory_furniture)
+        }
+        myHWallpaperImageButton.setOnClickListener {
+            upDateInventory("wallpaper")
+            myHInventorybgImageView.setImageResource(R.drawable.inventory_wallpapare)
+        }
     }
 
     private fun hNameEditPopUp() {
@@ -64,5 +95,14 @@ class HamsterEditFragment() : Fragment() {
                 //생략
             }
         })
+    }
+
+    private fun upDateInventory(name: String) {
+        //인벤토리 변환
+        when(name){
+            "cloth"-> Toast.makeText(requireContext(),"옷이당",Toast.LENGTH_SHORT).show()
+            "furniture" -> Toast.makeText(requireContext(),"가구당",Toast.LENGTH_SHORT).show()
+            "wallpaper" -> Toast.makeText(requireContext(),"벽지당",Toast.LENGTH_SHORT).show()
+        }
     }
 }

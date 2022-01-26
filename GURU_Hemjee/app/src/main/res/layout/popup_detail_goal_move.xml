@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/popBackImageButton"
         android:layout_width="8dp"
         android:layout_height="16dp"
         android:layout_marginStart="17dp"
@@ -41,7 +41,7 @@
         android:text="총 0개"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/popBackImageButton" />
 
     <ScrollView
         android:id="@+id/scrollView3"

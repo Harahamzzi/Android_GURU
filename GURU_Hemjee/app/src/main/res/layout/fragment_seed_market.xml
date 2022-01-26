@@ -130,11 +130,21 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/inventory_cloth"
                 app:layout_constraintBottom_toBottomOf="@+id/inventoryBacgroundImageView"
                 app:layout_constraintEnd_toEndOf="@+id/inventoryBacgroundImageView"
                 app:layout_constraintStart_toStartOf="@+id/inventoryBacgroundImageView"
                 app:layout_constraintTop_toTopOf="@+id/inventoryBacgroundImageView">
+
+                <ImageView
+                    android:id="@+id/marketInventorybgImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/inventory_cloth"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout3"
@@ -186,7 +196,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="80dp"
