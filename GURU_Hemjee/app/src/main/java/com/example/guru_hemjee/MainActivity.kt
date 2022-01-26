@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val transaction = supportFragmentManager.beginTransaction()
 
         // 빈 fragment 화면 띄우기 (홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
-        transaction.replace(R.id.fragment_main, BlankFragment())
+        transaction.replace(R.id.fragment_main, BlankFragment(), "blank")
         transaction.commit()
 
         // ViewPager 연결
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             // TODO: 현재 띄워진 fragment의 Tag 가져와서 비교 & 동작하기(수정 필요)
             // 돌아간 화면 가져오기
-            var fragment: Fragment? = supportFragmentManager.findFragmentByTag("home")
+            var fragment: Fragment? = supportFragmentManager.findFragmentByTag("blank")
 
             // 돌아간 화면이 home이라면(HomeFragment가 현재 열려있다면)
             if (fragment != null && fragment == HomeFragment())
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             titleText.setText("")
 
             // 빈 화면으로 전환(홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
-            transaction.replace(R.id.fragment_main, BlankFragment())
+            transaction.replace(R.id.fragment_main, BlankFragment(), "blank")
             transaction.addToBackStack(null)
             transaction.commit()
 
