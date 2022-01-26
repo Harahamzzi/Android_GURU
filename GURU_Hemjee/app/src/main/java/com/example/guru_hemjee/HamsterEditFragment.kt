@@ -28,7 +28,7 @@ class HamsterEditFragment(requireContext: Context) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //이름 변경 팝업 연결
-        myHNameEditImageButton = requireView().findViewById(R.id.startButton)
+        myHNameEditImageButton = requireView().findViewById(R.id.myHNameEditImageButton)
         myHNameEditImageButton.setOnClickListener {
 
         }
