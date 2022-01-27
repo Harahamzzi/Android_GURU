@@ -163,37 +163,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             // isHome 플래그 올리기
                             isHome = true
                         }
-                        // 목표 및 잠금 시간 설정 페이지
-                        "setUp" -> {
-                            titleText.setText("목표/잠금 시간 설정")
-                        }
-                        // 목표 리포트 페이지
-                        "dailyReport" -> {
-                            titleText.setText("목표 리포트")
-                        }
-                        // 나의 성취 앨범 페이지
-                        "dailyAlbum" -> {
-                            titleText.setText("나의 성취 앨범")
-                        }
-                        // 씨앗 상점 페이지
-                        "seedMarket" -> {
-                            titleText.setText("씨앗 상점")
-                        }
-                        // 나의 햄찌 관리 페이지
-                        "hamsterEdit" -> {
-                            titleText.setText("나의 햄찌 관리")
-                        }
+//                        // 목표 및 잠금 시간 설정 페이지
+//                        "setUp" -> {
+//                            titleText.setText("목표/잠금 시간 설정")
+//                        }
+//                        // 목표 리포트 페이지
+//                        "dailyReport" -> {
+//                            titleText.setText("목표 리포트")
+//                        }
+//                        // 나의 성취 앨범 페이지
+//                        "dailyAlbum" -> {
+//                            titleText.setText("나의 성취 앨범")
+//                        }
+//                        // 씨앗 상점 페이지
+//                        "seedMarket" -> {
+//                            titleText.setText("씨앗 상점")
+//                        }
+//                        // 나의 햄찌 관리 페이지
+//                        "hamsterEdit" -> {
+//                            titleText.setText("나의 햄찌 관리")
+//                        }
 //                        // 설정 탭
 //                        "설정탭 태그" -> {
 //                            titleText.setText("설정")
 //                        }
                     }
 
-                    // home을 제외한 화면일 때의 공통 동작
-                    if(tag != "blank")
-                    {
-                        setOtherPagesAction()
-                    }
+//                    // home을 제외한 화면일 때의 공통 동작
+//                    if(tag != "blank")
+//                    {
+//                        setOtherPagesAction()
+//                    }
                 }
             }
         }
