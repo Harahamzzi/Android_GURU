@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -24,21 +25,10 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // FIXME: 하단 소프트키 안 숨겨짐
-        // 하단 소프트키 숨기기 위함
-        var uiOptions = window.decorView.systemUiVisibility
-        var newUiOptions = uiOptions
-
-        newUiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        newUiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
-        newUiOptions = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
-        window.decorView.systemUiVisibility = newUiOptions  // 변경한 ui 적용
-
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)   // 기본 잠금화면 해제시키기
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)     // 화면 켜기..?
+//        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)     // 화면 켜기..?
 
         setContentView(R.layout.activity_lock)
 
@@ -83,6 +73,29 @@ class LockActivity : AppCompatActivity() {
 
     }
 
+    // FIXME: 하단 소프트키 숨겨지지만...너무 풀스크린으로 화면을 뿌려 윗부분이 살짝 잘리는 현상 발생함
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (hasFocus) window.decorView.systemUiVisibility = (
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    )
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onAttachedToWindow() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+        )
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        super.onAttachedToWindow()
+    }
 
     override fun onBackPressed() {
         // (폰) 뒤로가기 버튼이 아무런 동작도 하지 않도록 함
