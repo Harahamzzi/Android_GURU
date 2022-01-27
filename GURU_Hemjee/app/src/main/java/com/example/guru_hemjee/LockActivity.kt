@@ -1,29 +1,31 @@
 package com.example.guru_hemjee
 
+import android.drm.DrmStore
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
 
 class LockActivity : AppCompatActivity() {
 
+    //사용가능 한 앱, 시간 조절 버튼
     lateinit var appListButton: ImageButton
     lateinit var timeMinusImageButton: ImageButton
     lateinit var timePlusImageButton: ImageButton
 
-    lateinit var lockExitImageButton: ImageButton
-    lateinit var exitImageButton: ImageButton
+    //나가기 버튼
+    lateinit var lockExitImageButton: ImageButton//첫번째
+    lateinit var exitImageButton: ImageButton//두번째
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lock)
 
-        // 액션바 숨기기
-        var actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
-
+        //위젯들 연결
         appListButton = findViewById(R.id.appListButton)
         timeMinusImageButton = findViewById(R.id.timeMinusImageButton)
         timePlusImageButton = findViewById(R.id.timePlusImageButton)
@@ -48,7 +50,7 @@ class LockActivity : AppCompatActivity() {
         }
 
         //나가기 버튼들
-        lockExitImageButton.setOnClickListener {
+        lockExitImageButton.setOnClickListener {//첫번째 나가기 버튼
             exitImageButton.visibility = View.VISIBLE
             lockExitImageButton.visibility = View.GONE
 
@@ -58,17 +60,19 @@ class LockActivity : AppCompatActivity() {
             }, 3000L)
         }
 
-        exitImageButton.setOnClickListener {
+        exitImageButton.setOnClickListener {//마지막 나가기 버튼
             showExitPop()
         }
 
     }
 
+    //사용가능 한 앱 팝업
     private fun showAppListPopup() {
         val dialog = AvailableAppsDialog(this)
         dialog.availableApps()
     }
 
+    //시간 감소 팝업
     private fun showTimeMinusPopUp(){
         val dialog = AlertDialog(this, "10분 줄이기", "-10      ", true)
         dialog.AlertDialog()
@@ -82,6 +86,7 @@ class LockActivity : AppCompatActivity() {
         })
     }
 
+    //시간 추가 팝업
     private fun showTimePlusPopUp(){
         val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기", false)
         dialog.AlertDialog()
@@ -95,6 +100,7 @@ class LockActivity : AppCompatActivity() {
         })
     }
 
+    //나가기 팝업
     private fun showExitPop(){
         val dialog = AlertDialog(this,"잠금 종료하기", "나가기", false)
         dialog.AlertDialog()
@@ -108,6 +114,7 @@ class LockActivity : AppCompatActivity() {
         })
     }
 
+    //마지막 확인 팝업 창
     private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isLockFinished: Boolean) {
         val dialog = FinalOK(this,title, okString, isNeedDrawable)
         dialog.alertDialog()
@@ -123,6 +130,7 @@ class LockActivity : AppCompatActivity() {
             }
         })
     }
+
 }
 
 

@@ -1,6 +1,8 @@
 package com.example.guru_hemjee
 
 import android.app.PendingIntent.getActivity
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 
 
@@ -33,8 +35,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var viewPager: ViewPager2
 
-//    lateinit var startButton: Button
-
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar: Toolbar = findViewById(R.id.toolBar)
         toolbar.setContentInsetsAbsolute(0, 0); // 왼쪽 여백 제거
         setActionBar(toolbar)
-
 
         // 드로어를 꺼낼 홈 버튼 비활성화(이미 툴바에 있기 때문)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -69,12 +71,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // titleText 연결
         titleText = findViewById(R.id.titleTextView)
-
-//        //lock 화면 연결
-//        startButton = findViewById(R.id.startButton)
-//        startButton.setOnClickListener {
-//            showSettingConfirmPopUp()
-//        }
 
 
         // fragment 전환을 위한 transaction 생성
