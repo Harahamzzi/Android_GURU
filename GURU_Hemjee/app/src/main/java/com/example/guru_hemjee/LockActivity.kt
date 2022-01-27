@@ -1,9 +1,11 @@
 package com.example.guru_hemjee
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageButton
 import androidx.appcompat.app.ActionBar
 
@@ -18,6 +20,12 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 잠금화면으로 쓰이기 위한 플래그 지정
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+
         setContentView(R.layout.activity_lock)
 
         // 액션바 숨기기
@@ -62,6 +70,10 @@ class LockActivity : AppCompatActivity() {
             showExitPop()
         }
 
+    }
+
+    override fun onBackPressed() {
+        // (폰) 뒤로가기 버튼이 아무런 동작도 하지 않도록 함
     }
 
     private fun showAppListPopup() {
