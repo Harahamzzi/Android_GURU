@@ -5,9 +5,6 @@ import android.content.Context
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import java.text.SimpleDateFormat
-import java.util.*
 
 class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
     private var context = context
@@ -50,10 +47,10 @@ class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
         //대표 목표 수정
         changeGoalButton = dialog.findViewById(R.id.changeGoalButton)
         changeGoalButton.setOnClickListener {
-            val subDialog = GoalSelecDialog(context, bigGoalTitle)
+            val subDialog = GoalSelectDialog(context, bigGoalTitle)
             subDialog.goalSelectPop()
 
-            subDialog.setOnClickedListener(object : GoalSelecDialog.ButtonClickListener{
+            subDialog.setOnClickedListener(object : GoalSelectDialog.ButtonClickListener{
                 override fun onClicked(changedBigGoalTitle: String?) {
                     bigGoalTitle = changedBigGoalTitle
                     goalTitleTextView.text = changedBigGoalTitle
