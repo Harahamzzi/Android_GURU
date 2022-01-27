@@ -21,6 +21,7 @@ private const val NUM_PAGES = 3
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    // Navagation Drawer 관련(햄버거 메뉴를 통한 화면 전환)
     lateinit var navigationView: NavigationView
     lateinit var drawerLayout: DrawerLayout
 
@@ -29,8 +30,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var titleImage: ImageView
     lateinit var titleText: TextView
 
+    // viewPager(스와이프를 통한 화면 전환)
     lateinit var viewPager: ViewPager2
 
+    // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
+    private var backPressedTime: Long = 0
+    var isHome = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 빈 fragment 화면 띄우기 (홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
         transaction.replace(R.id.fragment_main, BlankFragment(), "blank")
         transaction.commit()
+        isHome = true
 
         // ViewPager 연결
         viewPager = findViewById(R.id.viewPager)
@@ -96,11 +102,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+
+
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {
         // 만일 드로어가 열려있는 상태라면 드로어를 닫음
         if(drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawers()
+        // 현재 홈 화면일 경우
+        else if(isHome)
+        {
+            if(System.currentTimeMillis() > backPressedTime + 2000)
+            {
+                backPressedTime = System.currentTimeMillis()
+                Toast.makeText(this, "\'뒤로 \' 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show()
+            }
+            else if(System.currentTimeMillis() <= backPressedTime + 2000)   // 토스트 메시지가 사라지기 전에 누르면 앱이 종료됨
+            {
+                // 현재 액티비티 종료(앱이 종료 되게 함)
+                finish()
+            }
+        }
         // 그렇지 않다면 이전 화면으로 돌아가기
         else
         {
@@ -136,6 +158,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             viewPager.adapter = ScreenSlidePagerAdapter(this)
                             // ViewPager 스와이프 터치 활성화
                             viewPager.isUserInputEnabled = true
+
+                            // isHome 플래그 올리기
+                            isHome = true
                         }
                         // 목표 및 잠금 시간 설정 페이지
                         "setUp" -> {
@@ -166,24 +191,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     // home을 제외한 화면일 때의 공통 동작
                     if(tag != "blank")
                     {
-                        // titleImage 숨기기
-                        titleImage.visibility = View.INVISIBLE
-                        // titleText 보이기
-                        titleText.visibility = View.VISIBLE
-
-                        // 툴바 좌측 이미지 변경(뒤로가기)
-                        titleButton.setImageResource(R.drawable.ic_outline_west_24)
-                        // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
-                        backHomeListener(titleButton)
-
-                        // ViewPager adapter 제거
-                        viewPager.adapter = null
-                        // ViewPager 스와이프 터치 비활성화
-                        viewPager.isUserInputEnabled = false
+                        setOtherPagesAction()
                     }
                 }
             }
         }
+    }
+
+    // 현재 페이지가 Home 페이지 외 다른 페이지일 때의 동작과 디자인을 설정해주는 함수
+    private fun setOtherPagesAction() {
+        // titleImage 숨기기
+        titleImage.visibility = View.INVISIBLE
+        // titleText 보이기
+        titleText.visibility = View.VISIBLE
+
+        // 툴바 좌측 이미지 변경(뒤로가기)
+        titleButton.setImageResource(R.drawable.ic_outline_west_24)
+        // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
+        backHomeListener(titleButton)
+
+        // ViewPager adapter 제거
+        viewPager.adapter = null
+        // ViewPager 스와이프 터치 비활성화
+        viewPager.isUserInputEnabled = false
+
+        // isHome 플래그 내리기
+        isHome = false
     }
 
     // 툴바 좌측 이미지를 눌렀을 때 홈 화면으로 가기를 처리하는 함수(리스너)
@@ -215,6 +248,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             viewPager.adapter = ScreenSlidePagerAdapter(this)
             // ViewPager 스와이프 터치 활성화
             viewPager.isUserInputEnabled = true
+
+            // isHome 플래그 올리기
+            isHome = true
         }
     }
 
@@ -305,21 +341,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_goalAndTime, R.id.action_report, R.id.action_album,
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
 
-                // ViewPager 스와이프 터치 비활성화
-                viewPager.isUserInputEnabled = false
-                // ViewPager adapter 없애기
-                viewPager.adapter = null
-
-                // title 이미지 숨기기
-                titleImage.visibility = View.GONE
-
-                // 타이틀 텍스트 보이기
-                titleText.visibility = View.VISIBLE
-
-                // 툴바 좌측 이미지 변경(뒤로가기)
-                titleButton.setImageResource(R.drawable.ic_outline_west_24)
-                // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
-                backHomeListener(titleButton)
+                setOtherPagesAction()
             }
         }
 
