@@ -7,6 +7,7 @@
     tools:context=".BigGoalSetupFragment">
 
     <ScrollView
+        android:id="@+id/fragment_biggoal_setup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,10 +38,13 @@
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="17dp"
+                android:backgroundTint="@color/Yellow"
                 android:ems="10"
                 android:fontFamily="@font/noto_sans"
-                android:hint="얼마나 작은 글씨일까"
                 android:inputType="text"
+                android:maxLines="2"
+                android:textColorHighlight="@color/BrightYellow"
+                android:textCursorDrawable="@color/Yellow"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -248,9 +252,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="33dp"
+                    android:backgroundTint="@color/Yellow"
                     android:fontFamily="@font/noto_sans"
-                    android:hint="01"
+                    android:hint="00"
                     android:textColor="@color/Black"
+                    android:textColorHighlight="@color/BrightYellow"
+                    android:textCursorDrawable="@color/Yellow"
                     android:textSize="22sp" />
 
                 <TextView
@@ -265,90 +272,25 @@
                     android:id="@+id/todayLockMinView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/Yellow"
                     android:fontFamily="@font/noto_sans"
                     android:hint="00"
                     android:textColor="@color/Black"
+                    android:textColorHighlight="@color/BrightYellow"
+                    android:textCursorDrawable="@color/Yellow"
                     android:textSize="22sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="사용 가능한 앱"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="17dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22">
-
-                <LinearLayout
-                    android:id="@+id/possibleAppListLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="33dp">
-
-                        <ImageButton
-                            android:id="@+id/plusPossibleAppBtn"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:layout_marginBottom="2dp"
-                            android:background="@drawable/outline_rectangle_button"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/ic_plus_button"
-                            app:layout_constraintBottom_toTopOf="@+id/textView23"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:text="앱 추가"
-                            android:textColor="@color/SeedBrown"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/plusPossibleAppBtn" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout26"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="100dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/deleteButton"
@@ -379,7 +321,7 @@
                 android:layout_marginTop="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout26"/>
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout26" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -38,7 +38,7 @@ class DBManager(
 
         //대표 목표 DB: avaiable app 생략)
         db!!.execSQL("CREATE TABLE big_goal_db (big_goal_name text PRIMARY KEY, " +
-                "color text, big_goal_lock_time time);")
+                "color INT, big_goal_lock_time time);")
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
