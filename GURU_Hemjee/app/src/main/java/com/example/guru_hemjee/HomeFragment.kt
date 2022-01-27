@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.content.ClipData.newIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -65,7 +66,9 @@ class HomeFragment : Fragment() {
         dialog.setOnClickedListener(object : LockSettingConfirmDialog.ButtonClickListener{
             override fun onClicked(isLock: Boolean) {
                 if(isLock){
-                    var intent = Intent(requireContext(), LockActivity::class.java)
+                    LockScreenUtil.active()
+
+                    var intent = Intent(requireActivity(), LockActivity::class.java)
                     startActivity(intent)
                 }
             }

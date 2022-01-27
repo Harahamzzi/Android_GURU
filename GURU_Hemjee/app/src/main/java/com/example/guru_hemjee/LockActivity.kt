@@ -24,10 +24,21 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // FIXME: 하단 소프트키 안 숨겨짐
+        // 하단 소프트키 숨기기 위함
+        var uiOptions = window.decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+
+        newUiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+        newUiOptions = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+
+        window.decorView.systemUiVisibility = newUiOptions  // 변경한 ui 적용
+
         // 잠금화면으로 쓰이기 위한 플래그 지정
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)   // 기본 잠금화면 해제시키기
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)     // 화면 켜기..?
 
         setContentView(R.layout.activity_lock)
 
@@ -134,6 +145,7 @@ class LockActivity : AppCompatActivity() {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm && isLockFinished){
                     //잠금 종료시 필요한 연산
+                    LockScreenUtil.deActive()   // 잠금 서비스 종료
 
                     //잠금 종료
                     finish()

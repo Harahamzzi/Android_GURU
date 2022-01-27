@@ -1,11 +1,15 @@
 package com.example.guru_hemjee
 
 import android.app.PendingIntent.getActivity
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.net.Uri
+import android.os.Build
 import android.widget.Toast
 
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -42,6 +46,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // permission를 얻었는지 체크
+        checkPermission()
 
         // 툴바 적용
         val toolbar: Toolbar = findViewById(R.id.toolBar)
@@ -103,7 +110,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
+    // 다른 앱 위에 그리기 권한을 얻었는지 체크하는 함수
+    private fun checkPermission() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            if(!Settings.canDrawOverlays(this)) {
+                val uri = Uri.fromParts("package", packageName, null)
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri)
+                startActivityForResult(intent, 0)
+            }
+        }
+    }
 
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {

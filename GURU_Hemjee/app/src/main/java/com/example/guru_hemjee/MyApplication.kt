@@ -1,0 +1,19 @@
+package com.example.guru_hemjee
+
+import android.app.Application
+import android.content.Context
+
+class MyApplication : Application() {
+    init {
+        instance = this
+    }
+
+    companion object {
+        lateinit var instance: MyApplication
+
+        // 어디서든 MyApplication.applicationContext()로 application context에 접근할 수 있게 함
+        fun applicationContext(): Context {
+            return instance.applicationContext
+        }
+    }
+}
