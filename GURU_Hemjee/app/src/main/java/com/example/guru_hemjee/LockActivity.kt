@@ -1,6 +1,6 @@
 package com.example.guru_hemjee
 
-import android.drm.DrmStore
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +23,12 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 잠금화면으로 쓰이기 위한 플래그 지정
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+
         setContentView(R.layout.activity_lock)
 
         //위젯들 연결
@@ -66,7 +72,12 @@ class LockActivity : AppCompatActivity() {
 
     }
 
-    //사용가능 한 앱 팝업
+
+    override fun onBackPressed() {
+        // (폰) 뒤로가기 버튼이 아무런 동작도 하지 않도록 함
+    }
+
+    //사용 가능한 앱
     private fun showAppListPopup() {
         val dialog = AvailableAppsDialog(this)
         dialog.availableApps()

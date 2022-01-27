@@ -5,13 +5,11 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 
-
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -35,9 +33,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var viewPager: ViewPager2
 
-    //DB 관련
-    private lateinit var dbManager: DBManager
-    private lateinit var sqlitedb: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,40 +108,82 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
 
 
-            // TODO: 현재 띄워진 fragment의 Tag 가져와서 비교 & 동작하기(수정 필요)
-            // 돌아간 화면 가져오기
-            var fragment: Fragment? = supportFragmentManager.findFragmentByTag("blank")
-
-            // 돌아간 화면이 home이라면(HomeFragment가 현재 열려있다면)
-            if (fragment != null && fragment == HomeFragment())
+            // 현재 보여지는 fragment 찾기
+            for(fragment : Fragment in supportFragmentManager.fragments)
             {
-                // titleImage 보이기
-                titleImage.visibility = View.VISIBLE
-                // titleText 숨기기
-                titleText.visibility = View.INVISIBLE
+                // 만일 보이는 fragment를 찾았다면 tag 저장
+                if(fragment.isVisible)
+                {
+                    val tag = fragment.tag
 
-                // 툴바 좌측 이미지 변경(드로어 열기)
-                titleButton.setImageResource(R.drawable.menu_icon)
-                // 드로어 열기 리스너로 교체
-                titleButton.setOnClickListener {
-                    drawerLayout.openDrawer(GravityCompat.START)
+                    // tag 비교/적용
+                    when(tag)
+                    {
+                        // tag가 blank일 때의 동작(blank면 홈 화면이다.)
+                        "blank" -> {
+                            // titleImage 보이기
+                            titleImage.visibility = View.VISIBLE
+                            // titleText 숨기기
+                            titleText.visibility = View.INVISIBLE
+
+                            // 툴바 좌측 이미지 변경(드로어 열기)
+                            titleButton.setImageResource(R.drawable.menu_icon)
+                            // 드로어 열기 리스너로 교체
+                            titleButton.setOnClickListener {
+                                drawerLayout.openDrawer(GravityCompat.START)
+                            }
+
+                            // ViewPager adapter 생성
+                            viewPager.adapter = ScreenSlidePagerAdapter(this)
+                            // ViewPager 스와이프 터치 활성화
+                            viewPager.isUserInputEnabled = true
+                        }
+                        // 목표 및 잠금 시간 설정 페이지
+                        "setUp" -> {
+                            titleText.setText("목표/잠금 시간 설정")
+                        }
+                        // 목표 리포트 페이지
+                        "dailyReport" -> {
+                            titleText.setText("목표 리포트")
+                        }
+                        // 나의 성취 앨범 페이지
+                        "dailyAlbum" -> {
+                            titleText.setText("나의 성취 앨범")
+                        }
+                        // 씨앗 상점 페이지
+                        "seedMarket" -> {
+                            titleText.setText("씨앗 상점")
+                        }
+                        // 나의 햄찌 관리 페이지
+                        "hamsterEdit" -> {
+                            titleText.setText("나의 햄찌 관리")
+                        }
+//                        // 설정 탭
+//                        "설정탭 태그" -> {
+//                            titleText.setText("설정")
+//                        }
+                    }
+
+                    // home을 제외한 화면일 때의 공통 동작
+                    if(tag != "blank")
+                    {
+                        // titleImage 숨기기
+                        titleImage.visibility = View.INVISIBLE
+                        // titleText 보이기
+                        titleText.visibility = View.VISIBLE
+
+                        // 툴바 좌측 이미지 변경(뒤로가기)
+                        titleButton.setImageResource(R.drawable.ic_outline_west_24)
+                        // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
+                        backHomeListener(titleButton)
+
+                        // ViewPager adapter 제거
+                        viewPager.adapter = null
+                        // ViewPager 스와이프 터치 비활성화
+                        viewPager.isUserInputEnabled = false
+                    }
                 }
             }
-            else
-            {
-                // TODO: 각 태그에 따라 title text 조정하기
-
-                // titleImage 숨기기
-                titleImage.visibility = View.INVISIBLE
-                // titleText 보이기
-                titleText.visibility = View.VISIBLE
-
-                // 툴바 좌측 이미지 변경(뒤로가기)
-                titleButton.setImageResource(R.drawable.ic_outline_west_24)
-                // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
-                backHomeListener(titleButton)
-            }
-
         }
     }
 
