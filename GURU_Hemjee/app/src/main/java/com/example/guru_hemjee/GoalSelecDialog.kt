@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.widget.ImageButton
 
-class GoalSelecDialog(context: Context) {
+class GoalSelecDialog(context: Context, bigGoalTitle: String?) {
     private var dialog = Dialog(context)
 
     private lateinit var backImageButton: ImageButton
@@ -22,7 +22,7 @@ class GoalSelecDialog(context: Context) {
     }
 
     interface ButtonClickListener {
-        fun onClicked(bigGoalTitle: String?)
+        fun onClicked(changedBigGoalTitle: String?)
     }
 
     private lateinit var onClickListener: ButtonClickListener
