@@ -47,9 +47,11 @@ class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
         //대표 목표 수정
         changeGoalButton = dialog.findViewById(R.id.changeGoalButton)
         changeGoalButton.setOnClickListener {
+            //대표 목표 수정을 위한 팝업 연결
             val subDialog = GoalSelectDialog(context, bigGoalTitle)
             subDialog.goalSelectPop()
 
+            //해당 팝업에서 받아온 정보로 데이터 갱신
             subDialog.setOnClickedListener(object : GoalSelectDialog.ButtonClickListener{
                 override fun onClicked(changedBigGoalTitle: String?) {
                     bigGoalTitle = changedBigGoalTitle
@@ -58,15 +60,21 @@ class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
             })
         }
 
+        //설정 취소 버튼
         lockCancelImageButton = dialog.findViewById(R.id.lockCancelImageButton)
         lockCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null, "")
             dialog.dismiss()
         }
 
+        //설정 확인 버튼
         settingOkImageButton = dialog.findViewById(R.id.settingOkImageButton)
         settingOkImageButton.setOnClickListener {
 
+            //시간이 올바르게 들어갔는지 확인
+            if(hourEditText.text.toString().toInt() )
+
+            //시간 갱신
             time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
 
             onClickListener.onClicked(true, bigGoalTitle, time)
