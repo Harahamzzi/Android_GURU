@@ -53,12 +53,17 @@ class SetupFragment : Fragment() {
         plusGoalButton = view.findViewById(R.id.plusGoalButton) // +버튼의 아이디 할당
 
         // DB
-        dbManager = DBManager(context, "biggoalDB", null, 1)
+        dbManager = DBManager(context, "big_goal_db", null, 1)
         sqlitedb = dbManager.readableDatabase // 데이터 읽기
 
         // TODO : DB 데이터 -> 어댑터 -> 반환
         var cursor : Cursor
         cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+
+        var items = mutableListOf<BigGoalListViewItem>() // 목표를 저장할 배열
+        val goalList_adapter = BigGoalListViewAdapter(items) // 커스텀 어댑터
+        bigGoalListView.adapter = goalList_adapter // 어댑터 연결
+        bigGoalListView.choiceMode = ListView.CHOICE_MODE_SINGLE // 단일 선택모드
 
         var num : Int = 0 // 리스트 아이템 개수
         while (cursor.moveToNext()) { // 어댑터에 있는 list배열에 데이터 개수만큼 추가
@@ -71,11 +76,7 @@ class SetupFragment : Fragment() {
 
             // 리스트 뷰에 있는 데이터를 입력받을 어댑터 생성
             // val goalList_adapter = BigGoalListViewAdapter(context, items) // 커스텀 어댑터
-            // val items = mutableListOf<BigGoalListViewItem>() // 목표를 저장할 배열
-            val items = mutableListOf<BigGoalListViewItem>() // 목표를 저장할 배열
-            val goalList_adapter = BigGoalListViewAdapter(items) // 커스텀 어댑터
-            bigGoalListView.adapter = goalList_adapter // 어댑터 연결
-            bigGoalListView.choiceMode = ListView.CHOICE_MODE_SINGLE // 단일 선택모드
+            // val items = mutableListOf<BigGoalListViewItem>() // 목표를 저장할 배
 
             // 현재 커서에 있는 값 가져오기
             var str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
@@ -138,11 +139,12 @@ class SetupFragment : Fragment() {
                     Toast.makeText(context, (checkedItem + 1).toString() + "번째를 클릭했습니다.", Toast.LENGTH_SHORT).show() // 클릭 확인용 토스트 메시지
                 }
             }
-            goalList_adapter.notifyDataSetChanged() // 리스트 갱신
-            Log.d("현재 num 값", num.toString())
-            num++;
-            Log.d("목표를 추가한 후의 num 값", num.toString())
         }
+
+        goalList_adapter.notifyDataSetChanged() // 리스트 갱신
+        Log.d("현재 num 값", num.toString())
+        num++;
+        Log.d("목표를 추가한 후의 num 값", num.toString())
 
         // +버튼을 눌렀다면
         plusGoalButton.setOnClickListener {
