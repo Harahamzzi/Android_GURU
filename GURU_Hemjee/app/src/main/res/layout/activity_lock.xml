@@ -122,14 +122,14 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/lokMinTextView"
+            android:id="@+id/lockMinTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="00"
             android:textColor="@color/Black"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lockDot2"
