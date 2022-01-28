@@ -15,7 +15,7 @@ class DBManager(
 
         /**사용법
          * ###time 타입: 밀리세컨트를 변환하여 사용
-         * var sf = SimpleDateFormat("h:mm:ss")
+         * var sf = SimpleDateFormat("hh:mm:ss")
          * var time = Date(<여기에 밀리세컨드>)
          * var result = sf.format(time)
          * >> result를 입력 바람(result는 sting)

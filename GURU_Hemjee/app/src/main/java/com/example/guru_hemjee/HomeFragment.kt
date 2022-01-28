@@ -66,9 +66,17 @@ class HomeFragment : Fragment() {
         dialog.setOnClickedListener(object : LockSettingConfirmDialog.ButtonClickListener{
             override fun onClicked(isLock: Boolean) {
                 if(isLock){
+                    // 잠금 서비스 실행
                     LockScreenUtil.active()
 
                     var intent = Intent(requireActivity(), LockActivity::class.java)
+                    // 타이머 시간 데이터 보내기
+                    intent.putExtra("hour", time.split(':')[0])
+                    intent.putExtra("min", time.split(':')[1])
+                    intent.putExtra("sec", time.split(':')[2])
+
+//                    intent.putExtra("time", time)
+
                     startActivity(intent)
                 }
             }

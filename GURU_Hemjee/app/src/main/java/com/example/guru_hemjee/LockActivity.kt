@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -63,6 +64,16 @@ class LockActivity : AppCompatActivity() {
         lockHourTextView = findViewById(R.id.lockHourTextView)
         lockMinTextView = findViewById(R.id.lockMinTextView)
         lockSecTextView = findViewById(R.id.lockSecTextView)
+
+        // 타이머 세팅
+        var intent = intent
+        lockHourTextView.setText(intent.getStringExtra("hour"))
+        lockMinTextView.setText(intent.getStringExtra("min"))
+        lockSecTextView.setText(intent.getStringExtra("sec"))
+
+//        var timeTemp = intent.getStringExtra("time")
+//        var sf = SimpleDateFormat("hh:mm:ss")
+//        time = sf.parse(timeTemp).getTime().toInt()
 
         // 타이머 시작
         time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
