@@ -67,34 +67,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
         settingOkImageButton = dialog.findViewById(R.id.settingOkImageButton)
         settingOkImageButton.setOnClickListener {
 
-            if(hourEditText.text.toString().isEmpty()){
-                time = timeArray[0]+":"
-            } else {
-                if(hourEditText.text.toString().toInt()/10 >= 1)
-                    time = hourEditText.text.toString()+":"
-                else
-                    time = "0" + hourEditText.text.toString()+":"
-            }
-
-            if(minEditText.text.toString().isEmpty()){
-                time += timeArray[1]+":"
-            } else {
-                if(minEditText.text.toString().toInt()/10 >= 1)
-                    time += minEditText.text.toString()+":"
-                else
-                    time += "0"+minEditText.text.toString()+":"
-
-            }
-
-            if(secEditText.text.toString().isEmpty()){
-                time += timeArray[2]
-            } else {
-                if(secEditText.text.toString().toInt()/10 >= 1)
-                    time += secEditText.text.toString()
-                else
-                    time += "0"+secEditText.text.toString()+":"
-
-            }
+            time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
 
             onClickListener.onClicked(true, bigGoalTitle, time)
             dialog.dismiss()
