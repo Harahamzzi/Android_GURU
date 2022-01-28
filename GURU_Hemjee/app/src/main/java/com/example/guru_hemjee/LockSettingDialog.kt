@@ -72,7 +72,6 @@ class LockSettingDialog(context: Context, bigGoalTitle: String?, time: String) {
         settingOkImageButton.setOnClickListener {
 
             //시간이 올바르게 들어갔는지 확인
-            if(hourEditText.text.toString().toInt() )
 
             //시간 갱신
             time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
