@@ -131,13 +131,13 @@ class LockActivity : AppCompatActivity() {
 
     // 타이머 줄어들게 하고, 변경된 값을 업데이트해서 보여주는 함수
     private fun countTime() {
-        var tempTime = time * 100
+        //var tempTime = time * 100
 
         // 0.01초마다 변수를 감소시킴
-        timerTask = timer(period = 10) {
-            val hour = (tempTime / 144000) % 24 // 1시간
-            val min = (tempTime / 6000) % 60   // 1분
-            val sec = (tempTime / 100) % 60   // 1초
+        timerTask = timer(period = 1000) {
+            val hour = (time/3600) % 24 // 1시간
+            val min = (time/60) % 60   // 1분
+            val sec = time % 60   // 1초
 
             runOnUiThread {
                 lockHourTextView.text = "$hour"
@@ -145,7 +145,7 @@ class LockActivity : AppCompatActivity() {
                 lockSecTextView.text = "$sec"
             }
 
-            tempTime--
+            time--
 
             // 타이머 종료
             if (hour == 0 && min == 0 && sec == 0)
