@@ -179,6 +179,7 @@ class SetupFragment : Fragment() {
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, BigGoalSetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ?.addToBackStack(null)
                 ?.commit()
     }
 }
