@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,10 @@ class LockActivity : AppCompatActivity() {
     lateinit var appListButton: ImageButton
     lateinit var timeMinusImageButton: ImageButton
     lateinit var timePlusImageButton: ImageButton
+
+    // 전화 걸기, 메시지 보내기 버튼
+    lateinit var phoneButton: ImageButton
+    lateinit var messageButton: ImageButton
 
     //나가기 버튼
     lateinit var lockExitImageButton: ImageButton//첫번째
@@ -40,6 +45,9 @@ class LockActivity : AppCompatActivity() {
         lockExitImageButton = findViewById(R.id.lockExitImageButton)
         exitImageButton = findViewById(R.id.exitImageButton)
         exitImageButton.visibility = View.GONE
+
+        phoneButton = findViewById(R.id.phoneButton)
+        messageButton = findViewById(R.id.messageButton)
 
         //사용 가능 한 앱
         appListButton.setOnClickListener {
@@ -71,9 +79,27 @@ class LockActivity : AppCompatActivity() {
             showExitPop()
         }
 
+        // 전화 걸기 버튼 리스너
+        phoneButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            if(intent.resolveActivity(packageManager) != null)
+            {
+                startActivity(intent)
+            }
+        }
+
+        // 메시지 보내기 버튼 리스너
+        messageButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("smsto:")
+            if(intent.resolveActivity(packageManager) != null)
+            {
+                startActivity(intent)
+            }
+        }
     }
 
-    // FIXME: 하단 소프트키 숨겨지지만...너무 풀스크린으로 화면을 뿌려 윗부분이 살짝 잘리는 현상 발생함
+    // 하단 소프트키를 숨겨 잠금 화면을 풀스크린으로 뿌리도록 함
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
