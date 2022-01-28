@@ -10,7 +10,10 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import java.util.*
+import kotlin.concurrent.timer
 
 class LockActivity : AppCompatActivity() {
 
@@ -26,6 +29,14 @@ class LockActivity : AppCompatActivity() {
     //나가기 버튼
     lateinit var lockExitImageButton: ImageButton//첫번째
     lateinit var exitImageButton: ImageButton//두번째
+
+    // 타이머 시간 관련
+    lateinit var lockHourTextView: TextView
+    lateinit var lockMinTextView: TextView
+    lateinit var lockSecTextView: TextView
+
+    private var time = 0
+    private var timerTask: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +59,14 @@ class LockActivity : AppCompatActivity() {
 
         phoneButton = findViewById(R.id.phoneButton)
         messageButton = findViewById(R.id.messageButton)
+
+        lockHourTextView = findViewById(R.id.lockHourTextView)
+        lockMinTextView = findViewById(R.id.lockMinTextView)
+        lockSecTextView = findViewById(R.id.lockSecTextView)
+
+        // 타이머 시작
+        time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+        countTime()
 
         //사용 가능 한 앱
         appListButton.setOnClickListener {
@@ -95,6 +114,32 @@ class LockActivity : AppCompatActivity() {
             if(intent.resolveActivity(packageManager) != null)
             {
                 startActivity(intent)
+            }
+        }
+    }
+
+    // 타이머 줄어들게 하고, 변경된 값을 업데이트해서 보여주는 함수
+    private fun countTime() {
+        var tempTime = time * 100
+
+        // 0.01초마다 변수를 감소시킴
+        timerTask = timer(period = 10) {
+            val hour = (tempTime / 144000) % 24 // 1시간
+            val min = (tempTime / 6000) % 60   // 1분
+            val sec = (tempTime / 100) % 60   // 1초
+
+            runOnUiThread {
+                lockHourTextView.text = "$hour"
+                lockMinTextView.text = "$min"
+                lockSecTextView.text = "$sec"
+            }
+
+            tempTime--
+
+            // 타이머 종료
+            if (hour == 0 && min == 0 && sec == 0)
+            {
+                timerTask?.cancel()
             }
         }
     }
