@@ -56,8 +56,8 @@ class DBManager(
         db!!.execSQL("CREATE TABLE basic_info_db (user_name TEXT, hamster_name TEXT, seed INT, total_time time)")
 
         //씨앗 상점 아이템 DB
-        db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name TEXT PRIMARY KEY, " +
-                "price int, type text, category text, is_bought INT,is_using INT)")
+        db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name TEXT PRIMARY KEY, price int, " +
+                "type text, category text, bg_pic text, market_pic text,is_bought INT,is_using INT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

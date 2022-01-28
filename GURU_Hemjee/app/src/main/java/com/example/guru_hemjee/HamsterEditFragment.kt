@@ -1,9 +1,11 @@
 package com.example.guru_hemjee
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Layout
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 
 class HamsterEditFragment() : Fragment() {
 
@@ -30,6 +33,8 @@ class HamsterEditFragment() : Fragment() {
     private lateinit var myHClothImageButton: ImageButton
     private lateinit var myHFurnitureImageButton: ImageButton
     private lateinit var myHWallpaperImageButton: ImageButton
+
+    private lateinit var myHItemList: RecyclerView
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -82,8 +87,11 @@ class HamsterEditFragment() : Fragment() {
         myHClothImageButton = requireView().findViewById(R.id.myHClothImageButton)
         myHFurnitureImageButton = requireView().findViewById(R.id.myHFurnitureImageButton)
         myHWallpaperImageButton = requireView().findViewById(R.id.myHWallPaperImageButton)
-
         myHInventorybgImageView = requireView().findViewById(R.id.myHInventoryImageView)
+
+        myHItemList = requireView().findViewById(R.id.myHItemList)
+
+        upDateInventory("cloth")
 
         myHClothImageButton.setOnClickListener {
             upDateInventory("cloth")
@@ -132,9 +140,84 @@ class HamsterEditFragment() : Fragment() {
     private fun upDateInventory(name: String) {
         //인벤토리 변환
         when(name){
-            "cloth"-> Toast.makeText(requireContext(),"옷이당",Toast.LENGTH_SHORT).show()
-            "furniture" -> Toast.makeText(requireContext(),"가구당",Toast.LENGTH_SHORT).show()
-            "wallpaper" -> Toast.makeText(requireContext(),"벽지당",Toast.LENGTH_SHORT).show()
+            "cloth"-> {
+                var items = ArrayList<MarketItem>()
+                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
+                myHItemList.adapter = marketItemAdapter
+
+                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                sqlitedb = dbManager.readableDatabase
+                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo'",null)
+
+                var num: Int = 0
+                while(cursor.moveToNext()){
+                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
+                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
+                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
+
+                    items.addAll(listOf(MarketItem(id, price)))
+
+                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
+                    num++
+                    Log.d("현재 num 값", num.toString())
+                }
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+            }
+            "furniture" -> {
+                var items = ArrayList<MarketItem>()
+                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
+                myHItemList.adapter = marketItemAdapter
+
+                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                sqlitedb = dbManager.readableDatabase
+                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'furni'",null)
+
+                var num: Int = 0
+                while(cursor.moveToNext()){
+                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
+                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
+                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
+
+                    items.addAll(listOf(MarketItem(id, price)))
+
+                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
+                    num++
+                    Log.d("현재 num 값", num.toString())
+                }
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+            }
+            "wallpaper" -> {
+                var items = ArrayList<MarketItem>()
+                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
+                myHItemList.adapter = marketItemAdapter
+
+                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                sqlitedb = dbManager.readableDatabase
+                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'",null)
+
+                var num: Int = 0
+                while(cursor.moveToNext()){
+                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
+                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
+                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
+
+                    items.addAll(listOf(MarketItem(id, price)))
+
+                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
+                    num++
+                    Log.d("현재 num 값", num.toString())
+                }
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+            }
         }
     }
 }

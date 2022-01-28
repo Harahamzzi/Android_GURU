@@ -10,45 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/headToolBar1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?actionBarSize"-->
-<!--            app:contentInsetStart="0dp"-->
-<!--            app:layout_constraintTop_toTopOf="parent">-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?actionBarSize"-->
-<!--                android:background="@color/BrightYellow"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingStart="15dp"-->
-<!--                android:paddingEnd="15dp">-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/backImageButton"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="@drawable/ic_outline_west_24"-->
-<!--                    android:src="@drawable/menu_icon"-->
-<!--                    app:srcCompat="@drawable/ic_outline_west_24" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/textView2"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:fontFamily="@font/noto_sans"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="씨앗 상점"-->
-<!--                    android:textColor="@color/Black"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--            </LinearLayout>-->
-<!--        </androidx.appcompat.widget.Toolbar>-->
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
@@ -151,7 +112,7 @@
                     android:layout_width="160dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/marketList"
+                    app:layout_constraintBottom_toTopOf="@+id/marketItemList"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_weight="1">
@@ -181,59 +142,23 @@
                         android:src="@drawable/ic_outline_wallpaper_24" />
                 </LinearLayout>
 
-                <HorizontalScrollView
-                    android:id="@+id/marketList"
-                    android:layout_width="match_parent"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/marketItemList"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:padding="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    app:layout_constraintVertical_weight="3">
+                    app:layout_constraintVertical_weight="3" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content">
-
-                            <ImageButton
-                                android:id="@+id/imageButton9"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/inventory_small"
-                                android:scaleType="fitCenter"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/inventoryPriceTextView"
-                                android:layout_width="62dp"
-                                android:layout_height="22dp"
-                                android:layout_marginBottom="8dp"
-                                android:background="@drawable/seed_point_background"
-                                android:drawableLeft="@drawable/seed_resize"
-                                android:fontFamily="@font/noto_sans"
-                                android:gravity="right"
-                                android:paddingRight="10dp"
-                                android:text="0"
-                                android:textColor="@color/Black"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
