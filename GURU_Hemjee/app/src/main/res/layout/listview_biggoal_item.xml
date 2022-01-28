@@ -6,7 +6,9 @@
     android:layout_marginLeft="17dp"
     android:layout_marginRight="17dp"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <!-- 목표/잠금 시간 설정 화면에서 +아이콘을 누르면 대표 목표가 추가되는데,
          이때 추가되는 목표들의 리스트 목록을 커스텀한 파일 -->
