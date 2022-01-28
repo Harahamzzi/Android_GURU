@@ -43,12 +43,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var backPressedTime: Long = 0
     var isHome = false
 
+    //튜토리얼 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // permission를 얻었는지 체크
+        // 권한을 얻었는지 체크
         checkPermission()
+
+        //튜토리얼 확인(basic_info_db에 데이터가 있는지 확인)
+        dbManager = DBManager(this, "basic_info_db", null, 1)
+        sqlitedb = dbManager.readableDatabase // 데이터 읽기
+
+        var cursor = sqlitedb.rawQuery("SELECT count(*) FROM basic_info_db", null)
+        cursor.moveToFirst()
+        var count = cursor.getInt(0);
+        if(!(count>0)){
+            Toast.makeText(this, "튜토리얼 시작", Toast.LENGTH_SHORT).show()
+            tutorial()
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
 
         // 툴바 적용
         val toolbar: Toolbar = findViewById(R.id.toolBar)
@@ -92,6 +113,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL   // 방향을 가로로
+    }
+
+    //튜토리얼 시작
+    private fun tutorial(){
+        dbManager = DBManager(this, "basic_info_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+        sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('김슈니', '햄찌햄찌', 1000, '01:30:00')")
     }
 
     // 내부 클래스 선언

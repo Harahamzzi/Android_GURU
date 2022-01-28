@@ -53,7 +53,7 @@ class DBManager(
                 "lock_date DATE, lock_day INT, photo_name TEXT)")
 
         //기본 정보 DB
-        db!!.execSQL("CREATE TABLE basic_info_db (user_name TEXT, hamster_name TEXT, seed INT)")
+        db!!.execSQL("CREATE TABLE basic_info_db (user_name TEXT, hamster_name TEXT, seed INT, total_time time)")
 
         //씨앗 상점 아이템 DB
         db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name TEXT PRIMARY KEY, " +

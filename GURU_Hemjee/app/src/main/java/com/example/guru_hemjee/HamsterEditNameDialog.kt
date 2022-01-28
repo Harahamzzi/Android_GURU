@@ -4,17 +4,29 @@ import android.app.Dialog
 import android.content.Context
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 
-class HamsterEditNameDialog(context: Context) {
+class HamsterEditNameDialog(context: Context, name: String?) {
     private val dialog = Dialog(context)
 
+    //기존 이름 textView
+    private lateinit var nameTextView: TextView
+    private var name = name
+
+    //수정 이름 editText
     private lateinit var editNameEditText: EditText
+
+    //취소, 확인 버튼
     private lateinit var hamsterCancelImageButton: ImageButton
     private lateinit var nameEditImageButton: ImageButton
 
     fun EditName() {
         dialog.show()
         dialog.setContentView(R.layout.popup_edit_name)
+
+        //기존 이름
+        nameTextView = dialog.findViewById(R.id.nameTextView)
+        nameTextView.text = name
 
         editNameEditText = dialog.findViewById(R.id.editNameEditText)
         hamsterCancelImageButton = dialog.findViewById(R.id.hamsterCancelImageButton)

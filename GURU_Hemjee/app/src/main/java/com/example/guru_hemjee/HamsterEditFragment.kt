@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Layout
 import androidx.fragment.app.Fragment
@@ -9,10 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 
 class HamsterEditFragment() : Fragment() {
+
+    //함께한, 이름 관련
+    private lateinit var hamsterNameTextView: TextView
+    private lateinit var totalSpentTimeTextView: TextView
+    lateinit var userName: String
 
     //변경 관련 버튼들
     private lateinit var myHNameEditImageButton: ImageButton
@@ -23,6 +30,10 @@ class HamsterEditFragment() : Fragment() {
     private lateinit var myHClothImageButton: ImageButton
     private lateinit var myHFurnitureImageButton: ImageButton
     private lateinit var myHWallpaperImageButton: ImageButton
+
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +49,22 @@ class HamsterEditFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //이름, 함께한 시간
+        hamsterNameTextView = requireView().findViewById(R.id.hamsterNameTextView)
+        totalSpentTimeTextView = requireView().findViewById(R.id.totalSpentTimeTextView)
+
+        dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+        if(cursor.moveToNext()){
+            hamsterNameTextView.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
+            totalSpentTimeTextView.text = cursor.getString(cursor.getColumnIndex("total_time")).toString()
+            userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
+        }
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
 
         //이름 변경 팝업 연결
         myHNameEditImageButton = requireView().findViewById(R.id.myHNameEditImageButton)
@@ -73,13 +100,18 @@ class HamsterEditFragment() : Fragment() {
     }
 
     private fun hNameEditPopUp() {
-        val dialog = HamsterEditNameDialog(requireContext())
+        val dialog = HamsterEditNameDialog(requireContext(), hamsterNameTextView.text.toString())
         dialog.EditName()
 
         dialog.setOnClickedListener(object : HamsterEditNameDialog.ButtonClickListener{
             override fun onClicked(isChanged: Boolean, name: String?) {
                 if(isChanged){
-                    //이름 변경한거 db에 반영
+                    //이름 변경 db와 ui에 반영
+                    dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+                    hamsterNameTextView.text = name
+                    sqlitedb.execSQL("UPDATE basic_info_db SET hamster_name = '"+hamsterNameTextView.text+
+                            "' WHERE user_name = '"+userName+"'")
                 }
             }
         })

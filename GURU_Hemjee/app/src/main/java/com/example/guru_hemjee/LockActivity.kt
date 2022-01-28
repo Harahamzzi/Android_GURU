@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,8 +20,10 @@ import kotlin.concurrent.timer
 
 class LockActivity : AppCompatActivity() {
 
-    //사용가능 한 앱, 시간 조절 버튼
-    lateinit var appListButton: ImageButton
+    //씨앗 관련
+    private lateinit var seedPointView: TextView
+
+    //시간 조절 버튼
     lateinit var timeMinusImageButton: ImageButton
     lateinit var timePlusImageButton: ImageButton
 
@@ -39,6 +43,11 @@ class LockActivity : AppCompatActivity() {
     private var time = 0
     private var timerTask: Timer? = null
 
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb:SQLiteDatabase
+    private lateinit var userName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +59,6 @@ class LockActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lock)
 
         //위젯들 연결
-        appListButton = findViewById(R.id.appListButton)
         timeMinusImageButton = findViewById(R.id.timeMinusImageButton)
         timePlusImageButton = findViewById(R.id.timePlusImageButton)
 
@@ -65,6 +73,12 @@ class LockActivity : AppCompatActivity() {
         lockMinTextView = findViewById(R.id.lockMinTextView)
         lockSecTextView = findViewById(R.id.lockSecTextView)
 
+        seedPointView = findViewById(R.id.seedPointView)
+
+        //씨앗 세팅
+        seedPointView.text = intent.getStringExtra("seed")
+        userName = intent.getStringExtra("userName")
+
         // 타이머 세팅
         var intent = intent
         lockHourTextView.setText(intent.getStringExtra("hour"))
@@ -78,11 +92,6 @@ class LockActivity : AppCompatActivity() {
         // 타이머 시작
         time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
         countTime()
-
-        //사용 가능 한 앱
-        appListButton.setOnClickListener {
-            showAppListPopup()
-        }
 
         //시간 감소 버튼
         timeMinusImageButton.setOnClickListener {
@@ -183,21 +192,18 @@ class LockActivity : AppCompatActivity() {
         // (폰) 뒤로가기 버튼이 아무런 동작도 하지 않도록 함
     }
 
-    //사용 가능한 앱
-    private fun showAppListPopup() {
-        val dialog = AvailableAppsDialog(this)
-        dialog.availableApps()
-    }
-
     //시간 감소 팝업
     private fun showTimeMinusPopUp(){
-        val dialog = AlertDialog(this, "10분 줄이기", "-10      ", true)
+        val dialog = AlertDialog(this, "10분 줄이기", "-180      ", true)
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
                     finalOK("10분 줄이기", "확인", false,false)
+
+                    time -= 600
+                    seedChange(-180)
                 }
             }
         })
@@ -212,6 +218,8 @@ class LockActivity : AppCompatActivity() {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
                     finalOK("10분 늘리기", "확인", false, false)
+
+                    time += 600
                 }
             }
         })
@@ -247,6 +255,20 @@ class LockActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    //씨앗 변화
+    private fun seedChange(change: Int) {
+        var changedSeed = seedPointView.text.toString().toInt() + change
+
+        dbManager = DBManager(this, "basic_info_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+        sqlitedb.execSQL("UPDATE basic_info_db SET seed = '"+changedSeed.toString()+
+                "' WHERE user_name = '"+userName+"'")
+        sqlitedb.close()
+        dbManager.close()
+
+        seedPointView.text = changedSeed.toString()
     }
 
 }
