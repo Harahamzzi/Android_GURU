@@ -103,7 +103,7 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
         completeButton = view.findViewById(R.id.completeButton)
 
         // DB
-        dbManager = DBManager(context, "biggoalDB", null, 1)
+        dbManager = DBManager(context, "big_goal_db", null, 1)
 
         // TODO: 라디오 그룹간의 전환 시 다른 라디오 그룹에 있는 버튼을 2번 눌러야만 선택되는 문제 수정 필요
         // 색깔 라디오 버튼 클릭시 이벤트 연결

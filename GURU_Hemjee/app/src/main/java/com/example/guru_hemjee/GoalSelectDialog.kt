@@ -41,7 +41,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String?) {
         var num: Int = 0
         while(cursor.moveToNext()){
             var goalName = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
-            var color = cursor.getString(cursor.getColumnIndex("color")).toString()
+            var color = cursor.getInt(cursor.getColumnIndex("color"))
 
 //            Toast.makeText(context, "$goalName", Toast.LENGTH_SHORT).show()
 //
@@ -64,7 +64,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String?) {
             radioButton.height = 51
             radioButton.id = num
             radioButton.text = goalName
-            radioButton.setBackgroundColor(Color.parseColor("#$color"))
+            radioButton.setBackgroundColor(color)
             radioButton.gravity=RadioButton.TEXT_ALIGNMENT_CENTER
             radioButton.layoutDirection=RadioButton.LAYOUT_DIRECTION_RTL
             radioButton.textSize = 12F

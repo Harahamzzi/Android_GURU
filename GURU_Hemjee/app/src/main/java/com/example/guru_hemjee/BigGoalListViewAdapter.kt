@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.marginBottom
 
 // 대표 목록 커스텀 리스트뷰의 어댑터
 /* class BigGoalListViewAdapter : BaseAdapter() { */
