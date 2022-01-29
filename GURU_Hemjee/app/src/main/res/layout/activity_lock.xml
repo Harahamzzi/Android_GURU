@@ -52,7 +52,7 @@
             android:background="@drawable/lock_background_circle"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/hamster_small" />
+            app:srcCompat="@drawable/hamzzi" />
 
         <ImageButton
             android:id="@+id/exitImageButton"
@@ -63,7 +63,7 @@
             android:backgroundTint="@color/Gray"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/hamster_small" />
+            app:srcCompat="@drawable/hamzzi" />
 
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/timeLeftCircleProgressBar"
