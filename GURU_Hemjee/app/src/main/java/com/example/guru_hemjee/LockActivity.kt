@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.app.NotificationManager
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
@@ -7,14 +8,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import java.text.SimpleDateFormat
+import androidx.core.app.NotificationManagerCompat
+import com.dinuscxj.progressbar.CircleProgressBar
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -43,6 +43,9 @@ class LockActivity : AppCompatActivity() {
     private var time = 0
     private var timerTask: Timer? = null
 
+    // progress bar
+    lateinit var progressBar: CircleProgressBar
+
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb:SQLiteDatabase
@@ -50,6 +53,17 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // FIXME: 알림 여부 확인 코드 수정 필요
+//        if(해당 알림 껐는지 체크..)
+//        {
+//            // 알림 설정 창으로 사용자 보내기
+//            var tempIntent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+//            tempIntent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_1")
+//            tempIntent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+//            startActivity(tempIntent)
+//        }
+
 
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
@@ -73,7 +87,9 @@ class LockActivity : AppCompatActivity() {
         lockMinTextView = findViewById(R.id.lockMinTextView)
         lockSecTextView = findViewById(R.id.lockSecTextView)
 
-        seedPointView = findViewById(R.id.seedPointView)
+        seedPointView = findViewById(R.id.Lock_seedPointView)
+
+        progressBar = findViewById(R.id.timeLeftCircleProgressBar)
 
         //씨앗 세팅
         seedPointView.text = intent.getStringExtra("seed")
@@ -85,12 +101,18 @@ class LockActivity : AppCompatActivity() {
         lockMinTextView.setText(intent.getStringExtra("min"))
         lockSecTextView.setText(intent.getStringExtra("sec"))
 
+        time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+
 //        var timeTemp = intent.getStringExtra("time")
 //        var sf = SimpleDateFormat("hh:mm:ss")
 //        time = sf.parse(timeTemp).getTime().toInt()
 
+        // progressBar 세팅
+        progressBar.progress = 0
+        progressBar.max = time
+
         // 타이머 시작
-        time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+
         countTime()
 
         //시간 감소 버튼
@@ -148,13 +170,15 @@ class LockActivity : AppCompatActivity() {
             val min = (time/60) % 60   // 1분
             val sec = time % 60   // 1초
 
+            // 위젯 값 변경
             runOnUiThread {
                 lockHourTextView.text = "$hour"
                 lockMinTextView.text = "$min"
                 lockSecTextView.text = "$sec"
             }
 
-            time--
+            time--  // 시간 감소
+            progressBar.progress++  // progress 수치 증가
 
             // 타이머 종료
             if (hour == 0 && min == 0 && sec == 0)

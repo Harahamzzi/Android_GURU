@@ -7,6 +7,7 @@ import android.app.Service
 import android.content.*
 import android.os.Binder
 import android.os.IBinder
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 
 class LockScreenService : Service() {
@@ -37,7 +38,7 @@ class LockScreenService : Service() {
         val CHANNEL_ID = "channel_1"
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(CHANNEL_ID, "잠금화면 테스트", NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(CHANNEL_ID, "알림 표시를 해제해주세요!", NotificationManager.IMPORTANCE_DEFAULT)
         // 채널 생성
         notificationManager.createNotificationChannel(channel)
 

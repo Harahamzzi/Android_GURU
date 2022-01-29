@@ -1,7 +1,5 @@
 package com.example.guru_hemjee
 
-import android.content.ClipData.newIntent
-import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -11,14 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.FragmentManager
 import com.google.android.material.button.MaterialButton
-import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
 
@@ -54,7 +46,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //씨앗 표시
-        seedPointView = requireView().findViewById(R.id.seedPointView)
+        seedPointView = requireView().findViewById(R.id.Home_seedPointView)
         dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
@@ -93,9 +85,12 @@ class HomeFragment : Fragment() {
                     LockScreenUtil.active()
 
                     var intent = Intent(requireActivity(), LockActivity::class.java)
-                    // 타이머 시간 데이터 보내기
+
+                    // 유저 정보 보내기
                     intent.putExtra("seed", seedPointView.text)
                     intent.putExtra("userName", userName)
+
+                    // 타이머 시간 데이터 보내기
                     intent.putExtra("hour", time.split(':')[0])
                     intent.putExtra("min", time.split(':')[1])
                     intent.putExtra("sec", time.split(':')[2])
