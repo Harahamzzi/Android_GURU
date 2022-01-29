@@ -8,7 +8,7 @@
     tools:context=".LockActivity">
 
     <TextView
-        android:id="@+id/seedPointView"
+        android:id="@+id/Lock_seedPointView"
         android:layout_width="86dp"
         android:layout_height="26dp"
         android:layout_marginTop="41dp"
@@ -30,7 +30,7 @@
         android:layout_marginTop="29dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seedPointView">
+        app:layout_constraintTop_toBottomOf="@+id/Lock_seedPointView">
 
         <ImageButton
             android:id="@+id/lockExitImageButton"
