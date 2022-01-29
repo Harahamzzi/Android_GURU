@@ -2,6 +2,8 @@ package com.example.guru_hemjee
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -19,9 +21,12 @@ class SeedMarket : Fragment() {
 
     //씨앗 관련
     private lateinit var marketSeedTextView: TextView
+    private lateinit var marketReducedSeedTextView: TextView
 
-    //구매 버튼
+    //구매 관련
     private lateinit var buyImageButton: ImageButton
+    private var preselectedItems = ArrayList<String>()//이미 적용되어 있던 아이템 리스트
+    private var selectedItems = ArrayList<String>() //선택한 아이템 리스트
 
     //인벤토리 배경 관련
     private lateinit var bgImageView: ImageView //인벤토리 배경
@@ -31,6 +36,11 @@ class SeedMarket : Fragment() {
 
     //인벤토리 리스트 관련
     private lateinit var marketListView: RecyclerView
+    private var currentInventory: String = "clo"
+
+    //햄찌 장식(배경) 관련
+    private lateinit var marketBGFrameLayout: FrameLayout
+    private lateinit var marketClothFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -54,12 +64,14 @@ class SeedMarket : Fragment() {
 
         //씨앗 관련
         marketSeedTextView = requireView().findViewById(R.id.marketSeedTextView)
+        marketReducedSeedTextView = requireView().findViewById(R.id.toBeUsedSeedTextView)
 
+        //기본 정보 가져오기
         dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
-             marketSeedTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
+            marketSeedTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
             userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
         }
         cursor.close()
@@ -82,46 +94,117 @@ class SeedMarket : Fragment() {
         marketListView = requireView().findViewById(R.id.marketItemList)
 
         //인벤토리 초기 화면
-        upDateInventory("cloth")
+        upDateInventory(currentInventory)
 
         clothImageButton.setOnClickListener {
-            upDateInventory("cloth")
+            currentInventory = "clo"
+            upDateInventory("clo")
             bgImageView.setImageResource(R.drawable.inventory_cloth)
         }
         furnitureImageButton.setOnClickListener {
-            upDateInventory("furniture")
+            currentInventory = "furni"
+            upDateInventory("furni")
             bgImageView.setImageResource(R.drawable.inventory_furniture)
         }
         wallPaperImageButton.setOnClickListener {
-            upDateInventory("wallpaper")
+            currentInventory = "bg"
+            upDateInventory("bg")
             bgImageView.setImageResource(R.drawable.inventory_wallpapare)
         }
+
+        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        while(cursor.moveToNext()){
+            preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+        }
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        //햄찌(배경) 업데이트
+        marketBGFrameLayout = requireView().findViewById(R.id.marketBGFrameLayout)
+        marketClothFrameLayout = requireView().findViewById(R.id.marketClothFrameLayout)
+        //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
+        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
+
+        selectedItems.addAll(preselectedItems)
     }
 
+    //화면 종료 시 적용 되었던 아이템만 is_using을 1로 만듬
+    override fun onDestroyView() {
+        super.onDestroyView()
+        //화면 초기화
+        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+        for(item in selectedItems){
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+        }
+        for(item in preselectedItems){
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+        }
+        selectedItems.clear()
+        sqlitedb.close()
+        dbManager.close()
+    }
+
+    //영수증 팝업
     private fun receiptPopUp() {
-        val dialog = ReceiptDialog(requireContext(), marketSeedTextView.text.toString().toInt(),null)
+        val dialog = ReceiptDialog(requireContext(), marketSeedTextView.text.toString(), marketReducedSeedTextView.text.toString(), selectedItems)
         dialog.receiptPop()
 
-        dialog.setOnClickedListener(object : ReceiptDialog.ButtonClickListener{
+        dialog.setOnClickedListener(object : ReceiptDialog.ButtonClickListener {
             override fun onClicked(isBought: Boolean, seed: Int?) {
-                if(isBought){
+                if (isBought) {
                     //여기에 구매 완료시 필요한 연산
-                    dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+                    //인벤토리 관련
+                    dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = '"+seed.toString()+
-                            "' WHERE user_name = '"+userName+"'")
+                    for (item in selectedItems) {
+                        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_bought = '1' WHERE item_name = '$item'")
+                    }
+                    selectedItems.clear()
                     sqlitedb.close()
                     dbManager.close()
+
+                    upDateInventory(currentInventory)
+
+                    //씨앗 관련
+                    dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = '${seed.toString()}' WHERE user_name = '${userName}'")
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    marketReducedSeedTextView.text = "0"
+
 
                     marketSeedTextView.text = seed.toString()
 
                     //구매 확인 완료 팝업
                     finalOK("구매 완료", "확인", false)
+                } else {
+                    //화면 초기화
+                    dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+                    for(item in selectedItems){
+                        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+                    }
+                    for(item in preselectedItems){
+                        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+                    }
+                    selectedItems.clear()
+                    selectedItems.addAll(preselectedItems)
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
                 }
             }
         })
     }
 
+    //확인
     private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean) {
         val dialog = FinalOK(requireContext(),title, okString, isNeedDrawable)
         dialog.alertDialog()
@@ -133,88 +216,94 @@ class SeedMarket : Fragment() {
         })
     }
 
+    //인밴토리 업데이트
     private fun upDateInventory(name: String) {
-        //인벤토리 변환
-        when(name){
-            //옷일 때
-            "cloth"-> {
-                var items = ArrayList<MarketItem>()
-                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
-                marketListView.adapter = marketItemAdapter
-
+        val items = ArrayList<MarketItem>()
+        var deselectItems = ArrayList<String>()
+        //어뎁터 생성: itemClick 함수 정의(MarketItemAdapter 참고)
+        val marketItemAdapter = MarketItemAdapter(requireContext(), items) { item, isClicked ->
+            //Toast.makeText(requireContext(), "아이템 이름: ${item.name}, ${isClicked}", Toast.LENGTH_SHORT).show()
+            if(isClicked){
+                //같은 유형(옷끼리, 모자끼리, 배경끼리) 겹치지 않게 하기
                 dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
                 sqlitedb = dbManager.readableDatabase
-                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo'",null)
-
-                var num: Int = 0
+                val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE category = '${item.category}'", null)
                 while(cursor.moveToNext()){
-                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
-                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
-                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
+                    val tempName = cursor.getString(cursor.getColumnIndex("item_name"))
+                    val tempPrice = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
 
-                    items.addAll(listOf(MarketItem(id, price)))
-
-                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
-                    num++
-                    Log.d("현재 num 값", num.toString())
+                    if(selectedItems.contains(tempName) && tempName != item.name) {
+                        selectedItems.remove(tempName)
+                        deselectItems.add(tempName)
+                        marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() - tempPrice).toString()
+                    }
                 }
                 cursor.close()
                 sqlitedb.close()
                 dbManager.close()
 
-            }
-            "furniture" -> {
-                var items = ArrayList<MarketItem>()
-                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
-                marketListView.adapter = marketItemAdapter
-
-                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
-                sqlitedb = dbManager.readableDatabase
-                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'furni'",null)
-
-                var num: Int = 0
-                while(cursor.moveToNext()){
-                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
-                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
-                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
-
-                    items.addAll(listOf(MarketItem(id, price)))
-
-                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
-                    num++
-                    Log.d("현재 num 값", num.toString())
+                selectedItems.add(item.name)
+                //사용 예정 씨앗 관리(씨앗 +-, 구매 버튼 비활성화)
+                marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() + item.price).toString()
+                if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
+                    buyImageButton.isClickable = false
+                    marketReducedSeedTextView.setTextColor(Color.RED)
+                } else {
+                    buyImageButton.isClickable = true
+                    marketReducedSeedTextView.setTextColor(Color.parseColor("#2E2925"))
                 }
-                cursor.close()
-                sqlitedb.close()
-                dbManager.close()
 
+                upDateInventory(currentInventory)
             }
-            "wallpaper" -> {
-                var items = ArrayList<MarketItem>()
-                val marketItemAdapter = MarketItemAdapter(requireContext(), items)
-                marketListView.adapter = marketItemAdapter
-
-                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
-                sqlitedb = dbManager.readableDatabase
-                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'",null)
-
-                var num: Int = 0
-                while(cursor.moveToNext()){
-                    var marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
-                    var price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
-                    var id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
-
-                    items.addAll(listOf(MarketItem(id, price)))
-
-                    marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
-                    num++
-                    Log.d("현재 num 값", num.toString())
+            //요소 클릭 종료
+            else {
+                selectedItems.remove(item.name)
+                deselectItems.add(item.name)
+                //사용 예정 씨앗 관리(씨앗 +-, 구매 버튼 비활성화)
+                marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() - item.price).toString()
+                if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
+                    buyImageButton.isClickable = false
+                    marketReducedSeedTextView.setTextColor(Color.RED)
+                } else {
+                    buyImageButton.isClickable = true
+                    marketReducedSeedTextView.setTextColor(Color.parseColor("#2E2925"))
                 }
-                cursor.close()
-                sqlitedb.close()
-                dbManager.close()
-
             }
+
+            //화면 표시
+            dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+            sqlitedb = dbManager.writableDatabase
+            for(item in selectedItems){
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+            }
+            for(item in deselectItems){
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+            }
+            sqlitedb.close()
+            dbManager.close()
+
+            FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
         }
+        marketListView.adapter = marketItemAdapter
+
+        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        //유형에 따라 list 가져오기
+        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '${name}' AND is_bought = 0",null)
+
+        while(cursor.moveToNext()){
+            val marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
+            val price = cursor.getString(cursor.getColumnIndex("price")).toString().toInt()
+            val itemName = cursor.getString(cursor.getColumnIndex("item_name")).toString()
+            val itemCategory = cursor.getString(cursor.getColumnIndex("category")).toString()
+            val id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
+
+            items.addAll(listOf(MarketItem(id, price, itemName, itemCategory, selectedItems.contains(itemName))))
+
+            marketItemAdapter.notifyDataSetChanged() // 리스트 갱신
+        }
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
     }
 }

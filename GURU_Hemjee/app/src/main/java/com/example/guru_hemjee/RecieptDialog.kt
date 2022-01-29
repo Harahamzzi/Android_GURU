@@ -5,11 +5,10 @@ import android.content.Context
 import android.widget.ImageButton
 import android.widget.TextView
 
-class ReceiptDialog(context: Context, originalSeed: Int, itemNames: Array<String>?) {
+class ReceiptDialog(context: Context, val originalSeed: String, val reducedSeed: String, itemNames: ArrayList<String>?) {
     private val dialog = Dialog(context)
 
     //기존 씨앗
-    private var seed = originalSeed
     private lateinit var originalSeedTextView: TextView
 
     //사용 씨앗
@@ -24,16 +23,15 @@ class ReceiptDialog(context: Context, originalSeed: Int, itemNames: Array<String
 
         //기존 씨앗
         originalSeedTextView = dialog.findViewById(R.id.originalSeedTextView)
-        originalSeedTextView.text = seed.toString()
+        originalSeedTextView.text = originalSeed
 
         //사용 씨앗
         usedSeedsTextView = dialog.findViewById(R.id.usedSeedsTextView)
-        usedSeedsTextView.text = "10"
+        usedSeedsTextView.text = reducedSeed
 
         //결과 씨앗
         remnantSeedsTextView = dialog.findViewById(R.id.remnantSeedsTextView)
-        remnantSeedsTextView.text = (originalSeedTextView.text.toString().toInt() -
-                usedSeedsTextView.text.toString().toInt()).toString()
+        remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed.toInt()).toString()
 
         //구매 확인
         val buy = dialog.findViewById<ImageButton>(R.id.okBuyImageButton)

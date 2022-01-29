@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="498dp"
             android:layout_marginStart="17dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="17dp"
@@ -91,18 +91,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <ImageView
-                android:id="@+id/marketBackgroundImageView"
+            <FrameLayout
+                android:id="@+id/myHBGFrameLayout"
                 android:layout_width="376dp"
-                android:layout_height="498dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/hamster_background"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/hamzziImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hamzzi_full_screen"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/myHClothFrameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/inventoryBacgroundImageView"
@@ -110,28 +126,16 @@
                 android:layout_height="0dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="59dp"
+                android:layout_marginTop="335dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="6dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/hamster_inventory_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/marketBackgroundImageView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/marketBackgroundImageView"
-                app:layout_constraintTop_toBottomOf="@+id/hamsterImageView" />
-
-            <ImageView
-                android:id="@+id/hamsterImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:src="@drawable/hamster"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.36" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/inventoryLayout"
