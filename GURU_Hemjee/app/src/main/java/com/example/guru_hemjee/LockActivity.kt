@@ -183,6 +183,11 @@ class LockActivity : AppCompatActivity() {
             // 타이머 종료
             if (hour == 0 && min == 0 && sec == 0)
             {
+                runOnUiThread {
+                    // 나갈 수 있는 팝업창 띄우기
+                    finalOK("잠금 종료!", "확인", false, false, true)
+                }
+
                 timerTask?.cancel()
             }
         }
@@ -200,7 +205,6 @@ class LockActivity : AppCompatActivity() {
                     )
         }
     }
-
     @Suppress("DEPRECATION")
     override fun onAttachedToWindow() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
@@ -218,16 +222,16 @@ class LockActivity : AppCompatActivity() {
 
     //시간 감소 팝업
     private fun showTimeMinusPopUp(){
-        val dialog = AlertDialog(this, "10분 줄이기", "-180      ", true)
+        val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true)
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("10분 줄이기", "확인", false,false)
+                    finalOK("10분 줄이기", "확인", false, false,false)
 
                     time -= 600
-                    seedChange(-180)
+                    seedChange(-40)
                 }
             }
         })
@@ -241,7 +245,7 @@ class LockActivity : AppCompatActivity() {
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("10분 늘리기", "확인", false, false)
+                    finalOK("10분 늘리기", "확인", false, false,false)
 
                     time += 600
                 }
@@ -251,27 +255,36 @@ class LockActivity : AppCompatActivity() {
 
     //나가기 팝업
     private fun showExitPop(){
-        val dialog = AlertDialog(this,"잠금 종료하기", "나가기", false)
+        val dialog = AlertDialog(this,"잠금 종료하기", "-180      ", true)
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("잠금 종료하기", "확인", false, true)
+                    finalOK("잠금 종료하기", "확인", false, true, true)
                 }
             }
         })
     }
 
     //마지막 확인 팝업 창
-    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isLockFinished: Boolean) {
+    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isExitBuy: Boolean, isLockFinished: Boolean) {
         val dialog = FinalOK(this,title, okString, isNeedDrawable)
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
             override fun onClicked(isConfirm: Boolean) {
+
+                // 나갈려고 하는 상황
                 if(isConfirm && isLockFinished){
-                    //잠금 종료시 필요한 연산
+                    // -- 잠금 종료시 필요한 연산 --
+
+                    // 나가기를 구매해서 나가는 경우
+                    if(isExitBuy)
+                    {
+                        seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
+                    }
+
                     LockScreenUtil.deActive()   // 잠금 서비스 종료
 
                     //잠금 종료

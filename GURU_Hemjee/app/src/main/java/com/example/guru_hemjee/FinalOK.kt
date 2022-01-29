@@ -19,6 +19,7 @@ class FinalOK(context: Context, title: String, okString: String, isNeedDrawable:
 
     fun alertDialog(){
         dialog.show()
+        dialog.setCancelable(false) // 화면 밖 터치시 팝업창이 닫히지 않게 함
         dialog.setContentView(R.layout.popup_final_ok)
 
         popTitleTextView = dialog.findViewById(R.id.finalOkTitleTextView)
