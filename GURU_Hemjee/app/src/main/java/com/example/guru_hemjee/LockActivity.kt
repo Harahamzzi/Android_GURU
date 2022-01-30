@@ -290,6 +290,7 @@ class LockActivity : AppCompatActivity() {
                     if(isExitBuy)
                     {
                         seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
+                        timerTask?.cancel()         // 타이머 종료
                     }
 
                     LockScreenUtil.deActive()   // 잠금 서비스 종료
