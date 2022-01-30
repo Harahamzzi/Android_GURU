@@ -10,6 +10,7 @@
         android:layout_width="75dp"
         android:layout_height="90dp"
         android:background="@drawable/available_pop_up_bg"
+        android:backgroundTint="#00FFFFFF"
         android:scaleType="fitStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

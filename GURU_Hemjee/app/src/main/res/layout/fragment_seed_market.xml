@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="500dp"
             android:layout_marginStart="17dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="17dp"
@@ -31,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/hamzziImage"
@@ -50,7 +50,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/marketSeedTextView"
@@ -77,7 +77,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginStart="6dp"
-                android:layout_marginTop="362dp"
+                android:layout_marginTop="335dp"
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="6dp"
                 android:scaleType="fitXY"
@@ -170,9 +170,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="45dp"
             android:layout_marginStart="17dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="17dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/market_bottom"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
