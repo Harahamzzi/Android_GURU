@@ -247,6 +247,7 @@ class HamsterEditFragment() : Fragment() {
             sqlitedb.close()
             dbManager.close()
 
+            deselectedItems.clear()
             FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout)
         }
         myHItemList.adapter = myHamsterAdapter
