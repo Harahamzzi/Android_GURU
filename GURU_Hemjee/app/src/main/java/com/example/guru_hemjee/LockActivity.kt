@@ -1,4 +1,5 @@
 package com.example.guru_hemjee
+import android.util.Log
 
 import android.app.NotificationManager
 import android.content.Intent
@@ -184,8 +185,14 @@ class LockActivity : AppCompatActivity() {
             if (hour == 0 && min == 0 && sec == 0)
             {
                 runOnUiThread {
-                    // 나갈 수 있는 팝업창 띄우기
-                    finalOK("잠금 종료!", "확인", false, false, true)
+                    try {
+                        // 나갈 수 있는 팝업창 띄우기
+                        finalOK("잠금 종료!", "확인", false, false, true)
+                    }
+                    catch (e: WindowManager.BadTokenException) {
+                        Log.e("오류태그", "잠금 종료 팝업창 오류..")
+                    }
+
                 }
 
                 timerTask?.cancel()

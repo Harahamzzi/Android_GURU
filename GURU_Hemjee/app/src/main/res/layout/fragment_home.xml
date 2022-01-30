@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/Home_seedPointView"
-        android:layout_width="62dp"
-        android:layout_height="22dp"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/seed_point_background"
