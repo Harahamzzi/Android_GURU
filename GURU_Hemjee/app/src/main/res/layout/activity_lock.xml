@@ -40,7 +40,7 @@
             android:background="@drawable/lock_background_circle"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/hamzzi" />
+            android:src="@drawable/hamzzi" />
 
         <ImageButton
             android:id="@+id/exitImageButton"
@@ -51,7 +51,7 @@
             android:backgroundTint="@color/Gray"
             android:padding="18dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/hamzzi" />
+            android:src="@drawable/hamzzi" />
 
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/timeLeftCircleProgressBar"
@@ -73,10 +73,10 @@
         android:layout_height="34dp"
         android:layout_marginStart="17dp"
         android:background="@drawable/ic_outline_remove_circle_outline_24"
+        android:src="@drawable/ic_outline_remove_circle_outline_24"
         app:layout_constraintBottom_toTopOf="@+id/line"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:srcCompat="@drawable/ic_outline_remove_circle_outline_24" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -150,10 +150,10 @@
         android:layout_height="34dp"
         android:layout_marginEnd="17dp"
         android:background="@drawable/ic_outline_control_point_24"
+        android:src="@drawable/ic_outline_control_point_24"
         app:layout_constraintBottom_toTopOf="@+id/line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        tools:src="@drawable/ic_outline_control_point_24" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <View
         android:id="@+id/line"
@@ -183,59 +183,63 @@
         app:layout_constraintTop_toTopOf="@+id/line">
 
         <LinearLayout
+            android:id="@+id/Lock_detailGoalLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="15dp">
+<!--            <include-->
+<!--                layout="@layout/container_detail_goal" />-->
 
-                <ImageButton
-                    android:id="@+id/lockDetialmageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/lock_detial_goal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginBottom="15dp">-->
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/dumble_icon" />
+<!--                <ImageButton-->
+<!--                    android:id="@+id/lockDetialmageButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/lock_detial_goal"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="세부 목표"
-                    android:textColor="@color/Black"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView4"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView4"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:src="@drawable/dumble_icon"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/next_button"
-                    app:tint="@color/Orange" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/textView9"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:fontFamily="@font/noto_sans"-->
+<!--                    android:text="세부 목표"-->
+<!--                    android:textColor="@color/Black"-->
+<!--                    android:textSize="16sp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/imageView4"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView7"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:src="@drawable/next_button"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:tint="@color/Orange" />-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
         </LinearLayout>
     </ScrollView>
 
@@ -249,9 +253,9 @@
         android:paddingRight="22dp"
         android:paddingBottom="10dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/phone_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/phone_icon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/messageButton"
@@ -263,8 +267,8 @@
         android:paddingRight="8dp"
         android:paddingBottom="10dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/message_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/message_icon" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

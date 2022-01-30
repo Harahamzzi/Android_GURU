@@ -3,7 +3,10 @@ import android.util.Log
 
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +14,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.Dimension
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginLeft
 import com.dinuscxj.progressbar.CircleProgressBar
 import java.util.*
 import kotlin.concurrent.timer
@@ -51,6 +62,9 @@ class LockActivity : AppCompatActivity() {
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb:SQLiteDatabase
     private lateinit var userName: String
+
+    // 세부 목표 리스트 관련
+    lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +106,11 @@ class LockActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.timeLeftCircleProgressBar)
 
+        detailGoalListContainer = findViewById(R.id.Lock_detailGoalLinearLayout)
+
+        // 세부 목표 동적 생성 및 세팅
+        addDetailGoal()
+
         //씨앗 세팅
         seedPointView.text = intent.getStringExtra("seed")
         userName = intent.getStringExtra("userName")
@@ -113,7 +132,6 @@ class LockActivity : AppCompatActivity() {
         progressBar.max = time
 
         // 타이머 시작
-
         countTime()
 
         //시간 감소 버튼
@@ -161,45 +179,6 @@ class LockActivity : AppCompatActivity() {
         }
     }
 
-    // 타이머 줄어들게 하고, 변경된 값을 업데이트해서 보여주는 함수
-    private fun countTime() {
-        //var tempTime = time * 100
-
-        // 0.01초마다 변수를 감소시킴
-        timerTask = timer(period = 1000) {
-            val hour = (time/3600) % 24 // 1시간
-            val min = (time/60) % 60   // 1분
-            val sec = time % 60   // 1초
-
-            // 위젯 값 변경
-            runOnUiThread {
-                lockHourTextView.text = "$hour"
-                lockMinTextView.text = "$min"
-                lockSecTextView.text = "$sec"
-            }
-
-            time--  // 시간 감소
-            progressBar.progress++  // progress 수치 증가
-
-            // 타이머 종료
-            if (hour == 0 && min == 0 && sec == 0)
-            {
-                runOnUiThread {
-                    try {
-                        // 나갈 수 있는 팝업창 띄우기
-                        finalOK("잠금 종료!", "확인", false, false, true)
-                    }
-                    catch (e: WindowManager.BadTokenException) {
-                        Log.e("오류태그", "잠금 종료 팝업창 오류..")
-                    }
-
-                }
-
-                timerTask?.cancel()
-            }
-        }
-    }
-
     // 하단 소프트키를 숨겨 잠금 화면을 풀스크린으로 뿌리도록 함
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -227,25 +206,141 @@ class LockActivity : AppCompatActivity() {
         // (폰) 뒤로가기 버튼이 아무런 동작도 하지 않도록 함
     }
 
-    //시간 감소 팝업
-    private fun showTimeMinusPopUp(){
+    // 타이머 줄어들게 하고, 변경된 값을 업데이트해서 보여주는 함수
+    private fun countTime() {
+        //var tempTime = time * 100
+
+        // 0.01초마다 변수를 감소시킴
+        timerTask = timer(period = 1000) {
+            val hour = (time/3600) % 24 // 1시간
+            val min = (time/60) % 60   // 1분
+            val sec = time % 60   // 1초
+
+            // 위젯 값 변경
+            runOnUiThread {
+                lockHourTextView.text = "$hour"
+                lockMinTextView.text = "$min"
+                lockSecTextView.text = "$sec"
+            }
+
+            time--  // 시간 감소
+            progressBar.progress++  // progress 수치 증가
+
+            // 타이머 종료
+            if (hour <= 0 && min <= 0 && sec <= 0)
+            {
+                runOnUiThread {
+                    try {
+                        // 나갈 수 있는 팝업창 띄우기
+                        finalOK("잠금 종료!", "확인", false, false, true)
+                    }
+                    catch (e: WindowManager.BadTokenException) {
+                        Log.e("lockExitException", "잠금 종료 팝업창 오류..")
+                    }
+
+                }
+
+                timerTask?.cancel()
+            }
+        }
+    }
+
+    // 세부 목표 동적 생성
+    private fun addDetailGoal() {
+
+        // 잠금 전 확인 팝업창에 있던 대표 목표 이름(위젯) 가져오기
+        var bigGoalTitle: TextView = findViewById(R.id.goalTitleTextView)
+
+        // 대표 목표의 색상 뽑아오기
+        dbManager = DBManager(this, "big_goal_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = ${bigGoalTitle.text}", null)
+        var bigGoalColor: Int
+
+        if(cursor.moveToNext())
+            bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
+        else
+            bigGoalColor = 0
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+
+        // DB 데이터 가져오기(세부 목표)
+        dbManager = DBManager(this, "detail_goal_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        // 해당 대표 목표의 세부 목표들 가져오기
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = ${bigGoalTitle.text}", null)
+
+        // 위젯 생성 및 적용
+        while(cursor.moveToNext())
+        {
+            var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
+
+            // icon 변경
+            var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
+            icon.setImageResource(resources.getIdentifier(cursor.getString(cursor.getColumnIndex("icon")).toString(), "drawable", packageName))
+
+            // icon의 색을 대표 목표의 색으로 변경
+            icon.setColorFilter(ContextCompat.getColor(this, bigGoalColor), PorterDuff.Mode.SRC_IN)
+
+            // 세부 목표 이름 변경
+            var textView: TextView = view.findViewById(R.id.detailGoalTextView)
+            textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
+
+            // 버튼에 리스너 달기
+            var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
+            button.setOnClickListener {
+                // TODO: 카메라 또는 인증 팝업 열기...?
+            }
+
+            // 위젯 추가
+            detailGoalListContainer.addView(view)
+        }
+
+        // 닫기
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+    }
+
+    // 시간 감소 팝업
+    private fun showTimeMinusPopUp() {
         val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true)
         dialog.AlertDialog()
 
-        dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
-            override fun onClicked(isConfirm: Boolean) {
-                if(isConfirm){
-                    finalOK("10분 줄이기", "확인", false, false,false)
+        // 만일 현재 보유 씨앗이 구매 비용(=40)보다 많다면 -> 정상 구매
+        if(seedPointView.text.toString().toInt() > 40)
+        {
+            dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+                override fun onClicked(isConfirm: Boolean) {
+                    if(isConfirm){
+                        finalOK("10분 줄이기", "확인", false, false,false)
 
-                    time -= 600
-                    seedChange(-40)
+                        time -= 600
+                        seedChange(-40)
+                    }
                 }
-            }
-        })
+            })
+        }
+        // 현재 보유한 씨앗이 구매 비용보다 적을 경우 -> 구매 실패
+        else
+        {
+            dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+                override fun onClicked(isConfirm: Boolean) {
+                    if(isConfirm){
+                        // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
+                        finalOK("구매 불가", "확인", false, false,false)
+                    }
+                }
+            })
+        }
     }
 
-    //시간 추가 팝업
-    private fun showTimePlusPopUp(){
+    // 시간 추가 팝업
+    private fun showTimePlusPopUp() {
         val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기", false)
         dialog.AlertDialog()
 
@@ -260,21 +355,37 @@ class LockActivity : AppCompatActivity() {
         })
     }
 
-    //나가기 팝업
-    private fun showExitPop(){
+    // (나가기 구매를 통한)나가기 팝업
+    private fun showExitPop() {
         val dialog = AlertDialog(this,"잠금 종료하기", "-180      ", true)
         dialog.AlertDialog()
 
-        dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
-            override fun onClicked(isConfirm: Boolean) {
-                if(isConfirm){
-                    finalOK("잠금 종료하기", "확인", false, true, true)
+        // 만일 현재 보유 씨앗이 구매 비용(=180)보다 많다면 -> 정상 구매
+        if(seedPointView.text.toString().toInt() > 180)
+        {
+            dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
+                override fun onClicked(isConfirm: Boolean) {
+                    if(isConfirm){
+                        finalOK("잠금 종료하기", "확인", false, true, true)
+                    }
                 }
-            }
-        })
+            })
+        }
+        // 만일 현재 보유 씨앗이 구매 비용(=180)보다 적다면 -> 구매 실패(나가기 실패)
+        else
+        {
+            dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
+                override fun onClicked(isConfirm: Boolean) {
+                    if(isConfirm){
+                        // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
+                        finalOK("구매 불가", "확인", false, false, false)
+                    }
+                }
+            })
+        }
     }
 
-    //마지막 확인 팝업 창
+    // 마지막 확인 팝업 창
     private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isExitBuy: Boolean, isLockFinished: Boolean) {
         val dialog = FinalOK(this,title, okString, isNeedDrawable)
         dialog.alertDialog()
@@ -302,7 +413,7 @@ class LockActivity : AppCompatActivity() {
         })
     }
 
-    //씨앗 변화
+    // 씨앗 변화
     private fun seedChange(change: Int) {
         var changedSeed = seedPointView.text.toString().toInt() + change
 
