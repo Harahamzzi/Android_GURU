@@ -81,7 +81,11 @@ class SeedMarket : Fragment() {
         //구매 버튼
         buyImageButton = requireView().findViewById(R.id.buyImageButton)
         buyImageButton.setOnClickListener {
-            receiptPopUp()
+            if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
+                Toast.makeText(requireContext(), "해바라기 씨가 부족합니다!", Toast.LENGTH_SHORT).show()
+            } else {
+                receiptPopUp()
+            }
         }
 
         //인벤토리 배경 관련
@@ -144,6 +148,7 @@ class SeedMarket : Fragment() {
             sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
         }
         selectedItems.clear()
+        preselectedItems.clear()
         sqlitedb.close()
         dbManager.close()
     }
@@ -246,14 +251,13 @@ class SeedMarket : Fragment() {
                 //사용 예정 씨앗 관리(씨앗 +-, 구매 버튼 비활성화)
                 marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() + item.price).toString()
                 if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
-                    buyImageButton.isClickable = false
                     marketReducedSeedTextView.setTextColor(Color.RED)
                 } else {
-                    buyImageButton.isClickable = true
                     marketReducedSeedTextView.setTextColor(Color.parseColor("#2E2925"))
                 }
 
                 upDateInventory(currentInventory)
+                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
             }
             //요소 클릭 종료
             else {
@@ -262,10 +266,8 @@ class SeedMarket : Fragment() {
                 //사용 예정 씨앗 관리(씨앗 +-, 구매 버튼 비활성화)
                 marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() - item.price).toString()
                 if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
-                    buyImageButton.isClickable = false
                     marketReducedSeedTextView.setTextColor(Color.RED)
                 } else {
-                    buyImageButton.isClickable = true
                     marketReducedSeedTextView.setTextColor(Color.parseColor("#2E2925"))
                 }
             }
@@ -282,6 +284,7 @@ class SeedMarket : Fragment() {
             sqlitedb.close()
             dbManager.close()
 
+            deselectItems.clear()
             FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
         }
         marketListView.adapter = marketItemAdapter
