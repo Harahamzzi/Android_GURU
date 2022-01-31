@@ -1,5 +1,7 @@
 package com.example.guru_hemjee
 
+import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
@@ -11,8 +13,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.guru_hemjee.FunTimeConvert.Companion.time
 import java.text.SimpleDateFormat
 
@@ -55,6 +59,20 @@ class BigGoalModifyFragment : Fragment() {
     private var integer_color : Int = 0 // 대표목표 색상
     private var lock_time = time // 시간
     private var lock_timeArray = time.split(':')
+
+    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        mainActivity = context as MainActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        mainActivity = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,6 +153,66 @@ class BigGoalModifyFragment : Fragment() {
             modTodayLockHourView.setText(lock_timeArray[0])
             modTodayLockMinView.setText(lock_timeArray[1])
         }
+
+        // TODO: 라디오 그룹간의 전환 시 다른 라디오 그룹에 있는 버튼을 2번 눌러야만 선택되는 문제 수정 필요
+        // 색깔 라디오 버튼 클릭시 이벤트 연결
+        modColorRadioGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
+            when (checkedId) { // 라디오 그룹1에서 버튼을 눌렀다면
+                R.id.modOrangeRadioBtn,
+                R.id.modYellowRadioBtn,
+                R.id.modNoteYellowRadioBtn,
+                R.id.modApricotRadioBtn,
+                R.id.modSeedBrownRadioBtn,
+                R.id.modDarkBrownRadioBtn -> {
+                    modColorRadioGroup2.clearCheck() // 라디오 그룹2에서 선택되어 있는 버튼 초기화
+                }
+            }
+        }
+
+        modColorRadioGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
+            when (checkedId) { // 라디오 그룹2에서 버튼을 눌렀다면
+                R.id.modLightGreenRadioBtn,
+                R.id.modGreenRadioBtn,
+                R.id.modLightBlueRadioBtn,
+                R.id.modBlueRadioBtn,
+                R.id.modPurpleRadioBtn,
+                R.id.modPinkRadioBtn -> {
+                    modColorRadioGroup1.clearCheck() // 라디오 그룹1에서 선택되어 있는 버튼 초기화
+                }
+            }
+        }
+
+        // 대표목표 DB
+        dbManager = DBManager(context, "big_goal_db", null, 1)
+
+        // 삭제 버튼을 눌렀을 경우
+        modDeleteButton.setOnClickListener {
+            dbManager = DBManager(context, "big_goal_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+
+            sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_biggoal + "';")
+            sqlitedb.close()
+            dbManager.close()
+
+            val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val setupFragment = SetupFragment()
+            val bundle = Bundle()
+            bundle.putString("bundle_biggoal", str_biggoal)
+
+            setupFragment.setArguments(bundle)
+
+            transaction.replace(R.id.fragment_main, SetupFragment())
+            transaction.commit() // 저장
+        }
         return view
+    }
+
+    // detailGoalSetupfragment로 화면을 전환하는 함수
+    fun goDetailGoalSetup() {
+        mainActivity?.supportFragmentManager
+                ?.beginTransaction()
+                ?.replace(R.id.fragment_main, DetailGoalSetupFragment())
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ?.commit()
     }
 }

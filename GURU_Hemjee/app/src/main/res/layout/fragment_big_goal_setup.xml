@@ -302,7 +302,7 @@
                     android:layout_marginRight="28dp"
                     android:background="@drawable/solid_rectangle_button"
                     android:backgroundTint="@color/Gray"
-                    android:text="삭제"
+                    android:text="취소"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
                     android:textSize="14sp" />

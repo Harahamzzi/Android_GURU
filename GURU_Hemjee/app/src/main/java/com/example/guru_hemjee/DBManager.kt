@@ -60,10 +60,6 @@ class DBManager(
                 "type text, category text, bg_pic text, market_pic text,is_bought INT, is_using INT)")
     }
 
-    // DB 갱신
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS big_goal_db")
-        db!!.execSQL("DROP TABLE IF EXISTS detail_goal_db")
-        onCreate(db)
     }
 }

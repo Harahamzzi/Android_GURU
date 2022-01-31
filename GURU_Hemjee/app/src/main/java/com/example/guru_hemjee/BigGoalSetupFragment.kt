@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -141,7 +142,6 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
             var integer_hour : String = todayLockHourView.text.toString() // 잠금 시간
             var integer_min : String = todayLockMinView.text.toString()// 잠금 분
 
-            R.color.Orange
             if (str_biggoal == "") { // EditText가 비어있다면
                 Toast.makeText(context, "목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -207,8 +207,9 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
             }
         }
 
-        // 삭제 버튼을 눌렀을 경우
+        // 취소 버튼을 눌렀을 경우
         deleteButton.setOnClickListener {
+            goSetUp()
             // TODO : 입력되어 있는 정보가 DB에 등록된 정보인지 확인
             // Todo : if) 입력되어 있다면, 정보 삭제
             // Todo : else if) 입력되어 있지 않다면, 토스트 메시지 띄우기 (입력하신 정보는 등록되어 있지 않습니다)

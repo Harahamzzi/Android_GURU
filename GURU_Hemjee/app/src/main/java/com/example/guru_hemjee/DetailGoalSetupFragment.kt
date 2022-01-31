@@ -299,5 +299,4 @@ class DetailGoalSetupFragment : Fragment() {
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.commit()
     }
-    //
 }
