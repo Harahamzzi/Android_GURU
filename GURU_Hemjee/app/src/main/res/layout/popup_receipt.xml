@@ -164,7 +164,8 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView11"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/receiptItemRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_marginStart="17dp"
@@ -172,46 +173,12 @@
         android:layout_marginEnd="17dp"
         android:layout_marginBottom="22dp"
         android:background="@drawable/hamster_inventory_bg"
+        android:orientation="horizontal"
         android:padding="7dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/imageView12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receiptTitleTextView">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/ic_outline_checkroom_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_outline_checkroom_24" />
-
-                <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="97dp"
-                    android:background="@drawable/inventory_small"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView13"
-                    app:srcCompat="@drawable/pets_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-    </HorizontalScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/receiptTitleTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

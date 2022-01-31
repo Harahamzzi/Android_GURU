@@ -121,6 +121,7 @@ class SeedMarket : Fragment() {
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
         while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+            Toast.makeText(requireContext(), cursor.getString(cursor.getColumnIndex("item_name")), Toast.LENGTH_SHORT).show()
         }
         cursor.close()
         sqlitedb.close()
@@ -155,7 +156,16 @@ class SeedMarket : Fragment() {
 
     //영수증 팝업
     private fun receiptPopUp() {
-        val dialog = ReceiptDialog(requireContext(), marketSeedTextView.text.toString(), marketReducedSeedTextView.text.toString(), selectedItems)
+        //사려는 아이템만 영수증 다이얼로그에 넘기기
+        var buyItems = ArrayList<String>()
+        for(item in selectedItems){
+            if(!preselectedItems.contains(item)){
+                buyItems.add(item)
+            }
+        }
+
+        //다이얼 로그에서 넘기기
+        val dialog = ReceiptDialog(requireContext(), marketSeedTextView.text.toString(), marketReducedSeedTextView.text.toString(), buyItems)
         dialog.receiptPop()
 
         dialog.setOnClickedListener(object : ReceiptDialog.ButtonClickListener {
@@ -224,10 +234,9 @@ class SeedMarket : Fragment() {
     //인밴토리 업데이트
     private fun upDateInventory(name: String) {
         val items = ArrayList<MarketItem>()
-        var deselectItems = ArrayList<String>()
         //어뎁터 생성: itemClick 함수 정의(MarketItemAdapter 참고)
         val marketItemAdapter = MarketItemAdapter(requireContext(), items) { item, isClicked ->
-            //Toast.makeText(requireContext(), "아이템 이름: ${item.name}, ${isClicked}", Toast.LENGTH_SHORT).show()
+            var deselectItems = ArrayList<String>()
             if(isClicked){
                 //같은 유형(옷끼리, 모자끼리, 배경끼리) 겹치지 않게 하기
                 dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
