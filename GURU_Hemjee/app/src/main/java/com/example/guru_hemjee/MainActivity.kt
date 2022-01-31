@@ -25,6 +25,7 @@ import com.google.android.material.navigation.NavigationView
 
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 // fragment 페이지 수(슬라이드 전환시)
 private const val NUM_PAGES = 3
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // viewPager(스와이프를 통한 화면 전환)
     lateinit var viewPager: ViewPager2
+    // indicator(현재 페이지 표시 목적)
+    lateinit var viewPagerIndicator: DotsIndicator
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
@@ -117,6 +120,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         viewPager = findViewById(R.id.viewPager)
         viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL   // 방향을 가로로
+
+        // indicator 연결
+        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
+        viewPagerIndicator.setViewPager2(viewPager)
     }
 
     //튜토리얼 시작
