@@ -53,6 +53,7 @@ class LockActivity : AppCompatActivity() {
     lateinit var lockMinTextView: TextView
     lateinit var lockSecTextView: TextView
 
+    private var totalTime = 0
     private var time = 0
     private var timerTask: Timer? = null
 
@@ -121,7 +122,8 @@ class LockActivity : AppCompatActivity() {
         lockMinTextView.setText(intent.getStringExtra("min"))
         lockSecTextView.setText(intent.getStringExtra("sec"))
 
-        time = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+        totalTime = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+        time = totalTime
 
 //        var timeTemp = intent.getStringExtra("time")
 //        var sf = SimpleDateFormat("hh:mm:ss")
@@ -129,7 +131,7 @@ class LockActivity : AppCompatActivity() {
 
         // progressBar 세팅
         progressBar.progress = 0
-        progressBar.max = time
+        progressBar.max = totalTime
 
         // 타이머 시작
         countTime()
@@ -330,10 +332,14 @@ class LockActivity : AppCompatActivity() {
             dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
-                        finalOK("10분 줄이기", "확인", false, false,false)
+                        // 현재 잔여 시간이 10분 이상일 때만 확인 팝업 뜨도록 함
+                        // 잠금 종료 팝업과의 중복을 방지하기 위함
+                        if(time >= 600)
+                            finalOK("10분 줄이기", "확인", false, false,false)
 
-                        time -= 600
-                        seedChange(-40)
+                        time -= 600                 // 현재 남은 시간 10분 감소
+                        progressBar.progress += 600 // 10분만큼 진행도 증가
+                        seedChange(-40)     // 씨앗 차감
                     }
                 }
             })
@@ -362,7 +368,8 @@ class LockActivity : AppCompatActivity() {
                 if(isConfirm){
                     finalOK("10분 늘리기", "확인", false, false,false)
 
-                    time += 600
+                    time += 600                         // 잔여시간 10분 늘리기
+                    progressBar.max = totalTime + 600   // 전체 진행도(max)값 10분만큼 확장
                 }
             }
         })
