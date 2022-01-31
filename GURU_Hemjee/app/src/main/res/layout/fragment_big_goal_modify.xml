@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BigGoalSetupFragment">
+
+    <!-- 대표목표 수정 페이지 -->
+    <ScrollView
+        android:id="@+id/fragment_biggoal_setup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="목표"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/modBigGoalEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="17dp"
+                android:backgroundTint="@color/Yellow"
+                android:ems="10"
+                android:fontFamily="@font/noto_sans"
+                android:inputType="text"
+                android:maxLines="2"
+                android:textColorHighlight="@color/Yellow"
+                android:textCursorDrawable="@color/Yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="색상"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/modBigGoalEditText" />
+
+            <LinearLayout
+                android:id="@+id/radioLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                <RadioGroup
+                    android:id="@+id/modColorRadioGroup1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="35dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modOrangeRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Orange" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modYellowRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Yellow" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modNoteYellowRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/NoteYellow" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modApricotRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Apricot" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modSeedBrownRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/SeedBrown" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modDarkBrownRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/DarkBrown" />
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/modColorRadioGroup2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modLightGreenRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/LightGreen" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modGreenRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Green" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modLightBlueRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/LightBlue" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modBlueRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Blue" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modPurpleRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Purple" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/modPinkRadioBtn"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:background="@drawable/selector_color_radio_button"
+                        android:button="@drawable/ic_colorselectionicon"
+                        android:buttonTint="@color/Pink" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="32dp"
+                android:text="목표 잠금 시간"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioLayout" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/textView21"
+                tools:layout_editor_absoluteX="-16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="74dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="시간"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="분 "
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+                <EditText
+                    android:id="@+id/modTodayLockHourView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="33dp"
+                    android:backgroundTint="@color/Yellow"
+                    android:fontFamily="@font/noto_sans"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/Black"
+                    android:textColorHighlight="@color/Yellow"
+                    android:textCursorDrawable="@color/Yellow"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="33dp"
+                    android:text=":"
+                    android:textColor="@color/Black"
+                    android:textSize="22sp" />
+
+                <EditText
+                    android:id="@+id/modTodayLockMinView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/Yellow"
+                    android:fontFamily="@font/noto_sans"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/Black"
+                    android:textColorHighlight="@color/Yellow"
+                    android:textCursorDrawable="@color/Yellow"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/modDeleteButton"
+                    android:layout_width="90dp"
+                    android:layout_height="27dp"
+                    android:layout_marginRight="28dp"
+                    android:background="@drawable/solid_rectangle_button"
+                    android:backgroundTint="@color/Gray"
+                    android:text="삭제"
+                    android:textAlignment="center"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/modCompleteButton"
+                    android:layout_width="90dp"
+                    android:layout_height="27dp"
+                    android:background="@drawable/solid_rectangle_button"
+                    android:text="확인"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/bottomSpace"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout26" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

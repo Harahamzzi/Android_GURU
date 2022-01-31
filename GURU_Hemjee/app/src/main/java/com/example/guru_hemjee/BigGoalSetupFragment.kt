@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.guru_hemjee.FunTimeConvert.Companion.time
 import java.util.*
 import java.text.SimpleDateFormat
 
@@ -71,7 +72,7 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view: View = inflater.inflate(R.layout.fragment_big_goal_setup, container, false);
+        var view: View = inflater.inflate(R.layout.fragment_big_goal_setup, container, false)
 
         // 대표 목표
         bigGoalEditText = view.findViewById(R.id.bigGoalEditText)
@@ -142,10 +143,10 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
 
             R.color.Orange
             if (str_biggoal == "") { // EditText가 비어있다면
-                Toast.makeText(context, "저장할 목표가 없습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
-            else if (integer_hour == "" || integer_min == "") {
-                Toast.makeText(context, "저장할 시간이 없습니다.", Toast.LENGTH_SHORT).show()
+            else if (integer_hour == "" && integer_min == "") {
+                Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else {
                 when (colorRadioGroup1.checkedRadioButtonId) {
@@ -165,15 +166,32 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
                     R.id.purpleRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Purple)
                     R.id.pinkRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Pink)
                 }
-                Log.d("BGSF - COLOR : ", integer_color.toString())
 
-                var sf = SimpleDateFormat("h:mm:ss")
-                var totalMilli : Long = ((integer_hour.toInt() * 60 * 60000) + (integer_min.toInt() * 60000)).toLong() // 대표 목표 잠금 시간을 밀리초로 변환
-                var time = Date(totalMilli)
-                var str_total_result : String = sf.format(time)
+                // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
+                // 시간 입력
+                var total_time = time
+                if (integer_hour.isNullOrBlank()) { // 시간이 공란인 경우
+                    if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) {
+                        Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        total_time = FunTimeConvert.timeConvert(null, integer_min, null)
+                    }
+                } else if (integer_min.isNullOrBlank()) { // 분이 공란인 경우
+                    if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) {
+                        Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        total_time = FunTimeConvert.timeConvert(integer_hour, null, null)
+                    }
+                } else if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) { // 시간 범위
+                    Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                } else if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) { // 분 범위
+                    Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+                } else {
+                    total_time = FunTimeConvert.timeConvert(integer_hour, integer_min, null)
+                }
 
                 sqlitedb = dbManager.writableDatabase // 정보를 DB에 저장
-                sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('" + str_biggoal + "', '" + integer_color + "', '" + str_total_result + "');")
+                sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('" + str_biggoal + "', '" + integer_color + "', '" + total_time + "');")
                 sqlitedb.close()
 
                 /*val bundle : Bundle = Bundle() // 번들을 통해서 값 전달

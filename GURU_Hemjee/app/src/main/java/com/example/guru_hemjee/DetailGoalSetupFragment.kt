@@ -147,6 +147,20 @@ class DetailGoalSetupFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
 
+        // 연필 아이콘을 클릭했을 경우
+        editBigGoalBtn.setOnClickListener {
+            // 대표목표 수정 화면으로 이동
+            val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val modifyFragment = BigGoalModifyFragment()
+            val bundle = Bundle()
+            bundle.putString("bundle_biggoal", str_biggoal)
+
+            modifyFragment.setArguments(bundle)
+
+            transaction.replace(R.id.fragment_main, modifyFragment)
+            transaction.commit()
+        }
+
         // var isEditing : Boolean = false // 텍스트뷰, 에디트텍스트뷰의 상태를 점검
 
         // +버튼을 눌렀을 경우
@@ -285,4 +299,5 @@ class DetailGoalSetupFragment : Fragment() {
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.commit()
     }
+    //
 }
