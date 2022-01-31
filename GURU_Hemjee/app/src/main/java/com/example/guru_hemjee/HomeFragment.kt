@@ -90,6 +90,9 @@ class HomeFragment : Fragment() {
                     intent.putExtra("seed", seedPointView.text)
                     intent.putExtra("userName", userName)
 
+                    // 대표 목표 이름 보내기
+                    intent.putExtra("bigGoalName", goalSelectButton.text)
+
                     // 타이머 시간 데이터 보내기
                     intent.putExtra("hour", time.split(':')[0])
                     intent.putExtra("min", time.split(':')[1])

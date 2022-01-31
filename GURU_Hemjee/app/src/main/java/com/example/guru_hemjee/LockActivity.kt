@@ -27,6 +27,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginLeft
 import com.dinuscxj.progressbar.CircleProgressBar
+import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -116,7 +117,6 @@ class LockActivity : AppCompatActivity() {
         userName = intent.getStringExtra("userName")
 
         // 타이머 세팅
-        var intent = intent
         lockHourTextView.setText(intent.getStringExtra("hour"))
         lockMinTextView.setText(intent.getStringExtra("min"))
         lockSecTextView.setText(intent.getStringExtra("sec"))
@@ -249,61 +249,74 @@ class LockActivity : AppCompatActivity() {
     private fun addDetailGoal() {
 
         // 잠금 전 확인 팝업창에 있던 대표 목표 이름(위젯) 가져오기
-        var bigGoalTitle: TextView = findViewById(R.id.goalTitleTextView)
+        var bigGoalName = intent.getStringExtra("bigGoalName")  // 대표 목표 이름
+        var bigGoalColor: Int = 0   // 대표 목표의 색상
 
-        // 대표 목표의 색상 뽑아오기
-        dbManager = DBManager(this, "big_goal_db", null, 1)
-        sqlitedb = dbManager.readableDatabase
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = ${bigGoalTitle.text}", null)
-        var bigGoalColor: Int
+        var cursor: Cursor
 
-        if(cursor.moveToNext())
-            bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
-        else
-            bigGoalColor = 0
-
-        cursor.close()
-        sqlitedb.close()
-        dbManager.close()
+        try {
+            // 대표 목표의 색상 뽑아오기
+            dbManager = DBManager(this, "big_goal_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
 
-        // DB 데이터 가져오기(세부 목표)
-        dbManager = DBManager(this, "detail_goal_db", null, 1)
-        sqlitedb = dbManager.readableDatabase
+            if(cursor.moveToNext())
+                bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
 
-        // 해당 대표 목표의 세부 목표들 가져오기
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = ${bigGoalTitle.text}", null)
-
-        // 위젯 생성 및 적용
-        while(cursor.moveToNext())
-        {
-            var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
-
-            // icon 변경
-            var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
-            icon.setImageResource(resources.getIdentifier(cursor.getString(cursor.getColumnIndex("icon")).toString(), "drawable", packageName))
-
-            // icon의 색을 대표 목표의 색으로 변경
-            icon.setColorFilter(ContextCompat.getColor(this, bigGoalColor), PorterDuff.Mode.SRC_IN)
-
-            // 세부 목표 이름 변경
-            var textView: TextView = view.findViewById(R.id.detailGoalTextView)
-            textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
-
-            // 버튼에 리스너 달기
-            var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
-            button.setOnClickListener {
-                // TODO: 카메라 또는 인증 팝업 열기...?
-            }
-
-            // 위젯 추가
-            detailGoalListContainer.addView(view)
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+        }
+        catch(e: Exception) {
+            Log.e("DBException", "대표 목표 색상 뽑아오기 실패")
         }
 
-        // 닫기
-        cursor.close()
-        sqlitedb.close()
-        dbManager.close()
+        try {
+            // DB 데이터 가져오기(세부 목표)
+            dbManager = DBManager(this, "detail_goal_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+
+            // 해당 대표 목표의 세부 목표들 가져오기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
+
+            // 위젯 생성 및 적용
+            while(cursor.moveToNext())
+            {
+                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
+                var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
+
+
+                // icon 변경
+                var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
+                icon.setImageResource(cursor.getInt(cursor.getColumnIndex("icon")))
+
+                // icon의 색을 대표 목표의 색으로 변경
+                icon.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
+
+                // 세부 목표 이름 변경
+                var textView: TextView = view.findViewById(R.id.detailGoalTextView)
+                textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
+
+                // 버튼에 리스너 달기
+                var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
+                button.setOnClickListener {
+                    // TODO: 카메라 또는 인증 팝업 열기...?
+                    Log.i ("정보태그", "눌렀다!")
+                }
+
+                // 위젯 추가
+                detailGoalListContainer.addView(view)
+            }
+
+            // 닫기
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+        }
+        catch(e: Exception) {
+            Log.e("DBException", "세부 목표 가져오기 실패")
+        }
     }
 
     // 시간 감소 팝업
