@@ -42,7 +42,7 @@ class DBManager(
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
-                "icon text, big_goal_name text);")
+                "icon INT, big_goal_name text);")
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT PRIMARY KEY, " +

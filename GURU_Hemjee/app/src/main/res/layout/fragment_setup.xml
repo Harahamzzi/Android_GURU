@@ -7,7 +7,6 @@
     tools:context=".SetupFragment">
 
     <ScrollView
-        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +14,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/fragment_setup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,98 +23,11 @@
             tools:layout_editor_absoluteY="0dp">
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="28dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="하루 목표 잠금 시간"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout9"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="74dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="시간"
-                    android:textColor="@color/Black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="분 "
-                    android:textColor="@color/Black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout8"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
-
-                <EditText
-                    android:id="@+id/todayLockHourView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="33dp"
-                    android:backgroundTint="@color/Yellow"
-                    android:fontFamily="@font/noto_sans"
-                    android:hint="00"
-                    android:textColor="@color/Black"
-                    android:textColorHighlight="@color/BrightYellow"
-                    android:textCursorDrawable="@color/Yellow"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="33dp"
-                    android:text=":"
-                    android:textColor="@color/Black"
-                    android:textSize="22sp" />
-
-                <EditText
-                    android:id="@+id/todayLockMinView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/Yellow"
-                    android:fontFamily="@font/noto_sans"
-                    android:hint="00"
-                    android:textColor="@color/Black"
-                    android:textColorHighlight="@color/BrightYellow"
-                    android:textCursorDrawable="@color/Yellow"
-                    android:textSize="22sp" />
-            </LinearLayout>
-
-            <TextView
                 android:id="@+id/textView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="28dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="대표 목표"
                 android:textColor="@color/Black"
@@ -127,7 +38,7 @@
             <ListView
                 android:id="@+id/bigGoalListView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="420dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="17dp"
                 android:layout_marginEnd="17dp"
@@ -141,19 +52,19 @@
                 android:id="@+id/plusGoalButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_gravity="center|bottom"
                 android:layout_marginBottom="17dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_outline_control_point_24"
-                android:layout_gravity="center|bottom"
+                android:src="@drawable/plus_circle"
                 app:tint="@color/Black" />
 
             <Space
                 android:id="@+id/bottomSpace"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="17dp"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:layout_marginTop="17dp" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageButton
+        android:id="@+id/detailGoalIconBtn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginRight="7dp"
+        android:background="@null"
+        app:srcCompat="@drawable/ic_outline_menu_book_24"
+        app:tint="@color/Orange" />
+
+    <TextView
+        android:id="@+id/detailGoalTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/noto_sans"
+        android:maxLines="2"
+        android:textColor="@color/Black"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/sebuMenuBtn"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_marginLeft="7dp"
+        android:background="@null"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_sebumenu"
+        app:tint="@color/Gray" />
+</LinearLayout>

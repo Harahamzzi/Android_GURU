@@ -45,15 +45,6 @@ class BigGoalListViewAdapter(private val items: MutableList<BigGoalListViewItem>
         bigGoalText.setText(item.bigGoalText)
         rightImg.setImageDrawable(item.rightImg)
 
-        /*colorImg.setImageDrawable(item.color)
-        bigGoalText.setText(item.bigGoal)
-        rightImg.setImageDrawable(item.rightImage)*/
-
-        //color.setImageDrawable(item.color.drawable)
-        //bigGoal.text = item.bigGoal.toString()
-        //rightImage.setImageDrawable(item.rightImage.drawable)
-        //rightImage.setImageResource(rightImage.id)
-
         return convertView
     }
 
