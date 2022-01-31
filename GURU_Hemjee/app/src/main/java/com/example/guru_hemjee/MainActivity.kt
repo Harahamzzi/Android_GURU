@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.Manifest
 import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.database.Cursor
@@ -21,6 +22,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.navigation.NavigationView
+
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 
 // fragment 페이지 수(슬라이드 전환시)
 private const val NUM_PAGES = 3
@@ -52,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         // 권한을 얻었는지 체크
-        checkPermission()
+        checkPermissions()
 
         //튜토리얼 확인(basic_info_db에 데이터가 있는지 확인)
         dbManager = DBManager(this, "basic_info_db", null, 1)
@@ -167,16 +171,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    // 다른 앱 위에 그리기 권한을 얻었는지 체크하는 함수
-    private fun checkPermission() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            if(!Settings.canDrawOverlays(this)) {
-                val uri = Uri.fromParts("package", packageName, null)
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, uri)
-                startActivityForResult(intent, 0)
-            }
+    // 권한 체크를 위한 리스너
+    private var permissionListener: PermissionListener = object: PermissionListener {
+        // 권한 허가시 실행할 함수
+        override fun onPermissionGranted() {
+            // 그대로 진행
         }
+
+        // 권한 거부시 실행할 함수
+        override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+            // 앱 종료
+            finish()
+        }
+    }
+    // 권한을 얻었는지 체크하는 함수(통합)
+    private fun checkPermissions() {
+        TedPermission.create()
+            .setPermissionListener(permissionListener)
+            .setDeniedMessage("앱에서 요구하는 권한 설정이 필요합니다.\n[권한]에서 허용으로 설정해주세요.")
+            .setPermissions(Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.FOREGROUND_SERVICE,
+                            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
+            .check()
     }
 
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
