@@ -43,37 +43,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popBackImageButton" />
 
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="match_parent"
-        android:layout_height="119dp"
+    <RadioGroup
+        android:id="@+id/setGoalRadioGroup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="17dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="17dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalGoalCountTextView">
-
-        <RadioGroup
-            android:id="@+id/goalRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/radioButton5"
-                android:layout_width="match_parent"
-                android:layout_height="27dp"
-                android:buttonTint="@color/DarkBrown"
-                android:drawableLeft="@drawable/goal_dot_small"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/Orange"
-                android:gravity="center|left"
-                android:layoutDirection="rtl"
-                android:text="대목표 제목"
-                android:textSize="12sp" />
-
-        </RadioGroup>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/totalGoalCountTextView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

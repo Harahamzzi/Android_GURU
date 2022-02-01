@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 
@@ -22,10 +24,16 @@ class HomeFragment : Fragment() {
 
     //잠금 수정 버튼
     private lateinit var goalSelectButton: MaterialButton
+    private var bigGoalName: String = ""
+    private var bigGoalColor: Int = 0
 
     //잠금 시간 안내
     private var time = "00:00:00"
     private lateinit var goalTime: TextView
+
+    //햄찌 관련
+    private lateinit var mainBGFrameLayout: FrameLayout
+    private lateinit var mainClothFrameLayout: FrameLayout
 
     //db관련
     private lateinit var dbManager: DBManager
@@ -56,6 +64,47 @@ class HomeFragment : Fragment() {
             userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
         }
 
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        //잠금 버튼 수정
+        goalSelectButton = requireView().findViewById(R.id.goalSelectButton)
+        dbManager = DBManager(context, "big_goal_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        cursor= sqlitedb.rawQuery("SELECT * FROM big_goal_db",null)
+        var isThereBigGoal = false
+        if(cursor.moveToNext()){
+            bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+            bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
+            time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time"))
+
+            goalSelectButton.text = bigGoalName
+            goalSelectButton.setTextColor(resources.getColor(R.color.Black))
+            goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
+
+            isThereBigGoal = true
+        }
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        if(!isThereBigGoal){
+            bigGoalName = "목표를 생성해주세요"
+            bigGoalColor = R.color.Gray
+            goalSelectButton.text = bigGoalName
+            goalSelectButton.setTextColor(bigGoalColor)
+            goalSelectButton.setIconTintResource(R.color.Gray)
+        }
+        goalSelectButton.setOnClickListener {
+            showLockSettingPopUp()
+        }
+
+        //메인 화면 햄찌 설정
+        mainBGFrameLayout = requireView().findViewById(R.id.mainBGFrameLayout)
+        mainClothFrameLayout = requireView().findViewById(R.id.mainClothFrameLayout)
+        FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false)
+
         //잠금 시간 안내
         goalTime = requireView().findViewById(R.id.goalTime)
         goalTime.text = time.split(':')[0]+"시 " + time.split(':')[1]+"분 " +time.split(':')[2]+"초"
@@ -66,16 +115,12 @@ class HomeFragment : Fragment() {
             showSettingConfirmPopUp()
         }
 
-        //잠금 수정
-        goalSelectButton = requireView().findViewById(R.id.goalSelectButton)
-        goalSelectButton.setOnClickListener {
-            showLockSettingPopUp()
-        }
+
     }
 
     //잠금 시작
     private fun showSettingConfirmPopUp() {
-        val dialog = LockSettingConfirmDialog(requireContext(),time)
+        val dialog = LockSettingConfirmDialog(requireContext(),bigGoalName,bigGoalColor,time)
         dialog.myDig()
 
         dialog.setOnClickedListener(object : LockSettingConfirmDialog.ButtonClickListener{
@@ -107,14 +152,19 @@ class HomeFragment : Fragment() {
 
     //잠금 설정
     private fun showLockSettingPopUp() {
-        val dialog = LockSettingDialog(requireContext(), goalSelectButton.text.toString(), time)
+        val dialog = LockSettingDialog(requireContext(), bigGoalName, bigGoalColor, time)
         dialog.lockSetting()
 
         dialog.setOnClickedListener(object : LockSettingDialog.ButtonClickListener{
-            override fun onClicked(isChanged: Boolean, bigGoalTitle: String?, getTime: String) {
+            override fun onClicked(isChanged: Boolean, bigGoalTitle: String, changedBigGoalColor: Int, getTime: String) {
                 if(isChanged){
+                    bigGoalName = bigGoalTitle
                     goalSelectButton.text = bigGoalTitle
-                    time = getTime
+                    bigGoalColor = changedBigGoalColor
+                    goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
+                    if(getTime != "00:00:00"){
+                        time = getTime
+                    }
                     var timeArray = time.split(':')
                     goalTime.text = timeArray[0] + "시 " + timeArray[1]+"분 " + timeArray[2]+"초"
                 }

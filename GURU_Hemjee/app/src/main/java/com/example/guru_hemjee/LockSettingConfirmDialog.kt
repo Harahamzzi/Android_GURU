@@ -3,13 +3,17 @@ package com.example.guru_hemjee
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
+import android.graphics.PorterDuff
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 import java.util.*
 
-class LockSettingConfirmDialog(context: Context, time: String) {
+class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor: Int, time: String) {
     private val dialog = Dialog(context)
 
     private lateinit var lock: ImageButton
@@ -21,9 +25,25 @@ class LockSettingConfirmDialog(context: Context, time: String) {
     private lateinit var min: TextView
     private lateinit var sec: TextView
 
+    //대표 목표 관련
+    private lateinit var goalTitleTextView: TextView
+    private lateinit var goalColorImageView: ImageView
+    private var goalName = goalName
+    private var goalColor = goalColor
+
+    //달성 가능한 세부 목표
+    private lateinit var detailGoalItemRecyclerView: RecyclerView
+
     fun myDig(){
         dialog.show()
         dialog.setContentView(R.layout.popup_lock_setting_confirm)
+
+        //대표 목표 수정하기
+        goalTitleTextView = dialog.findViewById(R.id.goalTitleTextView)
+        goalColorImageView = dialog.findViewById(R.id.lockSetConfirmGoalColorImageView)
+        goalTitleTextView.text = goalName
+        goalColorImageView.setColorFilter(goalColor, PorterDuff.Mode.SRC_IN)
+
 
         //시간 연결
         hour = dialog.findViewById(R.id.hourTimeTextView)
@@ -45,7 +65,29 @@ class LockSettingConfirmDialog(context: Context, time: String) {
             dialog.dismiss()
         }
 
+        //목표 리스트 연결
+        detailGoalItemRecyclerView = dialog.findViewById(R.id.lockSettingConfirmDetailGoalRecyclerView)
+        if(goalName != "목표를 생성해주세요"){
+            val items = ArrayList<DetailGoalItem>()
+            val detailGoalListAdapter = DetailGoalListAdapter(context, items)
+            detailGoalItemRecyclerView.adapter = detailGoalListAdapter
 
+            var dbManager = DBManager(context, "detail_goal_db", null, 1)
+            var sqlitedb = dbManager.readableDatabase
+            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '$goalName'", null)
+
+            while(cursor.moveToNext()){
+                val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+                val iconPic = cursor.getInt(cursor.getColumnIndex("icon"))
+
+                items.addAll(listOf(DetailGoalItem(iconPic, goalColor, goalName)))
+                detailGoalListAdapter.notifyDataSetChanged()
+            }
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+        }
     }
 
     interface ButtonClickListener {

@@ -121,7 +121,6 @@ class SeedMarket : Fragment() {
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
         while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
-            Toast.makeText(requireContext(), cursor.getString(cursor.getColumnIndex("item_name")), Toast.LENGTH_SHORT).show()
         }
         cursor.close()
         sqlitedb.close()
@@ -131,7 +130,7 @@ class SeedMarket : Fragment() {
         marketBGFrameLayout = requireView().findViewById(R.id.marketBGFrameLayout)
         marketClothFrameLayout = requireView().findViewById(R.id.marketClothFrameLayout)
         //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
-        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
+        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
 
         selectedItems.addAll(preselectedItems)
     }
@@ -143,7 +142,7 @@ class SeedMarket : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.writableDatabase
         for(item in selectedItems){
-            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE is_using = 1")
         }
         for(item in preselectedItems){
             sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
@@ -213,7 +212,7 @@ class SeedMarket : Fragment() {
                     sqlitedb.close()
                     dbManager.close()
 
-                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
+                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
                 }
             }
         })
@@ -266,7 +265,7 @@ class SeedMarket : Fragment() {
                 }
 
                 upDateInventory(currentInventory)
-                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
+                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
             }
             //요소 클릭 종료
             else {
@@ -294,7 +293,7 @@ class SeedMarket : Fragment() {
             dbManager.close()
 
             deselectItems.clear()
-            FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout)
+            FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
         }
         marketListView.adapter = marketItemAdapter
 

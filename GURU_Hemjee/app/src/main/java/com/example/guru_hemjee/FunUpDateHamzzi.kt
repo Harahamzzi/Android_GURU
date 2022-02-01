@@ -18,7 +18,7 @@ class FunUpDateHamzzi {
         private lateinit var dbManager: DBManager
         private lateinit var sqlitedb: SQLiteDatabase
 
-        fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout) {
+        fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout, isList: Boolean) {
             //배경 & 가구 설정
             bgLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
@@ -31,7 +31,11 @@ class FunUpDateHamzzi {
 
                 var imageView: ImageView = ImageView(context)
                 imageView.setImageResource(id)
-                imageView.scaleType = ImageView.ScaleType.FIT_XY
+                if(isList)
+                    imageView.scaleType = ImageView.ScaleType.FIT_XY
+                else{
+                    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                }
 
                 bgLayout.addView(imageView)
             }
@@ -45,12 +49,16 @@ class FunUpDateHamzzi {
             cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)
             while(cursor.moveToNext()){
                 //저장 파일 이름으로 ImageView 설정
-                var bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
+                var bgPic = ""
+                if(isList)
+                    bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
+                else
+                    bgPic = cursor.getString(cursor.getColumnIndex("hamster_pic"))
+
                 var id = context.resources!!.getIdentifier(bgPic, "drawable", context?.packageName) //파일 id
 
                 var imageView: ImageView = ImageView(context)
                 imageView.setImageResource(id)
-                imageView.scaleType = ImageView.ScaleType.FIT_XY
 
                 clothLayout.addView(imageView)
             }

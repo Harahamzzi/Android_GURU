@@ -96,7 +96,7 @@ class HamsterEditFragment() : Fragment() {
         //사용 중인 아이템 미리 선택하기
         dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_bought = 1 AND is_using = 1",null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
         while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
         }
@@ -127,7 +127,7 @@ class HamsterEditFragment() : Fragment() {
         //배경(옷, 가구, 배경)
         myHBGFrameLayout = requireView().findViewById(R.id.myHBGFrameLayout)
         myHClothFrameLayout = requireView().findViewById(R.id.myHClothFrameLayout)
-        FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout)
+        FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
 
         //적용 버튼
         myHamsterApplyImageButton = requireView().findViewById(R.id.myHamsterApplyImageButton)
@@ -165,7 +165,7 @@ class HamsterEditFragment() : Fragment() {
             preselectedItems.addAll(selectedItems)
 
             upDateInventory(currentInventory)
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout)
+            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
 
             Toast.makeText(requireContext(), "적용 되었습니다.", Toast.LENGTH_SHORT).show()
         }
@@ -248,7 +248,7 @@ class HamsterEditFragment() : Fragment() {
             dbManager.close()
 
             deselectedItems.clear()
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout)
+            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
         }
         myHItemList.adapter = myHamsterAdapter
 

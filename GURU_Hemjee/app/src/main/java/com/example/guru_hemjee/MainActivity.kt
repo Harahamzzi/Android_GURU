@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //튜토리얼 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
+    //햄찌 관련
+    private var preselected = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,30 +138,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         dbManager = DBManager(this, "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.writableDatabase
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg1', 10, 'bg', 'bg', 'bg_bg_10', 'market_bg_10', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg2', 1000, 'bg', 'bg', 'bg_bg_1000', 'market_bg_1000', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_toystory', 1500, 'bg', 'bg', 'bg_bg_1500', 'market_bg_1500', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_beach', 1800, 'bg', 'bg', 'bg_bg_1800', 'market_bg_1800', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_snow', 2100, 'bg', 'bg', 'bg_bg_2100', 'market_bg_2100', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_sunset', 2500, 'bg', 'bg', 'bg_bg_2500', 'market_bg_2500', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_sandcattle', 390, 'furni1', 'furni', 'bg_furni_390', 'market_furni_390', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_plant', 390, 'furni', 'furni2', 'bg_furni_390_2', 'market_furni_390_2', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_pics', 560, 'furni', 'furni3', 'bg_furni_560', 'market_furni_560', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_house', 730, 'furni', 'furni5', 'bg_furni_730_2', 'market_furni_730_2', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_surf1', 730, 'furni', 'furni4', 'bg_furni_730', 'market_furni_730', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_surf2', 790, 'furni', 'furni6', 'bg_furni_790', 'market_furni_790', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_snowman', 920, 'furni', 'right', 'bg_furni_920', 'market_furni_920', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_tree1', 1000, 'furni', 'furni8', 'bg_furni_1000', 'market_furni_1000', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_tree2', 1020, 'furni', 'right', 'bg_furni_1020', 'market_furni_1020', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_glasses', 390, 'clo', 'gla', 'bg_clo_390', 'market_clo_390', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_cap', 390, 'clo', 'hat', 'bg_clo_390_2', 'market_clo_390_2', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_workhard', 560, 'clo', 'hat', 'bg_clo_560', 'market_clo_560', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_earmuffs', 560, 'clo', 'hat', 'bg_clo_560_2', 'market_clo_560_2', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_sungla', 730, 'clo', 'hat', 'bg_clo_730', 'market_clo_730', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_flower', 730, 'clo', 'hat', 'bg_clo_730_2', 'market_clo_730_2', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_strap', 420, 'clo', 'clo', 'bg_clo_420', 'market_clo_420', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_winter', 710, 'clo', 'clo', 'bg_clo_710', 'market_clo_710', 0, 0)")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_summer', 1000, 'clo', 'clo', 'bg_clo_1000', 'market_clo_1000', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg1', 10, 'bg', 'bg', 'bg_bg_10', 'market_bg_10', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg2', 1000, 'bg', 'bg', 'bg_bg_1000', 'market_bg_1000', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_toystory', 1500, 'bg', 'bg', 'bg_bg_1500', 'market_bg_1500', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_beach', 1800, 'bg', 'bg', 'bg_bg_1800', 'market_bg_1800', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_snow', 2100, 'bg', 'bg', 'bg_bg_2100', 'market_bg_2100', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_sunset', 2500, 'bg', 'bg', 'bg_bg_2500', 'market_bg_2500', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_sandcattle', 390, 'furni1', 'furni', 'bg_furni_390', 'market_furni_390', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_plant', 390, 'furni', 'furni2', 'bg_furni_390_2', 'market_furni_390_2', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_pics', 560, 'furni', 'furni3', 'bg_furni_560', 'market_furni_560', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_house', 730, 'furni', 'furni5', 'bg_furni_730_2', 'market_furni_730_2', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_surf1', 730, 'furni', 'furni4', 'bg_furni_730', 'market_furni_730', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_surf2', 790, 'furni', 'furni6', 'bg_furni_790', 'market_furni_790', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_snowman', 920, 'furni', 'right', 'bg_furni_920', 'market_furni_920', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_tree1', 1000, 'furni', 'furni8', 'bg_furni_1000', 'market_furni_1000', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('furni_tree2', 1020, 'furni', 'right', 'bg_furni_1020', 'market_furni_1020', '', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_glasses', 390, 'clo', 'gla', 'bg_clo_390', 'market_clo_390', 'hamster_clo_390', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_cap', 390, 'clo', 'hat', 'bg_clo_390_2', 'market_clo_390_2', 'hamster_clo_390_2', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_workhard', 560, 'clo', 'hat', 'bg_clo_560', 'market_clo_560', 'hamster_clo_560', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_earmuffs', 560, 'clo', 'hat', 'bg_clo_560_2', 'market_clo_560_2', 'hamster_clo_560_2', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_sungla', 730, 'clo', 'hat', 'bg_clo_730', 'market_clo_730', 'hamster_clo_730', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_flower', 730, 'clo', 'hat', 'bg_clo_730_2', 'market_clo_730_2', 'hamster_clo_730_2', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_strap', 420, 'clo', 'clo', 'bg_clo_420', 'market_clo_420', 'hamster_clo_420', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_winter', 710, 'clo', 'clo', 'bg_clo_710', 'market_clo_710', 'hamster_clo_710', 0, 0)")
+        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_summer', 1000, 'clo', 'clo', 'bg_clo_1000', 'market_clo_1000', 'hamster_clo_1000', 0, 0)")
     }
 
     // 내부 클래스 선언
@@ -280,6 +282,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                        "hamsterEdit" -> {
 //                            titleText.setText("나의 햄찌 관리")
 //                        }
+//                        }
 //                        // 설정 탭
 //                        "설정탭 태그" -> {
 //                            titleText.setText("설정")
@@ -315,6 +318,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // isHome 플래그 내리기
         isHome = false
+
+        //햄찌 설정 초기화
     }
 
     // 툴바 좌측 이미지를 눌렀을 때 홈 화면으로 가기를 처리하는 함수(리스너)

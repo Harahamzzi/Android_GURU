@@ -8,6 +8,71 @@
     android:orientation="horizontal"
     tools:context=".HomeFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goalTime">
+
+        <FrameLayout
+            android:id="@+id/mainBGFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/mainHamsterImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginBottom="150dp"
+            android:src="@drawable/hamzzi3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mainBGFrameLayout" />
+
+        <FrameLayout
+            android:id="@+id/mainClothFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="105dp"
+            android:layout_marginBottom="150dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/mainTopImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/main_white_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/mainButtomImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/main_white_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/Home_seedPointView"
         android:layout_width="80dp"
@@ -32,11 +97,11 @@
         android:layout_width="58.3dp"
         android:layout_height="17dp"
         android:fontFamily="@font/noto_sans"
+        android:lineSpacingExtra="49.03px"
         android:text="오늘의 목표"
         android:textColor="@color/Black"
-        android:textSize="12dp"
-        android:lineSpacingExtra="49.03px"
         android:textFontWeight="400"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Home_seedPointView" />
@@ -84,34 +149,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goalSelectButton" />
-
-    <TextView
-        android:id="@+id/speechBallon"
-        android:layout_width="206dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="47dp"
-        android:background="@drawable/speech_ballon"
-        android:gravity="center"
-        android:paddingBottom="11dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="인생 뭐 말아먹든가.."
-        android:textSize="12dp"
-        android:textFontWeight="400"
-        android:textColor="@color/Black"
-        android:lineSpacingExtra="49.03px"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalTime" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="166dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/hamzzi"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speechBallon" />
 
     <Button
         android:id="@+id/startButton"

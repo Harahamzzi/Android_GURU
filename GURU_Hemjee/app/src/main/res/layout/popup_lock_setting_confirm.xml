@@ -38,20 +38,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ok_button" />
 
+        <ImageView
+            android:id="@+id/lockSetConfirmGoalColorImageView"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="22dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/color_icon" />
+
         <TextView
             android:id="@+id/goalTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="17dp"
-            android:drawableLeft="@drawable/goal_dot_small"
             android:drawablePadding="10dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="center|left"
             android:text="목표 제목"
             android:textColor="@color/Black"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lockSetConfirmGoalColorImageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -80,11 +89,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="66dp"
             android:fontFamily="@font/noto_sans"
             android:text="잠금 시간"
             android:textColor="@color/Black"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView16"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -173,28 +182,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="166dp"
             android:text="달성 가능한 세부 목표"
             android:textColor="@color/Black"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/imageView17"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="17dp"
             android:layout_marginTop="195dp"
             android:layout_marginEnd="17dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/lockCancelImageButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/hamster_inventory_bg"
+            app:tint="@color/LightGray" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lockSettingConfirmDetailGoalRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
