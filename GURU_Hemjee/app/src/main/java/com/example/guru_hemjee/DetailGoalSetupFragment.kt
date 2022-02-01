@@ -79,7 +79,7 @@ class DetailGoalSetupFragment : Fragment() {
         editBigGoalBtn = view.findViewById(R.id.editBigGoalBtn)
         completeBtn = view.findViewById(R.id.completeBtn)
 
-        // SetupFragment에서 넘어온 값(대표 목표) 받기
+        // SetupFragment 또는 BigGoalModifyFragment에서 넘어온 (대표 목표)값 받기
         if (arguments != null)
         {
             // 받아온 값 넣기
@@ -111,7 +111,6 @@ class DetailGoalSetupFragment : Fragment() {
 
         var cursor: Cursor
         cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '"+bigGoalTextView.text.toString()+"';", null)
-        Log.d("BigGoalTextView.text = ", bigGoalTextView.text.toString())
         var num : Int = 0 // 리스트 개수
         while(cursor.moveToNext()) {
             // 대표목표에 해당하는 커서에 있는 값들 가져오기

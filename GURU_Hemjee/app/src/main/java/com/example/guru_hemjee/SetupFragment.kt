@@ -58,7 +58,7 @@ class SetupFragment : Fragment() {
         dbManager = DBManager(context, "big_goal_db", null, 1)
         sqlitedb = dbManager.readableDatabase // 데이터 읽기
 
-        // TODO : DB 데이터 -> 어댑터 -> 반환
+        /** DB 데이터 -> 어댑터 -> 반환 **/
         var cursor : Cursor
         cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
 
