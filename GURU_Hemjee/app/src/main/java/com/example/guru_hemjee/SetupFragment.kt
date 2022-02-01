@@ -121,7 +121,7 @@ class SetupFragment : Fragment() {
                 val checkedItem = bigGoalListView.checkedItemPosition // 클릭한 대표 목표의 인덱스 가져오기
 
                 if (checkedItem != -1) { // 클릭한 대표 목표가 있다면
-                    Toast.makeText(context, (checkedItem + 1).toString() + "번째를 클릭했습니다.", Toast.LENGTH_SHORT).show() // 클릭 확인용 토스트 메시지
+                    // Toast.makeText(context, (checkedItem + 1).toString() + "번째를 클릭했습니다.", Toast.LENGTH_SHORT).show() // 클릭 확인용 토스트 메시지
 
                     // DetailGoalSetupFragment로 데이터를 전송하고 화면을 전환
                     val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()

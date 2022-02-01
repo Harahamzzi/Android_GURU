@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import java.lang.Exception
 
 class BigGoalModifyFragment : Fragment() {
 
@@ -22,6 +23,7 @@ class BigGoalModifyFragment : Fragment() {
     lateinit var dbManager: DBManager
     lateinit var dbManager2: DBManager
     lateinit var sqlitedb: SQLiteDatabase
+    lateinit var sqlitedb2: SQLiteDatabase
 
     // 대표 목표
     lateinit var modBigGoalEditText: EditText
@@ -246,52 +248,57 @@ class BigGoalModifyFragment : Fragment() {
              **/
 
             sqlitedb = dbManager.writableDatabase
-            sqlitedb.execSQL("CREATE TABLE copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
+            sqlitedb2 = dbManager.readableDatabase
+            try {
+                sqlitedb.execSQL("CREATE TABLE IF NOT EXISTS copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
+            } catch (e : Exception) {
+                e.printStackTrace()
+            }
             sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
             if (big_goal == str_big_goal) { // 대표목표의 값이 변경되지 않았다면
-                sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + str_big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
                 sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("DROP TABLE copy_goal_db")
+                sqlitedb2.close()
+                sqlitedb.close()
+                goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
             } else { // 대표목표의 값이 변경되었다면
-                //lateinit var sqlitedb2: SQLiteDatabase
-                //sqlitedb2 = dbManager.readableDatabase
-
                 var cursor: Cursor
-                cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+                cursor = sqlitedb2.rawQuery("SELECT * FROM big_goal_db", null)
 
-                var isFlag : Boolean = true
+                var isFlag : Boolean = false
                 while (cursor.moveToNext()) { // 기존에 저장된 값과 같다면
                     var goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
                     if (goal == big_goal) {
-                        Toast.makeText(context, "다른 내용의 대표목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
-                        isFlag = false
+                        isFlag = true
+                        // Log.d("while문 안의 flag값  ", isFlag.toString())
                         break
                     }
                 }
-                if (isFlag) {
+                // Log.d("while문 아래 flag값  ", isFlag.toString())
+                if (!isFlag) {
+                    // Log.d("if문 flag값  ", isFlag.toString())
                     sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
                     sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
+
+                    cursor.close()
+                    sqlitedb.execSQL("DROP TABLE copy_goal_db")
+                    sqlitedb2.close()
+                    sqlitedb.close()
+
+                    sqlitedb = dbManager2.writableDatabase
+                    sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                    sqlitedb.close()
+
+                    goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
+                }
+                else {
+                    // Log.d("else문 flag값  ", isFlag.toString())
+                    Toast.makeText(context, "다른 내용의 대표목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
-            sqlitedb.execSQL("DROP TABLE copy_goal_db")
-            sqlitedb.close()
-
-            sqlitedb = dbManager2.writableDatabase
-            sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.close()
-
-            Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-
-            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            val detailGoalSetupFragment = DetailGoalSetupFragment()
-            val bundle = Bundle()
-
-            bundle.putString("bundle_biggoal", big_goal)
-            detailGoalSetupFragment.arguments = bundle
-            transaction.replace(R.id.fragment_main, detailGoalSetupFragment)
-            transaction.commit() // 저장
         }
 
         // 삭제 버튼을 눌렀을 경우
@@ -314,5 +321,19 @@ class BigGoalModifyFragment : Fragment() {
             transaction.commit() // 저장
         }
         return view
+    }
+
+    // 세부목표 화면으로 이동
+    fun goDetailGoalSetup(big_goal: String) {
+        Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+
+        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        val detailGoalSetupFragment = DetailGoalSetupFragment()
+        val bundle = Bundle()
+
+        bundle.putString("bundle_biggoal", big_goal)
+        detailGoalSetupFragment.arguments = bundle
+        transaction.replace(R.id.fragment_main, detailGoalSetupFragment)
+        transaction.commit() // 저장
     }
 }
