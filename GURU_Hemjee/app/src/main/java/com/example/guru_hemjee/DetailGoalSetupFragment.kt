@@ -48,12 +48,12 @@ class DetailGoalSetupFragment : Fragment() {
     private lateinit var str_biggoal : String // 대표목표
     private var integer_color : Int = 0 // 대표목표 색상
 
-    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as MainActivity
+        mainActivity = context as SubMainActivity
     }
 
     override fun onDetach() {

@@ -51,12 +51,12 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
     lateinit var deleteButton : androidx.appcompat.widget.AppCompatButton // 삭제 버튼
     lateinit var completeButton : androidx.appcompat.widget.AppCompatButton // 확인 버튼
 
-    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as MainActivity
+        mainActivity = context as SubMainActivity
     }
 
     override fun onDetach() {
