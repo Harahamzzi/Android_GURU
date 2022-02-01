@@ -50,6 +50,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-rc03'
 
+    // ViewPager2 사용을 위함(스와이프로 화면 전환)
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha04'
+
     // (viewPager) 디자인된 indicator 라이브러리
     implementation 'com.tbuonomo:dotsindicator:4.2'
 
@@ -58,9 +61,6 @@ dependencies {
 
     // 스택바 차트를 위함, 파이차트
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    // ViewPager2 사용을 위함(스와이프로 화면 전환)
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha04'
 
     //가로 listView를 위함
     //noinspection GradleCompatible

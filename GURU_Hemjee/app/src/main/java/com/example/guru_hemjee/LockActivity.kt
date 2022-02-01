@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -304,6 +305,14 @@ class LockActivity : AppCompatActivity() {
                 var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
                 button.setOnClickListener {
                     // TODO: 카메라 또는 인증 팝업 열기...?
+//                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                    startActivity(intent)
+//                    dispatchTakePictureIntent() // 카메라 어플 실행
+
+                    // Camera Activity로 이동
+                    var intent = Intent(this, CameraActivity::class.java)
+                    startActivity(intent)
+
                     Log.i ("정보태그", "눌렀다!")
                 }
 
@@ -321,6 +330,17 @@ class LockActivity : AppCompatActivity() {
         }
     }
 
+//    // 카메라 인텐트 관련
+//    private val REQUEST_IMAGE_CAPTURE = 1
+//
+//    private fun dispatchTakePictureIntent() {
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            takePictureIntent.resolveActivity(packageManager)?.also {
+//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+//            }
+//        }
+//    }
+
     // 시간 감소 팝업
     private fun showTimeMinusPopUp() {
         val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true)
@@ -335,9 +355,15 @@ class LockActivity : AppCompatActivity() {
                         // 현재 잔여 시간이 10분 이상일 때만 확인 팝업 뜨도록 함
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
+                        {
                             finalOK("10분 줄이기", "확인", false, false,false)
-
-                        time -= 600                 // 현재 남은 시간 10분 감소
+                            time -= 600     // 잔여 시간 10분 감소
+                        }
+                        // 현재 잔여 시간이 10분 이하일 경우
+                        else
+                        {
+                            time = 0        // 잔여 시간 0으로 세팅
+                        }
                         progressBar.progress += 600 // 10분만큼 진행도 증가
                         seedChange(-40)     // 씨앗 차감
                     }
