@@ -199,38 +199,6 @@ class DetailGoalSetupFragment : Fragment() {
             detailGoalListLayout.addView(view)
 
             num++ // 추가한 목표 개수 증가
-
-            // 각각의 객체에 대한 layout param을 만들기
-            /*/val iconLayoutParams = LinearLayout.LayoutParams( // 아이콘의 레이아웃
-                    28,
-                    28
-            )
-            val editLayoutParams = LinearLayout.LayoutParams( // editText의 레이아웃
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            // 각각의 레이아웃에 속성 값 넣기
-            iconLayoutParams.setMargins(0,0,7,0)
-            editLayoutParams.weight = 1F
-
-            // 레이아웃 적용
-            detailGoalIconBtn.layoutParams = iconLayoutParams
-            detailGoalEditText.layoutParams = editLayoutParams
-
-            // 각각의 객체에 속성 값 넣기
-            detailGoalIconBtn.background = null
-            detailGoalIconBtn.setColorFilter(R.color.Apricot, PorterDuff.Mode.SRC_IN) // TODO : 대표 목표 색깔 넣기
-            detailGoalIconBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_outline_menu_book_24))
-            detailGoalEditText.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.Yellow) // 밑줄샥
-            detailGoalEditText.setTextSize(Dimension.SP, 18.0F) // sp단위
-            detailGoalEditText.inputType = 0x00000001 // text타입
-            detailGoalEditText.setTextColor(ContextCompat.getColor(requireContext(), R.color.Black))
-            detailGoalEditText.typeface = resources.getFont(R.font.noto_sans)
-
-            // 레이아웃에 객체 추가
-            detailGoalListLayout.addView(detailGoalIconBtn)
-            detailGoalListLayout.addView(detailGoalEditText)*/
         }
 
         // editText가 아니라 다른 곳을 클릭할 경우 방법(1)
@@ -258,7 +226,7 @@ class DetailGoalSetupFragment : Fragment() {
         }*/
 
         /*detailGoalSetupLayout.setOnClickListener{
-            Log.d("키보드 내림", "키보드내리라고")
+            Log.d("키보드 내림", "키보드내리기")
             val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(detailGoalEditText.windowToken, 0)
         }*/
@@ -274,10 +242,9 @@ class DetailGoalSetupFragment : Fragment() {
             while (i < edtdetailGoalList.size) {
                 var detailGoal: String = edtdetailGoalList[i].text.toString()
                 var iconName : Int = iconList[i].getTag() as Int
-                Log.d("세부목표: ", i.toString() + "번째" + detailGoal)
-                Log.d("아이콘이름: ", i.toString() + "번째" + iconName)
 
-                sqlitedb.execSQL("INSERT INTO detail_goal_db VALUES ('" + detailGoal + "', '" + iconName + "', '" + str_biggoal + "')")
+                // 중복 데이터 제외하고 저장
+                sqlitedb.execSQL("INSERT OR IGNORE INTO detail_goal_db VALUES ('" + detailGoal + "', '" + iconName + "', '" + str_biggoal + "')")
                 ++i
             }
 

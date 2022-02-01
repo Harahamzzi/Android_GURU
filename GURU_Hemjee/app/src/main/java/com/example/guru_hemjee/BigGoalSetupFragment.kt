@@ -189,7 +189,8 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
                 }
 
                 sqlitedb = dbManager.writableDatabase // 정보를 DB에 저장
-                sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('" + str_biggoal + "', '" + integer_color + "', '" + total_time + "');")
+                // 중복 데이터 제외하고 저장
+                sqlitedb.execSQL("INSERT OR IGNORE INTO big_goal_db VALUES ('" + str_biggoal + "', '" + integer_color + "', '" + total_time + "');")
                 sqlitedb.close()
 
                 /*val bundle : Bundle = Bundle() // 번들을 통해서 값 전달

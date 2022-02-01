@@ -238,42 +238,62 @@ class BigGoalModifyFragment : Fragment() {
             }
 
             /** <데이터를 수정하는 방법>
-             * 1. 새로운 테이블 생성
+             * 1. IF) 데이터 조회 후 기존db에 저장되어 있는 대표목표 값과 변경하려는 대표목표 값이 같다면, 토스트메시지 띄우기
+             * 2. 새로운 테이블 생성
              * 2. 기존 테이블에 있던 특정 데이터 값들만 복사해서 새로운 테이블에 붙여넣기
              * 3. 기존 테이블에 있는 복사된 데이터 삭제
              * 4. 복사한 테이블의 데이터 수정
              * 5. 기존 테이블에 복사한 테이블의 데이터 추가하기
              * 6. 새로 만든 테이블 삭제
              **/
-            sqlitedb = dbManager.writableDatabase
+            sqlitedb = dbManager.readableDatabase // 데이터 읽기
+            var cursor : Cursor
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
 
-            sqlitedb.execSQL("CREATE TABLE copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
-            sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
-            sqlitedb.execSQL("DROP TABLE copy_goal_db")
-
+            var isFlag : Boolean = false
+            while (cursor.moveToNext()) {
+                var goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+                if (goal.equals(big_goal)) { // 중복되는 데이터값이 있다면
+                    isFlag = true
+                    Log.i("중복값이 ", "있다")
+                    break
+                }
+            }
             sqlitedb.close()
 
-            sqlitedb = dbManager2.writableDatabase
+            if (!isFlag) { // 중복되는 값이 없을 경우
+                Log.i("중복값이 ", "없다")
+                sqlitedb = dbManager.writableDatabase
+                sqlitedb.execSQL("CREATE TABLE copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
+                sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
+                sqlitedb.execSQL("DROP TABLE copy_goal_db")
 
-            sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.close()
+                sqlitedb.close()
 
-            Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                sqlitedb = dbManager2.writableDatabase
+                sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.close()
 
-            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            val detailGoalSetupFragment = DetailGoalSetupFragment()
-            val bundle = Bundle()
-            bundle.putString("bundle_biggoal", big_goal)
+                Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
 
-            detailGoalSetupFragment.setArguments(bundle)
+                val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+                val detailGoalSetupFragment = DetailGoalSetupFragment()
+                val bundle = Bundle()
+                bundle.putString("bundle_biggoal", big_goal)
 
-            transaction.replace(R.id.fragment_main, SetupFragment())
-            transaction.commit() // 저장
+                detailGoalSetupFragment.setArguments(bundle)
+
+                transaction.replace(R.id.fragment_main, DetailGoalSetupFragment())
+                transaction.commit() // 저장
+            }
+            else {
+                Toast.makeText(context, "다른 내용의 대표목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // 삭제 버튼을 눌렀을 경우
