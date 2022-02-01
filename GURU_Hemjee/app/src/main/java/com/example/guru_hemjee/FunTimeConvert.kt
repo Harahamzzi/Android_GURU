@@ -3,7 +3,7 @@ package com.example.guru_hemjee
 class FunTimeConvert {
 
     companion object {
-        var time: String = "00:00:00"
+        private var time: String = "00:00:00"
         fun timeConvert(hour: String?, min: String?, sec: String?): String{
             if(hour.isNullOrBlank()){
                 time = "00:"

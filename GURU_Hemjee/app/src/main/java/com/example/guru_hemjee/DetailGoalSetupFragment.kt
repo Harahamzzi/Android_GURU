@@ -102,7 +102,6 @@ class DetailGoalSetupFragment : Fragment() {
 
             // 위젯에 반영하기
             bigGoalTextView.text = str_biggoal
-            Log.d("색상", integer_color.toString())
             bigGoalColorImageView.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
         }
 
@@ -111,8 +110,8 @@ class DetailGoalSetupFragment : Fragment() {
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '"+str_biggoal+"';", null)
-
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '"+bigGoalTextView.text.toString()+"';", null)
+        Log.d("BigGoalTextView.text = ", bigGoalTextView.text.toString())
         var num : Int = 0 // 리스트 개수
         while(cursor.moveToNext()) {
             // 대표목표에 해당하는 커서에 있는 값들 가져오기
@@ -153,7 +152,7 @@ class DetailGoalSetupFragment : Fragment() {
             val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             val modifyFragment = BigGoalModifyFragment()
             val bundle = Bundle()
-            bundle.putString("bundle_biggoal", str_biggoal)
+            bundle.putString("bundle_biggoal_2", str_biggoal)
 
             modifyFragment.setArguments(bundle)
 

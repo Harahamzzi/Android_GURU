@@ -132,7 +132,6 @@ class SetupFragment : Fragment() {
                     //var item_color : Int = cursor_item.getInt(cursor_item.getColumnIndex("color"))
 
                     var item_biggoal : String = goalList_adapter.getItem(checkedItem).bigGoalText
-                    Log.d("컬러필터:", integer_color.toString())
 
                     val bundle = Bundle() // 프래그먼트에 값을 넘기기 위한 번들
                     bundle.putString("bundle_biggoal", item_biggoal) // 번들에 넘길 값의 id 저장

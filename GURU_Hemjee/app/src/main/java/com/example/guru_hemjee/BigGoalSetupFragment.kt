@@ -12,7 +12,6 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.guru_hemjee.FunTimeConvert.Companion.time
 import java.util.*
 import java.text.SimpleDateFormat
 
@@ -168,26 +167,25 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
                 }
 
                 // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
-                // 시간 입력
-                var total_time = time
+                lateinit var total_time : String
                 if (integer_hour.isNullOrBlank()) { // 시간이 공란인 경우
                     if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) {
                         Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                     } else {
-                        total_time = FunTimeConvert.timeConvert(null, integer_min, null)
+                        total_time = FunTimeConvert.timeConvert(null, integer_min.toInt().toString(), null)
                     }
                 } else if (integer_min.isNullOrBlank()) { // 분이 공란인 경우
                     if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) {
                         Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                     } else {
-                        total_time = FunTimeConvert.timeConvert(integer_hour, null, null)
+                        total_time = FunTimeConvert.timeConvert(integer_hour.toInt().toString(), null, null)
                     }
                 } else if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) { // 시간 범위
                     Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) { // 분 범위
                     Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else {
-                    total_time = FunTimeConvert.timeConvert(integer_hour, integer_min, null)
+                    total_time = FunTimeConvert.timeConvert(integer_hour.toInt().toString(), integer_min.toInt().toString(), null)
                 }
 
                 sqlitedb = dbManager.writableDatabase // 정보를 DB에 저장
@@ -210,9 +208,6 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
         // 취소 버튼을 눌렀을 경우
         deleteButton.setOnClickListener {
             goSetUp()
-            // TODO : 입력되어 있는 정보가 DB에 등록된 정보인지 확인
-            // Todo : if) 입력되어 있다면, 정보 삭제
-            // Todo : else if) 입력되어 있지 않다면, 토스트 메시지 띄우기 (입력하신 정보는 등록되어 있지 않습니다)
         }
 
         return view
