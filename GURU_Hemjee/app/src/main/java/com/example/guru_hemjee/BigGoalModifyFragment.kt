@@ -21,42 +21,43 @@ class BigGoalModifyFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
     lateinit var dbManager: DBManager
+    lateinit var dbManager2: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
     // 대표 목표
-    lateinit var modBigGoalEditText : EditText
+    lateinit var modBigGoalEditText: EditText
 
     // 라디오 그룹
-    lateinit var modColorRadioGroup1 : RadioGroup // 1행 라디오 그룹 변수
-    lateinit var modColorRadioGroup2 : RadioGroup // 2행 라디오 그룹 변수
+    lateinit var modColorRadioGroup1: RadioGroup // 1행 라디오 그룹 변수
+    lateinit var modColorRadioGroup2: RadioGroup // 2행 라디오 그룹 변수
 
     // 라디오 버튼
-    lateinit var modOrangeRadioBtn : RadioButton // 오렌지색 라디오 버튼
-    lateinit var modYellowRadioBtn : RadioButton // 노랑색 라디오 버튼
-    lateinit var modNoteYellowRadioBtn : RadioButton // 노트노랑색 라디오 버튼
-    lateinit var modApricotRadioBtn : RadioButton // 살구색 라디오 버튼
-    lateinit var modSeedBrownRadioBtn : RadioButton // 갈색 라디오 버튼
-    lateinit var modDarkBrownRadioBtn : RadioButton // 고동색 라디오 버튼
-    lateinit var modLightGreenRadioBtn : RadioButton // 연두색 라디오 버튼
-    lateinit var modGreenRadioBtn : RadioButton // 초록색 라디오 버튼
-    lateinit var modLightBlueRadioBtn : RadioButton // 하늘색 라디오 버튼
-    lateinit var modBlueRadioBtn : RadioButton // 파랑색 라디오 버튼
-    lateinit var modPurpleRadioBtn : RadioButton // 보라색 라디오 버튼
-    lateinit var modPinkRadioBtn : RadioButton // 분홍색 라디오 버튼
+    lateinit var modOrangeRadioBtn: RadioButton // 오렌지색 라디오 버튼
+    lateinit var modYellowRadioBtn: RadioButton // 노랑색 라디오 버튼
+    lateinit var modNoteYellowRadioBtn: RadioButton // 노트노랑색 라디오 버튼
+    lateinit var modApricotRadioBtn: RadioButton // 살구색 라디오 버튼
+    lateinit var modSeedBrownRadioBtn: RadioButton // 갈색 라디오 버튼
+    lateinit var modDarkBrownRadioBtn: RadioButton // 고동색 라디오 버튼
+    lateinit var modLightGreenRadioBtn: RadioButton // 연두색 라디오 버튼
+    lateinit var modGreenRadioBtn: RadioButton // 초록색 라디오 버튼
+    lateinit var modLightBlueRadioBtn: RadioButton // 하늘색 라디오 버튼
+    lateinit var modBlueRadioBtn: RadioButton // 파랑색 라디오 버튼
+    lateinit var modPurpleRadioBtn: RadioButton // 보라색 라디오 버튼
+    lateinit var modPinkRadioBtn: RadioButton // 분홍색 라디오 버튼
 
     // 목표 잠금 시간
-    lateinit var modTodayLockHourView : EditText // 시간
-    lateinit var modTodayLockMinView : EditText // 분
+    lateinit var modTodayLockHourView: EditText // 시간
+    lateinit var modTodayLockMinView: EditText // 분
 
     // 삭제, 확인 버튼
-    lateinit var modDeleteButton : androidx.appcompat.widget.AppCompatButton // 삭제 버튼
-    lateinit var modCompleteButton : androidx.appcompat.widget.AppCompatButton // 확인 버튼
+    lateinit var modDeleteButton: androidx.appcompat.widget.AppCompatButton // 삭제 버튼
+    lateinit var modCompleteButton: androidx.appcompat.widget.AppCompatButton // 확인 버튼
 
-    private lateinit var str_big_goal : String // 대표목표
-    private var integer_color : Int = 0 // 대표목표 색상
-    private lateinit var total_time : String
+    private lateinit var str_big_goal: String // 대표목표
+    private var integer_color: Int = 0 // 대표목표 색상
+    private lateinit var total_time: String
 
-    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+    var mainActivity: MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -109,8 +110,7 @@ class BigGoalModifyFragment : Fragment() {
         modCompleteButton = view.findViewById(R.id.modCompleteButton)
 
         // DetailGoalSetupFragment에서 넘어온 값(대표 목표) 받기
-        if (arguments != null)
-        {
+        if (arguments != null) {
             str_big_goal = requireArguments().getString("bundle_biggoal_2").toString() // 대표목표
 
             // 대표목표 DB
@@ -118,10 +118,10 @@ class BigGoalModifyFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 대표목표 찾기
-            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '"+ str_big_goal +"';", null)
+            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';", null)
 
             // 색상, 시간 값 찾기
-            if(cursor.moveToNext()) {
+            if (cursor.moveToNext()) {
                 integer_color = cursor.getInt(cursor.getColumnIndex("color"))
                 total_time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time")).toString()
             }
@@ -132,7 +132,7 @@ class BigGoalModifyFragment : Fragment() {
 
             // 위젯에 반영하기
             modBigGoalEditText.setText(str_big_goal)
-            when(integer_color) {
+            when (integer_color) {
                 ContextCompat.getColor(requireContext(), R.color.Orange) -> modOrangeRadioBtn.isChecked = true
                 ContextCompat.getColor(requireContext(), R.color.Yellow) -> modYellowRadioBtn.isChecked = true
                 ContextCompat.getColor(requireContext(), R.color.NoteYellow) -> modNoteYellowRadioBtn.isChecked = true
@@ -182,11 +182,13 @@ class BigGoalModifyFragment : Fragment() {
 
         // 대표목표 DB
         dbManager = DBManager(context, "big_goal_db", null, 1)
+        // 세부목표 DB
+        dbManager2 = DBManager(context, "detail_goal_db", null, 1)
 
         // 확인버튼을 눌렀을 경우
         modCompleteButton.setOnClickListener {
             var big_goal = modBigGoalEditText.text.toString() // 대표 목표
-            var color : Int = integer_color // 색상
+            var color: Int = integer_color // 색상
             var str_hour: String = modTodayLockHourView.text.toString() // 잠금 시간
             var str_min: String = modTodayLockMinView.text.toString()// 잠금 분
 
@@ -214,7 +216,7 @@ class BigGoalModifyFragment : Fragment() {
             }
 
             // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
-            lateinit var total_time : String
+            lateinit var total_time: String
             if (str_hour.isNullOrBlank()) { // 시간이 공란인 경우
                 if (str_min.toInt() < 0 || str_min.toInt() >= 60) {
                     Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -235,45 +237,43 @@ class BigGoalModifyFragment : Fragment() {
                 total_time = FunTimeConvert.timeConvert(str_hour.toInt().toString(), str_min.toInt().toString(), null)
             }
 
-            // !채택! 방법1) 새로운 테이블 생성 -> 기존 테이블에 있던 특정 데이터만 복사해서 붙여넣기 -> 기존 데이터 삭제 -> 복사한 테이블의 데이터 수정 -> 다시 기존 테이블에 붙여넣기 -> 생성한 테이블 삭제
-            // 방법2) 새로운 칼럼 생성 -> 기존 테이블에 있던 데이터 복사해서 붙여넣기
-            // 방법3) 새로운 primary key를 추가한 후 기존 primary key 조건 삭제, 데이터 수정, 다시 설정 바꾸기
-            // 방법4) 기존의 특정 데이터만 복사 -> 기존 데이터 삭제 -> 새롭게 등록
+            /** <데이터를 수정하는 방법>
+             * 1. 새로운 테이블 생성
+             * 2. 기존 테이블에 있던 특정 데이터 값들만 복사해서 새로운 테이블에 붙여넣기
+             * 3. 기존 테이블에 있는 복사된 데이터 삭제
+             * 4. 복사한 테이블의 데이터 수정
+             * 5. 기존 테이블에 복사한 테이블의 데이터 추가하기
+             * 6. 새로 만든 테이블 삭제
+             **/
             sqlitedb = dbManager.writableDatabase
-            Log.d("기존 biggoal: ", str_big_goal)
-            Log.d("새로운 biggoal: ", big_goal)
-            Log.d("시:분:초 total_time: ", total_time)
-            var total_time_array = total_time.split(':')
-            Log.d("분리한 시 = ", total_time_array[0])
-            Log.d("분리한 분 = ", total_time_array[1])
-            Log.d("분리한 초 = ", total_time_array[2])
 
             sqlitedb.execSQL("CREATE TABLE copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
             sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '"+total_time+"' WHERE big_goal_name = '"+str_big_goal+"';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '"+big_goal +"' WHERE big_goal_name = '"+str_big_goal+"';")
+            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
+            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
             sqlitedb.execSQL("DROP TABLE copy_goal_db")
 
-            //sqlitedb.execSQL("UPDATE big_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "'")
-            // sqlitedb.execSQL("UPDATE big_goal_db SET big_goal_lock_time = " + new_total_time + " WHERE big_goal_name = '" + str_big_goal + "';")
-            /* 방법2 실패
-            sqlitedb.execSQL("ALTER TABLE big_goal_db DROP PRIMARY KEY")
-            sqlitedb.execSQL("ALTER TABLE big_goal_db ADD copy text PRIMARY KEY")
-            sqlitedb.execSQL("CREATE TABLE copy_big_goal_db(big_goal_name TEXT, color INTEGER, big_goal_lock_time time)") // 복사본
-            sqlitedb.execSQL("INSERT INTO copy_big_goal_db SELECT * FROM big_goal_db") // 기존 테이블에 있던 데이터 복사
-            sqlitedb.execSQL("DROP TABLE big_goal_db")
-            sqlitedb.execSQL("UPDATE copy_big_goal_db SET big_goal_name = " + biggoal + " WHERE big_goal_name = '" + str_biggoal + "';")
-            sqlitedb.execSQL("UPDATE copy_big_goal_db SET big_goal_lock_time = " + total_time + " WHERE big_goal_name = '" + str_biggoal + "';")
-            sqlitedb.execSQL("UPDATE copy_big_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_biggoal + "';")
-            sqlitedb.execSQL("ALTER TABLE copy_big_goal_db RENAME TO big_goal_db") // 테이블명 수정 */
-            Log.i("테이블 수정 테스트: ", "true")
+            sqlitedb.close()
+
+            sqlitedb = dbManager2.writableDatabase
+
+            sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.close()
 
             Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-            goDetailGoalSetup()
+
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val detailGoalSetupFragment = DetailGoalSetupFragment()
+            val bundle = Bundle()
+            bundle.putString("bundle_biggoal", big_goal)
+
+            detailGoalSetupFragment.setArguments(bundle)
+
+            transaction.replace(R.id.fragment_main, SetupFragment())
+            transaction.commit() // 저장
         }
 
         // 삭제 버튼을 눌렀을 경우
@@ -285,7 +285,7 @@ class BigGoalModifyFragment : Fragment() {
             sqlitedb.close()
             dbManager.close()
 
-            val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             val setupFragment = SetupFragment()
             val bundle = Bundle()
             bundle.putString("bundle_biggoal", str_big_goal)
@@ -296,14 +296,5 @@ class BigGoalModifyFragment : Fragment() {
             transaction.commit() // 저장
         }
         return view
-    }
-
-    // detailGoalSetupfragment로 화면을 전환하는 함수
-    fun goDetailGoalSetup() {
-        mainActivity?.supportFragmentManager
-                ?.beginTransaction()
-                ?.replace(R.id.fragment_main, DetailGoalSetupFragment())
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.commit()
     }
 }
