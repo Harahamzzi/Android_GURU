@@ -9,9 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.RecyclerView
-import com.github.mikephil.charting.renderer.scatter.ChevronUpShapeRenderer
 
 class SeedMarket : Fragment() {
 
@@ -195,7 +193,14 @@ class SeedMarket : Fragment() {
                     marketSeedTextView.text = seed.toString()
 
                     //구매 확인 완료 팝업
-                    finalOK("구매 완료", "확인", false)
+                    val dialog = FinalOKDialog(requireContext(),"구매 확인", "확인", false, R.drawable.popup_confirm_buy, null)
+                    dialog.alertDialog()
+
+                    dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+                        override fun onClicked(isConfirm: Boolean) {
+                            //내용 없음
+                        }
+                    })
                 } else {
                     //화면 초기화
                     dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
@@ -216,18 +221,6 @@ class SeedMarket : Fragment() {
 
                     FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
                 }
-            }
-        })
-    }
-
-    //확인
-    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOK(requireContext(),title, okString, isNeedDrawable)
-        dialog.alertDialog()
-
-        dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
-            override fun onClicked(isConfirm: Boolean) {
-                //내용 없음
             }
         })
     }

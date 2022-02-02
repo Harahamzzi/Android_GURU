@@ -1,20 +1,14 @@
 package com.example.guru_hemjee
 
-import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.ArithmeticException
 
 class HamsterEditFragment() : Fragment() {
 
@@ -173,6 +167,16 @@ class HamsterEditFragment() : Fragment() {
 
             upDateInventory(currentInventory)
             FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
+
+
+            val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인", false, R.drawable.popup_applyed, null)
+            dialog.alertDialog()
+
+            dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+                override fun onClicked(isConfirm: Boolean) {
+                    //내용 없음
+                }
+            })
 
             Toast.makeText(requireContext(), "적용 되었습니다.", Toast.LENGTH_SHORT).show()
         }

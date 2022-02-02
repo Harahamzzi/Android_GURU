@@ -18,17 +18,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/mainImageView"
+        android:id="@+id/okPopMainImageView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="240dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="47dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/okButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/finalOkTitleTextView"
         app:srcCompat="@drawable/popup_basic_ham" />
+
+    <TextView
+        android:id="@+id/okPopHamsterTalkTextView"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="17dp"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="center"
+        android:textColor="@color/Black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/okPopMainImageView" />
 
     <Button
         android:id="@+id/okButton"

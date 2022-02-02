@@ -4,9 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 
-class FinalOK(context: Context, title: String, okString: String, isNeedDrawable: Boolean) {
+class FinalOKDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val picSource: Int?, val talkText: String?) {
     private val dialog = Dialog(context)
 
     private var title: String = title
@@ -16,6 +17,8 @@ class FinalOK(context: Context, title: String, okString: String, isNeedDrawable:
     private lateinit var popTitleTextView: TextView
     private lateinit var confirmSeedButton: Button
     private lateinit var confirmButton: Button
+    private lateinit var hamsterTalkTextView: TextView
+    private lateinit var okPopMainImageView: ImageView
 
     fun alertDialog(){
         dialog.show()
@@ -25,6 +28,16 @@ class FinalOK(context: Context, title: String, okString: String, isNeedDrawable:
         popTitleTextView = dialog.findViewById(R.id.finalOkTitleTextView)
         confirmSeedButton = dialog.findViewById(R.id.okButton)
         confirmButton = dialog.findViewById(R.id.plainOkButton)
+        hamsterTalkTextView = dialog.findViewById(R.id.okPopHamsterTalkTextView)
+        okPopMainImageView = dialog.findViewById(R.id.okPopMainImageView)
+
+        if(picSource != null){
+            okPopMainImageView.setImageResource(picSource)
+        }
+
+        if(talkText != null){
+            hamsterTalkTextView.text = talkText
+        }
 
         popTitleTextView.text = title
         if(isNeedDrawable){
