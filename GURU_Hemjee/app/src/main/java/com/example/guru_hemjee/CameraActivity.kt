@@ -219,16 +219,16 @@ class CameraActivity : AppCompatActivity() {
             // 선택한 세부 목표 이름 가져오기
             var goalName = intent.getStringExtra("detailGoalName")
             // 현재 날짜 가져오기
-            var lockDate: Date = Date(System.currentTimeMillis()) // 현재 시간을 Date형으로 가져옴
+            var lockDate = Date(System.currentTimeMillis()) // 현재 시간을 Date형으로 가져옴
 
             // FIXME: 해당 대표 목표의 세부 목표를 가져오는 방법..잘 모르겠음
             // 세부 목표 리포트 DB 가져오기
             dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
             sqlitedb = dbManager.writableDatabase
             // 날짜 넣기
-            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' WHERE detail_goal_name = '$goalName'")
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' WHERE detail_goal_name = '$goalName' AND is_active = 1")
             // 파일명 넣기
-            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET photo_name = '$fileName' WHERE detail_goal_name = '$goalName'")
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET photo_name = '$fileName' WHERE detail_goal_name = '$goalName' AND is_active = 1")
 
             sqlitedb.close()
             dbManager.close()
@@ -254,9 +254,9 @@ class CameraActivity : AppCompatActivity() {
                     // 현재 액티비티 닫기
                     finish()
 
-                    var intent = Intent(this@CameraActivity, LockActivity::class.java)
-                    intent.putExtra("id", intent.getIntExtra("id", 0))  // 받았던 id 다시 넘기기
-                    startActivity(intent)
+//                    var intent = Intent(this@CameraActivity, LockActivity::class.java)
+//                    intent.putExtra("id", intent.getIntExtra("id", 0))  // 받았던 id 다시 넘기기
+//                    startActivity(intent)
                 }
             }
         })
