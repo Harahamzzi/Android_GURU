@@ -50,7 +50,7 @@ class DBManager(
 
         //세부 목표 기록 DB
         db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text PRIMARY KEY, " +
-                "lock_date DATE, lock_day INT, photo_name TEXT)")
+                "lock_date DATE, photo_name TEXT, is_active INT)")
 
         //기본 정보 DB
         db!!.execSQL("CREATE TABLE basic_info_db (hamster_name TEXT, seed INT, total_time time)")
