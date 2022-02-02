@@ -40,10 +40,11 @@ class DetailGoalSetupFragment : Fragment() {
 
     // 배열
     var iconList = ArrayList<ImageButton>() // 아이콘
-    var edtdetailGoalList = ArrayList<EditText>() // 세부목표
-    var textdetailGoalList = ArrayList<TextView>()
-    var detailGoalList = ArrayList<String>()
+    var textdetailGoalList = ArrayList<TextView>() //목표 리스트
+    var bigGoalList = ArrayList<String>() //대표 목표 리스트
     var sebuMenuList = ArrayList<ImageButton>() // 세부메뉴
+
+    var origin = 0
 
     private lateinit var str_biggoal : String // 대표목표
     private var integer_color : Int = 0 // 대표목표 색상
@@ -127,11 +128,18 @@ class DetailGoalSetupFragment : Fragment() {
 
             // 값 넣기
             detailGoalIconBtn.setImageResource(int_icon)
+            detailGoalIconBtn.scaleType = ImageView.ScaleType.FIT_CENTER
             detailGoalIconBtn.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
             detailGoalIconBtn.setTag(int_icon)
 
+            //아이콘 변경
             detailGoalIconBtn.setOnClickListener {
                 showIconPopUp(integer_color, detailGoalIconBtn)
+            }
+
+            //세부 목표 수정
+            sebuMenuBtn.setOnClickListener {
+                showDetailEditPopUp(detailGoalTextView, num)
             }
 
             detailGoalTextView.text = str_detail
@@ -140,11 +148,12 @@ class DetailGoalSetupFragment : Fragment() {
             // 리니어 레이아웃에 객체 추가
             iconList.add(detailGoalIconBtn)
             textdetailGoalList.add(detailGoalTextView)
-            detailGoalList.add(detailGoalTextView.text.toString())
+            bigGoalList.add(str_biggoal)
             sebuMenuList.add(sebuMenuBtn)
 
             detailGoalListLayout.addView(view)
             num++
+            origin++
         }
         cursor.close()
         sqlitedb.close()
@@ -176,29 +185,21 @@ class DetailGoalSetupFragment : Fragment() {
             // 아이콘과 EditText, 레이아웃 객체 동적 생성
             var detailGoalIconBtn : ImageButton = view.findViewById<ImageButton>(R.id.detailGoalIconBtn)
             var detailGoalEditText : EditText = view.findViewById<EditText>(R.id.detailGoalEditText)
-            var sebuMenuBtn : ImageButton = view.findViewById<ImageButton>(R.id.sebuMenuBtn)
 
             // 초기값
             detailGoalIconBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_outline_menu_book_24))
             detailGoalIconBtn.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
             detailGoalIconBtn.setTag(R.drawable.ic_outline_menu_book_24)
-            sebuMenuBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_sebumenu))
 
             // 아이콘을 클릭했을 경우
             detailGoalIconBtn.setOnClickListener {
                 showIconPopUp(integer_color, detailGoalIconBtn)
             }
 
-            // 세부메뉴 버튼을 클릭했을 경우
-            sebuMenuBtn.setOnClickListener {
-
-            }
-
             // 리니어 레이아웃에 객체 추가
             iconList.add(detailGoalIconBtn)
-            edtdetailGoalList.add(detailGoalEditText)
-            detailGoalList.add(detailGoalEditText.text.toString())
-            sebuMenuList.add(sebuMenuBtn)
+            textdetailGoalList.add(detailGoalEditText)
+            bigGoalList.add(str_biggoal)
 
             detailGoalListLayout.addView(view)
 
@@ -241,18 +242,23 @@ class DetailGoalSetupFragment : Fragment() {
             dbManager = DBManager(context, "detail_goal_db", null, 1)
             sqlitedb = dbManager.writableDatabase
 
+            sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '$str_biggoal'")
+
             // 새롭게 추가한 목표를 db에 저장
             var i : Int = 0
-            while (i < edtdetailGoalList.size) {
-                var detailGoal: String = edtdetailGoalList[i].text.toString()
+            while (i < iconList.size) {
+                var detailGoal: String = textdetailGoalList[i].text.toString()
                 var iconName : Int = iconList[i].getTag() as Int
+                var bigGoal: String = bigGoalList[i]
 
                 // 중복 데이터 제외하고 저장
-                sqlitedb.execSQL("INSERT OR IGNORE INTO detail_goal_db VALUES ('" + detailGoal + "', '" + iconName + "', '" + str_biggoal + "')")
+                if(textdetailGoalList[i].text.toString() != "")
+                    sqlitedb.execSQL("INSERT OR IGNORE INTO detail_goal_db VALUES ('" + detailGoal + "', '" + iconName + "', '" + bigGoal + "')")
                 ++i
             }
 
             sqlitedb.close()
+            dbManager.close()
             Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
             goSetUp()
         }
@@ -279,6 +285,39 @@ class DetailGoalSetupFragment : Fragment() {
                 if (isChanged) {
                     iconButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), changedIcon))
                     iconButton.setTag(changedIcon)
+                }
+            }
+        })
+    }
+
+    private fun showDetailEditPopUp(detailNameTextView: TextView, num: Int){
+        val dialog = DetailGoalEditDialog(requireContext(), detailNameTextView.text.toString(), str_biggoal)
+        dialog.detailGoalEditPopUp()
+
+        dialog.setOnClickedListener(object : DetailGoalEditDialog.ButtonClickListener{
+            override fun onClicked(
+                isDeleted: Boolean,
+                goalName: String,
+                bigGoalName: String
+            ) {
+                if(isDeleted){
+                    iconList.removeAt(num-1)
+                    textdetailGoalList.removeAt(num-1)
+                    bigGoalList.removeAt(num-1)
+                    sebuMenuList.removeAt(num-1)
+                } else {
+                    dbManager = DBManager(context, "big_goal_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$bigGoalName'",null)
+                    if(cursor.moveToNext()){
+                        iconList[num-1].setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
+                    }
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    detailNameTextView.text = goalName
+                    bigGoalList[num-1] = bigGoalName
                 }
             }
         })
