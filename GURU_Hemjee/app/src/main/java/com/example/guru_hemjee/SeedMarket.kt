@@ -2,20 +2,16 @@ package com.example.guru_hemjee
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
+import com.github.mikephil.charting.renderer.scatter.ChevronUpShapeRenderer
 
 class SeedMarket : Fragment() {
 
@@ -45,7 +41,7 @@ class SeedMarket : Fragment() {
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-    private lateinit var userName: String
+    private lateinit var hamsterName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +68,7 @@ class SeedMarket : Fragment() {
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
             marketSeedTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
-            userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
+            hamsterName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
         cursor.close()
         sqlitedb.close()
@@ -98,6 +94,7 @@ class SeedMarket : Fragment() {
         marketListView = requireView().findViewById(R.id.marketItemList)
 
         //인벤토리 초기 화면
+        //화면 초기화
         upDateInventory(currentInventory)
 
         clothImageButton.setOnClickListener {
@@ -118,11 +115,24 @@ class SeedMarket : Fragment() {
 
         dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
         while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
         }
         cursor.close()
+        var preusingItems = ArrayList<String>()
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        while(cursor.moveToNext()){
+            preusingItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+        }
+        cursor.close()
+        sqlitedb.close()
+
+        sqlitedb = dbManager.writableDatabase
+        for(item in preusingItems){
+            if(!preselectedItems.contains(item))
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+        }
         sqlitedb.close()
         dbManager.close()
 
@@ -130,28 +140,12 @@ class SeedMarket : Fragment() {
         marketBGFrameLayout = requireView().findViewById(R.id.marketBGFrameLayout)
         marketClothFrameLayout = requireView().findViewById(R.id.marketClothFrameLayout)
         //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
-        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
+        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
 
+        preusingItems.clear()
         selectedItems.addAll(preselectedItems)
     }
 
-    //화면 종료 시 적용 되었던 아이템만 is_using을 1로 만듬
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //화면 초기화
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
-        sqlitedb = dbManager.writableDatabase
-        for(item in selectedItems){
-            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE is_using = 1")
-        }
-        for(item in preselectedItems){
-            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
-        }
-        selectedItems.clear()
-        preselectedItems.clear()
-        sqlitedb.close()
-        dbManager.close()
-    }
 
     //영수증 팝업
     private fun receiptPopUp() {
@@ -186,7 +180,7 @@ class SeedMarket : Fragment() {
                     //씨앗 관련
                     dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = '${seed.toString()}' WHERE user_name = '${userName}'")
+                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = '${seed.toString()}' WHERE hamster_name = '${hamsterName}'")
                     sqlitedb.close()
                     dbManager.close()
 
@@ -212,7 +206,10 @@ class SeedMarket : Fragment() {
                     sqlitedb.close()
                     dbManager.close()
 
-                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
+                    marketReducedSeedTextView.text = "0"
+                    upDateInventory(currentInventory)
+
+                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
                 }
             }
         })
@@ -265,7 +262,7 @@ class SeedMarket : Fragment() {
                 }
 
                 upDateInventory(currentInventory)
-                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
+                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
             }
             //요소 클릭 종료
             else {
@@ -293,7 +290,7 @@ class SeedMarket : Fragment() {
             dbManager.close()
 
             deselectItems.clear()
-            FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true)
+            FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
         }
         marketListView.adapter = marketItemAdapter
 
@@ -317,4 +314,5 @@ class SeedMarket : Fragment() {
         sqlitedb.close()
         dbManager.close()
     }
+
 }

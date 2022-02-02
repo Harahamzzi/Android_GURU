@@ -100,10 +100,34 @@ class HomeFragment : Fragment() {
             showLockSettingPopUp()
         }
 
-        //메인 화면 햄찌 설정
+        //메인 화면 햄찌 설정(선처리)
+        var preselectedItems = ArrayList<String>()
+        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
+        while(cursor.moveToNext()){
+            preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+        }
+        cursor.close()
+        var preusingItems = ArrayList<String>()
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        while(cursor.moveToNext()){
+            preusingItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+        }
+        cursor.close()
+        sqlitedb.close()
+
+        sqlitedb = dbManager.writableDatabase
+        for(item in preusingItems){
+            if(!preselectedItems.contains(item))
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+        }
+        sqlitedb.close()
+        dbManager.close()
+
         mainBGFrameLayout = requireView().findViewById(R.id.mainBGFrameLayout)
         mainClothFrameLayout = requireView().findViewById(R.id.mainClothFrameLayout)
-        FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false)
+        FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false, false)
 
         //잠금 시간 안내
         goalTime = requireView().findViewById(R.id.goalTime)
