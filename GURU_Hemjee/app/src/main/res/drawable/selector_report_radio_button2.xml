@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 색깔 버튼을 눌렀을 때 -->
+    <!-- 주간 버튼 레이아웃 -->
+    <!-- 버튼을 눌렀을 때 -->
     <item android:state_checked="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/Yellow" />
@@ -10,7 +11,7 @@
                 android:height="27dp" />
         </shape>
     </item>
-    <!-- 색깔 버튼을 안 눌렀을 때 -->
+    <!-- 버튼을 안 눌렀을 때 -->
     <item android:state_checked="false">
         <shape android:shape="rectangle">
             <solid android:color="@color/White" />

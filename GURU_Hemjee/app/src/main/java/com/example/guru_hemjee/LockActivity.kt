@@ -36,6 +36,7 @@ import com.dinuscxj.progressbar.CircleProgressBar
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
+import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
@@ -66,6 +67,10 @@ class LockActivity : AppCompatActivity() {
     private var totalTime = 0
     private var time = 0
     private var timerTask: Timer? = null
+
+    // 대표 목표 리포트에 들어갈 시간들
+    private var bigGoallockDate: Long = 0L
+    private lateinit var bigGoalTotalTime: BigInteger
 
     // progress bar
     lateinit var progressBar: CircleProgressBar
@@ -148,6 +153,9 @@ class LockActivity : AppCompatActivity() {
         // 타이머 시작
         countTime()
 
+        // 현재 시각 받아오기(타이머 시작 시각)
+        bigGoallockDate = System.currentTimeMillis() // 현재 시간 가져오기
+
         //시간 감소 버튼
         timeMinusImageButton.setOnClickListener {
             showTimeMinusPopUp()
@@ -200,15 +208,19 @@ class LockActivity : AppCompatActivity() {
         // 세부 목표 달성 체크 - 세부 목표 리포트 확인하기
         dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
+        // 현재 활성화된(is_active = 1) 값만 가져오기
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1", null)
+
+        // view의 아이디 숫자로 활용
+        var i = 0
 
         while(cursor.moveToNext())
         {
             // 목표를 달성했다면
             if(cursor.getString(cursor.getColumnIndex("photo_name")) != null)
             {
-                // FixMe: 뷰 연결 코드 수정 필요
-                var id = intent.getIntExtra("id", 0)
+                // FixMe: 왜..안 되는 거지..?
+                var id = resources.getIdentifier("detailGoalView_${i}", "id", packageName)
                 var view: View = findViewById(id)
 
                 // 버튼 리스너 제거
@@ -233,6 +245,9 @@ class LockActivity : AppCompatActivity() {
                 iconImage.bringToFront()
                 textView.bringToFront()
             }
+
+            // 아이디 숫자 증가
+            i++
         }
 
         cursor.close()
@@ -305,8 +320,17 @@ class LockActivity : AppCompatActivity() {
         }
     }
 
-    // 생성된 세부 목표 개수
-    private var detailGoalCount = 0
+    // 이전에 생성된 세부 목표들 중, 달성하지 못한 세부 목표들은 삭제하는 함수
+    private fun clearDetailGoal() {
+        dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+
+        // 파일명이 적혀있지 않은 세부목표들 삭제
+        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name = " + null)
+
+        sqlitedb.close()
+        dbManager.close()
+    }
 
     // 세부 목표 동적 생성
     private fun addDetailGoal() {
@@ -357,7 +381,7 @@ class LockActivity : AppCompatActivity() {
                 var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
 
                 // 각 view에 id 지정
-                view.id = resources.getIdentifier("detailGoalView${i.toString()}", "id", packageName)
+                view.id = resources.getIdentifier("detailGoalView_${i}", "id", packageName)
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
@@ -376,18 +400,18 @@ class LockActivity : AppCompatActivity() {
                     // Camera Activity로 이동
                     var intent = Intent(this, CameraActivity::class.java)
                     intent.putExtra("detailGoalName", textView.text)
-                    intent.putExtra("viewId", view.id)
+//                    intent.putExtra("viewId", view.id)
                     startActivity(intent)
                 }
 
                 // 위젯 추가
                 detailGoalListContainer.addView(view)
-                // 추가된 세부 목표 개수 카운트 1 증가
-                detailGoalCount++
 
-                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - 중복 제외
-                // Todo: 날짜 넘어가면 같은 세부 목표여도...추가하는 구문 필요할듯
-                sqlitedb2.execSQL("INSERT OR IGNORE INTO detail_goal_time_report_db (detail_goal_name) VALUES ('${textView.text}');")
+                // 아이디 구분 숫자 증가
+                i++
+
+                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
+                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, is_active) VALUES ('${textView.text}', 1);")
             }
 
             // 닫기
@@ -510,6 +534,36 @@ class LockActivity : AppCompatActivity() {
                         seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
                         timerTask?.cancel()         // 타이머 종료
                     }
+
+                    /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
+                    dbManager = DBManager(this@LockActivity, "detail_goal_time_report_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
+                    sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
+
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    /** 대표 목표 리포트 DB 기록 (생성) **/
+                    dbManager = DBManager(this@LockActivity, "big_goal_time_report_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
+                    // 대표 목표 이름
+                    var bigGoalName: String = intent.getStringExtra("bigGoalName")
+
+                    // 총 잠금한 시간 구하기
+                    var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
+                    bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
+                    var resultDate = Date(bigGoallockDate)
+
+                    // 데이터 추가
+                    sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
+
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    // 이번에 생성한 세부 목표들 중, 달성하지 못한 세부 목표들은 삭제
+                    clearDetailGoal()
 
                     LockScreenUtil.deActive()   // 잠금 서비스 종료
 

@@ -45,11 +45,11 @@ class DBManager(
                 "icon INT, big_goal_name text);")
 
         //대표 목표 기록 DB
-        db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT PRIMARY KEY, " +
+        db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT, " +
                 "total_lock_time BIGINT, lock_date DATE);")
 
         //세부 목표 기록 DB
-        db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text PRIMARY KEY, " +
+        db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text, " +
                 "lock_date DATE, photo_name TEXT, is_active INT)")
 
         //기본 정보 DB
