@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
-    var isHome = false
 
     //튜토리얼 관련
     private lateinit var dbManager: DBManager
@@ -96,15 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // titleText 연결
 //        titleText = findViewById(R.id.titleTextView)
-
-
-        // fragment 전환을 위한 transaction 생성
-        val transaction = supportFragmentManager.beginTransaction()
-
-        // 빈 fragment 화면 띄우기 (홈 화면을 보여주기 위함 - 스와이프 화면과 중복 방지)
-        transaction.replace(R.id.fragment_main, BlankFragment(), "blank")
-        transaction.commit()
-        isHome = true
 
         // ViewPager 연결
         viewPager = findViewById(R.id.viewPager)
