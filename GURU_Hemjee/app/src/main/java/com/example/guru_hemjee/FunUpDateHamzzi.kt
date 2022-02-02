@@ -18,12 +18,17 @@ class FunUpDateHamzzi {
         private lateinit var dbManager: DBManager
         private lateinit var sqlitedb: SQLiteDatabase
 
-        fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout, isList: Boolean) {
+        fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
             //배경 & 가구 설정
             bgLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg' AND is_using = 1 OR type = 'furni' AND is_using = 1",null)
+            var cursor: Cursor
+            if(isMarket)
+                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg' AND is_using = 1 OR type = 'furni' AND is_using = 1",null)
+            else
+                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg' AND is_applied = 1 OR type = 'furni' AND is_applied = 1",null)
+
             while(cursor.moveToNext()){
                 //저장 파일 이름으로 ImageView 설정
                 var bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
@@ -46,7 +51,11 @@ class FunUpDateHamzzi {
             clothLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)
+            if(isMarket)
+                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)
+            else
+                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_applied = 1",null)
+
             while(cursor.moveToNext()){
                 //저장 파일 이름으로 ImageView 설정
                 var bgPic = ""

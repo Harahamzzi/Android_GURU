@@ -21,7 +21,7 @@ class HamsterEditFragment() : Fragment() {
     //함께한, 이름 관련
     private lateinit var hamsterNameTextView: TextView
     private lateinit var totalSpentTimeTextView: TextView
-    lateinit var userName: String
+    lateinit var hamsterName: String
 
     //변경 관련 버튼들
     private lateinit var myHNameEditImageButton: ImageButton
@@ -71,7 +71,7 @@ class HamsterEditFragment() : Fragment() {
         if(cursor.moveToNext()){
             hamsterNameTextView.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
             totalSpentTimeTextView.text = cursor.getString(cursor.getColumnIndex("total_time")).toString()
-            userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
+            hamsterName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
         cursor.close()
         sqlitedb.close()
@@ -96,14 +96,21 @@ class HamsterEditFragment() : Fragment() {
         //사용 중인 아이템 미리 선택하기
         dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
         while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+        }
+        cursor.close()
+        var preusingItems = ArrayList<String>()
+        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+        while(cursor.moveToNext()){
+            preusingItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
         }
         cursor.close()
         sqlitedb.close()
         dbManager.close()
 
+        preusingItems.clear()
         selectedItems.addAll(preselectedItems)
 
         upDateInventory("clo")
@@ -127,7 +134,7 @@ class HamsterEditFragment() : Fragment() {
         //배경(옷, 가구, 배경)
         myHBGFrameLayout = requireView().findViewById(R.id.myHBGFrameLayout)
         myHClothFrameLayout = requireView().findViewById(R.id.myHClothFrameLayout)
-        FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
+        FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
 
         //적용 버튼
         myHamsterApplyImageButton = requireView().findViewById(R.id.myHamsterApplyImageButton)
@@ -138,13 +145,11 @@ class HamsterEditFragment() : Fragment() {
             //기존에 선택 중이던 아이템을 deselectedItems에 대입
             dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1 OR is_applied = 1",null)
             while(cursor.moveToNext()){
                 var itemName = cursor.getString(cursor.getColumnIndex("item_name"))
-
-                if(!selectedItems.contains(itemName)){
+                if(!selectedItems.contains(itemName))
                     deSelectItems.add(itemName)
-                }
             }
             cursor.close()
             sqlitedb.close()
@@ -152,9 +157,11 @@ class HamsterEditFragment() : Fragment() {
             //사용중임 수정(selected, deselct 아이템 갱신)
             sqlitedb = dbManager.writableDatabase
             for(item in selectedItems){
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_applied = 1 WHERE item_name = '${item}'")
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
             }
             for(item in deSelectItems) {
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_applied = 0 WHERE item_name = '${item}'")
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
             }
             sqlitedb.close()
@@ -165,26 +172,10 @@ class HamsterEditFragment() : Fragment() {
             preselectedItems.addAll(selectedItems)
 
             upDateInventory(currentInventory)
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
+            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
 
             Toast.makeText(requireContext(), "적용 되었습니다.", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //화면 초기화
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
-        sqlitedb = dbManager.writableDatabase
-        for(item in selectedItems){
-            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
-        }
-        for(item in preselectedItems){
-            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
-        }
-        selectedItems.clear()
-        sqlitedb.close()
-        dbManager.close()
     }
 
     //이름 변경 팝업
@@ -199,7 +190,7 @@ class HamsterEditFragment() : Fragment() {
                     dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     hamsterNameTextView.text = name
-                    sqlitedb.execSQL("UPDATE basic_info_db SET user_name = '${name}' WHERE user_name = '${userName}'")
+                    sqlitedb.execSQL("UPDATE basic_info_db SET user_name = '${name}' WHERE hamster_name = '${hamsterName}'")
                 }
             }
         })
@@ -248,7 +239,7 @@ class HamsterEditFragment() : Fragment() {
             dbManager.close()
 
             deselectedItems.clear()
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true)
+            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
         }
         myHItemList.adapter = myHamsterAdapter
 

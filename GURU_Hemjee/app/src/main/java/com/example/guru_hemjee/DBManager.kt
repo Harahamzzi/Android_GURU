@@ -57,7 +57,7 @@ class DBManager(
 
         //씨앗 상점 아이템 DB
         db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name TEXT PRIMARY KEY, price int, " +
-                "type text, category text, bg_pic text, market_pic text, hamster_pic text, is_bought INT, is_using INT)")
+                "type text, category text, bg_pic text, market_pic text, hamster_pic text, is_bought INT, is_using INT, is_applied INT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
