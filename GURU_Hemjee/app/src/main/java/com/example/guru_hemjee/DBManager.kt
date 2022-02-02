@@ -46,7 +46,7 @@ class DBManager(
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT PRIMARY KEY, " +
-                "total_lock_time BIGINT, lock_date DATE, lock_day INT);")
+                "total_lock_time BIGINT, lock_date DATE);")
 
         //세부 목표 기록 DB
         db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text PRIMARY KEY, " +
