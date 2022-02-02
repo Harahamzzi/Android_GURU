@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
@@ -139,7 +140,8 @@ class DetailGoalSetupFragment : Fragment() {
 
             //세부 목표 수정
             sebuMenuBtn.setOnClickListener {
-                showDetailEditPopUp(detailGoalTextView, num)
+                showDetailEditPopUp(detailGoalTextView, textdetailGoalList.indexOf(detailGoalTextView))
+
             }
 
             detailGoalTextView.text = str_detail
@@ -189,6 +191,7 @@ class DetailGoalSetupFragment : Fragment() {
             // 초기값
             detailGoalIconBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_outline_menu_book_24))
             detailGoalIconBtn.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
+            detailGoalIconBtn.scaleType = ImageView.ScaleType.FIT_CENTER
             detailGoalIconBtn.setTag(R.drawable.ic_outline_menu_book_24)
 
             // 아이콘을 클릭했을 경우
@@ -291,7 +294,7 @@ class DetailGoalSetupFragment : Fragment() {
     }
 
     private fun showDetailEditPopUp(detailNameTextView: TextView, num: Int){
-        val dialog = DetailGoalEditDialog(requireContext(), detailNameTextView.text.toString(), str_biggoal)
+        val dialog = DetailGoalEditDialog(requireContext(), detailNameTextView.text.toString(), bigGoalList[num])
         dialog.detailGoalEditPopUp()
 
         dialog.setOnClickedListener(object : DetailGoalEditDialog.ButtonClickListener{
@@ -301,23 +304,26 @@ class DetailGoalSetupFragment : Fragment() {
                 bigGoalName: String
             ) {
                 if(isDeleted){
-                    iconList.removeAt(num-1)
-                    textdetailGoalList.removeAt(num-1)
-                    bigGoalList.removeAt(num-1)
-                    sebuMenuList.removeAt(num-1)
+                    iconList[num].setColorFilter(R.color.Gray, PorterDuff.Mode.SRC_IN)
+                    detailNameTextView.setTextColor(ColorStateList.valueOf(resources.getColor(R.color.Gray)))
+                    sebuMenuList[num].isClickable = false
+                    iconList.removeAt(num)
+                    textdetailGoalList.removeAt(num)
+                    bigGoalList.removeAt(num)
+                    sebuMenuList.removeAt(num)
                 } else {
                     dbManager = DBManager(context, "big_goal_db", null, 1)
                     sqlitedb = dbManager.readableDatabase
                     var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$bigGoalName'",null)
                     if(cursor.moveToNext()){
-                        iconList[num-1].setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
+                        iconList[num].setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
                     }
                     cursor.close()
                     sqlitedb.close()
                     dbManager.close()
 
                     detailNameTextView.text = goalName
-                    bigGoalList[num-1] = bigGoalName
+                    bigGoalList[num] = bigGoalName
                 }
             }
         })

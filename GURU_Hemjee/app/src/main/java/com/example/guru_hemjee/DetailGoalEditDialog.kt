@@ -47,7 +47,7 @@ class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: 
         //목표 이동
         moveGoalImageButton = dialog.findViewById(R.id.moveDetailGoalNameImageButton)
         moveGoalImageButton.setOnClickListener {
-            val subDialog = GoalSelectDialog(context, goalName, "목표 이동")
+            val subDialog = GoalSelectDialog(context, bigGoalName, "목표 이동")
             subDialog.goalSelectPop()
 
             subDialog.setOnClickedListener(object : GoalSelectDialog.ButtonClickListener{
