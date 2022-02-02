@@ -14,10 +14,13 @@ import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
-class GoalSelectDialog(context: Context, bigGoalTitle: String) {
+class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: String) {
     private var context = context
     private var dialog = Dialog(context)
     private var bigGoalTitle = bigGoalTitle
+
+    //팝업 제목
+    private lateinit var dialogTitleTextView: TextView
 
     //db관련(대표 목표 리스트)
     private lateinit var dbManager: DBManager
@@ -36,6 +39,10 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String) {
     fun goalSelectPop(){
         dialog.show()
         dialog.setContentView(R.layout.popup_goal_select)
+
+        //팝업 제목
+        dialogTitleTextView = dialog.findViewById<TextView>(R.id.moveDetailGoalTextView)
+        dialogTitleTextView.text = dialogTitle
 
         //리스트 가져오기
         goalRadioGroup = dialog.findViewById(R.id.setGoalRadioGroup)

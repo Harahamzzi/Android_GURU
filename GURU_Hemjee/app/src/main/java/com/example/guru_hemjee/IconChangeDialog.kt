@@ -55,114 +55,158 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         iconGroup3 = dialog.findViewById(R.id.iconGroup3)
 
         icon1RadioButton = dialog.findViewById(R.id.icon1)
-        icon1RadioButton.isChecked = R.drawable.ic_outline_menu_book_24==icon
         icon2RadioButton = dialog.findViewById(R.id.icon2)
-        icon2RadioButton.isChecked = R.drawable.ic_outline_play_lesson_24==icon
         icon3RadioButton = dialog.findViewById(R.id.icon3)
-        icon3RadioButton.isChecked = R.drawable.ic_outline_school_24==icon
         icon4RadioButton = dialog.findViewById(R.id.icon4)
-        icon4RadioButton.isChecked = R.drawable.dumble_icon==icon
         icon5RadioButton = dialog.findViewById(R.id.icon5)
-        icon5RadioButton.isChecked = R.drawable.ic_outline_forest_24==icon
         icon6RadioButton = dialog.findViewById(R.id.icon6)
-        icon6RadioButton.isChecked = R.drawable.ic_outline_sports_esports_24==icon
         icon7RadioButton = dialog.findViewById(R.id.icon7)
-        icon7RadioButton.isChecked = R.drawable.ic_outline_computer_24==icon
         icon8RadioButton = dialog.findViewById(R.id.icon8)
-        icon8RadioButton.isChecked = R.drawable.ic_outline_piano_24==icon
         icon9RadioButton = dialog.findViewById(R.id.icon9)
-        icon9RadioButton.isChecked = R.drawable.ic_outline_ramen_dining_24==icon
         icon10RadioButton = dialog.findViewById(R.id.icon10)
-        icon10RadioButton.isChecked = R.drawable.ic_outline_local_cafe_24==icon
         icon11RadioButton = dialog.findViewById(R.id.icon11)
-        icon11RadioButton.isChecked = R.drawable.ic_outline_business_center_24==icon
         icon12RadioButton = dialog.findViewById(R.id.icon12)
-        icon12RadioButton.isChecked = R.drawable.ic_outline_storefront_24==icon
         icon13RadioButton = dialog.findViewById(R.id.icon13)
-        icon13RadioButton.isChecked = R.drawable.ic_outline_draw_24==icon
         icon14RadioButton = dialog.findViewById(R.id.icon14)
-        icon14RadioButton.isChecked = R.drawable.ic_outline_savings_24==icon
         icon15RadioButton = dialog.findViewById(R.id.icon15)
-        icon15RadioButton.isChecked = R.drawable.ic_outline_query_stats_24==icon
+
+        if(R.drawable.ic_outline_menu_book_24==icon){
+            icon1RadioButton.isChecked = true
+            icon1RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_play_lesson_24==icon){
+            icon2RadioButton.isChecked = true
+            icon2RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_school_24==icon){
+            icon3RadioButton.isChecked = true
+            icon3RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.dumble_icon==icon){
+            icon4RadioButton.isChecked = true
+            icon4RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_forest_24==icon){
+            icon5RadioButton.isChecked = true
+            icon5RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_sports_esports_24==icon){
+            icon6RadioButton.isChecked = true
+            icon6RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_computer_24==icon){
+            icon7RadioButton.isChecked = true
+            icon7RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_piano_24==icon){
+            icon8RadioButton.isChecked = true
+            icon8RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_ramen_dining_24==icon){
+            icon9RadioButton.isChecked = true
+            icon9RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_local_cafe_24==icon){
+            icon10RadioButton.isChecked = true
+            icon10RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_business_center_24==icon){
+            icon11RadioButton.isChecked = true
+            icon11RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_storefront_24==icon){
+            icon12RadioButton.isChecked = true
+            icon12RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_draw_24==icon){
+            icon13RadioButton.isChecked = true
+            icon13RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_savings_24==icon){
+            icon14RadioButton.isChecked = true
+            icon14RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
+        else if(R.drawable.ic_outline_query_stats_24==icon){
+            icon15RadioButton.isChecked = true
+            icon15RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+        }
 
         iconGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when(checkedId){
                 R.id.icon1 -> {
                     colorGray()
-                    icon1RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_menu_book_24
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
+                    icon1RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_menu_book_24
                 }
                 R.id.icon2 -> {
                     colorGray()
-                    icon2RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_play_lesson_24
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
+                    icon2RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_play_lesson_24
                 }
                 R.id.icon3 -> {
                     colorGray()
-                    icon3RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_school_24
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
+                    icon3RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_school_24
                 }
                 R.id.icon4 -> {
                     colorGray()
-                    icon4RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.dumble_icon
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
+                    icon4RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.dumble_icon
                 }
                 R.id.icon5 -> {
                     colorGray()
-                    icon5RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_forest_24
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
+                    icon5RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_forest_24
                 }
             }
-            iconGroup2.clearCheck()
-            iconGroup3.clearCheck()
         }
         iconGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.icon6 -> {
                     colorGray()
-                    icon6RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_sports_esports_24
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
+                    icon6RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_sports_esports_24
                 }
                 R.id.icon7 -> {
                     colorGray()
-                    icon7RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_computer_24
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
+                    icon7RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_computer_24
                 }
                 R.id.icon8 -> {
                     colorGray()
-                    icon8RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_piano_24
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
+                    icon8RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_piano_24
                 }
                 R.id.icon9 -> {
                     colorGray()
-                    icon9RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_ramen_dining_24
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
+                    icon9RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_ramen_dining_24
                 }
                 R.id.icon10 -> {
                     colorGray()
-                    icon10RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_local_cafe_24
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
+                    icon10RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_local_cafe_24
                 }
             }
         }
@@ -171,38 +215,38 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
             when(checkedId){
                 R.id.icon11 -> {
                     colorGray()
-                    icon11RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_business_center_24
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
+                    icon11RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_business_center_24
                 }
                 R.id.icon12 -> {
                     colorGray()
-                    icon12RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_storefront_24
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
+                    icon12RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_storefront_24
                 }
                 R.id.icon13 -> {
                     colorGray()
-                    icon13RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_draw_24
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
+                    icon13RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_draw_24
                 }
                 R.id.icon14 -> {
                     colorGray()
-                    icon14RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_savings_24
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
+                    icon14RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_savings_24
                 }
                 R.id.icon15 -> {
                     colorGray()
-                    icon15RadioButton.compoundDrawableTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_query_stats_24
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
+                    icon15RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    icon = R.drawable.ic_outline_query_stats_24
                 }
             }
         }
@@ -232,21 +276,21 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
     }
 
     fun colorGray() {
-        icon1RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon2RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon3RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon4RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon5RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon6RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon7RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon8RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon9RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon10RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon11RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon12RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon13RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon14RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon15RadioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon1RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon2RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon3RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon4RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon5RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon6RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon7RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon8RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon9RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon10RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon11RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon12RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon13RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon14RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        icon15RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
     }
 
 }

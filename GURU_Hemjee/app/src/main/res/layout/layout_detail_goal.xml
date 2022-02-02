@@ -45,14 +45,4 @@
         android:textSize="18sp"
         android:visibility="gone" />
 
-    <ImageButton
-        android:id="@+id/sebuMenuBtn"
-        android:layout_width="21dp"
-        android:layout_height="21dp"
-        android:layout_marginLeft="7dp"
-        android:background="@null"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_sebumenu"
-        app:tint="@color/Gray" />
-
 </LinearLayout>

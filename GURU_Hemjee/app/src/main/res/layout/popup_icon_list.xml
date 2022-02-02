@@ -67,6 +67,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_menu_book_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -77,6 +78,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_play_lesson_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -87,6 +89,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_school_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -97,6 +100,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/dumble_icon"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -107,6 +111,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_forest_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -127,6 +132,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_sports_esports_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -137,6 +143,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_computer_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -147,6 +154,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_piano_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -157,6 +165,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_ramen_dining_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -167,6 +176,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_local_cafe_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
         </RadioGroup>
@@ -186,6 +196,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_business_center_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -196,6 +207,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_storefront_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -206,6 +218,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_draw_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -216,6 +229,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_savings_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 
@@ -226,6 +240,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_query_stats_24"
+                android:backgroundTint="@color/Gray"
                 android:button="@null"
                 android:gravity="center" />
 

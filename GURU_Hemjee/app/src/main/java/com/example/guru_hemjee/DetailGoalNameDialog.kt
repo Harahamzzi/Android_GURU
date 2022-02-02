@@ -6,7 +6,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 
-class HamsterEditNameDialog(context: Context, name: String?) {
+class DetailGoalNameDialog(context: Context, name: String) {
     private val dialog = Dialog(context)
 
     //기존 이름 textView
@@ -22,15 +22,15 @@ class HamsterEditNameDialog(context: Context, name: String?) {
 
     fun EditName() {
         dialog.show()
-        dialog.setContentView(R.layout.popup_edit_name)
+        dialog.setContentView(R.layout.popup_detail_goal_name_edit)
 
         //기존 이름
-        nameTextView = dialog.findViewById(R.id.nameTextView)
+        nameTextView = dialog.findViewById(R.id.originDetailGoalNameTextView)
         nameTextView.text = name
 
-        editNameEditText = dialog.findViewById(R.id.editNameEditText)
-        hamsterCancelImageButton = dialog.findViewById(R.id.hamsterCancelImageButton)
-        nameEditImageButton = dialog.findViewById(R.id.nameEditImageButton)
+        editNameEditText = dialog.findViewById(R.id.detailNameEditText)
+        hamsterCancelImageButton = dialog.findViewById(R.id.goalNameEditCancelImageButton)
+        nameEditImageButton = dialog.findViewById(R.id.detailGoalNameOkImageButton)
 
         hamsterCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null)
