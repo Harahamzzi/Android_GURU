@@ -75,7 +75,7 @@ class LockActivity : AppCompatActivity() {
     private lateinit var dbManager2: DBManager
     private lateinit var sqlitedb:SQLiteDatabase
     private lateinit var sqlitedb2:SQLiteDatabase
-    private lateinit var userName: String
+    private lateinit var hamsterName: String
 
     // 세부 목표 리스트 관련
     lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
@@ -127,7 +127,7 @@ class LockActivity : AppCompatActivity() {
 
         //씨앗 세팅
         seedPointView.text = intent.getStringExtra("seed")
-        userName = intent.getStringExtra("userName")
+        hamsterName = intent.getStringExtra("hamsterName")
 
         // 타이머 세팅
         lockHourTextView.setText(intent.getStringExtra("hour"))
@@ -527,7 +527,7 @@ class LockActivity : AppCompatActivity() {
         dbManager = DBManager(this, "basic_info_db", null, 1)
         sqlitedb = dbManager.writableDatabase
         sqlitedb.execSQL("UPDATE basic_info_db SET seed = '"+changedSeed.toString()+
-                "' WHERE user_name = '"+userName+"'")
+                "' WHERE hamster_name = '"+hamsterName+"'")
         sqlitedb.close()
         dbManager.close()
 

@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     //db관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-    private lateinit var userName: String
+    private lateinit var hamName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
             seedPointView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
-            userName = cursor.getString(cursor.getColumnIndex("user_name")).toString()
+            hamName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
 
         cursor.close()
@@ -133,7 +133,7 @@ class HomeFragment : Fragment() {
 
                     // 유저 정보 보내기
                     intent.putExtra("seed", seedPointView.text)
-                    intent.putExtra("userName", userName)
+                    intent.putExtra("hamsterName", hamName)
 
                     // 대표 목표 이름 보내기
                     intent.putExtra("bigGoalName", goalSelectButton.text)
