@@ -323,10 +323,10 @@ class LockActivity : AppCompatActivity() {
     // 이전에 생성된 세부 목표들 중, 달성하지 못한 세부 목표들은 삭제하는 함수
     private fun clearDetailGoal() {
         dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
-        sqlitedb = dbManager.writableDatabase
+        sqlitedb = dbManager.readableDatabase
 
         // 파일명이 적혀있지 않은 세부목표들 삭제
-        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name = " + null)
+        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
 
         sqlitedb.close()
         dbManager.close()
