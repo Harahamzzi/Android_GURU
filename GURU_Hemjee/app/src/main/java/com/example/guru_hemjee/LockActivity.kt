@@ -1,16 +1,20 @@
 package com.example.guru_hemjee
+import android.app.Activity
 import android.util.Log
 
 import android.app.NotificationManager
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.provider.Settings
@@ -26,12 +30,17 @@ import androidx.annotation.Dimension
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.marginLeft
 import com.dinuscxj.progressbar.CircleProgressBar
+import java.io.File
+import java.io.IOException
 import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
+@Suppress("DEPRECATION")    // 사용하지 말아야 할 메소드 관련 경고 억제
 class LockActivity : AppCompatActivity() {
 
     //씨앗 관련
@@ -63,7 +72,9 @@ class LockActivity : AppCompatActivity() {
 
     //DB 관련
     private lateinit var dbManager: DBManager
+    private lateinit var dbManager2: DBManager
     private lateinit var sqlitedb:SQLiteDatabase
+    private lateinit var sqlitedb2:SQLiteDatabase
     private lateinit var userName: String
 
     // 세부 목표 리스트 관련
@@ -182,6 +193,53 @@ class LockActivity : AppCompatActivity() {
         }
     }
 
+    // 액티비티가 화면에 보였을 때 호출되는 함수
+    override fun onResume() {
+        super.onResume()
+
+        // 세부 목표 달성 체크 - 세부 목표 리포트 확인하기
+        dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
+
+        while(cursor.moveToNext())
+        {
+            // 목표를 달성했다면
+            if(cursor.getString(cursor.getColumnIndex("photo_name")) != null)
+            {
+                // FixMe: 뷰 연결 코드 수정 필요
+                var id = intent.getIntExtra("id", 0)
+                var view: View = findViewById(id)
+
+                // 버튼 리스너 제거
+                var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
+                button.setOnClickListener {
+                    // 아무것도 하지 않음
+                }
+                // 버튼 배경 변경
+                button.setBackgroundResource(R.drawable.lock_detail_goal_check)
+
+                // 카테고리 아이콘 색상 변경
+                var iconImage: ImageView = view.findViewById(R.id.detailGoalIconImageView)
+                iconImage.setColorFilter(null)
+                iconImage.setColorFilter(ContextCompat.getColor(applicationContext, R.color.NoteYellow))
+
+                // 텍스트 색상 변경
+                var textView: TextView = view.findViewById(R.id.detailGoalTextView)
+                textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.White))
+
+                // 위치 조정
+                button.bringToFront()
+                iconImage.bringToFront()
+                textView.bringToFront()
+            }
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+    }
+
     // 하단 소프트키를 숨겨 잠금 화면을 풀스크린으로 뿌리도록 함
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -194,7 +252,6 @@ class LockActivity : AppCompatActivity() {
                     )
         }
     }
-    @Suppress("DEPRECATION")
     override fun onAttachedToWindow() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -248,6 +305,9 @@ class LockActivity : AppCompatActivity() {
         }
     }
 
+    // 생성된 세부 목표 개수
+    private var detailGoalCount = 0
+
     // 세부 목표 동적 생성
     private fun addDetailGoal() {
 
@@ -280,8 +340,15 @@ class LockActivity : AppCompatActivity() {
             dbManager = DBManager(this, "detail_goal_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
+            // DB 데이터 쓰기 열기(세부 목표 리포트)
+            dbManager2 = DBManager(this, "detail_goal_time_report_db", null, 1)
+            sqlitedb2 = dbManager2.writableDatabase
+
+
             // 해당 대표 목표의 세부 목표들 가져오기
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
+
+            var i = 0
 
             // 위젯 생성 및 적용
             while(cursor.moveToNext())
@@ -289,6 +356,8 @@ class LockActivity : AppCompatActivity() {
                 // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
                 var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
 
+                // 각 view에 id 지정
+                view.id = resources.getIdentifier("detailGoalView${i.toString()}", "id", packageName)
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
@@ -304,42 +373,34 @@ class LockActivity : AppCompatActivity() {
                 // 버튼에 리스너 달기
                 var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
                 button.setOnClickListener {
-                    // TODO: 카메라 또는 인증 팝업 열기...?
-//                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//                    startActivity(intent)
-//                    dispatchTakePictureIntent() // 카메라 어플 실행
-
                     // Camera Activity로 이동
                     var intent = Intent(this, CameraActivity::class.java)
+                    intent.putExtra("detailGoalName", textView.text)
+                    intent.putExtra("viewId", view.id)
                     startActivity(intent)
-
-                    Log.i ("정보태그", "눌렀다!")
                 }
 
                 // 위젯 추가
                 detailGoalListContainer.addView(view)
+                // 추가된 세부 목표 개수 카운트 1 증가
+                detailGoalCount++
+
+                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - 중복 제외
+                // Todo: 날짜 넘어가면 같은 세부 목표여도...추가하는 구문 필요할듯
+                sqlitedb2.execSQL("INSERT OR IGNORE INTO detail_goal_time_report_db (detail_goal_name) VALUES ('${textView.text}');")
             }
 
             // 닫기
             cursor.close()
             sqlitedb.close()
             dbManager.close()
+
+            sqlitedb2.close()
         }
         catch(e: Exception) {
             Log.e("DBException", "세부 목표 가져오기 실패")
         }
     }
-
-//    // 카메라 인텐트 관련
-//    private val REQUEST_IMAGE_CAPTURE = 1
-//
-//    private fun dispatchTakePictureIntent() {
-//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-//            takePictureIntent.resolveActivity(packageManager)?.also {
-//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-//            }
-//        }
-//    }
 
     // 시간 감소 팝업
     private fun showTimeMinusPopUp() {
