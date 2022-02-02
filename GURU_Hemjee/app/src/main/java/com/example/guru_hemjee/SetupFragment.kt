@@ -27,12 +27,12 @@ class SetupFragment : Fragment() {
     private lateinit var bigGoalListView : ListView // fragment_setup.xml파일에 있는 리스트뷰의 아이디를 저장할 변수
     lateinit var plusGoalButton : ImageButton // fragment_setup.xml파일에 있는 +버튼의 아이디를 저장할 변수
 
-    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as MainActivity
+        mainActivity = context as SubMainActivity
     }
 
     override fun onDetach() {

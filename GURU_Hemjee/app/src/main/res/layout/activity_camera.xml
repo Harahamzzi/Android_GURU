@@ -15,8 +15,8 @@
         app:layout_constraintTop_toTopOf="parent">
     </Toolbar>
 
-    <SurfaceView
-        android:id="@+id/cameraSurfaceView"
+    <ImageView
+        android:id="@+id/imagePreview"
         android:layout_width="match_parent"
         android:layout_height="520dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,15 +30,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cameraSurfaceView">
+        app:layout_constraintTop_toBottomOf="@+id/imagePreview">
 
         <ImageButton
-            android:id="@+id/captureImageButton"
+            android:id="@+id/saveImageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_camera"
+            android:src="@drawable/ic_baseline_check"
             android:background="@android:color/transparent" />
     </FrameLayout>
 

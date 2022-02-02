@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="270dp"
     android:layout_height="309dp"
     android:background="@drawable/pop_up_bg">
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/cancelImageButton6"
+        android:id="@+id/iconCancelImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginStart="34dp"
@@ -31,7 +32,7 @@
         app:srcCompat="@drawable/cancel_button" />
 
     <ImageButton
-        android:id="@+id/settingOkImageButton3"
+        android:id="@+id/iconOkImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginEnd="36dp"
@@ -42,202 +43,194 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ok_button" />
 
-    <RadioGroup
+    <LinearLayout
         android:layout_width="228dp"
         android:layout_height="145dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/cancelImageButton6"
+        app:layout_constraintBottom_toTopOf="@+id/iconCancelImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moveDetailGoalTextView2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <RadioGroup
+            android:id="@+id/iconGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:layout_weight="1">
 
             <RadioButton
-                android:id="@+id/studyRadioButton"
+                android:id="@+id/icon1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_menu_book_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/takeClassRadioButton"
+                android:id="@+id/icon2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_play_lesson_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/icon3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_school_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:id="@+id/icon4"
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/dumble_icon"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton7"
+                android:id="@+id/icon5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_forest_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/iconGroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton8"
+                android:id="@+id/icon6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_sports_esports_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton9"
+                android:id="@+id/icon7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_computer_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton10"
+                android:id="@+id/icon8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_piano_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton11"
+                android:id="@+id/icon9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_ramen_dining_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton12"
+                android:id="@+id/icon10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_local_cafe_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
+        </RadioGroup>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <RadioGroup
+            android:id="@+id/iconGroup3"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton13"
+                android:id="@+id/icon11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_business_center_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton14"
+                android:id="@+id/icon12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_storefront_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton15"
+                android:id="@+id/icon13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_draw_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton16"
+                android:id="@+id/icon14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_savings_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/radioButton17"
+                android:id="@+id/icon15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/ic_outline_query_stats_24"
-                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
-        </LinearLayout>
-    </RadioGroup>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

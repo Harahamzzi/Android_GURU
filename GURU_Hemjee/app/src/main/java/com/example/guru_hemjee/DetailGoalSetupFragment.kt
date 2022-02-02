@@ -48,12 +48,12 @@ class DetailGoalSetupFragment : Fragment() {
     private lateinit var str_biggoal : String // 대표목표
     private var integer_color : Int = 0 // 대표목표 색상
 
-    var mainActivity : MainActivity? = null // 메인 액티비티 변수
+    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as MainActivity
+        mainActivity = context as SubMainActivity
     }
 
     override fun onDetach() {
@@ -129,6 +129,11 @@ class DetailGoalSetupFragment : Fragment() {
             detailGoalIconBtn.setImageResource(int_icon)
             detailGoalIconBtn.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
             detailGoalIconBtn.setTag(int_icon)
+
+            detailGoalIconBtn.setOnClickListener {
+                showIconPopUp(integer_color, detailGoalIconBtn)
+            }
+
             detailGoalTextView.text = str_detail
             sebuMenuBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_sebumenu))
 
@@ -181,7 +186,7 @@ class DetailGoalSetupFragment : Fragment() {
 
             // 아이콘을 클릭했을 경우
             detailGoalIconBtn.setOnClickListener {
-
+                showIconPopUp(integer_color, detailGoalIconBtn)
             }
 
             // 세부메뉴 버튼을 클릭했을 경우
@@ -263,5 +268,19 @@ class DetailGoalSetupFragment : Fragment() {
                 ?.replace(R.id.fragment_main, SetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.commit()
+    }
+
+    private fun showIconPopUp(color: Int, iconButton: ImageButton) {
+        val dialog = IconChangeDialog(requireContext(), color, iconButton.getTag() as Int)
+        dialog.iconPopUp()
+
+        dialog.setOnClickedListener(object : IconChangeDialog.ButtonClickListener {
+            override fun onClick(isChanged: Boolean, changedIcon: Int) {
+                if (isChanged) {
+                    iconButton.setImageDrawable(ContextCompat.getDrawable(requireContext(), changedIcon))
+                    iconButton.setTag(changedIcon)
+                }
+            }
+        })
     }
 }
