@@ -1,24 +1,18 @@
 package com.example.guru_hemjee
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
-import android.hardware.Camera
 import android.media.ExifInterface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
 import android.util.Log
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.FileProvider
@@ -27,7 +21,6 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 import java.lang.Exception
-import java.nio.file.Files.exists
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -245,10 +238,10 @@ class CameraActivity : AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOK(this,title, okString, isNeedDrawable)
+        val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, R.drawable.popup_goal, "좋아! 끝까지 가보는거다 햄찌!\n해바라기 씨를 위해!")
         dialog.alertDialog()
 
-        dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
+        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
                     // 현재 액티비티 닫기

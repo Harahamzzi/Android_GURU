@@ -7,17 +7,20 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 
-class AlertDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean) {
+class AlertDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val talkText: String?) {
     private val dialog = Dialog(context)
 
-    var title: String = title
-    var okString: String = okString
-    var isNeedDrawable: Boolean = isNeedDrawable
+    private var title: String = title
+    private var okString: String = okString
+    private var isNeedDrawable: Boolean = isNeedDrawable
 
-    lateinit var popTitleTextView: TextView
-    lateinit var cancelImageButton: ImageButton
-    lateinit var confirmSeedButton: Button
-    lateinit var confirmButton: Button
+    private lateinit var popTitleTextView: TextView
+    private lateinit var cancelImageButton: ImageButton
+    private lateinit var confirmSeedButton: Button
+    private lateinit var confirmButton: Button
+
+    private lateinit var hamsterTalkTextView: TextView
+
 
     fun AlertDialog(){
         dialog.show()
@@ -27,6 +30,11 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
         cancelImageButton = dialog.findViewById(R.id.cancelImageButton)
         confirmSeedButton = dialog.findViewById(R.id.confirmSeedButton)
         confirmButton = dialog.findViewById(R.id.confrimButton)
+        hamsterTalkTextView = dialog.findViewById(R.id.alertPopHamsterTalkTextView)
+
+        if(talkText != null){
+            hamsterTalkTextView.text = talkText
+        }
 
         popTitleTextView.text = title
         if(isNeedDrawable){

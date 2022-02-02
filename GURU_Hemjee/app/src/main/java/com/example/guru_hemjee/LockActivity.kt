@@ -1,43 +1,25 @@
 package com.example.guru_hemjee
-import android.app.Activity
 import android.util.Log
 
-import android.app.NotificationManager
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
-import android.provider.MediaStore
-import android.provider.Settings
 import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.WindowManager
-import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.Dimension
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.view.marginLeft
 import com.dinuscxj.progressbar.CircleProgressBar
-import java.io.File
-import java.io.IOException
 import java.lang.Exception
 import java.math.BigInteger
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -307,7 +289,7 @@ class LockActivity : AppCompatActivity() {
                 runOnUiThread {
                     try {
                         // 나갈 수 있는 팝업창 띄우기
-                        finalOK("잠금 종료!", "확인", false, false, true)
+                        finalOK("잠금 종료!", "확인", false, false, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
                     catch (e: WindowManager.BadTokenException) {
                         Log.e("lockExitException", "잠금 종료 팝업창 오류..")
@@ -428,7 +410,7 @@ class LockActivity : AppCompatActivity() {
 
     // 시간 감소 팝업
     private fun showTimeMinusPopUp() {
-        val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true)
+        val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true,"고작 10분 줄이려고\n씨앗 40개나 쓰냐 햄찌...?")
         dialog.AlertDialog()
 
         // 만일 현재 보유 씨앗이 구매 비용(=40)보다 많다면 -> 정상 구매
@@ -441,7 +423,7 @@ class LockActivity : AppCompatActivity() {
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
                         {
-                            finalOK("10분 줄이기", "확인", false, false,false)
+                            finalOK("10분 줄이기", "확인", false, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
                             time -= 600     // 잔여 시간 10분 감소
                         }
                         // 현재 잔여 시간이 10분 이하일 경우
@@ -462,7 +444,7 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false,false)
+                        finalOK("구매 불가", "확인", false, false,false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -471,13 +453,13 @@ class LockActivity : AppCompatActivity() {
 
     // 시간 추가 팝업
     private fun showTimePlusPopUp() {
-        val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기", false)
+        val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기", false, "좋아 좋아 더 열심히!!!\n더 씨앗을 버는 거다 햄찌!!")
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("10분 늘리기", "확인", false, false,false)
+                    finalOK("10분 늘리기", "확인", false, false,false, "좋아! 끝까지 가보는 거다 햄찌!\n해바라기 씨를 위해!")
 
                     time += 600                         // 잔여시간 10분 늘리기
                     progressBar.max = totalTime + 600   // 전체 진행도(max)값 10분만큼 확장
@@ -488,7 +470,7 @@ class LockActivity : AppCompatActivity() {
 
     // (나가기 구매를 통한)나가기 팝업
     private fun showExitPop() {
-        val dialog = AlertDialog(this,"잠금 종료하기", "-180      ", true)
+        val dialog = AlertDialog(this,"잠금 종료하기", "-180      ", true, "진짜 갈꺼냐 햄찌...?\n여기서 진짜 포기냐 햄찌??")
         dialog.AlertDialog()
 
         // 만일 현재 보유 씨앗이 구매 비용(=180)보다 많다면 -> 정상 구매
@@ -497,7 +479,7 @@ class LockActivity : AppCompatActivity() {
             dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
-                        finalOK("잠금 종료하기", "확인", false, true, true)
+                        finalOK("잠금 종료하기", "확인", false, true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
                     }
                 }
             })
@@ -509,7 +491,7 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false, false)
+                        finalOK("구매 불가", "확인", false, false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -517,11 +499,11 @@ class LockActivity : AppCompatActivity() {
     }
 
     // 마지막 확인 팝업 창
-    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isExitBuy: Boolean, isLockFinished: Boolean) {
-        val dialog = FinalOK(this,title, okString, isNeedDrawable)
+    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isExitBuy: Boolean, isLockFinished: Boolean, talkText: String) {
+        val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, null, talkText)
         dialog.alertDialog()
 
-        dialog.setOnClickedListener(object : FinalOK.ButtonClickListener{
+        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
             override fun onClicked(isConfirm: Boolean) {
 
                 // 나갈려고 하는 상황
