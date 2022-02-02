@@ -113,6 +113,7 @@ class SeedMarket : Fragment() {
             bgImageView.setImageResource(R.drawable.inventory_wallpapare)
         }
 
+        //햄찌 선처리
         dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
@@ -132,6 +133,10 @@ class SeedMarket : Fragment() {
         for(item in preusingItems){
             if(!preselectedItems.contains(item))
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+        }
+        for(item in preselectedItems){
+            if(!preusingItems.contains(item))
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
         }
         sqlitedb.close()
         dbManager.close()
@@ -245,7 +250,8 @@ class SeedMarket : Fragment() {
                     if(selectedItems.contains(tempName) && tempName != item.name) {
                         selectedItems.remove(tempName)
                         deselectItems.add(tempName)
-                        marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() - tempPrice).toString()
+                        if(!preselectedItems.contains(tempName))
+                            marketReducedSeedTextView.text = (marketReducedSeedTextView.text.toString().toInt() - tempPrice).toString()
                     }
                 }
                 cursor.close()
