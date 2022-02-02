@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun tutorial(){
         dbManager = DBManager(this, "basic_info_db", null, 1)
         sqlitedb = dbManager.writableDatabase
-        sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('김슈니', '햄찌햄찌', 3000, '01:30:00')")
+        sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('우주최강귀요미', 3000, '01:30:00')")
         sqlitedb.close()
         dbManager.close()
 
