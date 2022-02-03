@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import com.dinuscxj.progressbar.CircleProgressBar
 import java.lang.Exception
 import java.math.BigInteger
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
@@ -551,8 +552,8 @@ class LockActivity : AppCompatActivity() {
                     var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
                     bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
 
-                    // 시간차로 인해 9시간을 더해줌
-                    var resultDate = Date(bigGoallockDate + 32400000)
+                    // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
+                    var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
 
                     // 데이터 추가
                     sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")

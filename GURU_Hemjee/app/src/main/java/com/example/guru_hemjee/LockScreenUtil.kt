@@ -1,6 +1,5 @@
 package com.example.guru_hemjee
 
-import android.app.Application
 import android.content.Intent
 
 object LockScreenUtil {

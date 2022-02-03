@@ -87,7 +87,7 @@ class CameraActivity : AppCompatActivity() {
                 var tempDir: File = cacheDir
 
                 // 임시 촬영 파일 세팅
-                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("ko", "KR")).format(Date(System.currentTimeMillis()))
                 val imageFileName: String = timeStamp + "_"
 
                 var tempImage = File.createTempFile(
@@ -221,8 +221,8 @@ class CameraActivity : AppCompatActivity() {
 
             // 선택한 세부 목표 이름 가져오기
             var goalName = intent.getStringExtra("detailGoalName")
-            // 현재 날짜 가져오기 - 9시간 더한 값을 Date형으로 만듬
-            var lockDate = Date(System.currentTimeMillis() + 32400000) // 현재 시간(한국 기준)을 Date형으로 가져옴
+            // 현재 날짜 가져오기(한국 시간 기준)
+            var lockDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(System.currentTimeMillis() + 32400000))
 
             // 세부 목표 리포트 DB 가져오기
             dbManager = DBManager(this, "hamster_db", null, 1)
