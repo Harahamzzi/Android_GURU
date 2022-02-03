@@ -553,7 +553,7 @@ class LockActivity : AppCompatActivity() {
                     bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
 
                     // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
-                    var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss", Locale("ko", "KR")).format(Date(bigGoallockDate))
+                    var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
 
                     // 데이터 추가
                     sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")

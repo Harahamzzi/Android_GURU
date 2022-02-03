@@ -222,7 +222,7 @@ class CameraActivity : AppCompatActivity() {
             // 선택한 세부 목표 이름 가져오기
             var goalName = intent.getStringExtra("detailGoalName")
             // 현재 날짜 가져오기(한국 시간 기준)
-            var lockDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss", Locale("ko", "KR")).format(Date(System.currentTimeMillis()))
+            var lockDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(System.currentTimeMillis() + 32400000))
 
             // 세부 목표 리포트 DB 가져오기
             dbManager = DBManager(this, "hamster_db", null, 1)
