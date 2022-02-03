@@ -77,6 +77,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sqlitedb.close()
         dbManager.close()
 
+        // 세부 목표 리포트 DB의 is_active 필드 초기화
+        dbManager = DBManager(this, "hamster_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+        sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
+
+        sqlitedb.close()
+        dbManager.close()
+
         // 네비게이션 드로어 생성
         drawerLayout = findViewById(R.id.home_drawerLayout)
 

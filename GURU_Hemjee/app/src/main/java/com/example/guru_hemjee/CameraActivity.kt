@@ -177,7 +177,6 @@ class CameraActivity : AppCompatActivity() {
 
             var fileName: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".jpg"
 
-            // FIXME: DB 데이터 보고 기존에 있으면 삭제
             // 해당 파일이 기존에 있었다면 삭제
             var file = File(storageDir, fileName)
             var deleted: Boolean = file.delete()
@@ -214,7 +213,6 @@ class CameraActivity : AppCompatActivity() {
             // 현재 날짜 가져오기 - 9시간 더한 값을 Date형으로 만듬
             var lockDate = Date(System.currentTimeMillis() + 32400000) // 현재 시간(한국 기준)을 Date형으로 가져옴
 
-            // FIXME: 해당 대표 목표의 세부 목표를 가져오는 방법..잘 모르겠음
             // 세부 목표 리포트 DB 가져오기
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
@@ -226,7 +224,6 @@ class CameraActivity : AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
 
-            // FIXME: 목표 달성 팝업창으로 바꾸기..?
             // 목표 달성 팝업창
             finalPopup("목표 달성!", "확인", false)
         }
