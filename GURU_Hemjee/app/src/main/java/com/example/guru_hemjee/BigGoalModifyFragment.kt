@@ -115,7 +115,7 @@ class BigGoalModifyFragment : Fragment() {
             str_big_goal = requireArguments().getString("bundle_biggoal_2").toString() // 대표목표
 
             // 대표목표 DB
-            dbManager = DBManager(context, "big_goal_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // 대표목표 찾기
@@ -181,9 +181,9 @@ class BigGoalModifyFragment : Fragment() {
         }
 
         // 대표목표 DB
-        dbManager = DBManager(context, "big_goal_db", null, 1)
+        dbManager = DBManager(context, "hamster_db", null, 1)
         // 세부목표 DB
-        dbManager2 = DBManager(context, "detail_goal_db", null, 1)
+        dbManager2 = DBManager(context, "hamster_db", null, 1)
 
         // 확인버튼을 눌렀을 경우
         modCompleteButton.setOnClickListener {
@@ -303,7 +303,7 @@ class BigGoalModifyFragment : Fragment() {
 
         // 삭제 버튼을 눌렀을 경우
         modDeleteButton.setOnClickListener {
-            dbManager = DBManager(context, "big_goal_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")

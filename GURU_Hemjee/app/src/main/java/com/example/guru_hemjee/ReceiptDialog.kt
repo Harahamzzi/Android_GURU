@@ -46,7 +46,7 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
         val receiptAdapter = ReceiptAdapter(context, items)
         receiptItemRecyclerView.adapter = receiptAdapter
 
-        val dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
+        val dbManager = DBManager(context, "hamster_db", null, 1)
         val sqlitedb: SQLiteDatabase = dbManager.readableDatabase
         val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_bought = 0",null)
         while(cursor.moveToNext()){

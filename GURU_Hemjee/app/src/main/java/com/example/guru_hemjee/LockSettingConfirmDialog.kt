@@ -72,7 +72,7 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
             detailGoalItemRecyclerView.adapter = detailGoalListAdapter
 
-            var dbManager = DBManager(context, "detail_goal_db", null, 1)
+            var dbManager = DBManager(context, "hamster_db", null, 1)
             var sqlitedb = dbManager.readableDatabase
             var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '$goalName'", null)
 

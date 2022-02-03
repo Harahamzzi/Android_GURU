@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
 
         //씨앗 표시
         seedPointView = requireView().findViewById(R.id.Home_seedPointView)
-        dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
 
         //잠금 버튼 수정
         goalSelectButton = requireView().findViewById(R.id.goalSelectButton)
-        dbManager = DBManager(context, "big_goal_db", null, 1)
+        dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor= sqlitedb.rawQuery("SELECT * FROM big_goal_db",null)
         var isThereBigGoal = false
@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
 
         //메인 화면 햄찌 설정(선처리)
         var preselectedItems = ArrayList<String>()
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
         while(cursor.moveToNext()){

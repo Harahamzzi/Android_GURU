@@ -61,7 +61,7 @@ class SeedMarket : Fragment() {
         marketReducedSeedTextView = requireView().findViewById(R.id.toBeUsedSeedTextView)
 
         //기본 정보 가져오기
-        dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
@@ -112,7 +112,7 @@ class SeedMarket : Fragment() {
         }
 
         //햄찌 선처리
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
         while(cursor.moveToNext()){
@@ -169,7 +169,7 @@ class SeedMarket : Fragment() {
                 if (isBought) {
                     //여기에 구매 완료시 필요한 연산
                     //인벤토리 관련
-                    dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     for (item in selectedItems) {
                         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_bought = '1' WHERE item_name = '$item'")
@@ -181,7 +181,7 @@ class SeedMarket : Fragment() {
                     upDateInventory(currentInventory)
 
                     //씨앗 관련
-                    dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     sqlitedb.execSQL("UPDATE basic_info_db SET seed = '${seed.toString()}' WHERE hamster_name = '${hamsterName}'")
                     sqlitedb.close()
@@ -203,7 +203,7 @@ class SeedMarket : Fragment() {
                     })
                 } else {
                     //화면 초기화
-                    dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     for(item in selectedItems){
                         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
@@ -233,7 +233,7 @@ class SeedMarket : Fragment() {
             var deselectItems = ArrayList<String>()
             if(isClicked){
                 //같은 유형(옷끼리, 모자끼리, 배경끼리) 겹치지 않게 하기
-                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                 sqlitedb = dbManager.readableDatabase
                 val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE category = '${item.category}'", null)
                 while(cursor.moveToNext()){
@@ -277,7 +277,7 @@ class SeedMarket : Fragment() {
             }
 
             //화면 표시
-            dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
             for(item in selectedItems){
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
@@ -293,7 +293,7 @@ class SeedMarket : Fragment() {
         }
         marketListView.adapter = marketItemAdapter
 
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         //유형에 따라 list 가져오기
         val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '${name}' AND is_bought = 0",null)

@@ -88,7 +88,7 @@ class DetailGoalSetupFragment : Fragment() {
             str_biggoal = requireArguments().getString("bundle_biggoal").toString() // 대표목표
 
             // 대표목표 DB
-            dbManager = DBManager(context, "big_goal_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // 대표목표 찾기
@@ -108,7 +108,7 @@ class DetailGoalSetupFragment : Fragment() {
         }
 
         /** 만약에 이전에 저장해둔 값이 있다면 리스트 가져와서 레이아웃에 반영하기 **/
-        dbManager = DBManager(context, "detail_goal_db", null, 1)
+        dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor
@@ -242,7 +242,7 @@ class DetailGoalSetupFragment : Fragment() {
         // 확인버튼을 눌렀다면
         completeBtn.setOnClickListener {
             // DB에 데이터 쓰기(세부 목표)
-            dbManager = DBManager(context, "detail_goal_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
 
             sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '$str_biggoal'")
@@ -312,7 +312,7 @@ class DetailGoalSetupFragment : Fragment() {
                     bigGoalList.removeAt(num)
                     sebuMenuList.removeAt(num)
                 } else {
-                    dbManager = DBManager(context, "big_goal_db", null, 1)
+                    dbManager = DBManager(context, "hamster_db", null, 1)
                     sqlitedb = dbManager.readableDatabase
                     var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$bigGoalName'",null)
                     if(cursor.moveToNext()){

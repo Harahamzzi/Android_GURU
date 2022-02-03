@@ -59,7 +59,7 @@ class HamsterEditFragment() : Fragment() {
         hamsterNameTextView = requireView().findViewById(R.id.hamsterNameTextView)
         totalSpentTimeTextView = requireView().findViewById(R.id.totalSpentTimeTextView)
 
-        dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
@@ -88,7 +88,7 @@ class HamsterEditFragment() : Fragment() {
         upDateInventory(currentInventory)
 
         //사용 중인 아이템 미리 선택하기
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
         while(cursor.moveToNext()){
@@ -137,7 +137,7 @@ class HamsterEditFragment() : Fragment() {
             var deSelectItems = ArrayList<String>()
 
             //기존에 선택 중이던 아이템을 deselectedItems에 대입
-            dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1 OR is_applied = 1",null)
             while(cursor.moveToNext()){
@@ -191,7 +191,7 @@ class HamsterEditFragment() : Fragment() {
             override fun onClicked(isChanged: Boolean, name: String?) {
                 if(isChanged){
                     //이름 변경 db와 ui에 반영
-                    dbManager = DBManager(requireContext(), "basic_info_db", null, 1)
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     hamsterNameTextView.text = name
                     sqlitedb.execSQL("UPDATE basic_info_db SET user_name = '${name}' WHERE hamster_name = '${hamsterName}'")
@@ -208,7 +208,7 @@ class HamsterEditFragment() : Fragment() {
         val myHamsterAdapter = MyHamsterAdapter(requireContext(), items){ item, isClicked ->
             if(isClicked){
                 //같은 유형(옷끼리, 모자끼리, 배경끼리) 겹치지 않게 하기 + click 내용 반영하기
-                dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+                dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                 sqlitedb = dbManager.readableDatabase
                 val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_bought = 1 AND category = '${item.category}'", null)
                 while(cursor.moveToNext()){
@@ -231,7 +231,7 @@ class HamsterEditFragment() : Fragment() {
             }
 
             //화면 표시
-            dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
             for(item in selectedItems){
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
@@ -248,7 +248,7 @@ class HamsterEditFragment() : Fragment() {
         myHItemList.adapter = myHamsterAdapter
 
         //리스트 가져와서 적용하기
-        dbManager = DBManager(requireContext(), "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         //사용중인 아이템을 우선 배정
