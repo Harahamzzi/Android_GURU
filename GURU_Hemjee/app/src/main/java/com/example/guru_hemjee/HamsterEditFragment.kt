@@ -194,7 +194,7 @@ class HamsterEditFragment() : Fragment() {
                     dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
                     hamsterNameTextView.text = name
-                    sqlitedb.execSQL("UPDATE basic_info_db SET user_name = '${name}' WHERE hamster_name = '${hamsterName}'")
+                    sqlitedb.execSQL("UPDATE basic_info_db SET hamster_name = '${name}' WHERE hamster_name = '${hamsterName}'")
                 }
             }
         })

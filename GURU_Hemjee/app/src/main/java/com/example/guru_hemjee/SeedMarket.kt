@@ -76,7 +76,14 @@ class SeedMarket : Fragment() {
         buyImageButton = requireView().findViewById(R.id.buyImageButton)
         buyImageButton.setOnClickListener {
             if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
-                Toast.makeText(requireContext(), "해바라기 씨가 부족합니다!", Toast.LENGTH_SHORT).show()
+                val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인", false, R.drawable.popup_low_balance, null)
+                dialog.alertDialog()
+
+                dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+                    override fun onClicked(isConfirm: Boolean) {
+                        //내용 없음
+                    }
+                })
             } else {
                 receiptPopUp()
             }
