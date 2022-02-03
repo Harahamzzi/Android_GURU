@@ -1,5 +1,7 @@
 package com.example.guru_hemjee
 
+import android.app.NotificationManager
+import android.content.Context
 import android.util.Log
 import android.content.Intent
 import android.database.Cursor
@@ -10,12 +12,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.dinuscxj.progressbar.CircleProgressBar
 import java.lang.Exception
@@ -46,8 +50,8 @@ class LockActivity : AppCompatActivity() {
     lateinit var lockMinTextView: TextView
     lateinit var lockSecTextView: TextView
 
-    private var totalTime = 0
-    private var time = 0
+    private var totalTime = 0   // 전체 잠금 시간
+    private var time = 0        // 현재 남은 잠금 시간
     private var timerTask: Timer? = null
 
     // 대표 목표 리포트에 들어갈 시간들
@@ -70,16 +74,9 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // FIXME: 알림 여부 확인 코드 수정 필요
-//        if(해당 알림 껐는지 체크..)
-//        {
-//            // 알림 설정 창으로 사용자 보내기
-//            var tempIntent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-//            tempIntent.putExtra(Settings.EXTRA_CHANNEL_ID, "channel_1")
-//            tempIntent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-//            startActivity(tempIntent)
-//        }
-
+        // 상단 알림 표시 삭제
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.deleteNotificationChannel("channel_1")
 
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
@@ -109,9 +106,6 @@ class LockActivity : AppCompatActivity() {
 
         detailGoalListContainer = findViewById(R.id.Lock_detailGoalLinearLayout)
 
-        // 세부 목표 동적 생성 및 세팅
-        addDetailGoal()
-
         //씨앗 세팅
         seedPointView.text = intent.getStringExtra("seed")
         hamsterName = intent.getStringExtra("hamsterName")
@@ -131,6 +125,9 @@ class LockActivity : AppCompatActivity() {
         // progressBar 세팅
         progressBar.progress = 0
         progressBar.max = totalTime
+
+        // 세부 목표 동적 생성 및 세팅
+        addDetailGoal()
 
         // 타이머 시작
         countTime()
@@ -187,11 +184,24 @@ class LockActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        // 뷰에 보이는 씨앗 갱신
+        dbManager = DBManager(baseContext, "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+        if(cursor.moveToNext()){
+            seedPointView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
         // 세부 목표 달성 체크 - 세부 목표 리포트 확인하기
         dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         // 현재 활성화된(is_active = 1) 값만 가져오기
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1", null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1", null)
 
         // view의 아이디 숫자로 활용
         var i = 0
@@ -354,6 +364,7 @@ class LockActivity : AppCompatActivity() {
             // 해당 대표 목표의 세부 목표들 가져오기
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
+            var detailGoalCount: Int = cursor.count // 세부 목표의 개수
             var i = 0
 
             // 위젯 생성 및 적용
@@ -381,7 +392,10 @@ class LockActivity : AppCompatActivity() {
                 button.setOnClickListener {
                     // Camera Activity로 이동
                     var intent = Intent(this, CameraActivity::class.java)
-                    intent.putExtra("detailGoalName", textView.text)
+                    intent.putExtra("detailGoalName", textView.text)    // 세부 목표 이름 보내기
+                    intent.putExtra("detailGoalCount", detailGoalCount) // 총 세부 목표 개수 보내기
+                    intent.putExtra("totalLockTime", totalTime)         // 총 잠금 시간 보내기
+                    intent.putExtra("seedPoint", seedPointView.text.toString().toInt()) // 현재 씨앗 개수 보내기
 //                    intent.putExtra("viewId", view.id)
                     startActivity(intent)
                 }

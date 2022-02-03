@@ -41,6 +41,9 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
 
+    // 획득 씨앗 계산 관련
+    private var upSeedPoint: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +59,17 @@ class CameraActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             saveImage() // 이미지 저장
         }
+
+        // 해당 세부 목표를 완료해서 얻을 수 있는 씨앗 계산
+        // 우선 전체 시간을 분 단위로 바꿈
+        var tempCount: Int = intent.getIntExtra("totalLockTime", 0) / 60
+
+        // 10분 단위로 얼마나 나눠지는지 계산(나머지는 버림)
+        tempCount = tempCount / 10
+
+        // 세부 목표를 하나 해결할 때마다 얻을 수 있는 씨앗 포인트 갱신
+        // 10분당 10포인트
+        upSeedPoint = tempCount * 10 / intent.getIntExtra("detailGoalCount", 1)
 
         // 카메라 실행
         captureCamera()
@@ -241,6 +255,17 @@ class CameraActivity : AppCompatActivity() {
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
+                    /** 목표 달성시 수행할 작업 **/
+
+                    // 획득한 씨앗 갱신
+                    dbManager = DBManager(this@CameraActivity, "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
+                    var newSeedPoint: Int = upSeedPoint + intent.getIntExtra("seedPoint", 0)
+                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = $newSeedPoint")
+                    sqlitedb.close()
+                    dbManager.close()
+
                     // 현재 액티비티 닫기
                     finish()
 
