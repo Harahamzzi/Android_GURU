@@ -211,8 +211,8 @@ class CameraActivity : AppCompatActivity() {
 
             // 선택한 세부 목표 이름 가져오기
             var goalName = intent.getStringExtra("detailGoalName")
-            // 현재 날짜 가져오기
-            var lockDate = Date(System.currentTimeMillis()) // 현재 시간을 Date형으로 가져옴
+            // 현재 날짜 가져오기 - 9시간 더한 값을 Date형으로 만듬
+            var lockDate = Date(System.currentTimeMillis() + 32400000) // 현재 시간(한국 기준)을 Date형으로 가져옴
 
             // FIXME: 해당 대표 목표의 세부 목표를 가져오는 방법..잘 모르겠음
             // 세부 목표 리포트 DB 가져오기

@@ -1,6 +1,6 @@
 package com.example.guru_hemjee
-import android.util.Log
 
+import android.util.Log
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -536,7 +536,9 @@ class LockActivity : AppCompatActivity() {
                     // 총 잠금한 시간 구하기
                     var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
                     bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
-                    var resultDate = Date(bigGoallockDate)
+
+                    // 시간차로 인해 9시간을 더해줌
+                    var resultDate = Date(bigGoallockDate + 32400000)
 
                     // 데이터 추가
                     sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
@@ -571,5 +573,3 @@ class LockActivity : AppCompatActivity() {
     }
 
 }
-
-
