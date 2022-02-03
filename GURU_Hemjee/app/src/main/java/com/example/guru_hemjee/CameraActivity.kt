@@ -64,12 +64,9 @@ class CameraActivity : AppCompatActivity() {
         // 우선 전체 시간을 분 단위로 바꿈
         var tempCount: Int = intent.getIntExtra("totalLockTime", 0) / 60
 
-        // 10분 단위로 얼마나 나눠지는지 계산(나머지는 버림)
-        tempCount = tempCount / 10
-
         // 세부 목표를 하나 해결할 때마다 얻을 수 있는 씨앗 포인트 갱신
-        // 10분당 10포인트
-        upSeedPoint = tempCount * 10 / intent.getIntExtra("detailGoalCount", 1)
+        // 10분당 10포인트 = 1분당 1포인트
+        upSeedPoint = tempCount * 1 / intent.getIntExtra("detailGoalCount", 1)
 
         // 카메라 실행
         captureCamera()
