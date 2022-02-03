@@ -275,7 +275,7 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         onClickListener = listener
     }
 
-    fun colorGray() {
+    private fun colorGray() {
         icon1RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
         icon2RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
         icon3RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))

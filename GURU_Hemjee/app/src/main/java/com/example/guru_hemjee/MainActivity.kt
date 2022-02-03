@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         checkPermissions()
 
         //튜토리얼 확인(basic_info_db에 데이터가 있는지 확인)
-        dbManager = DBManager(this, "basic_info_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase // 데이터 읽기
 
         var cursor = sqlitedb.rawQuery("SELECT count(*) FROM basic_info_db", null)
@@ -108,13 +108,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //튜토리얼 시작
     private fun tutorial(){
-        dbManager = DBManager(this, "basic_info_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.writableDatabase
         sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('우주최강귀요미', 3000, '50:00:00')")
         sqlitedb.close()
         dbManager.close()
 
-        dbManager = DBManager(this, "hamster_deco_info_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.writableDatabase
         sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg1', 10, 'bg', 'bg', 'bg_bg_10', 'market_bg_10', '', 0, 0, 0)")
         sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg2', 1000, 'bg', 'bg', 'bg_bg_1000', 'market_bg_1000', '', 0, 0, 0)")

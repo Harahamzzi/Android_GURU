@@ -216,7 +216,7 @@ class CameraActivity : AppCompatActivity() {
 
             // FIXME: 해당 대표 목표의 세부 목표를 가져오는 방법..잘 모르겠음
             // 세부 목표 리포트 DB 가져오기
-            dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
+            dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
             // 날짜 넣기
             sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' WHERE detail_goal_name = '$goalName' AND is_active = 1")

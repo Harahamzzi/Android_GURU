@@ -21,7 +21,7 @@ class FunUpDateHamzzi {
         fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
             //배경 & 가구 설정
             bgLayout.removeAllViews()
-            dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             var cursor: Cursor
             if(isMarket)
@@ -49,7 +49,7 @@ class FunUpDateHamzzi {
 
             //의상 설정
             clothLayout.removeAllViews()
-            dbManager = DBManager(context, "hamster_deco_info_db", null, 1)
+            dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             if(isMarket)
                 cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)

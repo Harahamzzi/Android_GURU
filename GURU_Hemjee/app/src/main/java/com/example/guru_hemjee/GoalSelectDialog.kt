@@ -47,7 +47,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
         //리스트 가져오기
         goalRadioGroup = dialog.findViewById(R.id.setGoalRadioGroup)
 
-        dbManager = DBManager(context, "big_goal_db", null, 1)
+        dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db;", null)
 

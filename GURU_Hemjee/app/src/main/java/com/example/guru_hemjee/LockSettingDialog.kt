@@ -68,7 +68,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
                     bigGoalTitle = changedBigGoalTitle
                     goalTitleTextView.text = changedBigGoalTitle
 
-                    var dbManager = DBManager(context, "big_goal_db", null, 1)
+                    var dbManager = DBManager(context, "hamster_db", null, 1)
                     var sqlitedb = dbManager.readableDatabase
                     var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$bigGoalTitle'",null)
                     if (cursor.moveToNext()){
@@ -117,7 +117,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
             detailGoalRecyclerView.adapter = detailGoalListAdapter
 
-            var dbManager = DBManager(context, "detail_goal_db", null, 1)
+            var dbManager = DBManager(context, "hamster_db", null, 1)
             var sqlitedb = dbManager.readableDatabase
             var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '$bigGoalName'", null)
 

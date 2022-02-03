@@ -188,7 +188,7 @@ class LockActivity : AppCompatActivity() {
         super.onResume()
 
         // 세부 목표 달성 체크 - 세부 목표 리포트 확인하기
-        dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         // 현재 활성화된(is_active = 1) 값만 가져오기
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1", null)
@@ -304,7 +304,7 @@ class LockActivity : AppCompatActivity() {
 
     // 이전에 생성된 세부 목표들 중, 달성하지 못한 세부 목표들은 삭제하는 함수
     private fun clearDetailGoal() {
-        dbManager = DBManager(this, "detail_goal_time_report_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         // 파일명이 적혀있지 않은 세부목표들 삭제
@@ -325,7 +325,7 @@ class LockActivity : AppCompatActivity() {
 
         try {
             // 대표 목표의 색상 뽑아오기
-            dbManager = DBManager(this, "big_goal_db", null, 1)
+            dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
@@ -343,11 +343,11 @@ class LockActivity : AppCompatActivity() {
 
         try {
             // DB 데이터 가져오기(세부 목표)
-            dbManager = DBManager(this, "detail_goal_db", null, 1)
+            dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // DB 데이터 쓰기 열기(세부 목표 리포트)
-            dbManager2 = DBManager(this, "detail_goal_time_report_db", null, 1)
+            dbManager2 = DBManager(this, "hamster_db", null, 1)
             sqlitedb2 = dbManager2.writableDatabase
 
 
@@ -518,7 +518,7 @@ class LockActivity : AppCompatActivity() {
                     }
 
                     /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
-                    dbManager = DBManager(this@LockActivity, "detail_goal_time_report_db", null, 1)
+                    dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
 
                     sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
@@ -527,7 +527,7 @@ class LockActivity : AppCompatActivity() {
                     dbManager.close()
 
                     /** 대표 목표 리포트 DB 기록 (생성) **/
-                    dbManager = DBManager(this@LockActivity, "big_goal_time_report_db", null, 1)
+                    dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
 
                     // 대표 목표 이름
@@ -560,7 +560,7 @@ class LockActivity : AppCompatActivity() {
     private fun seedChange(change: Int) {
         var changedSeed = seedPointView.text.toString().toInt() + change
 
-        dbManager = DBManager(this, "basic_info_db", null, 1)
+        dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.writableDatabase
         sqlitedb.execSQL("UPDATE basic_info_db SET seed = '"+changedSeed.toString()+
                 "' WHERE hamster_name = '"+hamsterName+"'")

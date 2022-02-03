@@ -55,7 +55,7 @@ class SetupFragment : Fragment() {
         plusGoalButton = view.findViewById(R.id.plusGoalButton) // +버튼의 아이디 할당
 
         // DB
-        dbManager = DBManager(context, "big_goal_db", null, 1)
+        dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase // 데이터 읽기
 
         /** DB 데이터 -> 어댑터 -> 반환 **/
