@@ -72,7 +72,8 @@ class SubMainActivity : AppCompatActivity() {
 
             // 설정 페이지 띄우기
             "preference" -> {
-                Log.i ("정보태그", "설정 페이지..띄워졌다!")
+                transaction.replace(R.id.fragment_main, SettingFragment())
+                transaction.commit()
             }
         }
     }
