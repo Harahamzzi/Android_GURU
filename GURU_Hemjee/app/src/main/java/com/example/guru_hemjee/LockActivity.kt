@@ -12,12 +12,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.dinuscxj.progressbar.CircleProgressBar
+import kotlinx.android.synthetic.main.activity_tutorial.*
 import java.lang.Exception
 import java.math.BigInteger
 import java.text.SimpleDateFormat
@@ -45,6 +47,7 @@ class LockActivity : AppCompatActivity() {
     //나가기 버튼
     lateinit var lockExitImageButton: ImageButton//첫번째
     lateinit var exitImageButton: ImageButton//두번째
+    private lateinit var exitTextView: TextView
 
     // 타이머 시간 관련
     lateinit var lockHourTextView: TextView
@@ -90,9 +93,12 @@ class LockActivity : AppCompatActivity() {
         timeMinusImageButton = findViewById(R.id.timeMinusImageButton)
         timePlusImageButton = findViewById(R.id.timePlusImageButton)
 
+        //나가기 관련
         lockExitImageButton = findViewById(R.id.lockExitImageButton)
         exitImageButton = findViewById(R.id.exitImageButton)
+        exitTextView = findViewById(R.id.lockExitTextView)
         exitImageButton.visibility = View.GONE
+        exitTextView.visibility = View.GONE
 
         phoneButton = findViewById(R.id.phoneButton)
         messageButton = findViewById(R.id.messageButton)
@@ -154,12 +160,14 @@ class LockActivity : AppCompatActivity() {
         //나가기 버튼들
         lockExitImageButton.setOnClickListener {//첫번째 나가기 버튼
             exitImageButton.visibility = View.VISIBLE
+            exitTextView.visibility = View.VISIBLE
             lockExitImageButton.visibility = View.GONE
 
             Handler().postDelayed({
                 exitImageButton.visibility = View.GONE;
+                exitTextView.visibility = View.GONE
                 lockExitImageButton.visibility = View.VISIBLE;
-            }, 3000L)
+            }, 2500L)
         }
 
         exitImageButton.setOnClickListener {//마지막 나가기 버튼
@@ -236,6 +244,8 @@ class LockActivity : AppCompatActivity() {
                 // 텍스트 색상 변경
                 var textView: TextView = view.findViewById(R.id.detailGoalTextView)
                 textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.White))
+                textView.width = 300
+                textView.setSingleLine(true)
 
                 // 위치 조정
                 button.bringToFront()
@@ -303,7 +313,28 @@ class LockActivity : AppCompatActivity() {
             {
                 runOnUiThread {
                     try {
+                        /** 대표 목표 리포트 DB 기록 (생성) **/
+                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                        sqlitedb = dbManager.writableDatabase
+
+                        // 대표 목표 이름
+                        var bigGoalName: String = intent.getStringExtra("bigGoalName")
+
+                        // 총 잠금한 시간 구하기
+                        var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
+                        bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
+
+                        // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
+                        var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
+
+                        // 데이터 추가
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
+
+                        sqlitedb.close()
+                        dbManager.close()
+
                         // 나갈 수 있는 팝업창 띄우기
+
                         finalOK("잠금 종료!", "확인", false, false, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
                     catch (e: WindowManager.BadTokenException) {
@@ -386,6 +417,9 @@ class LockActivity : AppCompatActivity() {
 
                 // 세부 목표 이름 변경
                 var textView: TextView = view.findViewById(R.id.detailGoalTextView)
+                textView.width = 500
+                textView.setSingleLine()
+                textView.ellipsize = TextUtils.TruncateAt.END
                 textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
 
                 // 버튼에 리스너 달기
@@ -526,6 +560,26 @@ class LockActivity : AppCompatActivity() {
                     {
                         seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
                         timerTask?.cancel()         // 타이머 종료
+
+                        /** 대표 목표 리포트 DB 기록 (생성) **/
+                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                        sqlitedb = dbManager.writableDatabase
+
+                        // 대표 목표 이름
+                        var bigGoalName: String = intent.getStringExtra("bigGoalName")
+
+                        // 총 잠금한 시간 구하기
+                        var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
+                        bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
+
+                        // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
+                        var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
+
+                        // 데이터 추가
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
+
+                        sqlitedb.close()
+                        dbManager.close()
                     }
 
                     /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
@@ -533,26 +587,6 @@ class LockActivity : AppCompatActivity() {
                     sqlitedb = dbManager.writableDatabase
 
                     sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
-
-                    sqlitedb.close()
-                    dbManager.close()
-
-                    /** 대표 목표 리포트 DB 기록 (생성) **/
-                    dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
-                    sqlitedb = dbManager.writableDatabase
-
-                    // 대표 목표 이름
-                    var bigGoalName: String = intent.getStringExtra("bigGoalName")
-
-                    // 총 잠금한 시간 구하기
-                    var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
-                    bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
-
-                    // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
-                    var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
-
-                    // 데이터 추가
-                    sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
 
                     sqlitedb.close()
                     dbManager.close()

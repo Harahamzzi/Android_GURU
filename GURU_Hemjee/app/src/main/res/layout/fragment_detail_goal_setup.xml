@@ -53,7 +53,8 @@
                     android:singleLine="true"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:singleLine="true" />
 
                 <ImageButton
                     android:id="@+id/editBigGoalBtn"

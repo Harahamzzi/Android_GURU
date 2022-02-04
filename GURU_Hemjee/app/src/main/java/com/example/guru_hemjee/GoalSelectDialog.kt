@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
+import android.text.TextUtils
 import android.util.LayoutDirection
 import android.widget.*
 import androidx.core.view.ViewCompat
@@ -66,6 +67,8 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
             radioButton.setText(name)
             radioButton.layoutDirection = RadioButton.LAYOUT_DIRECTION_RTL
             radioButton.isChecked = name==bigGoalTitle
+            radioButton.setSingleLine()
+            radioButton.ellipsize = TextUtils.TruncateAt.END
 
             goalRadioGroup.addView(radioButton)
             num++

@@ -28,6 +28,7 @@
         android:fontFamily="@font/noto_sans"
         android:inputType="text"
         android:maxLines="2"
+        android:singleLine="true"
         android:textColor="@color/Black"
         android:textColorHighlight="@color/Yellow"
         android:textCursorDrawable="@color/Yellow"

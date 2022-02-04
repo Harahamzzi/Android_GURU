@@ -44,17 +44,18 @@
 
         <TextView
             android:id="@+id/smallAlbum_goalNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:includeFontPadding="false"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/noto_sans"
+            android:includeFontPadding="false"
             android:lineSpacingExtra="49.03px"
+            android:singleLine="true"
             android:text="알고리즘 마스터하기"
-            android:textFontWeight="600"
             android:textAlignment="textStart"
             android:textColor="@color/Black"
+            android:textFontWeight="600"
             android:textSize="12dp" />
 
         <ImageView

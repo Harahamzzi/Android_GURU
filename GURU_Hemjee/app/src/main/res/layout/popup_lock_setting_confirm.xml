@@ -50,18 +50,21 @@
 
         <TextView
             android:id="@+id/goalTitleTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="17dp"
+            android:layout_marginEnd="20dp"
             android:drawablePadding="10dp"
             android:ems="8"
             android:fontFamily="@font/noto_sans"
             android:gravity="center|left"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="목표 제목"
             android:textColor="@color/Black"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/lockSetConfirmGoalColorImageView"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -152,6 +152,7 @@
         android:insetBottom="0dp"
         android:lineSpacingExtra="49.03px"
         android:maxLines="1"
+        android:singleLine="true"
         android:text="알고리즘 공부하기"
         android:textColor="@color/black"
         android:textFontWeight="700"

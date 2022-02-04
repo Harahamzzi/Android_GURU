@@ -18,8 +18,11 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
+        android:ellipsize="marquee"
         android:fontFamily="@font/noto_sans"
         android:gravity="center|left"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:text="세부 목표"
         android:textColor="@color/Black"
         android:textSize="13sp" />

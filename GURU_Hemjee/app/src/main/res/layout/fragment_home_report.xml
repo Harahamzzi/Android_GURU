@@ -118,15 +118,18 @@
 
                     <TextView
                         android:id="@+id/dayGoalTextView1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
+                        android:singleLine="true"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/dayTimeTextView1"
                         app:layout_constraintStart_toEndOf="@+id/dayGoalColorImageView1"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,15 +179,18 @@
 
                     <TextView
                         android:id="@+id/dayGoalTextView2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
+                        android:singleLine="true"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/dayTimeTextView2"
                         app:layout_constraintStart_toEndOf="@+id/dayGoalColorImageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -301,15 +307,18 @@
 
                     <TextView
                         android:id="@+id/weekGoalTextView1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
+                        android:singleLine="true"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/weekTimeTextView1"
                         app:layout_constraintStart_toEndOf="@+id/weekGoalColorImageView1"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -374,15 +383,18 @@
 
                     <TextView
                         android:id="@+id/weekGoalTextView2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
+                        android:singleLine="true"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/weekTimeTextView2"
                         app:layout_constraintStart_toEndOf="@+id/weekGoalColorImageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -514,15 +526,17 @@
 
                     <TextView
                         android:id="@+id/monthGoalTextView1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/monthTimeTextView1"
                         app:layout_constraintStart_toEndOf="@+id/monthGoalColorImageView1"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -587,15 +601,18 @@
 
                     <TextView
                         android:id="@+id/monthGoalTextView2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
+                        android:layout_marginEnd="50dp"
                         android:fontFamily="@font/noto_sans"
                         android:includeFontPadding="false"
+                        android:singleLine="true"
                         android:text="알고리즘 마스터하기"
                         android:textAlignment="textStart"
                         android:textFontWeight="400"
                         android:textSize="12dp"
+                        app:layout_constraintEnd_toStartOf="@+id/monthTimeTextView2"
                         app:layout_constraintStart_toEndOf="@+id/monthGoalColorImageView2"
                         app:layout_constraintTop_toTopOf="parent" />
 
