@@ -1,11 +1,10 @@
 package com.example.guru_hemjee
 
+import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import java.math.BigInteger
-import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -30,11 +28,10 @@ class DailyReportFragment : Fragment() {
     lateinit var dbManager: DBManager
     lateinit var sqlite: SQLiteDatabase
 
-    // 라디오 그룹 & 라디오 버튼
-    lateinit var reportRadioGroup: RadioGroup
-    lateinit var dailyRadioBtn: RadioButton
-    lateinit var weeklyRadioBtn: RadioButton
-    lateinit var monthlyRadioBtn: RadioButton
+    // 일간, 주간, 월간
+    lateinit var dailyBtn: androidx.appcompat.widget.AppCompatButton
+    lateinit var weeklyBtn: androidx.appcompat.widget.AppCompatButton
+    lateinit var monthlyBtn: androidx.appcompat.widget.AppCompatButton
 
     // 오늘 리포트 화면으로 이동하는 달력 버튼
     lateinit var moveTodayButton: ImageButton
@@ -70,13 +67,22 @@ class DailyReportFragment : Fragment() {
     var detailGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
     var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
-    // SimpleDateFormat 형태
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd-E") // 년도, 월, 일, 날짜
-
     // 현재 리포트 화면 상태
     var reportSate: Int = 0 // 오늘
 
     var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        mainActivity = context as SubMainActivity
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        mainActivity = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,10 +93,9 @@ class DailyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_daily_report, container, false)
 
-        reportRadioGroup = view.findViewById(R.id.reportRadioGroup)
-        dailyRadioBtn = view.findViewById(R.id.dailyRadioBtn)
-        weeklyRadioBtn = view.findViewById(R.id.weeklyRadioBtn)
-        monthlyRadioBtn = view.findViewById(R.id.monthlyRadioBtn)
+        dailyBtn = view.findViewById(R.id.dailyBtn)
+        weeklyBtn = view.findViewById(R.id.weeklyBtn)
+        monthlyBtn = view.findViewById(R.id.monthlyBtn)
         moveTodayButton = view.findViewById(R.id.moveTodayButton)
         dailyTextview = view.findViewById(R.id.dailyTextview)
         dailyTimeTextview = view.findViewById(R.id.dailyTimeTextview)
@@ -256,7 +261,7 @@ class DailyReportFragment : Fragment() {
         nextBtn1.setOnClickListener {
             // 현재 리포트를 보고 있다면
             if (reportSate == 0) {
-                Toast.makeText(context, "현재 화면이 가장 최신의 리포트입니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 날짜의 리포트 보여주기
                 dailyReportListLayout.removeAllViews()
                 reportSate += 1
@@ -264,15 +269,42 @@ class DailyReportFragment : Fragment() {
             }
         }
 
-        // 라디오 버튼 클릭 이벤트(화면 전환)
-        reportRadioGroup.setOnCheckedChangeListener { radioGroup, checkedId ->
-            when (checkedId) { // id값에 따라 화면 이동(일간, 주간, 월간)
-                weeklyRadioBtn.id -> goMonthlyReport()
-                monthlyRadioBtn.id -> goMonthlyReport()
-            }
+        // 일간 버튼 클릭 이벤트
+        dailyBtn.setOnClickListener {
+            goDailyReport()
+        }
+
+        // 주간 버튼 클릭 이벤트
+        weeklyBtn.setOnClickListener {
+            goWeeklyReport()
+        }
+
+        // 일간 버튼 클릭 이벤트
+        monthlyBtn.setOnClickListener {
+            goMonthlyReport()
         }
 
         return view
+    }
+
+    // DailyReportFragment로 화면 전환
+    fun goDailyReport() {
+        mainActivity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.fragment_main, DailyReportFragment())
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.addToBackStack(null)
+            ?.commit()
+    }
+
+    // WeeklyReportFragmnet로 화면 전환
+    fun goWeeklyReport() {
+        mainActivity?.supportFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.fragment_main, WeeklyReportFragment())
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 
     // MonthlyReportfragment로 화면을 전환하는 함수
