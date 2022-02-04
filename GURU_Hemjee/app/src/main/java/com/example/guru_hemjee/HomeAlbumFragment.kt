@@ -353,6 +353,9 @@ class HomeAlbumFragment : Fragment() {
         // icon 값을 저장할 ArrayList
         var iconList = ArrayList<Int>()
 
+        //사진 개수를 저장할 ArrayList
+        var picNums = ArrayList<Int>()
+
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
@@ -367,6 +370,9 @@ class HomeAlbumFragment : Fragment() {
 
             // view 추가
             categoryAlbumLayout.addView(view)
+
+            //사진 개수 추가
+            picNums.add(0)
         }
 
         cursor.close()
@@ -386,8 +392,6 @@ class HomeAlbumFragment : Fragment() {
 //        cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
 //        cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)
 
-        var imageCount = 1
-
         while(cursor.moveToNext())
         {
             /** 어떤 아이콘인지 구분하기 **/
@@ -396,6 +400,9 @@ class HomeAlbumFragment : Fragment() {
             var iconNum: Int = iconList.indexOf(tempIcon)
             // 해당 뷰 연결
             var view: View = categoryAlbumLayout.get(iconNum)
+            //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
+            if(++picNums[iconNum] >= 4)
+                continue
 
             /** 날짜 데이터 가져와서 비교하기 **/
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
@@ -420,7 +427,7 @@ class HomeAlbumFragment : Fragment() {
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 155, true)
 
                     // FIXME: 사진 파일 넣을 때 동작 수정
-                    var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + imageCount, "id", requireContext().packageName))
+                    var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + picNums[iconNum], "id", requireContext().packageName))
                     categotyPhoto.setImageBitmap(reScaledBitmap)
                 }
                 catch(e: Exception) {
@@ -428,11 +435,11 @@ class HomeAlbumFragment : Fragment() {
                     break
                 }
             }
-
-            imageCount++
-
-            if(imageCount > 3)
-                imageCount = 1
+//
+//            imageCount++
+//
+//            if(imageCount > 3)
+//                imageCount = 1
         }
 
         cursor.close()
