@@ -360,18 +360,18 @@ class WeeklyReportFragment : Fragment() {
         // 스택바 차트 세팅
         var isBarFlag = false
         for (i in 0 until num) { // 해당 날짜와 관련한 값이 1개라도 있다면 파이차트 생성
-            if (bigGoalStringArray[i][1] == moveDate) {
-                dailyPieChart(moveDate)
-                dailyPieChart.visibility = View.VISIBLE
-                noGoalTimeView.visibility = View.INVISIBLE
-                isPieFlag = true
-                break
-            }
+            //if (bigGoalStringArray[i][1] == moveDate) {
+               //dailyPieChart(moveDate)
+               //dailyPieChart.visibility = View.VISIBLE
+               //noGoalTimeView.visibility = View.INVISIBLE
+               //isPieFlag = true
+               //break
+            //}
         }
-        if (!isPieFlag) { // 일치하는 날짜 값이 없다면 파이차트 숨기기
-            dailyPieChart.visibility = View.INVISIBLE
-            noGoalTimeView.visibility = View.VISIBLE
-        }
+        //if (!isPieFlag) { // 일치하는 날짜 값이 없다면 파이차트 숨기기
+        //    dailyPieChart.visibility = View.INVISIBLE
+        //    noGoalTimeView.visibility = View.VISIBLE
+        //}
 
         // 동적 뷰를 활용한 세부목표 리스트 만들기
         for (i in 0 until num2) { //detailGoalArray사용
@@ -384,14 +384,14 @@ class WeeklyReportFragment : Fragment() {
 
             // 값 할당하기
             if (detailGoalStringArray[i][0].isNotBlank()) { // 아무값도 없거나 공백이 있는 경우가 아니라면
-                if (detailGoalStringArray[i][1] == moveDate) { // 해당 날짜의 값이라면
-                    dailyIconImg.setImageResource(detailGoalIntArray[i][0].toInt())
-                    dailyIconImg.setColorFilter(detailGoalIntArray[i][1].toInt(), PorterDuff.Mode.SRC_IN)
-                    dailyDetailTextview.text = detailGoalStringArray[i][0]
-
-                    // 레이아웃에 객체 추가
-                    weeklyReportListLayout.addView(view)
-                }
+                //if (detailGoalStringArray[i][1] == moveDate) { // 해당 날짜의 값이라면
+                //    dailyIconImg.setImageResource(detailGoalIntArray[i][0].toInt())
+                //    dailyIconImg.setColorFilter(detailGoalIntArray[i][1].toInt(), PorterDuff.Mode.SRC_IN)
+                //    dailyDetailTextview.text = detailGoalStringArray[i][0]
+//
+                //    // 레이아웃에 객체 추가
+                //    weeklyReportListLayout.addView(view)
+                //}
             }
         }
     }
