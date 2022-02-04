@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="156dp"
+    android:layout_marginVertical="8dp" >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="17.3dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        >
+
+        <ImageView
+            android:id="@+id/bigAlbum_bigAlbumImageView3"
+            android:layout_width="156dp"
+            android:layout_height="155dp"
+            android:src="@color/LightGray" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        >
+
+        <ImageView
+            android:id="@+id/bigAlbum_bigAlbumImageView2"
+            android:layout_width="156dp"
+            android:layout_height="155dp"
+            android:src="@color/Gray" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp" >
+
+        <ImageView
+            android:id="@+id/bigAlbum_bigAlbumImageView1"
+            android:layout_width="156dp"
+            android:layout_height="155dp"
+            android:src="@color/LightGray" />
+    </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="35dp"
+        android:layout_height="155dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/big_side_cover" />
+
+    <ImageView
+        android:id="@+id/bigAlbum_albumIconImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="22dp"
+        app:tint="@color/Yellow"
+        android:src="@drawable/ic_outline_computer_24"/>
+</FrameLayout>

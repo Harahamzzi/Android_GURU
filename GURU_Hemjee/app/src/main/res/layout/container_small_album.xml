@@ -8,40 +8,76 @@
     app:layout_gravity="center"
     app:layout_rowWeight="1" >
 
-    <ImageView
-        android:id="@+id/homeAlbum_goalAlbumImageView1"
-        android:layout_width="156dp"
-        android:layout_height="156dp"
-        android:layout_gravity="center"
-        tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/homeAlbum_textView4"
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/noto_sans"
-        android:lineSpacingExtra="49.03px"
-        android:text="알고리즘 마스터하기"
-        android:textFontWeight="600"
-        android:textAlignment="textStart"
-        android:textColor="@color/Black"
-        android:textSize="12dp" />
+        android:layout_marginVertical="7dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp" >
 
-    <TextView
-        android:id="@+id/homeAlbum_timeTextView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="39dp"
-        android:layout_marginBottom="6dp"
-        android:fontFamily="@font/noto_sans"
-        android:lineSpacingExtra="81.72px"
-        android:text="0 : 00 : 00"
-        android:textFontWeight="500"
-        android:textColor="@color/Black"
-        android:textSize="20dp" />
+        <ImageView
+            android:id="@+id/smallAlbum_goalAlbumImageView"
+            android:layout_width="156dp"
+            android:layout_height="156dp"
+            android:layout_gravity="center"
+            android:src="@color/LightGray" />
+
+        <ImageView
+            android:layout_width="156dp"
+            android:layout_height="33dp"
+            android:src="@drawable/small_up_cover"/>
+
+        <ImageView
+            android:layout_width="156dp"
+            android:layout_height="33dp"
+            android:layout_gravity="bottom"
+            android:src="@drawable/small_down_cover"/>
+
+        <ImageView
+            android:id="@+id/smallAlbum_iconImageView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_colorselectionicon"
+            app:tint="@color/Blue" />
+
+        <TextView
+            android:id="@+id/smallAlbum_goalNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/noto_sans"
+            android:lineSpacingExtra="49.03px"
+            android:text="알고리즘 마스터하기"
+            android:textFontWeight="600"
+            android:textAlignment="textStart"
+            android:textColor="@color/Black"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/timer_icon" />
+
+        <TextView
+            android:id="@+id/smallAlbum_timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="40dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/noto_sans"
+            android:lineSpacingExtra="81.72px"
+            android:text="0 : 00 : 00"
+            android:textFontWeight="500"
+            android:textColor="@color/Black"
+            android:textSize="20dp" />
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

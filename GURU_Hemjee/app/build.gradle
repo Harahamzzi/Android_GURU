@@ -53,6 +53,9 @@ dependencies {
     // ViewPager2 사용을 위함(스와이프로 화면 전환)
     implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha04'
 
+    // CardView 서포트 라이브러리 - 모서리가 둥근 이미지뷰를 사용하기 위함
+    implementation 'com.android.support:design:29.0.0'
+
     // (viewPager) 디자인된 indicator 라이브러리
     implementation 'com.tbuonomo:dotsindicator:4.2'
 

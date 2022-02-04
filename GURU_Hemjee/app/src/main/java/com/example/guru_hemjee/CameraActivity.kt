@@ -36,6 +36,7 @@ class CameraActivity : AppCompatActivity() {
     // 카메라 관련..필요한 변수
     private lateinit var currentPhotoPath: String
     private val REQUEST_TAKE_PHOTO = 1
+    private lateinit var photoURI: Uri
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -109,7 +110,7 @@ class CameraActivity : AppCompatActivity() {
             if(photoFile != null)
             {
                 // Uri 가져오기
-                var photoURI: Uri = FileProvider.getUriForFile(
+                photoURI = FileProvider.getUriForFile(
                     this,
                     packageName + ".fileprovider",
                     photoFile
@@ -265,10 +266,6 @@ class CameraActivity : AppCompatActivity() {
 
                     // 현재 액티비티 닫기
                     finish()
-
-//                    var intent = Intent(this@CameraActivity, LockActivity::class.java)
-//                    intent.putExtra("id", intent.getIntExtra("id", 0))  // 받았던 id 다시 넘기기
-//                    startActivity(intent)
                 }
             }
         })

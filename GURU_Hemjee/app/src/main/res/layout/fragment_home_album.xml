@@ -74,67 +74,67 @@
                     android:id="@+id/homeAlbum_albumView1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/Gray"
                     app:layout_constraintBottom_toTopOf="@+id/homeAlbum_albumView4"
                     app:layout_constraintEnd_toStartOf="@+id/homeAlbum_albumView2"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/homeAlbum_albumView2"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/LightGray"
                     app:layout_constraintBottom_toTopOf="@+id/homeAlbum_albumView5"
                     app:layout_constraintEnd_toStartOf="@+id/homeAlbum_albumView3"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/homeAlbum_albumView1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/homeAlbum_albumView3"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/Gray"
                     app:layout_constraintBottom_toTopOf="@+id/homeAlbum_albumView6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/homeAlbum_albumView2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/homeAlbum_albumView4"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/LightGray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/homeAlbum_albumView5"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView1" />
 
                 <ImageView
                     android:id="@+id/homeAlbum_albumView5"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/Gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/homeAlbum_albumView6"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/homeAlbum_albumView4"
-                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView2"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView2" />
 
                 <ImageView
                     android:id="@+id/homeAlbum_albumView6"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:src="@color/LightGray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/homeAlbum_albumView5"
-                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView3"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    app:layout_constraintTop_toBottomOf="@+id/homeAlbum_albumView3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,17 +156,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/space"
                 app:orientation="horizontal">
 
-                <include
-                    app:layout_gravity="center"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    layout="@layout/container_small_album" />
+<!--                <include-->
+<!--                    app:layout_gravity="center"-->
+<!--                    app:layout_columnWeight="1"-->
+<!--                    app:layout_rowWeight="1"-->
+<!--                    layout="@layout/container_small_album" />-->
 
-                <include
-                    app:layout_gravity="center"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    layout="@layout/container_small_album" />
+<!--                <include-->
+<!--                    app:layout_gravity="center"-->
+<!--                    app:layout_columnWeight="1"-->
+<!--                    app:layout_rowWeight="1"-->
+<!--                    layout="@layout/container_small_album" />-->
 
             </androidx.gridlayout.widget.GridLayout>
 
@@ -187,47 +187,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/space2">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="156dp" >
-
-                    <ImageView
-                        android:id="@+id/homeAlbum_imageView9"
-                        android:layout_width="156dp"
-                        android:layout_height="155.3dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="17.3dp"
-                        tools:src="@tools:sample/avatars" />
-
-                    <ImageView
-                        android:id="@+id/homeAlbum_imageView8"
-                        android:layout_width="156dp"
-                        android:layout_height="155.3dp"
-                        android:layout_gravity="center"
-                        tools:src="@tools:sample/avatars" />
-
-                    <ImageView
-                        android:id="@+id/homeAlbum_imageView6"
-                        android:layout_width="156dp"
-                        android:layout_height="155.3dp"
-                        android:layout_marginLeft="18dp"
-                        tools:src="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/homeAlbum_textView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="44dp"
-                        android:text="공부"
-                        android:textSize="12dp"
-                        android:lineSpacingExtra="49.03px"
-                        android:textFontWeight="600"
-                        android:textColor="@color/Black"
-                        android:fontFamily="@font/noto_sans"
-                        />
-                </FrameLayout>
+<!--                <include-->
+<!--                    layout="@layout/container_big_album" />-->
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

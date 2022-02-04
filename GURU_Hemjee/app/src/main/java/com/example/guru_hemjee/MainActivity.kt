@@ -174,6 +174,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             {
                 // 현재 액티비티 종료(앱이 종료 되게 함)
                 finish()
+                finishAffinity()
             }
         }
     }
