@@ -73,6 +73,9 @@ class LockActivity : AppCompatActivity() {
     private lateinit var hamsterName: String
     private var bigGoalColor: Int = 0   // 대표 목표의 색상
 
+    //보상 관련
+    private var rewardSeed = 0
+
     // 세부 목표 리스트 관련
     private lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
 
@@ -245,8 +248,9 @@ class LockActivity : AppCompatActivity() {
                 // 텍스트 색상 변경
                 var textView: TextView = view.findViewById(R.id.detailGoalTextView)
                 textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.White))
-                textView.width = 300
+                textView.width = 500
                 textView.setSingleLine(true)
+                textView.ellipsize = TextUtils.TruncateAt.END
 
                 // 위치 조정
                 button.bringToFront()
@@ -334,9 +338,11 @@ class LockActivity : AppCompatActivity() {
                         sqlitedb.close()
                         dbManager.close()
 
+                        //잠금 시간 보상 계산
+                        rewardSeed += bigGoalTotalTime.toInt()/60000
+                        seedChange(rewardSeed)
                         // 나갈 수 있는 팝업창 띄우기
-
-                        finalOK("잠금 종료!", "확인", false, false, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
+                        finalOK("잠금 종료!", "+${rewardSeed}", true, false, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
                     catch (e: WindowManager.BadTokenException) {
                         Log.e("lockExitException", "잠금 종료 팝업창 오류..")
@@ -469,7 +475,7 @@ class LockActivity : AppCompatActivity() {
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
                         {
-                            finalOK("10분 줄이기", "확인", false, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
+                            finalOK("10분 줄이기", "-40", true, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
                             time -= 600     // 잔여 시간 10분 감소
                         }
                         // 현재 잔여 시간이 10분 이하일 경우
@@ -525,7 +531,36 @@ class LockActivity : AppCompatActivity() {
             dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
-                        finalOK("잠금 종료하기", "확인", false, true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
+                        seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
+                        timerTask?.cancel()         // 타이머 종료
+
+                        /** 대표 목표 리포트 DB 기록 (생성) **/
+                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                        sqlitedb = dbManager.writableDatabase
+
+                        // 대표 목표 이름
+                        var bigGoalName: String = intent.getStringExtra("bigGoalName")
+
+                        // 총 잠금한 시간 구하기
+                        var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
+                        bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
+
+
+                        // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
+                        var resultDate =
+                            SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
+
+                        // 데이터 추가
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
+
+                        sqlitedb.close()
+                        dbManager.close()
+
+                        //잠금 시간 보상 계산
+                        rewardSeed = bigGoalTotalTime.toInt()/60000
+                        seedChange(rewardSeed)
+
+                        finalOK("잠금 종료하기", "${rewardSeed-180}", true, true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
                     }
                 }
             })
@@ -549,38 +584,15 @@ class LockActivity : AppCompatActivity() {
         val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, null, talkText)
         dialog.alertDialog()
 
-        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
 
                 // 나갈려고 하는 상황
-                if(isConfirm && isLockFinished){
+                if (isConfirm && isLockFinished) {
                     // -- 잠금 종료시 필요한 연산 --
 
                     // 나가기를 구매해서 나가는 경우
-                    if(isExitBuy)
-                    {
-                        seedChange(-180)    // 나가기 사용으로 인한 씨앗 소모
-                        timerTask?.cancel()         // 타이머 종료
-
-                        /** 대표 목표 리포트 DB 기록 (생성) **/
-                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
-                        sqlitedb = dbManager.writableDatabase
-
-                        // 대표 목표 이름
-                        var bigGoalName: String = intent.getStringExtra("bigGoalName")
-
-                        // 총 잠금한 시간 구하기
-                        var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
-                        bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
-
-                        // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
-                        var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
-
-                        // 데이터 추가
-                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
-
-                        sqlitedb.close()
-                        dbManager.close()
+                    if (isExitBuy) {
                     }
 
                     /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
