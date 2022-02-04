@@ -385,10 +385,10 @@ class HomeAlbumFragment : Fragment() {
         // 세부 목표 리포트
         cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
 
-//        cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
-//        cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)
+        cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
+        cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)
 
-        while(cursor.moveToNext())
+        while(cursor.moveToPrevious())
         {
             /** 어떤 아이콘인지 구분하기 **/
             var tempIcon: Int = cursor.getInt(cursor.getColumnIndex("icon"))
