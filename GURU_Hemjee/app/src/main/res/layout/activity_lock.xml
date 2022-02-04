@@ -7,6 +7,16 @@
     android:background="@color/BrightYellow"
     tools:context=".LockActivity">
 
+    <FrameLayout
+        android:id="@+id/lockBGFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/Lock_seedPointView"
         android:layout_width="80dp"
@@ -52,6 +62,12 @@
             android:padding="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/hamzzi" />
+
+        <FrameLayout
+            android:id="@+id/lockHamsterClothFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="18dp"/>
 
         <com.dinuscxj.progressbar.CircleProgressBar
             android:id="@+id/timeLeftCircleProgressBar"

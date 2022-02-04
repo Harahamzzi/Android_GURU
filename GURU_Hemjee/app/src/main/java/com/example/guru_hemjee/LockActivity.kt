@@ -15,10 +15,7 @@ import android.os.Handler
 import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.dinuscxj.progressbar.CircleProgressBar
@@ -33,6 +30,10 @@ class LockActivity : AppCompatActivity() {
 
     //씨앗 관련
     private lateinit var seedPointView: TextView
+
+    //햄스터 장식 관련
+    private lateinit var clothFrameLayout: FrameLayout
+    private lateinit var bgFrameLayout: FrameLayout
 
     //시간 조절 버튼
     lateinit var timeMinusImageButton: ImageButton
@@ -110,6 +111,11 @@ class LockActivity : AppCompatActivity() {
         //씨앗 세팅
         seedPointView.text = intent.getStringExtra("seed")
         hamsterName = intent.getStringExtra("hamsterName")
+
+        //햄스터 세팅
+        bgFrameLayout = findViewById(R.id.lockBGFrameLayout)
+        clothFrameLayout= findViewById(R.id.lockHamsterClothFrameLayout)
+        FunUpDateHamzzi.upDate(this, bgFrameLayout, clothFrameLayout, false, false)
 
         // 타이머 세팅
         lockHourTextView.setText(intent.getStringExtra("hour"))

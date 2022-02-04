@@ -2,10 +2,14 @@ package com.example.guru_hemjee
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.*
 
 class TutorialActivity : AppCompatActivity() {
+
+    //튜토리얼 초기 화면
+    private lateinit var startImageView: ImageView
 
     //이름 입력 칸, 튜토리얼 끝내기
     private lateinit var nameEditTextView: EditText
@@ -17,6 +21,13 @@ class TutorialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+
+        //초기화면 1.5초 후 종료하기
+        startImageView = findViewById(R.id.startImageView)
+        Handler().postDelayed({
+            startImageView.visibility = View.GONE
+        }, 1500L)
+
 
         for(i in 1..20){
             imageButton.add(findViewById(resources.getIdentifier("tutorial${i}ImageButton", "id", packageName)))
