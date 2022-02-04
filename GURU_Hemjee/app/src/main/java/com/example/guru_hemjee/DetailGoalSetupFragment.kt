@@ -242,6 +242,11 @@ class DetailGoalSetupFragment : Fragment() {
         // 확인버튼을 눌렀다면
         completeBtn.setOnClickListener {
             // DB에 데이터 쓰기(세부 목표)
+            dbManager = DBManager(context, "hamster_db", null, 1)
+            sqlitedb = dbManager.writableDatabase
+            sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '$str_biggoal'")
+            sqlitedb.close()
+            dbManager.close()
 
             // 새롭게 추가한 목표를 db에 저장
             var isValid = true
@@ -281,12 +286,10 @@ class DetailGoalSetupFragment : Fragment() {
 
                 i++
             }
-            
+
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
-
-            sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '$str_biggoal'")
-
+            
             i=0
             while (i < iconList.size && isValid) {
                 var detailGoal: String = textdetailGoalList[i].text.toString()
