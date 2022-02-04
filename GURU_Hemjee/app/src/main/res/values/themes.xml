@@ -18,5 +18,12 @@
     <style name="CustomToolBar" parent="@style/Widget.AppCompat.Toolbar">
         <item name="titleTextColor">@color/Black</item>
     </style>
+
+    <style name="Spinner" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">12dp</item>
+    </style>
 </resources>
 
