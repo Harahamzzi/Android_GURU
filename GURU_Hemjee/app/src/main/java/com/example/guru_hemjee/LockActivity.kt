@@ -12,15 +12,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import com.dinuscxj.progressbar.CircleProgressBar
 import java.lang.Exception
 import java.math.BigInteger
@@ -70,7 +69,7 @@ class LockActivity : AppCompatActivity() {
     private lateinit var hamsterName: String
 
     // 세부 목표 리스트 관련
-    lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
+    private lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -182,10 +181,10 @@ class LockActivity : AppCompatActivity() {
     }
 
     // 액티비티가 화면에 보였을 때 호출되는 함수
-    override fun onResume() {
-        super.onResume()
+    override fun onRestart() {
+        super.onRestart()
 
-        // 뷰에 보이는 씨앗 갱신
+        /** 뷰에 보이는 씨앗 갱신 **/
         dbManager = DBManager(baseContext, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
@@ -198,13 +197,14 @@ class LockActivity : AppCompatActivity() {
         sqlitedb.close()
         dbManager.close()
 
-        // 세부 목표 달성 체크 - 세부 목표 리포트 확인하기
+        /** 세부 목표 달성 체크 **/
+        // 세부 목표 리포트 확인하기
         dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         // 현재 활성화된(is_active = 1) 값만 가져오기
         cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1", null)
 
-        // view의 아이디 숫자로 활용
+        // view의 카운트 숫자로 활용
         var i = 0
 
         while(cursor.moveToNext())
@@ -212,9 +212,7 @@ class LockActivity : AppCompatActivity() {
             // 목표를 달성했다면
             if(cursor.getString(cursor.getColumnIndex("photo_name")) != null)
             {
-                // FixMe: 왜..안 되는 거지..?
-                var id = resources.getIdentifier("detailGoalView_${i}", "id", packageName)
-                var view: View = findViewById(id)
+                var view: View = detailGoalListContainer.get(i)
 
                 // 버튼 리스너 제거
                 var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
@@ -239,7 +237,7 @@ class LockActivity : AppCompatActivity() {
                 textView.bringToFront()
             }
 
-            // 아이디 숫자 증가
+            // 카운트 숫자 증가
             i++
         }
 
@@ -366,16 +364,12 @@ class LockActivity : AppCompatActivity() {
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
             var detailGoalCount: Int = cursor.count // 세부 목표의 개수
-            var i = 0
 
             // 위젯 생성 및 적용
             while(cursor.moveToNext())
             {
                 // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
                 var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
-
-                // 각 view에 id 지정
-                view.id = resources.getIdentifier("detailGoalView_${i}", "id", packageName)
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
@@ -397,15 +391,11 @@ class LockActivity : AppCompatActivity() {
                     intent.putExtra("detailGoalCount", detailGoalCount) // 총 세부 목표 개수 보내기
                     intent.putExtra("totalLockTime", totalTime)         // 총 잠금 시간 보내기
                     intent.putExtra("seedPoint", seedPointView.text.toString().toInt()) // 현재 씨앗 개수 보내기
-//                    intent.putExtra("viewId", view.id)
                     startActivity(intent)
                 }
 
                 // 위젯 추가
                 detailGoalListContainer.addView(view)
-
-                // 아이디 구분 숫자 증가
-                i++
 
                 // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
                 sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, is_active) VALUES ('${textView.text}', 1);")
