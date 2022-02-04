@@ -103,11 +103,18 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
 
             //시간 갱신
             if(hourEditText.text.toString() != "" || minEditText.text.toString() != "" || secEditText.text.toString() != ""){
-                time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
+                if((hourEditText.text.toString() != "" && hourEditText.text.toString().toInt() > 23) || (minEditText.text.toString() != "" && minEditText.text.toString().toInt() > 59)||(secEditText.text.toString() != "" && secEditText.text.toString().toInt() > 59))
+                    Toast.makeText(context, "올바른 시간은 입력해주세요!", Toast.LENGTH_SHORT).show()
+                else{
+                    time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
+
+                }
+            } else {
+
+                onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
+                dialog.dismiss()
             }
 
-            onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
-            dialog.dismiss()
         }
     }
 

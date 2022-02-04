@@ -149,8 +149,8 @@ class BigGoalModifyFragment : Fragment() {
             }
 
             var lock_timeArray = total_time.split(':')
-            modTodayLockHourView.setText(lock_timeArray[0])
-            modTodayLockMinView.setText(lock_timeArray[1])
+            modTodayLockHourView.setHint(lock_timeArray[0])
+            modTodayLockMinView.setHint(lock_timeArray[1])
         }
 
         // TODO: 라디오 그룹간의 전환 시 다른 라디오 그룹에 있는 버튼을 2번 눌러야만 선택되는 문제 수정 필요
@@ -217,88 +217,83 @@ class BigGoalModifyFragment : Fragment() {
 
             // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
             lateinit var total_time: String
-            if (str_hour.isNullOrBlank()) { // 시간이 공란인 경우
-                if (str_min.toInt() < 0 || str_min.toInt() >= 60) {
-                    Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
-                } else {
-                    total_time = FunTimeConvert.timeConvert(null, str_min.toInt().toString(), null)
-                }
-            } else if (str_min.isNullOrBlank()) { // 분이 공란인 경우
-                if (str_hour.toInt() < 0 || str_hour.toInt() > 24) {
-                    Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
-                } else {
-                    total_time = FunTimeConvert.timeConvert(str_hour.toInt().toString(), null, null)
-                }
-            } else if (str_hour.toInt() < 0 || str_hour.toInt() > 24) { // 시간 범위
-                Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else if (str_min.toInt() < 0 || str_min.toInt() >= 60) { // 분 범위
-                Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (str_hour == "" && str_min == "") {
+                Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else if((str_hour != "" && str_hour.toInt() > 23 || (str_min != "" && str_min.toInt() > 59))){
+                Toast.makeText(context, "올바른 시간을 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
-                total_time = FunTimeConvert.timeConvert(str_hour.toInt().toString(), str_min.toInt().toString(), null)
-            }
+                if(str_hour == "")
+                    str_hour = "0"
+                else if(str_min == "")
+                    str_min = "0"
 
-            /** <데이터를 수정하는 방법>
-             * 1. 데이터 조회 후 기존db에 저장되어 있는 대표목표 값과 변경하려는 대표목표 값이 같다면, 토스트메시지 띄우기
-             * 2. 새로운 테이블 생성
-             * 2. 기존 테이블에 있던 특정 데이터 값들만 복사해서 새로운 테이블에 붙여넣기
-             * 3. 기존 테이블에 있는 복사된 데이터 삭제
-             * 4. 복사한 테이블의 데이터 수정
-             * 5. 기존 테이블에 복사한 테이블의 데이터 추가하기
-             * 6. 새로 만든 테이블 삭제
-             **/
+                total_time = FunTimeConvert.timeConvert(str_hour, str_min, null)
+                /** <데이터를 수정하는 방법>
+                 * 1. 데이터 조회 후 기존db에 저장되어 있는 대표목표 값과 변경하려는 대표목표 값이 같다면, 토스트메시지 띄우기
+                 * 2. 새로운 테이블 생성
+                 * 2. 기존 테이블에 있던 특정 데이터 값들만 복사해서 새로운 테이블에 붙여넣기
+                 * 3. 기존 테이블에 있는 복사된 데이터 삭제
+                 * 4. 복사한 테이블의 데이터 수정
+                 * 5. 기존 테이블에 복사한 테이블의 데이터 추가하기
+                 * 6. 새로 만든 테이블 삭제
+                 **/
 
-            sqlitedb = dbManager.writableDatabase
-            sqlitedb2 = dbManager.readableDatabase
-            try {
-                sqlitedb.execSQL("CREATE TABLE IF NOT EXISTS copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
-            } catch (e : Exception) {
-                e.printStackTrace()
-            }
-            sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
-            sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
-            if (big_goal == str_big_goal) { // 대표목표의 값이 변경되지 않았다면
-                sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
-                sqlitedb.execSQL("DROP TABLE copy_goal_db")
-                sqlitedb2.close()
-                sqlitedb.close()
-                goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
-            } else { // 대표목표의 값이 변경되었다면
-                var cursor: Cursor
-                cursor = sqlitedb2.rawQuery("SELECT * FROM big_goal_db", null)
-
-                var isFlag : Boolean = false
-                while (cursor.moveToNext()) { // 기존에 저장된 값과 같다면
-                    var goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
-                    if (goal == big_goal) {
-                        isFlag = true
-                        // Log.d("while문 안의 flag값  ", isFlag.toString())
-                        break
-                    }
+                sqlitedb = dbManager.writableDatabase
+                sqlitedb2 = dbManager.readableDatabase
+                try {
+                    sqlitedb.execSQL("CREATE TABLE IF NOT EXISTS copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
+                } catch (e : Exception) {
+                    e.printStackTrace()
                 }
-                // Log.d("while문 아래 flag값  ", isFlag.toString())
-                if (!isFlag) {
-                    // Log.d("if문 flag값  ", isFlag.toString())
-                    sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
-                    sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
-
-                    cursor.close()
+                sqlitedb.execSQL("INSERT INTO copy_goal_db SELECT * FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("UPDATE copy_goal_db SET color = " + color + " WHERE big_goal_name = '" + str_big_goal + "';")
+                sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_lock_time = '" + total_time + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                if (big_goal == str_big_goal) { // 대표목표의 값이 변경되지 않았다면
+                    sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
                     sqlitedb.execSQL("DROP TABLE copy_goal_db")
                     sqlitedb2.close()
                     sqlitedb.close()
-
-                    sqlitedb = dbManager2.writableDatabase
-                    sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
-                    sqlitedb.close()
-
                     goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
-                }
-                else {
-                    // Log.d("else문 flag값  ", isFlag.toString())
-                    Toast.makeText(context, "다른 내용의 대표목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                } else { // 대표목표의 값이 변경되었다면
+                    var cursor: Cursor
+                    cursor = sqlitedb2.rawQuery("SELECT * FROM big_goal_db", null)
+
+                    var isFlag : Boolean = false
+                    while (cursor.moveToNext()) { // 기존에 저장된 값과 같다면
+                        var goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+                        if (goal == big_goal) {
+                            isFlag = true
+                            // Log.d("while문 안의 flag값  ", isFlag.toString())
+                            break
+                        }
+                    }
+                    // Log.d("while문 아래 flag값  ", isFlag.toString())
+                    if (!isFlag) {
+                        // Log.d("if문 flag값  ", isFlag.toString())
+                        sqlitedb.execSQL("UPDATE copy_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                        sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + big_goal + "';")
+
+                        cursor.close()
+                        sqlitedb.execSQL("DROP TABLE copy_goal_db")
+                        sqlitedb2.close()
+                        sqlitedb.close()
+
+                        sqlitedb = dbManager2.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
+                        sqlitedb.close()
+
+                        goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
+                    }
+                    else {
+                        // Log.d("else문 flag값  ", isFlag.toString())
+                        Toast.makeText(context, "다른 내용의 대표목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+
+
         }
 
         // 삭제 버튼을 눌렀을 경우

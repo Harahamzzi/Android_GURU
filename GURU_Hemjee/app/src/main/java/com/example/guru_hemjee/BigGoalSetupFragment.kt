@@ -147,6 +147,9 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
             else if (integer_hour == "" && integer_min == "") {
                 Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
+            else if((integer_hour != "" && integer_hour.toInt() > 23 || (integer_min != "" && integer_min.toInt() > 59))){
+                Toast.makeText(context, "올바른 시간을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
             else {
                 when (colorRadioGroup1.checkedRadioButtonId) {
                     R.id.orangeRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Orange)
