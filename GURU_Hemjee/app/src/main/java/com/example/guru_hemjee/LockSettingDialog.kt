@@ -98,7 +98,6 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
         //설정 확인 버튼
         settingOkImageButton = dialog.findViewById(R.id.settingOkImageButton)
         settingOkImageButton.setOnClickListener {
-
             //시간이 올바르게 들어갔는지 확인
 
             //시간 갱신
@@ -108,9 +107,10 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
                 else{
                     time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
 
+                    onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
+                    dialog.dismiss()
                 }
             } else {
-
                 onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
                 dialog.dismiss()
             }
