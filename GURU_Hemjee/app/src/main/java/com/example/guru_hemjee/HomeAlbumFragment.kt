@@ -45,8 +45,6 @@ class HomeAlbumFragment : Fragment() {
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-    private lateinit var dbManager2: DBManager
-    private lateinit var sqlitedb2: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -338,7 +336,6 @@ class HomeAlbumFragment : Fragment() {
     }
 
     // 카테고리별 앨범 사진 세팅하는 함수
-    // 이미지가 보여지는 순서는 랜덤
     private fun applyDailyCategoryPhoto() {
 
         /** 아이콘 뽑아오기 & 뷰 생성해놓기 **/
@@ -385,9 +382,8 @@ class HomeAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 세부 목표 리포트 + 세부 목표 DB 열기
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
-                + " INNER JOIN detail_goal_db USING (detail_goal_name)", null)
+        // 세부 목표 리포트
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
 
 //        cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
 //        cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)

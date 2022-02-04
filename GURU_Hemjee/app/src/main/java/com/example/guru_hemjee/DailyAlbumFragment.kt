@@ -20,7 +20,7 @@ class DailyAlbumFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_daily_album, container, false)
 
         // spinner 연결
-        val spinner: Spinner = requireView().findViewById(R.id.albumMenuSpinner)
+        val spinner: Spinner = requireView().findViewById(R.id.daily_albumMenuSpinner)
 
         // spinner 어댑터 설정
         spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, android.R.layout.simple_spinner_item)
