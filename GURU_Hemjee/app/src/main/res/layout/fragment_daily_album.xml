@@ -56,12 +56,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/albumMenuSpinner"
+            android:id="@+id/daily_albumMenuSpinner"
             android:background="@drawable/spinner_select_background"
             android:layout_width="80dp"
             android:layout_height="23dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="17dp"
+            android:theme="@style/Spinner"
+            android:entries="@array/spinnerAlbumList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,7 +79,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/albumMenuSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/daily_albumMenuSpinner" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,60 +134,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/dayAlbumGridLayout"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:columnCount="3"
+            app:orientation="horizontal" >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/dayAlbumLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/dailyAlbumView1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                android:src="@color/LightGray" />
 
-                <ImageView
-                    android:id="@+id/dailyAlbumView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:flow_horizontalBias="0.5"
-                    app:layout_constraintEnd_toStartOf="@+id/dailyAlbumView2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/dailyAlbumView2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                android:src="@color/Gray" />
 
-                <ImageView
-                    android:id="@+id/dailyAlbumView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:flow_horizontalBias="0.5"
-                    app:layout_constraintEnd_toStartOf="@+id/dailyAlbumView3"
-                    app:layout_constraintStart_toEndOf="@+id/dailyAlbumView1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/dailyAlbumView3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                android:src="@color/LightGray" />
 
-                <ImageView
-                    android:id="@+id/dailyAlbumView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:flow_horizontalBias="0.5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/dailyAlbumView2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/dailyAlbumView4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                android:src="@color/Gray" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <Space
-                android:id="@+id/space"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dayAlbumLayout" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.gridlayout.widget.GridLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
