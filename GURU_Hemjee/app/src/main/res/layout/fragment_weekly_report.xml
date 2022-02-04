@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DailyReportFragment" >
+    tools:context=".WeeklyReportFragment" >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,12 +35,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/dailyBtn"
+                    android:id="@+id/dailyBtn2"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/solid_daily_report_button2"
+                    android:background="@drawable/solid_daily_report_button1"
                     android:button="@null"
-                    android:checked="true"
                     android:text="일간"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
@@ -48,11 +47,12 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/weeklyBtn"
+                    android:id="@+id/weeklyBtn2"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
-                    android:background="@drawable/solid_weekly_report_button1"
+                    android:background="@drawable/solid_weekly_report_button2"
                     android:button="@null"
+                    android:checked="true"
                     android:text="주간"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
@@ -60,7 +60,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/monthlyBtn"
+                    android:id="@+id/monthlyBtn2"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_monthly_report_button1"
@@ -73,7 +73,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/moveTodayButton"
+                android:id="@+id/moveWeeklyButton"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="22dp"
@@ -86,22 +86,22 @@
                 app:tint="@color/Black" />
 
             <TextView
-                android:id="@+id/dailyTextview"
+                android:id="@+id/weeklyTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="151dp"
                 android:layout_marginTop="22dp"
                 android:layout_marginEnd="101dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="1월 15일 토요일"
+                android:text="1월 10일 - 1월 16일"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/moveTodayButton"
+                app:layout_constraintEnd_toStartOf="@+id/moveWeeklyButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
 
             <TextView
-                android:id="@+id/dailyTimeTextview"
+                android:id="@+id/weeklyTimeTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -111,21 +111,21 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/weeklyTextview" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/dailyPieChart"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/weeklyStackBarChart"
                 android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toStartOf="@+id/nextBtn1"
-                app:layout_constraintStart_toEndOf="@+id/prevBtn1"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextview">
+                app:layout_constraintEnd_toStartOf="@+id/nextBtn2"
+                app:layout_constraintStart_toEndOf="@+id/prevBtn2"
+                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview">
 
-            </com.github.mikephil.charting.charts.PieChart>
+            </com.github.mikephil.charting.charts.BarChart>
 
             <ImageButton
-                android:id="@+id/prevBtn1"
+                android:id="@+id/prevBtn2"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="17dp"
@@ -134,12 +134,12 @@
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/prev_button"
-                app:layout_constraintEnd_toStartOf="@+id/dailyPieChart"
+                app:layout_constraintEnd_toStartOf="@+id/weeklyStackBarChart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
 
             <ImageButton
-                android:id="@+id/nextBtn1"
+                android:id="@+id/nextBtn2"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="78dp"
@@ -149,11 +149,39 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/next_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/dailyPieChart"
-                app:layout_constraintTop_toBottomOf="@+id/moveTodayButton" />
+                app:layout_constraintStart_toEndOf="@+id/weeklyStackBarChart"
+                app:layout_constraintTop_toBottomOf="@+id/moveWeeklyButton" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectBigGoalBtn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="180dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/goal_select_background"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="left|center"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="12dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="전체"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                app:backgroundTint="@null"
+                app:backgroundTintMode="add"
+                app:icon="@drawable/ic_colorselectionicon"
+                app:iconGravity="start"
+                app:iconSize="16dp"
+                app:iconTint="@color/Orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weeklyStackBarChart" />
 
             <LinearLayout
-                android:id="@+id/dailyReportListLayout"
+                android:id="@+id/weeklyReportListLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -165,7 +193,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/bottomSpace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyPieChart">
+                app:layout_constraintTop_toBottomOf="@+id/selectBigGoalBtn">
 
             </LinearLayout>
 
@@ -179,10 +207,10 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/noGoalTimeView"
+                android:id="@+id/noGoalTimeView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="103dp"
+                android:layout_marginTop="77dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="수행한 목표가 없습니다."
                 android:textColor="@color/Black"
@@ -190,7 +218,7 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

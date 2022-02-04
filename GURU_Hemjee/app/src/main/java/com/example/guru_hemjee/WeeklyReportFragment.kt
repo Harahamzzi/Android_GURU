@@ -10,67 +10,68 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentTransaction
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.charts.BarChart
+import com.google.android.material.button.MaterialButton
 import java.math.BigInteger
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
-class DailyReportFragment : Fragment() {
+class WeeklyReportFragment : Fragment() {
 
     // db
     lateinit var dbManager: DBManager
     lateinit var sqlite: SQLiteDatabase
 
     // 일간, 주간, 월간
-    lateinit var dailyBtn: androidx.appcompat.widget.AppCompatButton
-    lateinit var weeklyBtn: androidx.appcompat.widget.AppCompatButton
-    lateinit var monthlyBtn: androidx.appcompat.widget.AppCompatButton
+    lateinit var dailyBtn2: AppCompatButton
+    lateinit var weeklyBtn2: AppCompatButton
+    lateinit var monthlyBtn2: AppCompatButton
 
-    // 오늘 리포트 화면으로 이동하는 달력 버튼
-    lateinit var moveTodayButton: ImageButton
+    // 최신 주간 리포트 화면으로 이동하는 달력 버튼
+    lateinit var moveWeeklyButton: ImageButton
 
     // 날짜 & 시간
-    lateinit var dailyTextview: TextView
-    lateinit var dailyTimeTextview: TextView
+    lateinit var weeklyTextview: TextView
+    lateinit var weeklyTimeTextview: TextView
 
     // 이전 & 다음 버튼
-    lateinit var prevBtn1: ImageButton
-    lateinit var nextBtn1: ImageButton
+    lateinit var prevBtn2: ImageButton
+    lateinit var nextBtn2: ImageButton
 
-    // 파이 차트
-    lateinit var dailyPieChart: PieChart
+    // 스택바 차트
+    lateinit var weeklyStackBarChart: BarChart
 
-    // 세부목표 리스트를 저장할 리니어 레이아웃
-    lateinit var dailyReportListLayout: LinearLayout
+    // 대표목표 선택 버튼
+    lateinit var selectBigGoalBtn: MaterialButton
+
+    // 대표목표&세부목표 리스트를 저장할 리니어 레이아웃
+    lateinit var weeklyReportListLayout: LinearLayout
 
     // 텍스트뷰
-    lateinit var noGoalTimeView: TextView
+    lateinit var noGoalTimeView2: TextView
 
     // 현재 날짜
     var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
-    var nowDate = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
 
     // 2차원 배열(대표목표)
     var bigGoalStringArray = Array(10, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-    var bigGoalIntArray = Array(10, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
+    var bigGoalIntArray = Array(10, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
     var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
 
     // 2차원 배열(세부목표)
     var detailGoalStringArray = Array(20, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
-    var detailGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
+    var detailGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
     var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
     // 현재 리포트 화면 상태
-    var reportSate: Int = 0 // 오늘
-
-    var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    var reportSate: Int = 0 // 이번주
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -84,6 +85,8 @@ class DailyReportFragment : Fragment() {
         mainActivity = null
     }
 
+    var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -91,22 +94,23 @@ class DailyReportFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view: View = inflater.inflate(R.layout.fragment_daily_report, container, false)
+        var view: View = inflater.inflate(R.layout.fragment_weekly_report, container, false)
 
-        dailyBtn = view.findViewById(R.id.dailyBtn)
-        weeklyBtn = view.findViewById(R.id.weeklyBtn)
-        monthlyBtn = view.findViewById(R.id.monthlyBtn)
-        moveTodayButton = view.findViewById(R.id.moveTodayButton)
-        dailyTextview = view.findViewById(R.id.dailyTextview)
-        dailyTimeTextview = view.findViewById(R.id.dailyTimeTextview)
-        prevBtn1 = view.findViewById(R.id.prevBtn1)
-        nextBtn1 = view.findViewById(R.id.nextBtn1)
-        dailyPieChart = view.findViewById(R.id.dailyPieChart)
-        dailyReportListLayout = view.findViewById(R.id.dailyReportListLayout)
-        noGoalTimeView = view.findViewById(R.id.noGoalTimeView)
+        dailyBtn2 = view.findViewById(R.id.dailyBtn2)
+        weeklyBtn2 = view.findViewById(R.id.weeklyBtn2)
+        monthlyBtn2 = view.findViewById(R.id.monthlyBtn2)
+        moveWeeklyButton = view.findViewById(R.id.moveWeeklyButton)
+        weeklyTextview = view.findViewById(R.id.weeklyTextview)
+        weeklyTimeTextview = view.findViewById(R.id.weeklyTimeTextview)
+        prevBtn2 = view.findViewById(R.id.prevBtn2)
+        nextBtn2 = view.findViewById(R.id.nextBtn2)
+        weeklyStackBarChart = view.findViewById(R.id.weeklyStackBarChart)
+        selectBigGoalBtn = view.findViewById(R.id.selectBigGoalBtn)
+        weeklyReportListLayout = view.findViewById(R.id.weeklyReportListLayout)
+        noGoalTimeView2 = view.findViewById(R.id.noGoalTimeView2)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
-        dailyReportListLayout.removeAllViews()
+        weeklyReportListLayout.removeAllViews()
 
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -220,67 +224,57 @@ class DailyReportFragment : Fragment() {
         dbManager.close()
         sqlite.close()
 
-        // 배열 값 확인 용 Log
-        /*for (i in 0 until num) {
-            Log.d("bigGoalArray 대표목표 ", i.toString() + "번째 " + bigGoalStringArray[i][0])
-            Log.d("bigGoalArray 시간 ", i.toString() + "번째 " + bigGoalIntArray[i][0].toString())
-            Log.d("bigGoalArray 날짜 ", i.toString() + "번째 " + bigGoalStringArray[i][1])
-            Log.d("bigGoalArray 색상 ", i.toString() + "번째 " + bigGoalIntArray[i][1].toString())
-        }
-        for (i in 0 until num2) {
-            Log.d("detailGoalArray 세부목표 ", i.toString() + "번째 " + detailGoalStringArray[i][0])
-            Log.d("detailGoalArray 날짜 ", i.toString() + "번째 " + detailGoalStringArray[i][1])
-            Log.d("detailGoalArray 아이콘 ", i.toString() + "번째 " + detailGoalIntArray[i][0].toString())
-            Log.d("detailGoalArray 대표목표 ", i.toString() + "번째 " + detailGoalStringArray[i][2])
-            Log.d("detailGoalArray 색상 ", i.toString() + "번째 " + detailGoalIntArray[i][1].toString())
-        }*/
-
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
-        if (reportSate == 0) { // 오늘
-            dailyReportListLayout.removeAllViews()
-            dayReport(nowTime)
+        if (reportSate == 0) { // 지난주
+            weeklyReportListLayout.removeAllViews()
+            weeklyReport(nowTime) // 현재 날짜 넣기
         }
 
         // 달력 버튼 클릭 이벤트
-        moveTodayButton.setOnClickListener {
-            // 현재 날짜의 리포트를 보여주기
-            dailyReportListLayout.removeAllViews()
+        moveWeeklyButton.setOnClickListener {
+            // 최신 리포트(지난주 리포트)를 보여주기
+            weeklyReportListLayout.removeAllViews()
             reportSate = 0
-            dayReport(nowTime)
+            weeklyReport(nowTime)
         }
 
         // 이전 버튼 클릭 이벤트
-        prevBtn1.setOnClickListener {
-            // 이전 날짜의 리포트 보여주기
-            dailyReportListLayout.removeAllViews()
-            reportSate += -1
-            dayReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 현재 상태에 맞춰서 날짜 전달
+        prevBtn2.setOnClickListener {
+            // 이전 주간 리포트 보여주기
+            weeklyReportListLayout.removeAllViews()
+            reportSate += -7
+            weeklyReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 일주일 뺀 값 전달
         }
 
         // 다음 버튼 클릭 이벤트
-        nextBtn1.setOnClickListener {
+        nextBtn2.setOnClickListener {
             // 현재 리포트를 보고 있다면
             if (reportSate == 0) {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
-            } else { // 다음 날짜의 리포트 보여주기
-                dailyReportListLayout.removeAllViews()
-                reportSate += 1
-                dayReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 하루 더하기
+            } else { // 다음 주간의 리포트 보여주기
+                weeklyReportListLayout.removeAllViews()
+                reportSate += 7
+                weeklyReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 일주일 더한 값 전달
             }
         }
 
+        // 대표목표 토글 클릭 이벤트
+        selectBigGoalBtn.setOnClickListener {
+
+        }
+
         // 일간 버튼 클릭 이벤트
-        dailyBtn.setOnClickListener {
+        dailyBtn2.setOnClickListener {
             goDailyReport()
         }
 
         // 주간 버튼 클릭 이벤트
-        weeklyBtn.setOnClickListener {
+        weeklyBtn2.setOnClickListener {
             goWeeklyReport()
         }
 
         // 일간 버튼 클릭 이벤트
-        monthlyBtn.setOnClickListener {
+        monthlyBtn2.setOnClickListener {
             goMonthlyReport()
         }
 
@@ -316,63 +310,55 @@ class DailyReportFragment : Fragment() {
             ?.commit()
     }
 
-    // 파이차트 세팅 함수
-    fun dailyPieChart(moveDate: String) {
+    // 입력받은 날짜 근처의 월요일~일요일(7일) 구하기
+    fun getWeekDate(moveTime: ZonedDateTime): ArrayList<String> {
+        val calendar = Calendar.getInstance()
+        val nowDate = SimpleDateFormat("yyyy-MM-dd") // 현재 년도, 월, 일
 
-        dailyPieChart.setUsePercentValues(true) // 100%범위로 계산
+        var localMoveTime: LocalDateTime = moveTime.toLocalDateTime() // ZonedDateTime -> LocalDateTime
+        calendar.time = java.sql.Timestamp.valueOf(localMoveTime.toString()) // LocalDateTime -> Date
+        //calendar.time = Date(System.currentTimeMillis() + 32400000) // 현재 시간값 세팅 moveTime
 
-        // 데이터(시간, 대표목표) 입력
-        val entry = ArrayList<PieEntry>()
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate)
-                entry.add(PieEntry(bigGoalIntArray[i][0].toFloat(), ""))
+        calendar.add(Calendar.DATE, -7) // moveTime으로부터 일주일전 날짜로 세팅
+
+        // 지난주의 월요일부터 일요일까지의 날짜를 배열에 저장
+        var weekList = ArrayList<String>()
+        for (i in 2 until 8) {
+            calendar.add(Calendar.DAY_OF_MONTH, (i-calendar.get(Calendar.DAY_OF_WEEK)))
+            val lastDate = calendar.time
+            val lastDay = nowDate.format(lastDate)
+            weekList.add(lastDay)
         }
 
-        // 아이템 범위별 색상
-        val itemcolor = ArrayList<Int>()
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate)
-                itemcolor.add(bigGoalIntArray[i][1].toInt())
-        }
+        return weekList
+    }
 
-        val pieDataSet = PieDataSet(entry, "")
-        pieDataSet.apply {
-            colors = itemcolor
-            valueTextColor = R.color.Black
-            valueTextSize = 16f
-        }
+    // 스택바 차트 세팅 함수
+    fun weeklyBarChart(moveDate: String) {
 
-        val pieData = PieData(pieDataSet)
-        dailyPieChart.apply {
-            data = pieData
-            description.isEnabled = false // 그래프이름 띄우기X
-            isRotationEnabled = false // 애니메이션 효과X
-            legend.isEnabled = false // x-value값 안보이게
-            setTouchEnabled(false) // 차트 클릭X
-            setEntryLabelColor(R.color.Black) // 차트 내 글씨 색깔
-            animateY(1400, Easing.EaseInOutQuad) // 최초 애니메이션O
-            animate()
-        }
     }
 
     // 날짜에 따른 리포트
-    fun dayReport(moveTime: ZonedDateTime) {
-        var moveDate = moveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
-        val splitDate = moveDate.split('-') // 년도, 월, 일, 요일
-        dailyTextview.text = splitDate[1] + "월 " + splitDate[2] + "일 " + splitDate[3] + "요일"
+    fun weeklyReport(moveTime: ZonedDateTime) { // 지난 주 값
+        var weekList: ArrayList<String> = getWeekDate(moveTime)
+        var monday = weekList[0].split('-') // 월요일
+        var sunday = weekList[6].split('-') // 일요일
+        weeklyTextview.text = monday[1] + "월 " + monday[2] + "일 - " + sunday[1] + "월 " + sunday[2] + "일"
 
-        var totalMilli: BigInteger = BigInteger.ZERO
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate) { // 해당 날짜값의 시간만 가져와서 적용
-                totalMilli += bigGoalIntArray[i][0]
+        var totalMilli: BigInteger = BigInteger.ZERO // 총 전체 잠금 시간
+        for (i in 0 until num) { // 전체의 경우
+            for (j in 0 until weekList.size) {
+                if (bigGoalStringArray[i][1] == weekList[j]) // 잠금 날짜가 같다면 총 시간 저장
+                    totalMilli += bigGoalIntArray[i][0]
             }
         }
+
         var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
         var integer_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
-        dailyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        weeklyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
 
-        // 파이차트 세팅
-        var isPieFlag = false
+        // 스택바 차트 세팅
+        var isBarFlag = false
         for (i in 0 until num) { // 해당 날짜와 관련한 값이 1개라도 있다면 파이차트 생성
             if (bigGoalStringArray[i][1] == moveDate) {
                 dailyPieChart(moveDate)
@@ -390,7 +376,7 @@ class DailyReportFragment : Fragment() {
         // 동적 뷰를 활용한 세부목표 리스트 만들기
         for (i in 0 until num2) { //detailGoalArray사용
             // 동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.layout_daily_report_text, dailyReportListLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, weeklyReportListLayout, false)
 
             // 아이콘과 세부목표 동적 객체 생성
             var dailyIconImg: ImageView = view.findViewById(R.id.dailyIconImg)
@@ -404,112 +390,9 @@ class DailyReportFragment : Fragment() {
                     dailyDetailTextview.text = detailGoalStringArray[i][0]
 
                     // 레이아웃에 객체 추가
-                    dailyReportListLayout.addView(view)
+                    weeklyReportListLayout.addView(view)
                 }
             }
         }
     }
 }
-
-/** 혹시 몰라서 남겨두는 코드 (추후 삭제 예정) **/
-/* val nowTime = System.currentTimeMillis()
-           val nowDate = SimpleDateFormat("yyyy-MM-dd", Locale("ko", "KR")).format(Date(nowTime))
-           var nowDay = SimpleDateFormat("E", Locale("ko", "KR")).format(Date(nowTime))
-           var date = Date(nowTime) // 시간관련한 모든 값들 ex) Wed Feb 02 15:44:48 GMT 2022
-           val dateFormat = SimpleDateFormat("yyyy-MM-dd") // 년도, 월, 일
-           val dayFormat = SimpleDateFormat("E") // 날짜 */
-
-// 배열 정리하기
-// 1) 세부목표 배열에서 중복되는 값을 1개만 남겨두고 삭제하기
-// 2) 대표목표 배열에서 중복되는 값을 1개만 남겨두고, 남긴 1개 행에다가 시간 더해주기
-// 세부목표 배열에서 중복되는 값의 인덱스 찾기
-/*var indexArray = ArrayList<Int>()
-for (i in 0 until num2) {
-    for (j in i+1 until num2) {
-        if (detailGoalStringArray[i][0] == detailGoalStringArray[j][0]) { // 세부목표 비교
-            if (indexArray.size == 0) {
-                indexArray.add(i)
-                indexArray.add(j)
-            } else {
-                for (k in 0 until indexArray.size) { // 인덱스 배열에 같은 값이 없다면
-                    if (indexArray[k] != i) {
-                        indexArray.add(i) // 중복 위치 인덱스 저장
-                    }
-                    if (indexArray[k] != j) {
-                        indexArray.add(j) // 중복 위치 인덱스 저장
-                    }
-                }
-            }
-        }
-    }
-}*/
-/*var indexArray = ArrayList<Int>()
-for (i in 0 until num2) {
-    for (j in i+1 until num2) {
-        if (detailGoalStringArray[i][0] == detailGoalStringArray[j][0]) { // 세부목표 비교
-            indexArray.add(i) // 중복 값 위치 인덱스 저장
-            indexArray.add(j)
-        }
-    }
-}
-// 중복값을 제외하고 리스트에 인덱스 저장
-var resultArray = ArrayList<Int>()
-for (i in 0 until indexArray.size) {
-    var index = indexArray[i]
-    if (!resultArray.contains(index)) {
-        resultArray.add(index)
-    }
-}
-Log.d("세부목표 resultArray의 size", resultArray.size.toString())
-for (i in resultArray.indices) {
-    Log.d("세부목표 indexArray값 ", resultArray[i].toString())
-}
-// 세부목표 배열에서 중복되는 값 1개 남기고 삭제
-var i = 1
-while (i < resultArray.size) {
-    var index = resultArray[i]
-    detailGoalStringArray[index][0] = ""
-    detailGoalStringArray[index][1] = ""
-    detailGoalStringArray[index][2] = ""
-    detailGoalIntArray[index][0] = BigInteger.ZERO
-    detailGoalIntArray[index][1] = BigInteger.ZERO
-    ++i
-}
-resultArray.clear() // 리스트 초기화
-indexArray.clear()
-
-// 대표목표 배열에서 중복되는 값의 인덱스 찾기
-for (i in 0 until num) {
-    for (j in i+1 until  num) {
-        if (bigGoalStringArray[i][0] == bigGoalStringArray[j][0] &&
-                bigGoalStringArray[i][1] == bigGoalStringArray[j][1]) {
-            indexArray.add(i) // 중복 값 위치 인덱스 저장
-            indexArray.add(j)
-        }
-    }
-}
-// 중복값을 제외하고 리스트에 인덱스 저장
-for (i in 0 until indexArray.size) {
-    var index = indexArray[i]
-    if (!resultArray.contains(index)) {
-        resultArray.add(index)
-    }
-}
-Log.d("대표목표 resultArray의 size", resultArray.size.toString())
-for (i in indexArray.indices) {
-    Log.d("대표목표 resultArray값 ", resultArray[i].toString())
-}
-
-// 대표목표 배열에서 중복되는 값 1개 남기고 삭제, 시간 더해주기
-i = 1
-while(i < resultArray.size) {
-    var index = resultArray[i]
-    bigGoalIntArray[resultArray[0]][0] += bigGoalIntArray[index][0] // 중복되는 대표목표의 시간값 더하기
-    bigGoalStringArray[index][0] = ""
-    bigGoalStringArray[index][1] = ""
-    bigGoalIntArray[index][0] = BigInteger.ZERO
-    bigGoalIntArray[index][1] = BigInteger.ZERO
-    ++i
-}
-indexArray.clear() // 리스트 초기화
-resultArray.clear()*/
