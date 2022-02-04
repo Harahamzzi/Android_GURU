@@ -2,11 +2,14 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
+import android.database.Cursor
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.contentValuesOf
 
-class DetailGoalNameDialog(context: Context, name: String) {
+class DetailGoalNameDialog(val context: Context, name: String) {
     private val dialog = Dialog(context)
 
     //기존 이름 textView
@@ -37,12 +40,32 @@ class DetailGoalNameDialog(context: Context, name: String) {
             dialog.dismiss()
         }
 
+        //이름 설정
         nameEditImageButton.setOnClickListener {
-            if(editNameEditText.text != null){
-                name = editNameEditText.text.toString()
+            var changedName = editNameEditText.text.toString()
+            if(changedName != ""){
+                var isValid = true
+                var dbManager = DBManager(context, "hamster_db", null, 1)
+                var sqlitedb = dbManager.readableDatabase
+                var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db",null)
+                while(cursor.moveToNext()){
+                    var tempName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+                    if(tempName != name && tempName == changedName)
+                        isValid = false
+                }
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+                if(!isValid){
+                    Toast.makeText(context, "이미 있는 목표입니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    onClickListener.onClicked(true, changedName)
+                    dialog.dismiss()
+                }
+            } else {
+                Toast.makeText(context, "목표를 입력해주세요!", Toast.LENGTH_SHORT).show()
             }
-            onClickListener.onClicked(true, name)
-            dialog.dismiss()
         }
     }
 

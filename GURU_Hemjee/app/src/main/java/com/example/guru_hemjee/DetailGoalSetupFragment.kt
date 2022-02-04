@@ -242,28 +242,69 @@ class DetailGoalSetupFragment : Fragment() {
         // 확인버튼을 눌렀다면
         completeBtn.setOnClickListener {
             // DB에 데이터 쓰기(세부 목표)
+
+            // 새롭게 추가한 목표를 db에 저장
+            var isValid = true
+            var i : Int = 0
+            while(i < iconList.size){
+                var detailGoal: String = textdetailGoalList[i].text.toString()
+                var iconName : Int = iconList[i].getTag() as Int
+                var bigGoal: String = bigGoalList[i]
+
+//                if(detailGoal == ""){
+//                    isValid = false
+//                    Toast.makeText(context, "비어있는 목표는 저장 될 수 없습니다!", Toast.LENGTH_SHORT).show()
+//                    break
+//                }
+
+                for(item in textdetailGoalList){
+                    if(item.text.toString() == detailGoal && item != textdetailGoalList[i]){
+                        isValid = false
+                        Toast.makeText(context, "중복되는 목표가 입력되었습니다!", Toast.LENGTH_SHORT).show()
+                        break
+                    }
+                }
+
+                dbManager = DBManager(context, "hamster_db", null, 1)
+                sqlitedb = dbManager.readableDatabase
+                cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '${detailGoal}'",null)
+                if(cursor.moveToNext()){
+                    isValid = false
+                    Toast.makeText(context, "중복되는 목표가 있습니다!(${detailGoal})", Toast.LENGTH_SHORT).show()
+                }
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+                if(!isValid)
+                    break;
+
+                i++
+            }
+            
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
 
             sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '$str_biggoal'")
 
-            // 새롭게 추가한 목표를 db에 저장
-            var i : Int = 0
-            while (i < iconList.size) {
+            i=0
+            while (i < iconList.size && isValid) {
                 var detailGoal: String = textdetailGoalList[i].text.toString()
                 var iconName : Int = iconList[i].getTag() as Int
                 var bigGoal: String = bigGoalList[i]
 
-                // 중복 데이터 제외하고 저장
-                if(textdetailGoalList[i].text.toString() != "")
+                // 공백 데이터 제외하고 저장
+                if(detailGoal != "")
                     sqlitedb.execSQL("INSERT OR IGNORE INTO detail_goal_db VALUES ('" + detailGoal + "', '" + iconName + "', '" + bigGoal + "')")
                 ++i
             }
 
             sqlitedb.close()
             dbManager.close()
-            Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-            goSetUp()
+            if(isValid){
+                Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                goSetUp()
+            }
         }
 
         return view
