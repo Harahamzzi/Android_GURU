@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentTransaction
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -29,9 +30,9 @@ class DailyReportFragment : Fragment() {
     lateinit var sqlite: SQLiteDatabase
 
     // 일간, 주간, 월간
-    lateinit var dailyBtn: androidx.appcompat.widget.AppCompatButton
-    lateinit var weeklyBtn: androidx.appcompat.widget.AppCompatButton
-    lateinit var monthlyBtn: androidx.appcompat.widget.AppCompatButton
+    lateinit var dailyBtn: AppCompatButton
+    lateinit var weeklyBtn: AppCompatButton
+    lateinit var monthlyBtn: AppCompatButton
 
     // 오늘 리포트 화면으로 이동하는 달력 버튼
     lateinit var moveTodayButton: ImageButton
@@ -120,6 +121,7 @@ class DailyReportFragment : Fragment() {
             var str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
             var bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
             var str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var int_color = cursor.getInt(cursor.getColumnIndex("color")).toBigInteger()
 
             // 배열에 읽어온 값 저장
             var isFlag: Boolean = false // 중복값 확인
@@ -128,6 +130,7 @@ class DailyReportFragment : Fragment() {
                 bigGoalStringArray[num][0] = str_big_goal // 대표목표
                 bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
                 bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
+                bigGoalIntArray[num][1] = int_color // 대표목표 색상
                 ++num
             } else { // 기존에 데이터가 있다면
                 for (i in 0 until num) {
@@ -141,25 +144,12 @@ class DailyReportFragment : Fragment() {
                     bigGoalStringArray[num][0] = str_big_goal // 대표목표
                     bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
                     bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
+                    bigGoalIntArray[num][1] = int_color // 대표목표 색상
                     ++num
                 }
             }
         }
         cursor.close()
-
-        // 대표목표 색상값 가져와서 배열에 저장
-        var cursor2: Cursor
-        for (i in 0 until num) {
-            cursor2 = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '" + bigGoalStringArray[i][0] + "';", null)
-
-            while (cursor2.moveToNext()) {
-                var int_color = cursor2.getInt(cursor2.getColumnIndex("color")).toBigInteger()
-
-                // 배열에 읽어온 값 저장
-                bigGoalIntArray[i][1] = int_color // 대표목표 색상
-            }
-            cursor2.close()
-        }
 
         // 세부목표 리포트 db에서 저장된 값 읽어오기(세부목표, 잠금 날짜)
         var cursor3: Cursor
@@ -168,6 +158,8 @@ class DailyReportFragment : Fragment() {
         while (cursor3.moveToNext()) {
             var str_detail_goal = cursor3.getString(cursor3.getColumnIndex("detail_goal_name"))
             var str_date = cursor3.getString(cursor3.getColumnIndex("lock_date")).toString()
+            var int_icon = cursor3.getInt(cursor3.getColumnIndex("icon")).toBigInteger()
+            var int_color = cursor3.getInt(cursor3.getColumnIndex("color")).toBigInteger()
 
             // 배열에 읽어온 값 저장 (같은 날짜 내에 중복값 저장X)
             var isFlag: Boolean = false // 중복값 확인
@@ -175,6 +167,8 @@ class DailyReportFragment : Fragment() {
             if (detailGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
                 detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
                 detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
+                detailGoalIntArray[num2][0] = int_icon // 아이콘
+                detailGoalIntArray[num2][1] = int_color // 색상
                 ++num2
             } else { // 기존에 데이터가 있다면
                 for (i in 0 until num2) {
@@ -186,54 +180,30 @@ class DailyReportFragment : Fragment() {
                 if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
                     detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
                     detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
+                    detailGoalIntArray[num2][0] = int_icon // 아이콘
+                    detailGoalIntArray[num2][1] = int_color // 색상
                     ++num2
                 }
             }
         }
         cursor3.close()
 
-        // 세부목표 db에서 저장된 값 읽어오기(아이콘, 대표목표)
+        // 세부목표 db에서 저장된 값 읽어오기(대표목표)
         var cursor4: Cursor
         for (i in 0 until num2) {
             cursor4 = sqlite.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '" + detailGoalStringArray[i][0] + "';", null)
 
             while (cursor4.moveToNext()) {
-                var int_icon = cursor4.getInt(cursor4.getColumnIndex("icon")).toBigInteger()
                 var str_big_goal_name = cursor4.getString(cursor4.getColumnIndex("big_goal_name"))
 
                 // 배열에 읽어온 값 저장
-                detailGoalIntArray[i][0] = int_icon // 아이콘
                 detailGoalStringArray[i][2] = str_big_goal_name // 대표목표
             }
             cursor4.close()
         }
 
-        // 각 배열에 있는 대표목표 값이 같다면 detailGoalArray 배열에 색상 추가하기
-        for (i in 0 until num) {
-            for (j in 0 until num2) {
-                if (bigGoalStringArray[i][0] == detailGoalStringArray[j][2]) {
-                    detailGoalIntArray[j][1] = bigGoalIntArray[i][1]
-                }
-            }
-        }
-
         dbManager.close()
         sqlite.close()
-
-        // 배열 값 확인 용 Log
-        /*for (i in 0 until num) {
-            Log.d("bigGoalArray 대표목표 ", i.toString() + "번째 " + bigGoalStringArray[i][0])
-            Log.d("bigGoalArray 시간 ", i.toString() + "번째 " + bigGoalIntArray[i][0].toString())
-            Log.d("bigGoalArray 날짜 ", i.toString() + "번째 " + bigGoalStringArray[i][1])
-            Log.d("bigGoalArray 색상 ", i.toString() + "번째 " + bigGoalIntArray[i][1].toString())
-        }
-        for (i in 0 until num2) {
-            Log.d("detailGoalArray 세부목표 ", i.toString() + "번째 " + detailGoalStringArray[i][0])
-            Log.d("detailGoalArray 날짜 ", i.toString() + "번째 " + detailGoalStringArray[i][1])
-            Log.d("detailGoalArray 아이콘 ", i.toString() + "번째 " + detailGoalIntArray[i][0].toString())
-            Log.d("detailGoalArray 대표목표 ", i.toString() + "번째 " + detailGoalStringArray[i][2])
-            Log.d("detailGoalArray 색상 ", i.toString() + "번째 " + detailGoalIntArray[i][1].toString())
-        }*/
 
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
         if (reportSate == 0) { // 오늘
@@ -410,106 +380,3 @@ class DailyReportFragment : Fragment() {
         }
     }
 }
-
-/** 혹시 몰라서 남겨두는 코드 (추후 삭제 예정) **/
-/* val nowTime = System.currentTimeMillis()
-           val nowDate = SimpleDateFormat("yyyy-MM-dd", Locale("ko", "KR")).format(Date(nowTime))
-           var nowDay = SimpleDateFormat("E", Locale("ko", "KR")).format(Date(nowTime))
-           var date = Date(nowTime) // 시간관련한 모든 값들 ex) Wed Feb 02 15:44:48 GMT 2022
-           val dateFormat = SimpleDateFormat("yyyy-MM-dd") // 년도, 월, 일
-           val dayFormat = SimpleDateFormat("E") // 날짜 */
-
-// 배열 정리하기
-// 1) 세부목표 배열에서 중복되는 값을 1개만 남겨두고 삭제하기
-// 2) 대표목표 배열에서 중복되는 값을 1개만 남겨두고, 남긴 1개 행에다가 시간 더해주기
-// 세부목표 배열에서 중복되는 값의 인덱스 찾기
-/*var indexArray = ArrayList<Int>()
-for (i in 0 until num2) {
-    for (j in i+1 until num2) {
-        if (detailGoalStringArray[i][0] == detailGoalStringArray[j][0]) { // 세부목표 비교
-            if (indexArray.size == 0) {
-                indexArray.add(i)
-                indexArray.add(j)
-            } else {
-                for (k in 0 until indexArray.size) { // 인덱스 배열에 같은 값이 없다면
-                    if (indexArray[k] != i) {
-                        indexArray.add(i) // 중복 위치 인덱스 저장
-                    }
-                    if (indexArray[k] != j) {
-                        indexArray.add(j) // 중복 위치 인덱스 저장
-                    }
-                }
-            }
-        }
-    }
-}*/
-/*var indexArray = ArrayList<Int>()
-for (i in 0 until num2) {
-    for (j in i+1 until num2) {
-        if (detailGoalStringArray[i][0] == detailGoalStringArray[j][0]) { // 세부목표 비교
-            indexArray.add(i) // 중복 값 위치 인덱스 저장
-            indexArray.add(j)
-        }
-    }
-}
-// 중복값을 제외하고 리스트에 인덱스 저장
-var resultArray = ArrayList<Int>()
-for (i in 0 until indexArray.size) {
-    var index = indexArray[i]
-    if (!resultArray.contains(index)) {
-        resultArray.add(index)
-    }
-}
-Log.d("세부목표 resultArray의 size", resultArray.size.toString())
-for (i in resultArray.indices) {
-    Log.d("세부목표 indexArray값 ", resultArray[i].toString())
-}
-// 세부목표 배열에서 중복되는 값 1개 남기고 삭제
-var i = 1
-while (i < resultArray.size) {
-    var index = resultArray[i]
-    detailGoalStringArray[index][0] = ""
-    detailGoalStringArray[index][1] = ""
-    detailGoalStringArray[index][2] = ""
-    detailGoalIntArray[index][0] = BigInteger.ZERO
-    detailGoalIntArray[index][1] = BigInteger.ZERO
-    ++i
-}
-resultArray.clear() // 리스트 초기화
-indexArray.clear()
-
-// 대표목표 배열에서 중복되는 값의 인덱스 찾기
-for (i in 0 until num) {
-    for (j in i+1 until  num) {
-        if (bigGoalStringArray[i][0] == bigGoalStringArray[j][0] &&
-                bigGoalStringArray[i][1] == bigGoalStringArray[j][1]) {
-            indexArray.add(i) // 중복 값 위치 인덱스 저장
-            indexArray.add(j)
-        }
-    }
-}
-// 중복값을 제외하고 리스트에 인덱스 저장
-for (i in 0 until indexArray.size) {
-    var index = indexArray[i]
-    if (!resultArray.contains(index)) {
-        resultArray.add(index)
-    }
-}
-Log.d("대표목표 resultArray의 size", resultArray.size.toString())
-for (i in indexArray.indices) {
-    Log.d("대표목표 resultArray값 ", resultArray[i].toString())
-}
-
-// 대표목표 배열에서 중복되는 값 1개 남기고 삭제, 시간 더해주기
-i = 1
-while(i < resultArray.size) {
-    var index = resultArray[i]
-    bigGoalIntArray[resultArray[0]][0] += bigGoalIntArray[index][0] // 중복되는 대표목표의 시간값 더하기
-    bigGoalStringArray[index][0] = ""
-    bigGoalStringArray[index][1] = ""
-    bigGoalIntArray[index][0] = BigInteger.ZERO
-    bigGoalIntArray[index][1] = BigInteger.ZERO
-    ++i
-}
-indexArray.clear() // 리스트 초기화
-resultArray.clear()*/
