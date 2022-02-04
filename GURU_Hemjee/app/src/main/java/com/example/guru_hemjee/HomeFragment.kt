@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import java.util.*
@@ -136,17 +137,20 @@ class HomeFragment : Fragment() {
         FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false, false)
 
         //햄찌 말 처리
-        hamsterTalkList.add("앗 미안,,ㅎㅎ\n햄찌는 F 상대 안한다 햄찌,,")
-        hamsterTalkList.add("한 시간이 우습냐 햄찌?\n한 달이면 31시간이다 햄찌!")
-        hamsterTalkList.add("그러다가 나중에\n유튜브만 본 바부가 된다 햄찌!")
+        hamsterTalkList.add("미안하지만\n햄찌는 F 상대 안한다 햄찌,,")
+        hamsterTalkList.add("한 시간이 작아보이지?\n한 달이면 31시간이다 햄찌!")
+        hamsterTalkList.add("그러다가 나중에\n놀기만 한 바부가 된다 햄찌!")
         hamsterTalkList.add("하나둘 미루다가\n하나둘 멀어지는 거다 햄찌!")
-        hamsterTalkList.add("아직도 놀고 있냐 햄찌!!!!")
         hamsterTalkList.add("또 유튜브 보냐 햄찌...?")
         hamsterTalkList.add("또 트위터 보냐 햄찌...?")
         hamsterTalkList.add("또 넷플릭스 보냐 햄찌...?")
-        hamsterTalkList.add("노력은 하고 있는 거냐 햄찌!")
         hamsterTalkList.add("오늘도 안하지는 않았겠지...\n집사는 사람이니까...")
         hamsterTalkList.add("오늘도 놀꺼냐 집사!")
+        hamsterTalkList.add("작은 거라도 조금씩하면\n목표에 가까워진다 햄찌!")
+        hamsterTalkList.add("어제보다 오늘 하나 더하면\n집사는 멋진 사람!!")
+        hamsterTalkList.add("목표는 생각보다 가까이 있다!\n끝까지 화이팅이다 햄찌!")
+        hamsterTalkList.add("미래에 후회하는 나?\n미래에 뿌듯한 나?")
+        hamsterTalkList.add("24시간은 생각보다\n모자르다 햄찌!!")
         val listSize = hamsterTalkList.size
         hamsterTalkTextView = requireView().findViewById(R.id.mainHamsterTalkTextView)
         val random = Random()
@@ -170,8 +174,12 @@ class HomeFragment : Fragment() {
         //lock 화면 연결
         startButton = requireView().findViewById(R.id.startButton)
         startButton.setOnClickListener {
-            showSettingConfirmPopUp()
-            hamsterTalkTextView.callOnClick()
+            if(!isThereBigGoal)   {
+                Toast.makeText(context, "목표를 생성해주세요!", Toast.LENGTH_SHORT).show()
+            } else {
+                showSettingConfirmPopUp()
+                hamsterTalkTextView.callOnClick()
+            }
         }
 
 

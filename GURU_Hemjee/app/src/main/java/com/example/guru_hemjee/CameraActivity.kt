@@ -237,7 +237,7 @@ class CameraActivity : AppCompatActivity() {
             dbManager.close()
 
             // 목표 달성 팝업창
-            finalPopup("목표 달성!", "확인", false)
+            finalPopup("목표 달성!", "+5", true)
         }
         catch(e: Exception)
         {
@@ -259,7 +259,7 @@ class CameraActivity : AppCompatActivity() {
                     dbManager = DBManager(this@CameraActivity, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
 
-                    var newSeedPoint: Int = upSeedPoint + intent.getIntExtra("seedPoint", 0)
+                    var newSeedPoint: Int = 5 + intent.getIntExtra("seedPoint", 0)
                     sqlitedb.execSQL("UPDATE basic_info_db SET seed = $newSeedPoint")
                     sqlitedb.close()
                     dbManager.close()

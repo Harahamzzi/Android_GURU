@@ -115,8 +115,8 @@
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/weeklyStackBarChart"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
+                android:layout_width="300dp"
+                android:layout_height="160dp"
                 android:layout_marginTop="17dp"
                 app:layout_constraintEnd_toStartOf="@+id/nextBtn2"
                 app:layout_constraintStart_toEndOf="@+id/prevBtn2"
@@ -130,11 +130,9 @@
                 android:layout_height="22dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="189dp"
-                android:layout_marginEnd="77dp"
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/prev_button"
-                app:layout_constraintEnd_toStartOf="@+id/weeklyStackBarChart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
 
@@ -142,14 +140,12 @@
                 android:id="@+id/nextBtn2"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
-                android:layout_marginStart="78dp"
                 android:layout_marginTop="134dp"
                 android:layout_marginEnd="17dp"
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/next_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/weeklyStackBarChart"
                 app:layout_constraintTop_toBottomOf="@+id/moveWeeklyButton" />
 
             <com.google.android.material.button.MaterialButton
@@ -175,7 +171,7 @@
                 app:icon="@drawable/ic_colorselectionicon"
                 app:iconGravity="start"
                 app:iconSize="16dp"
-                app:iconTint="@color/Orange"
+                app:iconTint="@color/White"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weeklyStackBarChart" />
