@@ -1,59 +1,209 @@
 package com.example.guru_hemjee
 
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.core.view.get
+import androidx.gridlayout.widget.GridLayout
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GoalAlbumFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GoalAlbumFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    // 대표 목표별 앨범 사진이 들어갈 레이아웃
+    private lateinit var goalAlbumLayout: GridLayout
+
+    // 드롭다운 메뉴
+    private lateinit var spinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+        savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_goal_album, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment GoalAlbumFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GoalAlbumFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onStart() {
+        super.onStart()
+
+        // 위젯 연결
+        goalAlbumLayout = requireView().findViewById(R.id.goalAlbum_goalAlbumLayout)
+
+        // spinner 연결
+        spinner = requireView().findViewById(R.id.goal_albumMenuSpinner)
+
+        // spinner 어댑터 설정
+        spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, android.R.layout.simple_spinner_item)
+
+        // spinner 아이템 선택 리스너
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+
+                when(position){
+
+                    // 목표 선택
+                    0 -> {
+                        Log.i ("정보태그", "일간 앨범으로 이동했다..")
+                        transaction.replace(R.id.fragment_main, DailyAlbumFragment())
+                        transaction.commit()
+                    }
+
+                    // 카테고리 선택
+                    2 -> {
+                        Log.i ("정보태그", "카테고리 앨범으로 이동했다..")
+                        transaction.replace(R.id.fragment_main, CategoryAlbumFragment())
+                        transaction.commit()
+                    }
                 }
             }
+        }
+
+        // 앨범 생성
+        applyDailyBigGoalPhoto()
+    }
+
+    // 대표 목표별 앨범 사진 세팅하는 함수
+    private fun applyDailyBigGoalPhoto() {
+
+        /** view 동적 생성, 대표 목표 이름과 색상 가져와서 세팅하기 - big_goal_db **/
+
+        // DB 불러오기
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        // 대표 목표 DB 열기
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+
+        while(cursor.moveToNext())
+        {
+            // view goalAlbumLayout에 부풀리기
+            var view: View = layoutInflater.inflate(R.layout.container_small_album, goalAlbumLayout, false)
+
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+                //
+            }
+
+            // 아이콘 색상을 대표 목표 색상으로 변경
+            var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
+            icon.setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
+
+            // 제목을 대표 목표 이름으로 변경
+            var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
+            goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+
+            // view 추가
+            goalAlbumLayout.addView(view)
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        /** 세부 목표 리포트 + 세부 목표 DB에서 사진 뽑아오기 - detail_goal_time_report_db + detail_goal_db **/
+
+        // goalAlbumLayout에 생성한 뷰 개수 가져오기
+        var totalCount: Int = goalAlbumLayout.childCount
+        var count: Int = 0
+
+
+
+        while(count < totalCount)
+        {
+            // DB 불러오기
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+
+            // 해당 뷰 가져오기
+            var view: View = goalAlbumLayout.get(count)
+
+            // 대표 목표 이름 가져오기
+            var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
+            var goalName: String = goalNameTextView.text.toString()
+
+            // 세부 목표 리포트 + 세부 목표 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
+                    + " INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '$goalName'", null)
+
+            cursor.moveToLast()    // 가장 최근 데이터를 가져오기 위해 커서를 마지막으로 이동
+            cursor.moveToNext()    // 한 단계 앞으로(빈 곳을 가리키도록 함)
+
+            // 세부 목표 리포트에서 파일명 가져와서 이미지 변경하기
+            while(cursor.moveToPrevious())
+            {
+                var path = requireContext().filesDir.toString() + "/picture/"
+                path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
+
+                try {
+                    var bitmap: Bitmap = BitmapFactory.decodeFile(path)
+                    // 이미지 배율 크기 작업 - 156x156 크기로 재설정함
+                    var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 156, true)
+
+                    var goalPhoto: ImageView = view.findViewById(R.id.smallAlbum_goalAlbumImageView)
+                    goalPhoto.setImageBitmap(reScaledBitmap)
+                }
+                catch(e: Exception) {
+                    Log.e("오류태그", "대표 목표별 사진 로드/세팅 실패 => 강제 탈출 \n${e.printStackTrace()}")
+                    break
+                }
+            }
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+
+            /** 대표 목표의 총 잠금한 시간 가져와서 세팅하기 - big_goal_time_report_db **/
+
+            // DB 불러오기
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+
+            // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터만 가져오기
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '$goalName'", null)
+
+            // 대표 목표별 총 잠금한 시간 변수
+            var totalGoalLockTime: Int = 0
+
+            // 대표 목표 리포트에서 총 잠금한 시간 더하기
+            while(cursor.moveToNext())
+            {
+                totalGoalLockTime += cursor.getInt(cursor.getColumnIndex("total_lock_time"))
+            }
+
+            // 위젯에 totalTime 갱신
+            var tempHour = totalGoalLockTime / 1000 / 60 / 60 % 24   // 시간
+            var tempMin = totalGoalLockTime / 1000 / 60 % 60         // 분
+            var tempSec = totalGoalLockTime / 1000 % 60              // 초
+
+            var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
+            timeTextView.text = "$tempHour:$tempMin:$tempSec"
+
+            count++ // 카운트 증가
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+        }
     }
 }

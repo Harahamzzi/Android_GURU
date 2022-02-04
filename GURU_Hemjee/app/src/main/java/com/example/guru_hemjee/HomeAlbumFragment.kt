@@ -131,7 +131,7 @@ class HomeAlbumFragment : Fragment() {
         var tempMin = dayTotalLockTime / 1000 / 60 % 60         // 분
         var tempSec = dayTotalLockTime / 1000 % 60              // 초
 
-        timeTextView.text = "$tempHour:$tempMin:$tempSec"
+        timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
         cursor.close()
         sqlitedb.close()
@@ -325,7 +325,7 @@ class HomeAlbumFragment : Fragment() {
             var tempSec = totalGoalLockTime / 1000 % 60              // 초
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
-            timeTextView.text = "$tempHour:$tempMin:$tempSec"
+            timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
             count++ // 카운트 증가
 

@@ -13,7 +13,7 @@
         android:layout_gravity="right"
         android:layout_marginRight="17.3dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="1dp"
         >
 
         <ImageView
@@ -28,14 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
+        app:cardElevation="2dp"
         >
 
         <ImageView
             android:id="@+id/bigAlbum_bigAlbumImageView2"
             android:layout_width="156dp"
             android:layout_height="155dp"
-            android:src="@color/Gray" />
+            android:src="@color/LightGray" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp" >
+        app:cardElevation="3dp" >
 
         <ImageView
             android:id="@+id/bigAlbum_bigAlbumImageView1"
@@ -57,7 +57,8 @@
         android:id="@+id/imageView4"
         android:layout_width="35dp"
         android:layout_height="155dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="17dp"
+        android:elevation="4dp"
         android:src="@drawable/big_side_cover" />
 
     <ImageView
@@ -66,6 +67,7 @@
         android:layout_height="24dp"
         android:layout_marginTop="7dp"
         android:layout_marginLeft="22dp"
+        android:elevation="5dp"
         app:tint="@color/Yellow"
         android:src="@drawable/ic_outline_computer_24"/>
 </FrameLayout>

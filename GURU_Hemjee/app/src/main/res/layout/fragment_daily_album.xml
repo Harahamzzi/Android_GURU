@@ -68,7 +68,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/dateTextView"
+            android:id="@+id/dailyAlbum_dateTextView"
             android:layout_width="84.6dp"
             android:layout_height="20dp"
             android:layout_marginTop="15dp"
@@ -92,10 +92,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTextView">
+            app:layout_constraintTop_toBottomOf="@+id/dailyAlbum_dateTextView">
 
             <ImageButton
-                android:id="@+id/prevButton"
+                android:id="@+id/dailyAlbum_prevButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -103,7 +103,7 @@
                 android:src="@drawable/prev_button" />
 
             <TextView
-                android:id="@+id/timeTextView"
+                android:id="@+id/dailyAlbum_timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -115,7 +115,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/dailyAlbum_nextButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -135,43 +135,43 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/dayAlbumGridLayout"
+            android:id="@+id/dailyAlbum_GridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:columnCount="3"
             app:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/dailyAlbumView1"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:layout_columnWeight="1"
-                app:layout_rowWeight="1"
-                android:src="@color/LightGray" />
+<!--            <ImageView-->
+<!--                android:id="@+id/dailyAlbumView1"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="120dp"-->
+<!--                app:layout_columnWeight="1"-->
+<!--                app:layout_rowWeight="1"-->
+<!--                android:src="@color/LightGray" />-->
 
-            <ImageView
-                android:id="@+id/dailyAlbumView2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:layout_columnWeight="1"
-                app:layout_rowWeight="1"
-                android:src="@color/Gray" />
+<!--            <ImageView-->
+<!--                android:id="@+id/dailyAlbumView2"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="120dp"-->
+<!--                app:layout_columnWeight="1"-->
+<!--                app:layout_rowWeight="1"-->
+<!--                android:src="@color/Gray" />-->
 
-            <ImageView
-                android:id="@+id/dailyAlbumView3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:layout_columnWeight="1"
-                app:layout_rowWeight="1"
-                android:src="@color/LightGray" />
+<!--            <ImageView-->
+<!--                android:id="@+id/dailyAlbumView3"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="120dp"-->
+<!--                app:layout_columnWeight="1"-->
+<!--                app:layout_rowWeight="1"-->
+<!--                android:src="@color/LightGray" />-->
 
-            <ImageView
-                android:id="@+id/dailyAlbumView4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:layout_columnWeight="1"
-                app:layout_rowWeight="1"
-                android:src="@color/Gray" />
+<!--            <ImageView-->
+<!--                android:id="@+id/dailyAlbumView4"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="120dp"-->
+<!--                app:layout_columnWeight="1"-->
+<!--                app:layout_rowWeight="1"-->
+<!--                android:src="@color/Gray" />-->
 
         </androidx.gridlayout.widget.GridLayout>
     </ScrollView>

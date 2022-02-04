@@ -32,6 +32,13 @@ android {
         jvmTarget = '1.8'
     }
 }
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {url "https://jitpack.io"}
+    }
+}
 
 dependencies {
 
