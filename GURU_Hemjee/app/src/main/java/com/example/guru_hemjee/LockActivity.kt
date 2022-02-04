@@ -71,6 +71,7 @@ class LockActivity : AppCompatActivity() {
     private lateinit var sqlitedb:SQLiteDatabase
     private lateinit var sqlitedb2:SQLiteDatabase
     private lateinit var hamsterName: String
+    private var bigGoalColor: Int = 0   // 대표 목표의 색상
 
     // 세부 목표 리스트 관련
     private lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
@@ -328,7 +329,7 @@ class LockActivity : AppCompatActivity() {
                         var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
 
                         // 데이터 추가
-                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
 
                         sqlitedb.close()
                         dbManager.close()
@@ -365,7 +366,6 @@ class LockActivity : AppCompatActivity() {
 
         // 잠금 전 확인 팝업창에 있던 대표 목표 이름(위젯) 가져오기
         var bigGoalName = intent.getStringExtra("bigGoalName")  // 대표 목표 이름
-        var bigGoalColor: Int = 0   // 대표 목표의 색상
 
         var cursor: Cursor
 
@@ -410,7 +410,8 @@ class LockActivity : AppCompatActivity() {
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
-                icon.setImageResource(cursor.getInt(cursor.getColumnIndex("icon")))
+                var iconResource: Int = cursor.getInt(cursor.getColumnIndex("icon"))
+                icon.setImageResource(iconResource)
 
                 // icon의 색을 대표 목표의 색으로 변경
                 icon.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
@@ -438,7 +439,7 @@ class LockActivity : AppCompatActivity() {
                 detailGoalListContainer.addView(view)
 
                 // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
-                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, is_active) VALUES ('${textView.text}', 1);")
+                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, is_active) VALUES ('${textView.text}', $bigGoalColor, $iconResource, 1);")
             }
 
             // 닫기
@@ -576,7 +577,7 @@ class LockActivity : AppCompatActivity() {
                         var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
 
                         // 데이터 추가
-                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, '$resultDate');")
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
 
                         sqlitedb.close()
                         dbManager.close()
