@@ -289,7 +289,7 @@ class DetailGoalSetupFragment : Fragment() {
 
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
-            
+
             i=0
             while (i < iconList.size && isValid) {
                 var detailGoal: String = textdetailGoalList[i].text.toString()

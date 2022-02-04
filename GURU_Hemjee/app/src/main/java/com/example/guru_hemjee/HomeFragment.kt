@@ -12,7 +12,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +37,9 @@ class HomeFragment : Fragment() {
     //햄찌 관련
     private lateinit var mainBGFrameLayout: FrameLayout
     private lateinit var mainClothFrameLayout: FrameLayout
+    //햄찌 말 관련
+    private var hamsterTalkList = ArrayList<String>()
+    private lateinit var hamsterTalkTextView: TextView
 
     //db관련
     private lateinit var dbManager: DBManager
@@ -129,6 +135,34 @@ class HomeFragment : Fragment() {
         mainClothFrameLayout = requireView().findViewById(R.id.mainClothFrameLayout)
         FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false, false)
 
+        //햄찌 말 처리
+        hamsterTalkList.add("앗 미안,,ㅎㅎ\n햄찌는 F 상대 안한다 햄찌,,")
+        hamsterTalkList.add("한 시간이 우습냐 햄찌?\n한 달이면 31시간이다 햄찌!")
+        hamsterTalkList.add("그러다가 나중에\n유튜브만 본 바부가 된다 햄찌!")
+        hamsterTalkList.add("하나둘 미루다가\n하나둘 멀어지는 거다 햄찌!")
+        hamsterTalkList.add("아직도 놀고 있냐 햄찌!!!!")
+        hamsterTalkList.add("또 유튜브 보냐 햄찌...?")
+        hamsterTalkList.add("또 트위터 보냐 햄찌...?")
+        hamsterTalkList.add("또 넷플릭스 보냐 햄찌...?")
+        hamsterTalkList.add("노력은 하고 있는 거냐 햄찌!")
+        hamsterTalkList.add("오늘도 안하지는 않았겠지...\n집사는 사람이니까...")
+        hamsterTalkList.add("오늘도 놀꺼냐 집사!")
+        val listSize = hamsterTalkList.size
+        hamsterTalkTextView = requireView().findViewById(R.id.mainHamsterTalkTextView)
+        val random = Random()
+        var num = random.nextInt(listSize)
+        hamsterTalkTextView.text = hamsterTalkList[num]
+        hamsterTalkTextView.setOnClickListener {
+            var newNum = random.nextInt(listSize)
+            //이전 말과 무조건 다르게 나오게 처리
+            while(newNum == num){
+                newNum = random.nextInt(listSize)
+            }
+            num = newNum
+            hamsterTalkTextView.text = hamsterTalkList[num]
+        }
+
+
         //잠금 시간 안내
         goalTime = requireView().findViewById(R.id.goalTime)
         goalTime.text = time.split(':')[0]+"시 " + time.split(':')[1]+"분 " +time.split(':')[2]+"초"
@@ -137,6 +171,7 @@ class HomeFragment : Fragment() {
         startButton = requireView().findViewById(R.id.startButton)
         startButton.setOnClickListener {
             showSettingConfirmPopUp()
+            hamsterTalkTextView.callOnClick()
         }
 
 
