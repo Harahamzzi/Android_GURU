@@ -475,7 +475,7 @@ class LockActivity : AppCompatActivity() {
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
                         {
-                            finalOK("10분 줄이기", "-40", true, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
+                            finalOK("10분 줄이기", "확인", false, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
                             time -= 600     // 잔여 시간 10분 감소
                         }
                         // 현재 잔여 시간이 10분 이하일 경우
