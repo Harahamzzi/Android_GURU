@@ -445,7 +445,8 @@ class LockActivity : AppCompatActivity() {
                 detailGoalListContainer.addView(view)
 
                 // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
-                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, is_active) VALUES ('${textView.text}', $bigGoalColor, $iconResource, 1);")
+                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, big_goal_name, is_active)"
+                        + " VALUES ('${textView.text}', $bigGoalColor, $iconResource, '$bigGoalName', 1);")
             }
 
             // 닫기

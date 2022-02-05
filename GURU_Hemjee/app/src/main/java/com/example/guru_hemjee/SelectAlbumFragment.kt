@@ -268,9 +268,9 @@ class SelectAlbumFragment : Fragment() {
 
         for(index in goalNameList.indices)
         {
-            // 세부 목표 리포트 + 세부 목표 DB 열기
-            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
-                    + "INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '${goalNameList.get(index - removeCount)}'", null)
+            // 세부 목표 리포트 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db"
+                    + " WHERE big_goal_name = '${goalNameList.get(index - removeCount)}'", null)
 
             // 만일 해당 대표 목표에서 저장된 사진이 없다면
             if(!cursor.moveToNext())
@@ -369,9 +369,9 @@ class SelectAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 대표 목표 DB 열기 - 세부 목표 리포트 DB + 세부 목표 DB (해당하는 대표 목표의 세부 목표 관련 데이터들만 가져옴)
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
-                + " INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '$goalName'", null)
+        // 세부 목표 리포트 DB 열기 (해당하는 대표 목표의 세부 목표 관련 데이터들만 가져옴)
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db"
+                + " WHERE big_goal_name = '$goalName'", null)
 
         cursor.moveToLast()    // 가장 최근 데이터를 가져오기 위해 커서를 마지막으로 이동
         cursor.moveToNext()    // 한 단계 앞으로(빈 곳을 가리키도록 함)

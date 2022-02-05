@@ -252,9 +252,9 @@ class HomeAlbumFragment : Fragment() {
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             var goalName: String = goalNameTextView.text.toString()
 
-            // 세부 목표 리포트 + 세부 목표 DB 열기
-            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
-                    + " INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '$goalName'", null)
+            // 세부 목표 리포트 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db"
+                    + " WHERE big_goal_name = '$goalName'", null)
 
             // 만일 해당 대표 목표에서 저장된 사진이 없다면
             if(!cursor.moveToNext())
@@ -264,6 +264,8 @@ class HomeAlbumFragment : Fragment() {
 
                 // 삭제한 횟수 증가
                 removeCount++
+
+                continue
             }
 
             var isDone = false     // 날짜 비교 반복문 탈출하기 위한 flag

@@ -123,13 +123,13 @@ class AlbumMainActivity : AppCompatActivity() {
         // 만일 홈 앨범에서 왔다면
         if(intent.getBooleanExtra("isHome", false))
         {
-//            // (폰)뒤로가기를 눌렀을 때 다시 홈으로 돌아가기
-//            var intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-            var fm = supportFragmentManager
-            fm.popBackStack()
+            // (폰)뒤로가기를 눌렀을 때 다시 홈으로 돌아가기
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
-
-        super.onBackPressed()
+        else
+        {
+            super.onBackPressed()
+        }
     }
 }
