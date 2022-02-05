@@ -59,7 +59,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
         changeGoalButton = dialog.findViewById(R.id.changeGoalButton)
         changeGoalButton.setOnClickListener {
             //대표 목표 수정을 위한 팝업 연결
-            val subDialog = GoalSelectDialog(context, bigGoalTitle, "목표 변경")
+            val subDialog = GoalSelectDialog(context, bigGoalTitle, "목표 변경", false)
             subDialog.goalSelectPop()
 
             //해당 팝업에서 받아온 정보로 데이터 갱신

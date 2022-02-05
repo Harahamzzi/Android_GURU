@@ -15,7 +15,7 @@ import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
-class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: String) {
+class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: String, val isReport: Boolean) {
     private var context = context
     private var dialog = Dialog(context)
     private var bigGoalTitle = bigGoalTitle
@@ -53,6 +53,25 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db;", null)
 
         var num: Int = 0
+
+        if(isReport){
+            var radioButton: RadioButton = RadioButton(context)
+            radioButton.id = num
+            radioButton.width = 700
+            radioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goal_dot_small, 0, 0, 0)
+            radioButton.compoundDrawablePadding = 20
+            radioButton.compoundDrawableTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Black))
+            radioButton.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.SeedBrown))
+            radioButton.setText("전체")
+            radioButton.layoutDirection = RadioButton.LAYOUT_DIRECTION_RTL
+            radioButton.isChecked = true
+            radioButton.setSingleLine()
+            radioButton.ellipsize = TextUtils.TruncateAt.END
+
+            goalRadioGroup.addView(radioButton)
+            num++
+        }
+
         while(cursor.moveToNext()){
             val name = cursor.getString(cursor.getColumnIndex("big_goal_name"))
             val color = cursor.getInt(cursor.getColumnIndex("color"))
