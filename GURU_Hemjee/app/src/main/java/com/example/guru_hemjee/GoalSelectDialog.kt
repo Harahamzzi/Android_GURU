@@ -67,6 +67,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
             radioButton.isChecked = true
             radioButton.setSingleLine()
             radioButton.ellipsize = TextUtils.TruncateAt.END
+            radioButton.setPadding(0, 0, 0, 10)
 
             goalRadioGroup.addView(radioButton)
             num++
@@ -88,6 +89,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
             radioButton.isChecked = name==bigGoalTitle
             radioButton.setSingleLine()
             radioButton.ellipsize = TextUtils.TruncateAt.END
+            radioButton.setPadding(0, 0, 0, 10)
 
             goalRadioGroup.addView(radioButton)
             num++
