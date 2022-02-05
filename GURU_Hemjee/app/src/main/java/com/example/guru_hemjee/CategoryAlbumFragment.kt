@@ -128,6 +128,9 @@ class CategoryAlbumFragment : Fragment() {
             // icon 값 받아와서 저장하기
             iconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
 
+            // icon 값 tag로 저장하기
+            view.setTag(cursor.getInt(cursor.getColumnIndex("icon")))
+
             // view에 클릭 리스너 달기
             view.setOnClickListener {
                 // Spinner 숨기기
@@ -137,7 +140,7 @@ class CategoryAlbumFragment : Fragment() {
                 // 번들 생성(보낼 값 세팅)
                 var bundle = Bundle()
                 bundle.putString("flag", "CATEGORY")    // 카테고리 플래그
-                //TODO: 카테고리 아이콘 보내기!!
+                bundle.putInt("icon", view.tag as Int)       // 아이콘 값 전달
 
                 var fragment = SelectAlbumFragment()
                 fragment.arguments = bundle
