@@ -35,7 +35,8 @@ class CategoryAlbumFragment : Fragment() {
         spinner = requireView().findViewById(R.id.category_albumMenuSpinner)
 
         // spinner 어댑터 설정
-        spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, android.R.layout.simple_spinner_item)
+        spinner.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, resources.getStringArray(R.array.spinnerAlbumList))
+        spinner.setSelection(2)
 
         // spinner 아이템 선택 리스너
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
