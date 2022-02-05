@@ -187,6 +187,7 @@ class CategoryAlbumFragment : Fragment() {
             if(++picNums[iconNum] >= 4)
                 continue
 
+            /** 해당 카테고리에 사진 추가 **/
             var path = requireContext().filesDir.toString() + "/picture/"
             path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
 
@@ -207,5 +208,25 @@ class CategoryAlbumFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        /** 현재 사진이 없는 카테고리는 제거 **/
+
+        // 레이아웃에 있는 View 하나를 제거하면 나머지 View들이 자동으로
+        // 그 빈 공간을 채워 앞으로 당겨지기 때문에
+        // 아래와 같은 삭제 횟수 변수를 사용함
+        var removeCount = 0
+
+        for(index in picNums.indices)
+        {
+            // 해당 카테고리에 들어가 있는 사진이 없다면
+            if(picNums[index] == 0)
+            {
+                // 해당 카테고리 폴더를 삭제한다
+                categoryAlbumLayout.removeViewAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
+        }
     }
 }

@@ -107,17 +107,18 @@ class GoalAlbumFragment : Fragment() {
         /** 세부 목표 리포트 + 세부 목표 DB에서 사진 뽑아오기 - detail_goal_time_report_db + detail_goal_db **/
 
         // goalAlbumLayout에 생성한 뷰 개수 가져오기
-        var totalCount: Int = goalAlbumLayout.childCount
-        var count: Int = 0
+        var totalCountIndex: Int = goalAlbumLayout.childCount - 1
+        var removeCount = 0 // 삭제한 뷰의 개수
 
-        while(count < totalCount)
+        // 0 ~ totalCountIndex만큼 반복
+        for(index in 0..totalCountIndex)
         {
             // DB 불러오기
             dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(count)
+            var view: View = goalAlbumLayout.get(index)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -126,6 +127,16 @@ class GoalAlbumFragment : Fragment() {
             // 세부 목표 리포트 + 세부 목표 DB 열기
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
                     + " INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '$goalName'", null)
+
+            // 만일 해당 대표 목표에서 저장된 사진이 없다면
+            if(!cursor.moveToNext())
+            {
+                // 해당 대표 목표 폴더 삭제
+                goalAlbumLayout.removeViewAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
 
             cursor.moveToLast()    // 가장 최근 데이터를 가져오기 위해 커서를 마지막으로 이동
             cursor.moveToNext()    // 한 단계 앞으로(빈 곳을 가리키도록 함)
@@ -179,8 +190,6 @@ class GoalAlbumFragment : Fragment() {
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
             timeTextView.text = "$tempHour:$tempMin:$tempSec"
-
-            count++ // 카운트 증가
 
             cursor.close()
             sqlitedb.close()

@@ -240,6 +240,8 @@ class SelectAlbumFragment : Fragment() {
     // 대표 목표 목록을 세팅하는 함수
     private fun setGoalNameList() {
 
+        /** 대표 목표 이름 추가 **/
+
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -255,10 +257,41 @@ class SelectAlbumFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        /** 현재 사진이 없는 대표 목표의 이름 제거 **/
+
+        var removeCount = 0                 // 삭제한 횟수
+
+        // DB 불러오기
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        for(index in goalNameList.indices)
+        {
+            // 세부 목표 리포트 + 세부 목표 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
+                    + "INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '${goalNameList.get(index - removeCount)}'", null)
+
+            // 만일 해당 대표 목표에서 저장된 사진이 없다면
+            if(!cursor.moveToNext())
+            {
+                // 해당 대표 목표 이름 삭제
+                goalNameList.removeAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
     }
 
     // 카테고리 아이콘 목록을 세팅하는 함수
     private fun setCategoryIconList() {
+
+        /** 카테고리 아이콘 추가 **/
 
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
@@ -270,6 +303,35 @@ class SelectAlbumFragment : Fragment() {
         while(cursor.moveToNext())
         {   // 리스트에 아이콘 값 추가
             categoryIconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        /** 현재 사진이 없는 카테고리의 이름 제거 **/
+
+        var removeCount = 0                         // 삭제한 횟수
+
+        // DB 불러오기
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        for(index in categoryIconList.indices)
+        {
+            // 세부 목표 리포트 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
+                    + "WHERE icon = ${categoryIconList.get(index - removeCount)}", null)
+
+            // 만일 해당 카테고리에서 저장된 사진이 없다면
+            if(!cursor.moveToNext())
+            {
+                // 해당 아이콘 삭제
+                categoryIconList.removeAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
         }
 
         cursor.close()

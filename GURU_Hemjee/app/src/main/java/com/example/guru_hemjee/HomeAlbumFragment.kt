@@ -222,17 +222,18 @@ class HomeAlbumFragment : Fragment() {
         /** 세부 목표 리포트 + 세부 목표 DB에서 사진 뽑아오기 - detail_goal_time_report_db + detail_goal_db **/
 
         // goalAlbumLayout에 생성한 뷰 개수 가져오기
-        var totalCount: Int = goalAlbumLayout.childCount
-        var count: Int = 0
+        var totalCountIndex: Int = goalAlbumLayout.childCount - 1
+        var removeCount = 0 // 삭제한 뷰의 개수
 
-        while(count < totalCount)
+        // 0 ~ totalCountIndex만큼 반복
+        for(index in 0..totalCountIndex)
         {
             // DB 불러오기
             dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(count)
+            var view: View = goalAlbumLayout.get(index)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -242,7 +243,17 @@ class HomeAlbumFragment : Fragment() {
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
                     + " INNER JOIN detail_goal_db USING (detail_goal_name) WHERE big_goal_name = '$goalName'", null)
 
-            var isDone = false      // 반복문 탈출하기 위한 flag
+            // 만일 해당 대표 목표에서 저장된 사진이 없다면
+            if(!cursor.moveToNext())
+            {
+                // 해당 대표 목표 폴더 삭제
+                goalAlbumLayout.removeViewAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
+
+            var isDone = false     // 날짜 비교 반복문 탈출하기 위한 flag
             cursor.moveToLast()    // 가장 최근 데이터를 가져오기 위해 커서를 마지막으로 이동
             cursor.moveToNext()    // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
@@ -326,8 +337,6 @@ class HomeAlbumFragment : Fragment() {
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
             timeTextView.text = "$tempHour : $tempMin : $tempSec"
-
-            count++ // 카운트 증가
 
             cursor.close()
             sqlitedb.close()
@@ -430,59 +439,30 @@ class HomeAlbumFragment : Fragment() {
                     break
                 }
             }
-//
-//            imageCount++
-//
-//            if(imageCount > 3)
-//                imageCount = 1
         }
 
         cursor.close()
         sqlitedb.close()
         dbManager.close()
 
-//        var isDone = false      // 반복문 탈출하기 위한 flag
-//        cursor.moveToLast()    // 가장 최근 데이터를 가져오기 위해 커서를 마지막으로 이동
-//        cursor.moveToNext()    // 한 단계 앞으로
-//
-//        // 세부 목표 리포트에서 날짜 비교하기
-//        while(!isDone && cursor.moveToPrevious())
-//        {
-//            var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
-//
-//            // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
-//            var temp2: String = temp1.split(" ")[0]
-//
-//            // 2차 분리 - 연도/월/일 분리, 가져오기
-//            var tempYear: String = temp2.split("-")[0]
-//            var tempMonth: String = temp2.split("-")[1]
-//            var tempDay: String = temp2.split("-")[2]
-//
-//            // 오늘 날짜에 해당하는 데이터만 사진 가져와서 적용시키기
-//            if(year == tempYear && month == tempMonth && day == tempDay)
-//            {
-//                var path = requireContext().filesDir.toString() + "/picture/"
-//                path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
-//
-//                try {
-//                    var bitmap: Bitmap = BitmapFactory.decodeFile(path)
-//                    // 이미지 배율 크기 작업 - 156x156 크기로 재설정함
-//                    var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 156, true)
-//
-////                    var goalPhoto: ImageView = view.findViewById(R.id.smallAlbum_goalAlbumImageView)
-////                    goalPhoto.setImageBitmap(reScaledBitmap)
-//
-//                    isDone = true
-//                }
-//                catch(e: Exception) {
-//                    Log.e("오류태그", "사진 로드/세팅 실패 => 강제 탈출 \n${e.printStackTrace()}")
-//                    break
-//                }
-//            }
-//        }
-//
-//        cursor.close()
-//        sqlitedb.close()
-//        dbManager.close()
+        /** 현재 사진이 없는 카테고리는 제거 **/
+
+        // 레이아웃에 있는 View 하나를 제거하면 나머지 View들이 자동으로
+        // 그 빈 공간을 채워 앞으로 당겨지기 때문에
+        // 아래와 같은 삭제 횟수 변수를 사용함
+        var removeCount = 0
+
+        for(index in picNums.indices)
+        {
+            // 해당 카테고리에 들어가 있는 사진이 없다면
+            if(picNums[index] == 0)
+            {
+                // 해당 카테고리 폴더를 삭제한다
+                categoryAlbumLayout.removeViewAt(index - removeCount)
+
+                // 삭제한 횟수 증가
+                removeCount++
+            }
+        }
     }
 }
