@@ -182,92 +182,92 @@
                 app:layout_constraintTop_toBottomOf="@id/weekBarChart" />
 
 
-            <!-- ***** 월간 ***** -->
-            <TextView
-                android:id="@+id/monthTextView"
-                android:layout_width="40dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="67dp"
-                android:background="@drawable/outline_round_button"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="월간"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textFontWeight="300"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weekGoalListLayout" />
+<!--            &lt;!&ndash; ***** 월간 ***** &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/monthTextView"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginTop="67dp"-->
+<!--                android:background="@drawable/outline_round_button"-->
+<!--                android:fontFamily="@font/noto_sans"-->
+<!--                android:gravity="center"-->
+<!--                android:includeFontPadding="false"-->
+<!--                android:text="월간"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/Black"-->
+<!--                android:textFontWeight="300"-->
+<!--                android:textSize="10sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/weekGoalListLayout" />-->
 
-            <TextView
-                android:id="@+id/monthDayTextView"
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:layout_marginTop="7dp"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="2022년 1월"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textFontWeight="400"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/monthTextView" />
+<!--            <TextView-->
+<!--                android:id="@+id/monthDayTextView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="15dp"-->
+<!--                android:layout_marginTop="7dp"-->
+<!--                android:fontFamily="@font/noto_sans"-->
+<!--                android:gravity="center"-->
+<!--                android:includeFontPadding="false"-->
+<!--                android:text="2022년 1월"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/Black"-->
+<!--                android:textFontWeight="400"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/monthTextView" />-->
 
-            <TextView
-                android:id="@+id/monthTimeTextView"
-                android:layout_width="match_parent"
-                android:layout_height="29dp"
-                android:layout_marginTop="1dp"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="0시간 00분"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textFontWeight="700"
-                android:textSize="21sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/monthDayTextView" />
+<!--            <TextView-->
+<!--                android:id="@+id/monthTimeTextView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="29dp"-->
+<!--                android:layout_marginTop="1dp"-->
+<!--                android:fontFamily="@font/noto_sans"-->
+<!--                android:gravity="center"-->
+<!--                android:includeFontPadding="false"-->
+<!--                android:text="0시간 00분"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/Black"-->
+<!--                android:textFontWeight="700"-->
+<!--                android:textSize="21sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/monthDayTextView" />-->
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/monthBarChart"
-                android:layout_width="430dp"
-                android:layout_height="160dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/monthTimeTextView" />
+<!--            <com.github.mikephil.charting.charts.BarChart-->
+<!--                android:id="@+id/monthBarChart"-->
+<!--                android:layout_width="430dp"-->
+<!--                android:layout_height="160dp"-->
+<!--                android:layout_marginStart="17dp"-->
+<!--                android:layout_marginTop="17dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/monthTimeTextView" />-->
 
-            <!-- 월간 목표들 목록.. -->
-            <LinearLayout
-                android:id="@+id/monthGoalListLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="17dp"
-                android:layout_marginEnd="17dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/monthBarChart" />
+<!--            &lt;!&ndash; 월간 목표들 목록.. &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/monthGoalListLayout"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="17dp"-->
+<!--                android:layout_marginTop="17dp"-->
+<!--                android:layout_marginEnd="17dp"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/monthBarChart" />-->
 
-            <Space
-                android:id="@+id/bottomSpace"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="17dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/monthGoalListLayout" />
+<!--            <Space-->
+<!--                android:id="@+id/bottomSpace"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_gravity="bottom"-->
+<!--                android:layout_marginTop="17dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/monthGoalListLayout" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
