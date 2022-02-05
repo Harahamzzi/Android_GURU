@@ -4,7 +4,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +11,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.PieData
 import java.math.BigInteger
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -34,7 +30,7 @@ class HomeReportFragment : Fragment() {
     // 일간
     lateinit var dayTextView: TextView // 날짜
     lateinit var todayTimeTextView: TextView // 총 잠금시간
-    lateinit var totalDailyBarChart: BarChart // 총 잠금 시간 가로 막대 그래프
+    lateinit var totalDailyBarChart: HorizontalBarChart // 총 잠금 시간 가로 막대 그래프
     lateinit var dailyGoalListLayout: LinearLayout // 대표목표 리스트가 들어갈 레이아웃
 
     // 주간
@@ -79,6 +75,7 @@ class HomeReportFragment : Fragment() {
 
         // 일간 리포트에 들어갈 데이터로 동적 뷰 생성
         createDailyReport(nowDateBigGoalList, nowDateBigGoalTimeList, nowDateBigGoalColorList)
+
     }
 
     // 일간 리포트에 들어갈 데이터를 리스트에 저장하고 반환하는 함수
@@ -187,6 +184,10 @@ class HomeReportFragment : Fragment() {
             var temp1DailyBarChart: HorizontalBarChart = oneBarChartApperance(dailyBarChart) // 그래프 기본 레이아웃 설정
             oneBarChartDate(temp1DailyBarChart, milliTime, totalMilli, goalColor)
 
+            // 일간리포트의 총 잠금시간 가로 막대 그래프
+            var temp2DailyBarChart: HorizontalBarChart = totalBarChartApperance(totalDailyBarChart) // 그래프 기본 레이아웃 설정
+            totalBarChartDate(temp2DailyBarChart, nowDateBigGoalTimeList, totalMilli, nowDateBigGoalColorList)
+
             // 레이아웃에 객체 추가
             dailyGoalListLayout.addView(view2)
         }
@@ -214,6 +215,7 @@ class HomeReportFragment : Fragment() {
             granularity = 1f            // 값만큼 라인선 설정
             setDrawLabels(false)        // 값 세팅X
         }
+
         dailyBarChart.axisRight.apply { // 수평막대 기준 위쪽
             textSize = 15f              // 텍스트 크기
             setDrawLabels(false)        // 라벨X
@@ -248,5 +250,74 @@ class HomeReportFragment : Fragment() {
         barData.barWidth = 0.5f
         temp1DailyBarChart.data = barData
         temp1DailyBarChart.invalidate() // 차트 갱신
+    }
+
+    // 일간 리포트의 총잠금시간 BarChart의 레이아웃 & 데이터 세팅
+    fun totalBarChartApperance(dailyBarChart: HorizontalBarChart): HorizontalBarChart {
+
+        dailyBarChart.description.isEnabled = false // 그래프 이름 띄우기X
+        dailyBarChart.setTouchEnabled(false)        // 터치X
+        dailyBarChart.legend.isEnabled = false      // 차트 범례 표시X
+
+        dailyBarChart.xAxis.apply { // 수평막대 기준 왼쪽
+            setDrawAxisLine(false)  // 선X
+            setDrawLabels(false)    // 라벨X
+            setDrawGridLines(false)
+        }
+
+        dailyBarChart.axisLeft.apply {  // 수평막대 기준 아래쪽
+            setDrawGridLines(false)     // 선X
+            axisMinimum = 0f            // 최솟값
+            axisMaximum = 50f          // 최댓값
+            setDrawLabels(false)        // 값 세팅X
+            setDrawGridLines(false)
+            setDrawAxisLine(false)
+        }
+
+        dailyBarChart.axisRight.apply { // 수평막대 기준 위쪽
+            setDrawAxisLine(false)  // 선X
+            setDrawLabels(false)        // 값 세팅X
+            setDrawGridLines(false)
+        }
+
+        return dailyBarChart
+    }
+
+    // 일간리포트의 총 잠금시간 가로 막대 그래프 데이터 세팅
+    fun totalBarChartDate(temp2DailyBarChart: HorizontalBarChart, nowDateBigGoalTimeList: ArrayList<BigInteger>,
+                          totalMilli: BigInteger, nowDateBigGoalColorList: ArrayList<Int>) {
+        // 총시간에서의 백분율 구하기(밀리초)
+        var timeArray = ArrayList<Double>()
+        for (i in 0 until nowDateBigGoalTimeList.size) {
+            timeArray.add(nowDateBigGoalTimeList[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+
+        // BarChart에 표시될 데이터
+        val entry = ArrayList<BarEntry>()
+        for (i in 0 until timeArray.size) {
+            entry.add(BarEntry(0f, timeArray[i].toFloat()))
+        }
+
+        // 아이템 범위별 색상
+        val itemcolor = java.util.ArrayList<Int>()
+        for (i in 0 until nowDateBigGoalColorList.size) {
+            itemcolor.add(nowDateBigGoalColorList[i])
+        }
+
+        // 데이터를 막대모양으로 표시하기
+        val barDataSet = BarDataSet(entry, "")
+        barDataSet.apply {
+            barDataSet.setDrawIcons(false)
+            colors = itemcolor           // 아이템 색상
+            setDrawValues(false)         // %값 안보이기
+            valueTextColor = R.color.Black
+            valueFormatter
+            valueTextSize = 14f
+        }
+
+        val barData = BarData(barDataSet)
+        barData.barWidth = 0.5f
+        temp2DailyBarChart.data = barData
+        temp2DailyBarChart.invalidate() // 차트 갱신
     }
 }
