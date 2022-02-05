@@ -1,6 +1,5 @@
 package com.example.guru_hemjee
 
-import android.content.Intent
 import android.util.Log
 
 import android.database.Cursor
@@ -16,7 +15,6 @@ import android.view.ViewGroup
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.view.get
 import java.text.SimpleDateFormat
@@ -153,7 +151,18 @@ class HomeAlbumFragment : Fragment() {
         var count: Int = 0
 
         while(count < 6 && cursor.moveToPrevious()) {
+            var detailGoalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var color = cursor.getInt(cursor.getColumnIndex("color"))
+            var icon = cursor.getInt(cursor.getColumnIndex("icon"))
+            var bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+
+            //빈 값 처리
+            if(detailGoalName == null || icon == null || bigGoalName == null ||
+                color == null || temp1 == null){
+                Log.i("사진 저장 오류", "${detailGoalName}, ${temp1}, ${color}, ${icon}, ${bigGoalName}")
+                continue
+            }
 
             // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
             var temp2: String = temp1.split(" ")[0]
@@ -174,6 +183,12 @@ class HomeAlbumFragment : Fragment() {
                     // 이미지 배율 크기 작업 - 132x120 크기로 재설정함
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 132, 120, true)
                     todayPhoto.get(count).setImageBitmap(reScaledBitmap)
+
+                    //사진에 팝업 연결
+                    todayPhoto[count].setOnClickListener {
+                        val dialog = PhotoDialog(requireContext(), path, icon, detailGoalName, bigGoalName, temp2, color)
+                        dialog.photoPopUp()
+                    }
                 }
                 catch(e: Exception) {
                     Log.e("오류태그", "오늘 사진 로드/세팅 실패 \n${e.printStackTrace()}")
@@ -213,17 +228,6 @@ class HomeAlbumFragment : Fragment() {
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
 
-            // view에 클릭 리스너 달기
-            view.setOnClickListener {
-
-                // AlbumMainActivity로 보내기
-                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
-                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
-                intent.putExtra("homeFlag", "GOAL")     // 대표 목표 앨범임을 알리는 플래그
-                intent.putExtra("goalName", goalName.text.toString())   // 대표 목표의 이름
-                startActivity(intent)
-            }
-
             // view 추가
             goalAlbumLayout.addView(view)
         }
@@ -252,8 +256,8 @@ class HomeAlbumFragment : Fragment() {
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             var goalName: String = goalNameTextView.text.toString()
 
-            // 세부 목표 리포트 DB 열기
-            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db"
+            // 세부 목표 리포트 + 세부 목표 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
                     + " WHERE big_goal_name = '$goalName'", null)
 
             // 만일 해당 대표 목표에서 저장된 사진이 없다면
@@ -264,8 +268,6 @@ class HomeAlbumFragment : Fragment() {
 
                 // 삭제한 횟수 증가
                 removeCount++
-
-                continue
             }
 
             var isDone = false     // 날짜 비교 반복문 탈출하기 위한 flag
@@ -388,20 +390,6 @@ class HomeAlbumFragment : Fragment() {
 
             // icon 값 받아와서 저장하기
             iconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
-
-            // icon 값 tag로 저장하기
-            view.setTag(cursor.getInt(cursor.getColumnIndex("icon")))
-
-            // view에 클릭 리스너 달기
-            view.setOnClickListener {
-
-                // AlbumMainActivity로 보내기
-                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
-                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
-                intent.putExtra("homeFlag", "CATEGORY") // 카테고리 앨범임을 알리는 플래그
-                intent.putExtra("icon", view.tag as Int)       // 카테고리 아이콘 값
-                startActivity(intent)
-            }
 
             // view 추가
             categoryAlbumLayout.addView(view)

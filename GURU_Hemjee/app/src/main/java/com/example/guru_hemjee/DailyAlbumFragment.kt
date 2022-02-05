@@ -173,7 +173,18 @@ class DailyAlbumFragment : Fragment() {
         cursor.moveToNext() // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
         while(cursor.moveToPrevious()) {
+            var detailGoalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var color = cursor.getInt(cursor.getColumnIndex("color"))
+            var icon = cursor.getInt(cursor.getColumnIndex("icon"))
+            var bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+
+            //빈 값 처리
+            if(detailGoalName == null || icon == null || bigGoalName == null ||
+                color == null || temp1 == null){
+                Log.i("사진 저장 오류", "${detailGoalName}, ${temp1}, ${color}, ${icon}, ${bigGoalName}")
+                continue
+            }
 
             // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
             var temp2: String = temp1.split(" ")[0]
@@ -203,8 +214,15 @@ class DailyAlbumFragment : Fragment() {
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 360, 360, true)
                     imageView.setImageBitmap(reScaledBitmap)
 
+                    //사진에 팝업 연결
+                    imageView.setOnClickListener {
+                        val dialog = PhotoDialog(requireContext(), path, icon, detailGoalName, bigGoalName, temp2, color)
+                        dialog.photoPopUp()
+                    }
+
                     // 레이아웃에 이미지 뷰 넣기
                     albumGridLayout.addView(imageView)
+
                 }
                 catch(e: Exception) {
                     Log.e("오류태그", "오늘 사진 로드/세팅 실패 \n${e.printStackTrace()}")

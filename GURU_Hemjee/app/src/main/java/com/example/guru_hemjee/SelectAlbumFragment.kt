@@ -379,6 +379,19 @@ class SelectAlbumFragment : Fragment() {
         // 세부 목표 리포트에서 파일명 가져와서 이미지 추가하기
         while(cursor.moveToPrevious())
         {
+            var detailGoalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+            var date: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var color = cursor.getInt(cursor.getColumnIndex("color"))
+            var icon = cursor.getInt(cursor.getColumnIndex("icon"))
+            var bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+
+            //빈 값 처리
+            if(detailGoalName == null || icon == null || bigGoalName == null ||
+                color == null || date == null){
+                Log.i("사진 저장 오류", "${detailGoalName}, ${date}, ${color}, ${icon}, ${bigGoalName}")
+                continue
+            }
+
             var path = requireContext().filesDir.toString() + "/picture/"
             path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
 
@@ -395,6 +408,12 @@ class SelectAlbumFragment : Fragment() {
                 // 이미지 배율 크기 작업 - 360x360 크기로 재설정함
                 var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 360, 360, true)
                 imageView.setImageBitmap(reScaledBitmap)
+
+                //사진에 팝업 연결
+                imageView.setOnClickListener {
+                    val dialog = PhotoDialog(requireContext(), path, icon, detailGoalName, bigGoalName, date.split(" ")[0], color)
+                    dialog.photoPopUp()
+                }
 
                 // 레이아웃에 이미지 뷰 넣기
                 pictureGridLayout.addView(imageView)
@@ -428,6 +447,19 @@ class SelectAlbumFragment : Fragment() {
         // 세부 목표 리포트에서 파일명 가져와서 이미지 추가하기
         while(cursor.moveToPrevious())
         {
+            var detailGoalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+            var date: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var color = cursor.getInt(cursor.getColumnIndex("color"))
+            var icon = cursor.getInt(cursor.getColumnIndex("icon"))
+            var bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+
+            //빈 값 처리
+            if(detailGoalName == null || icon == null || bigGoalName == null ||
+                color == null || date == null){
+                Log.i("사진 저장 오류", "${detailGoalName}, ${date}, ${color}, ${icon}, ${bigGoalName}")
+                continue
+            }
+
             var path = requireContext().filesDir.toString() + "/picture/"
             path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
 
@@ -444,6 +476,12 @@ class SelectAlbumFragment : Fragment() {
                 // 이미지 배율 크기 작업 - 360x360 크기로 재설정함
                 var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 360, 360, true)
                 imageView.setImageBitmap(reScaledBitmap)
+
+                //사진에 팝업 연결
+                imageView.setOnClickListener {
+                    val dialog = PhotoDialog(requireContext(), path, icon, detailGoalName, bigGoalName, date.split(" ")[0], color)
+                    dialog.photoPopUp()
+                }
 
                 // 레이아웃에 이미지 뷰 넣기
                 pictureGridLayout.addView(imageView)
