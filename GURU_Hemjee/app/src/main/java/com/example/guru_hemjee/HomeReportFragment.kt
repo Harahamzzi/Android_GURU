@@ -17,8 +17,11 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import java.math.BigInteger
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeReportFragment : Fragment() {
@@ -36,6 +39,10 @@ class HomeReportFragment : Fragment() {
     // 주간
 
     // 월간
+    lateinit var monthDayTextView: TextView // 날짜
+    lateinit var monthTimeTextView: TextView // 총 잠금 시간
+    lateinit var monthBarChart: BarChart // 총 잠금 시간 세로 막대 그래프
+    lateinit var monthGoalListLayout: LinearLayout // 대표목표 리스트가 들어갈 레이아웃
 
     // 오늘 날짜 & 현재 설정된 날짜
     lateinit var todayDate: LocalDateTime // 오늘 날짜(전체)
@@ -64,8 +71,15 @@ class HomeReportFragment : Fragment() {
         totalDailyBarChart = requireView().findViewById(R.id.totalDailyBarChart)
         dailyGoalListLayout = requireView().findViewById(R.id.dailyGoalListLayout)
 
+        // 월간
+        monthDayTextView = requireView().findViewById(R.id.monthDayTextView)
+        monthTimeTextView = requireView().findViewById(R.id.monthTimeTextView)
+        monthBarChart = requireView().findViewById(R.id.monthBarChart)
+        monthGoalListLayout = requireView().findViewById(R.id.monthGoalListLayout)
+
         // 레이이웃 초기화
         dailyGoalListLayout.removeAllViews()
+        monthGoalListLayout.removeAllViews()
 
         // 현재 날짜를 오늘 날짜로 설정
         nowDate = todayDate
@@ -76,6 +90,8 @@ class HomeReportFragment : Fragment() {
         // 일간 리포트에 들어갈 데이터로 동적 뷰 생성
         createDailyReport(nowDateBigGoalList, nowDateBigGoalTimeList, nowDateBigGoalColorList)
 
+        // 월간 리포트 함수
+        createMonthlyReport(nowDate)
     }
 
     // 일간 리포트에 들어갈 데이터를 리스트에 저장하고 반환하는 함수
@@ -92,7 +108,7 @@ class HomeReportFragment : Fragment() {
 
         var nowDateBigGoalList = ArrayList<String>()            // 오늘 수행한 대표목표를 저장하는 리스트(중복값 저장X)
         var nowDateBigGoalTimeList = ArrayList<BigInteger>()    // 오늘 수행한 대표목표의 각 잠금 시간을 저장하는 리스트
-        var nowDateBigGoalColorList = ArrayList<Int>()          // 오늘 수행하 대표목표의 각 색상을 저장하는 리스트
+        var nowDateBigGoalColorList = ArrayList<Int>()          // 오늘 수행한 대표목표의 각 색상을 저장하는 리스트
 
        // 대표 목표 리포트 DB 읽기
         var cursor: Cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
@@ -120,7 +136,7 @@ class HomeReportFragment : Fragment() {
                         break
                     }
                 }
-                if (!isFlag) { // 중복값이 없다면 대표목표, 시간 저장
+                if (!isFlag) { // 중복값이 없다면 대표목표, 시간, 색상 저장
                     nowDateBigGoalList.add(str_big_goal)
                     nowDateBigGoalTimeList.add(bigint_lock_time)
                     nowDateBigGoalColorList.add(int_color)
@@ -320,4 +336,370 @@ class HomeReportFragment : Fragment() {
         temp2DailyBarChart.data = barData
         temp2DailyBarChart.invalidate() // 차트 갱신
     }
+
+    fun createMonthlyReport(nowDate: LocalDateTime) {
+
+        /** 월간 리포트에 들어갈 데이터를 리스트에 저장하기 **/
+        // 월간 위젯에 년도와 월 반영
+        var nowDateArray = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E"))
+        var nowDateSplit = nowDateArray.split('-') // 년도, 월, 일, 요일
+        monthDayTextView.text = nowDateSplit[0] + "년 " + nowDateSplit[1] + "월"
+
+        // 이번달의 1일부터 마지막날까지의 날짜를 리스트에 저장
+        // (리스트에 저장되는 값의 형태 : yyyy-MM-dd-E)
+        var sdf = SimpleDateFormat("yyyy-MM-dd-E")
+        val calendar = Calendar.getInstance()
+        var date = sdf.parse(nowDateArray) // String -> Date
+
+        calendar.time = date    // 현재 시간으로 캘린더 설정
+
+        calendar.add(Calendar.DATE, -Calendar.DATE) // 현재 날짜로부터 현재날짜를 뺀 값
+
+        var monthlyList = ArrayList<String>() // 이번달의 1일~말일을 저장 ex) 2022-02-06-일
+        var first = calendar.getMinimum(Calendar.DAY_OF_MONTH)  // 1일
+        var last = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) // 마지막날
+
+        for (i in first..last) {
+            val date = calendar.time
+            val day = sdf.format(date)
+
+            monthlyList.add(day)
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        // DB 열기
+        dbManager = DBManager(context, "hamster_db", null, 1)
+        sqlite = dbManager.readableDatabase
+
+        var monthlyDateBigGoalList = ArrayList<String>()            // 이번달에 수행한 대표목표를 저장하는 리스트(같은 날짜내에 중복값X)
+        var monthlyDateBigGoalTimeList = ArrayList<BigInteger>()    // 이번달에 수행한 대표목표의 각 잠금 시간을 저장하는 리스트
+        var monthlyDateBigGoalColorList = ArrayList<Int>()          // 이번달에 수행한 대표목표의 각 색상을 저장하는 리스트
+        var monthlyLockDateBigGoalList = ArrayList<String>()          // 이번달에 수행하 대표목표의 잠금 날짜를 저장하는 리스트
+
+        // 대표 목표 리포트 DB 읽기
+        var cursor: Cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
+        while (cursor.moveToNext()) {
+
+            var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            var str_big_goal: String = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+            var bigint_lock_time: BigInteger = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
+            var int_color: Int = cursor.getInt(cursor.getColumnIndex("color"))
+
+            // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+            var isFlag: Boolean = false
+
+            // 날짜[0], 시간[1] 분리
+            var tempDate: String = temp1.split(' ')[0]
+
+            // 이번달에 수행한 대표목표와 시간을 ArrayList에 추가
+            for (i in 0 until monthlyList.size) {
+                if (tempDate == monthlyList[i]) {
+                    for (j in 0 until monthlyDateBigGoalList.size) {
+
+                        // 중복값이 있다면 시간만 저장
+                        if (monthlyDateBigGoalList[j] == str_big_goal) {
+                            monthlyDateBigGoalTimeList[j] += bigint_lock_time
+                            isFlag = true
+                            break
+                        }
+                    }
+                    if (!isFlag) {// 중복값이 없다면 대표목표, 시간, 색상, 잠금 날짜 저장
+                        monthlyDateBigGoalList.add(str_big_goal)
+                        monthlyDateBigGoalTimeList.add(bigint_lock_time)
+                        monthlyDateBigGoalColorList.add(int_color)
+                        monthlyLockDateBigGoalList.add(temp1)
+                    }
+                }
+            }
+        }
+
+        cursor.close()
+        sqlite.close()
+        dbManager.close()
+
+        /** 월간 리포트에 들어갈 데이터를 활용하여 리스트 만들기 **/
+
+        // 월간 리포트 뷰 클리어
+        monthGoalListLayout.removeAllViews()
+
+        // 총 월간 잠금 시간 구하기
+        var totalMilli: BigInteger = BigInteger.ZERO
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            totalMilli += monthlyDateBigGoalTimeList[i] }
+
+        var long_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
+        var long_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
+
+        monthTimeTextView.text = long_hour.toString() + "시간 " + long_min.toString() + "분 "
+
+        // 7일 단위로 주간 리스트 만들기
+        var timeWeekList1 = ArrayList<BigInteger>()     // 1주차 시간
+        var colorWeekList1 = ArrayList<Int>()    // 1주차 색상
+        var timeWeekList2 = ArrayList<BigInteger>()     // 2주차 시간
+        var colorWeekList2 = ArrayList<Int>()    // 2주차 색상
+        var timeWeekList3 = ArrayList<BigInteger>()     // 3주차 시간
+        var colorWeekList3 = ArrayList<Int>()    // 3주차 색상
+        var timeWeekList4 = ArrayList<BigInteger>()     // 4주차 시간
+        var colorWeekList4 = ArrayList<Int>()    // 4주차 색상
+        var timeWeekList5 = ArrayList<BigInteger>()     // 5주차 시간
+        var colorWeekList5 = ArrayList<Int>()    // 5주차 색상
+
+        // 1주차
+        // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var isFlag: Boolean = false
+            for (k in 0 until monthlyDateBigGoalList.size) {
+                for (j in 0 until 6) {
+
+                    // 잠금 날짜와 대표목표가 같다면 시간만 저장
+                    if (monthlyLockDateBigGoalList[i] == monthlyList[j]
+                            && monthlyDateBigGoalList[i] == monthlyDateBigGoalList[j]) {
+                        timeWeekList1[i] += monthlyDateBigGoalTimeList[i]
+                        isFlag = true
+                        break
+                    }
+                }
+                if (!isFlag) { // 중복값이 없다면 시간, 색상 저장
+                    timeWeekList1.add(monthlyDateBigGoalTimeList[i])
+                    colorWeekList1.add(monthlyDateBigGoalColorList[i])
+                }
+            }
+        }
+
+        // 2주차
+        // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var isFlag: Boolean = false
+            for (k in 0 until monthlyDateBigGoalList.size) {
+                for (j in 7 until 13) {
+
+                    // 잠금 날짜와 대표목표가 같다면 시간만 저장
+                    if (monthlyLockDateBigGoalList[i] == monthlyList[j]
+                            && monthlyDateBigGoalList[i] == monthlyDateBigGoalList[j]) {
+                        timeWeekList2[i] += monthlyDateBigGoalTimeList[i]
+                        isFlag = true
+                        break
+                    }
+                }
+                if (!isFlag) { // 중복값이 없다면 시간, 색상 저장
+                    timeWeekList2.add(monthlyDateBigGoalTimeList[i])
+                    colorWeekList2.add(monthlyDateBigGoalColorList[i])
+                }
+            }
+        }
+
+        // 3주차
+        // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var isFlag: Boolean = false
+            for (k in 0 until monthlyDateBigGoalList.size) {
+                for (j in 14 until 20) {
+
+                    // 잠금 날짜와 대표목표가 같다면 시간만 저장
+                    if (monthlyLockDateBigGoalList[i] == monthlyList[j]
+                            && monthlyDateBigGoalList[i] == monthlyDateBigGoalList[j]) {
+                        timeWeekList3[i] += monthlyDateBigGoalTimeList[i]
+                        isFlag = true
+                        break
+                    }
+                }
+                if (!isFlag) { // 중복값이 없다면 시간, 색상 저장
+                    timeWeekList3.add(monthlyDateBigGoalTimeList[i])
+                    colorWeekList3.add(monthlyDateBigGoalColorList[i])
+                }
+            }
+        }
+
+        // 4주차
+        // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var isFlag: Boolean = false
+            for (k in 0 until monthlyDateBigGoalList.size) {
+                for (j in 21 until 27) {
+
+                    // 잠금 날짜와 대표목표가 같다면 시간만 저장
+                    if (monthlyLockDateBigGoalList[i] == monthlyList[j]
+                            && monthlyDateBigGoalList[i] == monthlyDateBigGoalList[j]) {
+                        timeWeekList4[i] += monthlyDateBigGoalTimeList[i]
+                        isFlag = true
+                        break
+                    }
+                }
+                if (!isFlag) { // 중복값이 없다면 시간, 색상 저장
+                    timeWeekList4.add(monthlyDateBigGoalTimeList[i])
+                    colorWeekList4.add(monthlyDateBigGoalColorList[i])
+                }
+            }
+        }
+
+        // 5주차
+        // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var isFlag: Boolean = false
+            for (k in 0 until monthlyDateBigGoalList.size) {
+                for (j in 29 until monthlyList.size) {
+
+                    // 잠금 날짜와 대표목표가 같다면 시간만 저장
+                    if (monthlyLockDateBigGoalList[i] == monthlyList[j]
+                            && monthlyDateBigGoalList[i] == monthlyDateBigGoalList[j]) {
+                        timeWeekList5[i] += monthlyDateBigGoalTimeList[i]
+                        isFlag = true
+                        break
+                    }
+                }
+                if (!isFlag) { // 중복값이 없다면 시간, 색상 저장
+                    timeWeekList5.add(monthlyDateBigGoalTimeList[i])
+                    colorWeekList5.add(monthlyDateBigGoalColorList[i])
+                }
+            }
+        }
+
+        /** 리스트 개수만큼 동적 뷰 생성 **/
+        for (i in 0 until monthlyDateBigGoalList.size) {
+            var view2: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, monthGoalListLayout, false)
+
+            // 동적 객체 생성 (색상 이미지, 대표목표, 막대 그래프)
+            var bigGoalColorImg: ImageView = view2.findViewById(R.id.bigGoalColorImg)
+            var bigGoalTextview: TextView = view2.findViewById(R.id.bigGoalTextview)
+            var biglGoalTimeview: TextView = view2.findViewById(R.id.biglGoalTimeview)
+            var bigGoalPercentview: TextView = view2.findViewById(R.id.bigGoalPercentview)
+
+            // 값 할당하기
+            bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
+            bigGoalColorImg.setColorFilter(monthlyDateBigGoalColorList[i])
+            bigGoalTextview.text = monthlyDateBigGoalList[i]
+            var long_hour: Long = (monthlyDateBigGoalTimeList[i].toLong() / (1000 * 60 * 60)) % 24
+            var long_min: Long = (monthlyDateBigGoalTimeList[i].toLong() / (1000 * 60)) % 60
+            var long_sec: Long = (monthlyDateBigGoalTimeList[i].toLong()) / 1000 % 60
+            if (long_hour == 0L && long_min == 0L) {
+                biglGoalTimeview.text = long_sec.toString() + "초"
+            } else if (long_hour == 0L) {
+                biglGoalTimeview.text = long_min.toString() + "분"
+            } else {
+                biglGoalTimeview.text = long_hour.toString() + "시간 " + long_min.toString() + "분"
+            }
+
+            // 레이아웃에 객체 추가
+            monthGoalListLayout.addView(view2)
+        }
+
+        /** 월간 차트 **/
+        var monthlyBarChart = monthBarChartApperance(monthBarChart) // 월간 리포트 레이아웃 설정
+        // 총시간에서의 백분율 구하기(밀리초)
+        // 1주차
+        var timeArray1 = ArrayList<Double>()
+        for (i in 0 until timeWeekList1.size) {
+            timeArray1.add(timeWeekList1[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+        // 2주차
+        var timeArray2 = ArrayList<Double>()
+        for (i in 0 until timeWeekList2.size) {
+            timeArray1.add(timeWeekList2[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+        // 3주차
+        var timeArray3 = ArrayList<Double>()
+        for (i in 0 until timeWeekList3.size) {
+            timeArray3.add(timeWeekList3[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+        // 4주차
+        var timeArray4 = ArrayList<Double>()
+        for (i in 0 until timeWeekList4.size) {
+            timeArray4.add(timeWeekList4[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+        // 5주차
+        var timeArray5 = ArrayList<Double>()
+        for (i in 0 until timeWeekList5.size) {
+            timeArray4.add(timeWeekList5[i].toDouble() / totalMilli.toDouble() * 100.0)
+        }
+
+        // BarChart에 표시될 데이터
+        // 1주차
+        val entry = ArrayList<BarEntry>()
+        for (i in 0 until timeArray1.size) {
+            entry.add(BarEntry(0f, timeArray1[i].toFloat()))
+        }
+        // 2주차
+        for (i in 0 until timeArray2.size) {
+            entry.add(BarEntry(1f, timeArray2[i].toFloat()))
+        }
+        // 3주차
+        for (i in 0 until timeArray3.size) {
+            entry.add(BarEntry(2f, timeArray3[i].toFloat()))
+        }
+        // 4주차
+        for (i in 0 until timeArray4.size) {
+            entry.add(BarEntry(3f, timeArray4[i].toFloat()))
+        }
+        // 5주차
+        for (i in 0 until timeArray5.size) {
+            entry.add(BarEntry(4f, timeArray5[i].toFloat()))
+        }
+
+        // 아이템 범위별 색상
+        val itemcolor = java.util.ArrayList<Int>()
+        for (i in 0 until colorWeekList1.size) {
+            itemcolor.add(colorWeekList1[i])
+        }
+        for (i in 0 until colorWeekList2.size) {
+            itemcolor.add(colorWeekList2[i])
+        }
+        for (i in 0 until colorWeekList3.size) {
+            itemcolor.add(colorWeekList3[i])
+        }
+        for (i in 0 until colorWeekList4.size) {
+            itemcolor.add(colorWeekList4[i])
+        }
+        for (i in 0 until colorWeekList5.size) {
+            itemcolor.add(colorWeekList5[i])
+        }
+
+        // 데이터를 막대모양으로 표시하기
+        val barDataSet = BarDataSet(entry, "")
+        barDataSet.apply {
+            barDataSet.setDrawIcons(false)
+            colors = itemcolor           // 아이템 색상
+            setDrawValues(false)         // %값 안보이기
+            valueTextColor = R.color.Black
+            valueFormatter
+            valueTextSize = 14f
+        }
+
+        val barData = BarData(barDataSet)
+        barData.barWidth = 0.5f
+        monthlyBarChart.data = barData
+        monthlyBarChart.invalidate() // 차트 갱신
+    }
+
+    // 월간 리포트의 총잠금시간 BarChart의 레이아웃 & 데이터 세팅
+    fun monthBarChartApperance(monthBarChart: BarChart): BarChart {
+
+        monthBarChart.description.isEnabled = false // 그래프 이름 띄우기X
+        monthBarChart.setTouchEnabled(false)        // 터치X
+        monthBarChart.legend.isEnabled = false      // 차트 범례 표시X
+
+        monthBarChart.xAxis.apply { // 수평막대 기준 왼쪽
+            setDrawAxisLine(false)  // 선X
+            setDrawLabels(false)    // 라벨X
+            setDrawGridLines(false)
+        }
+
+        monthBarChart.axisLeft.apply {  // 수평막대 기준 아래쪽
+            setDrawGridLines(false)     // 선X
+            axisMinimum = 0f            // 최솟값
+            axisMaximum = 50f          // 최댓값
+            setDrawLabels(false)        // 값 세팅X
+            setDrawGridLines(false)
+            setDrawAxisLine(false)
+        }
+
+        monthBarChart.axisRight.apply { // 수평막대 기준 위쪽
+            setDrawAxisLine(false)  // 선X
+            setDrawLabels(false)        // 값 세팅X
+            setDrawGridLines(false)
+        }
+
+        return monthBarChart
+    }
+
+
 }
