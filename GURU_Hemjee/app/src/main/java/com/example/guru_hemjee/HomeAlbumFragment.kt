@@ -379,26 +379,34 @@ class HomeAlbumFragment : Fragment() {
     private fun applyDailyCategoryPhoto() {
 
         /** 아이콘 뽑아오기 & 뷰 생성해놓기 **/
+
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
+
         // 세부 목표 DB 열기 - icon 가져오기 위함(중복 데이터 제거해서 들고 옴)
         var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_db", null)
+
         // icon 값을 저장할 ArrayList
         var iconList = ArrayList<Int>()
+
         //사진 개수를 저장할 ArrayList
         var picNums = ArrayList<Int>()
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
             var view: View = layoutInflater.inflate(R.layout.container_big_album, categoryAlbumLayout, false)
+
             // 아이콘 변경
             var icon: ImageView = view.findViewById(R.id.bigAlbum_albumIconImageView)
             icon.setImageResource(cursor.getInt(cursor.getColumnIndex("icon")))
+
             // icon 값 받아와서 저장하기
             iconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
+
             // icon 값 tag로 저장하기
             view.setTag(cursor.getInt(cursor.getColumnIndex("icon")))
+
             // view에 클릭 리스너 달기
             view.setOnClickListener {
                 // AlbumMainActivity로 보내기
@@ -408,46 +416,63 @@ class HomeAlbumFragment : Fragment() {
                 intent.putExtra("icon", view.tag as Int)       // 카테고리 아이콘 값
                 startActivity(intent)
             }
+
             // view 추가
             categoryAlbumLayout.addView(view)
+
             //사진 개수 추가
             picNums.add(0)
         }
+
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
         /** 해당 아이콘 앨범에 맞는 이미지 적용시키기 **/
+
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
+
         // 세부 목표 리포트
         cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
         cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
         cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)
+
         while(cursor.moveToPrevious())
         {
             /** 어떤 아이콘인지 구분하기 **/
             var tempIcon: Int = cursor.getInt(cursor.getColumnIndex("icon"))
+
             // 몇 번째 아이콘인지 뽑아오기
             var iconNum: Int = iconList.indexOf(tempIcon)
+
             // 해당 뷰 연결
             var view: View = categoryAlbumLayout.get(iconNum)
-            //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
-            if(++picNums[iconNum] >= 4)
-                continue
+
             /** 날짜 데이터 가져와서 비교하기 **/
+
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+
             // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
             var temp2: String = temp1.split(" ")[0]
+
             // 2차 분리 - 연도/월/일 분리, 가져오기
             var tempYear: String = temp2.split("-")[0]
             var tempMonth: String = temp2.split("-")[1]
             var tempDay: String = temp2.split("-")[2]
+
             // 오늘 날짜에 해당하는 데이터만 사진 가져와서 적용시키기
             if(year == tempYear && month == tempMonth && day == tempDay)
             {
+                //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
+                if(++picNums[iconNum] >= 4)
+                    continue
+
+                // 사진 경로 가져오기
                 var path = requireContext().filesDir.toString() + "/picture/"
                 path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
+
                 try {
                     var bitmap: Bitmap = BitmapFactory.decodeFile(path)
                     // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
@@ -464,13 +489,17 @@ class HomeAlbumFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
         /** 현재 사진이 없는 카테고리는 제거 **/
+
         // 레이아웃에 있는 View 하나를 제거하면 나머지 View들이 자동으로
         // 그 빈 공간을 채워 앞으로 당겨지기 때문에
         // 아래와 같은 삭제 횟수 변수를 사용함
         var removeCount = 0
+
         for(index in picNums.indices)
         {
+            Log.i ("정보태그", "${picNums[index]}")
             // 해당 카테고리에 들어가 있는 사진이 없다면
             if(picNums[index] == 0)
             {
