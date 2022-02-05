@@ -64,8 +64,9 @@
                 android:id="@+id/select_categoryIconImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_weight="1"
                 android:visibility="gone"
-                android:layout_weight="1" />
+                app:tint="@color/Black" />
 
             <ImageButton
                 android:id="@+id/select_nextButton"
