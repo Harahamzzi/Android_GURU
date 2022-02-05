@@ -76,5 +76,60 @@ class AlbumMainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        /** 만일 Home 앨범에서 온 경우 **/
+
+        if(intent.getBooleanExtra("isHome", false))
+        {
+            spinner.visibility = View.GONE
+
+            // Home - 목표 앨범에서 온 경우
+            if(intent.getStringExtra("homeFlag") == "GOAL")
+            {
+                // 번들 생성(보낼 값 세팅)
+                var bundle = Bundle()
+                bundle.putString("flag", "GOAL")    // 목표 플래그
+                bundle.putString("goalName", intent.getStringExtra("goalName"))  // 목표이름
+
+                var fragment = SelectAlbumFragment()
+                fragment.arguments = bundle
+
+                // 해당 대표 목표의 전체 앨범 펼치기
+                var transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_main, fragment)
+                transaction.commit()
+            }
+            // Home - 카테고리 앨범에서 온 경우
+            else if(intent.getStringExtra("homeFlag") == "CATEGORY")
+            {
+                // 번들 생성(보낼 값 세팅)
+                var bundle = Bundle()
+                bundle.putString("flag", "CATEGORY")    // 카테고리 플래그
+                bundle.putInt("icon", intent.getIntExtra("icon", 0))    // 아이콘 값 전달
+
+                var fragment = SelectAlbumFragment()
+                fragment.arguments = bundle
+
+                // 해당 카테고리의 전체 앨범 펼치기
+                var transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_main, fragment)
+                transaction.commit()
+            }
+        }
+    }
+
+    // (폰)뒤로가기를 눌렀을 때 동작하는 함수 오버라이딩
+    override fun onBackPressed() {
+        // 만일 홈 앨범에서 왔다면
+        if(intent.getBooleanExtra("isHome", false))
+        {
+//            // (폰)뒤로가기를 눌렀을 때 다시 홈으로 돌아가기
+//            var intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+            var fm = supportFragmentManager
+            fm.popBackStack()
+        }
+
+        super.onBackPressed()
     }
 }

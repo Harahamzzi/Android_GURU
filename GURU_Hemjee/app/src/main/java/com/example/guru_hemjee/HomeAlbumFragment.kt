@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.content.Intent
 import android.util.Log
 
 import android.database.Cursor
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.view.get
 import java.text.SimpleDateFormat
@@ -211,6 +213,17 @@ class HomeAlbumFragment : Fragment() {
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
 
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+
+                // AlbumMainActivity로 보내기
+                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
+                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
+                intent.putExtra("homeFlag", "GOAL")     // 대표 목표 앨범임을 알리는 플래그
+                intent.putExtra("goalName", goalName.text.toString())   // 대표 목표의 이름
+                startActivity(intent)
+            }
+
             // view 추가
             goalAlbumLayout.addView(view)
         }
@@ -373,6 +386,20 @@ class HomeAlbumFragment : Fragment() {
 
             // icon 값 받아와서 저장하기
             iconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
+
+            // icon 값 tag로 저장하기
+            view.setTag(cursor.getInt(cursor.getColumnIndex("icon")))
+
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+
+                // AlbumMainActivity로 보내기
+                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
+                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
+                intent.putExtra("homeFlag", "CATEGORY") // 카테고리 앨범임을 알리는 플래그
+                intent.putExtra("icon", view.tag as Int)       // 카테고리 아이콘 값
+                startActivity(intent)
+            }
 
             // view 추가
             categoryAlbumLayout.addView(view)

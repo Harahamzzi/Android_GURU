@@ -325,7 +325,6 @@ class MonthlyReportFragment : Fragment() {
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, DailyReportFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.addToBackStack(null)
                 ?.commit()
     }
 
@@ -335,7 +334,6 @@ class MonthlyReportFragment : Fragment() {
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, WeeklyReportFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.addToBackStack(null)
                 ?.commit()
     }
 
