@@ -455,6 +455,7 @@ class LockActivity : AppCompatActivity() {
             dbManager.close()
 
             sqlitedb2.close()
+            dbManager2.close()
         }
         catch(e: Exception) {
             Log.e("DBException", "세부 목표 가져오기 실패")
