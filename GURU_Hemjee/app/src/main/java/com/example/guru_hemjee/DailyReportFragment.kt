@@ -281,7 +281,7 @@ class DailyReportFragment : Fragment() {
     fun goMonthlyReport() {
         mainActivity?.supportFragmentManager
             ?.beginTransaction()
-            ?.replace(R.id.fragment_main, SetupFragment()) // 프래그먼트 이름 변경하기
+            ?.replace(R.id.fragment_main, MonthlyReportFragment())
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             ?.commit()
     }
