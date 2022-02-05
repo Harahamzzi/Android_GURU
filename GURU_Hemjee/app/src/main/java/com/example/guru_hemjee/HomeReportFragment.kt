@@ -184,10 +184,8 @@ class HomeReportFragment : Fragment() {
             var milliTime: BigInteger = nowDateBigGoalTimeList[i] // 대표목표의 총 잠금시간(=밀리초)
             var goalColor: Int = nowDateBigGoalColorList[i]            // 대표목표의 색상
 
-
-            oneBarChartApperance(dailyBarChart, milliTime, totalMilli, goalColor) // 그래프 기본 레이아웃 설정
-            // var temp1DailyBarChart: HorizontalBarChart = oneBarChartApperance(dailyBarChart) // 그래프 기본 레이아웃 설정
-            // oneBarChartDate(temp1DailyBarChart, milliTime, totalMilli, goalColor)
+            var temp1DailyBarChart: HorizontalBarChart = oneBarChartApperance(dailyBarChart) // 그래프 기본 레이아웃 설정
+            oneBarChartDate(temp1DailyBarChart, milliTime, totalMilli, goalColor)
 
             // 레이아웃에 객체 추가
             dailyGoalListLayout.addView(view2)
@@ -195,7 +193,7 @@ class HomeReportFragment : Fragment() {
     }
 
     // 일간 리포트의 개별 BarChart의 레이아웃 & 데이터 세팅
-    fun oneBarChartApperance(dailyBarChart: HorizontalBarChart, milliTime: BigInteger, totalMilli: BigInteger, goalColor: Int) {
+    fun oneBarChartApperance(dailyBarChart: HorizontalBarChart): HorizontalBarChart {
 
         dailyBarChart.description.isEnabled = false // 그래프 이름 띄우기X
         dailyBarChart.setTouchEnabled(false)        // 터치X
@@ -204,7 +202,7 @@ class HomeReportFragment : Fragment() {
         dailyBarChart.xAxis.apply { // 수평막대 기준 왼쪽
             setDrawAxisLine(false)  // 선X
             setDrawLabels(false)    // 라벨X
-            gridLineWidth = 25f
+            gridLineWidth = 5f
             gridColor = Color.parseColor("#80E5E5E5")   // 배경색
         }
 
@@ -223,6 +221,11 @@ class HomeReportFragment : Fragment() {
             setDrawAxisLine(false)
         }
 
+        return dailyBarChart
+    }
+
+    // 일간 리포트의 개별 BarChart의 데이터 세팅
+    fun oneBarChartDate(temp1DailyBarChart: HorizontalBarChart, milliTime: BigInteger, totalMilli: BigInteger, goalColor: Int) {
         // 총시간에서의 백분율 구하기(밀리초)
         var timeData = (milliTime.toDouble() / totalMilli.toDouble() * 100.0)
 
@@ -240,13 +243,10 @@ class HomeReportFragment : Fragment() {
             valueFormatter
             valueTextSize = 14f
         }
-        val barData = BarData(barDataSet)
-        dailyBarChart.data = barData
-        dailyBarChart.invalidate() // 차트 갱신
-    }
 
-    //// 일간 리포트의 개별 BarChart의 데이터 세팅
-    //fun oneBarChartDate(temp1DailyBarChart: HorizontalBarChart, milliTime: BigInteger, totalMilli: BigInteger, goalColor: Int) {
-    //
-    //}
+        val barData = BarData(barDataSet)
+        barData.barWidth = 0.5f
+        temp1DailyBarChart.data = barData
+        temp1DailyBarChart.invalidate() // 차트 갱신
+    }
 }
