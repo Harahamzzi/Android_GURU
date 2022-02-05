@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.BarEntry
 import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -169,6 +170,9 @@ class HomeReportFragment : Fragment() {
         dbManager.close()
         sqlite.close()
 
+
+        weeklyReport(ZonedDateTime.now((ZoneId.of("Asia/Seoul"))))
+
 //        // 월간 리포트 함수
 //        createMonthlyReport(nowDate)
     }
@@ -250,7 +254,7 @@ class HomeReportFragment : Fragment() {
             setDrawGridLines(true) // 격자구조X
         }
         weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
-            isEnabled = false // 라벨 표시X
+            isEnabled = true // 라벨 표시X
             setDrawLabels(false) // 값 세팅X
         }
         weeklyStackBarChart.axisRight.apply { // 오른쪽 y축

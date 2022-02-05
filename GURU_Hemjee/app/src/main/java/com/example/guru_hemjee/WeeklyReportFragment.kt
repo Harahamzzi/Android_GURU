@@ -494,7 +494,7 @@ class WeeklyReportFragment : Fragment() {
             setDrawGridLines(true) // 격자구조X
         }
         weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
-            isEnabled = false // 라벨 표시X
+            isEnabled = true // 라벨 표시X
             setDrawLabels(false) // 값 세팅X
         }
         weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
