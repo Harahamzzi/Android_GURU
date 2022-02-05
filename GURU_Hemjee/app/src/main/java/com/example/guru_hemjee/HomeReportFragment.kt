@@ -284,7 +284,7 @@ class HomeReportFragment : Fragment() {
         dailyBarChart.axisLeft.apply {  // 수평막대 기준 아래쪽
             setDrawGridLines(false)     // 선X
             axisMinimum = 0f            // 최솟값
-            axisMaximum = 50f          // 최댓값
+            axisMaximum = 100f          // 최댓값
             setDrawLabels(false)        // 값 세팅X
             setDrawGridLines(false)
             setDrawAxisLine(false)
@@ -299,20 +299,27 @@ class HomeReportFragment : Fragment() {
         return dailyBarChart
     }
 
+    private fun floatArrayOf(elements: ArrayList<Float>): FloatArray {
+        var temp: FloatArray = FloatArray(elements.size, {0.0f})
+        for(i in 0 until elements.size){
+            temp[i] = elements[i]
+        }
+
+        return temp
+    }
+
     // 일간리포트의 총 잠금시간 가로 막대 그래프 데이터 세팅
     fun totalBarChartDate(temp2DailyBarChart: HorizontalBarChart, nowDateBigGoalTimeList: ArrayList<BigInteger>,
                           totalMilli: BigInteger, nowDateBigGoalColorList: ArrayList<Int>) {
         // 총시간에서의 백분율 구하기(밀리초)
-        var timeArray = ArrayList<Double>()
+        var timeArray = ArrayList<Float>()
         for (i in 0 until nowDateBigGoalTimeList.size) {
-            timeArray.add(nowDateBigGoalTimeList[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray.add((nowDateBigGoalTimeList[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
 
         // BarChart에 표시될 데이터
         val entry = ArrayList<BarEntry>()
-        for (i in 0 until timeArray.size) {
-            entry.add(BarEntry(0f, timeArray[i].toFloat()))
-        }
+        entry.add(BarEntry(0f, floatArrayOf(timeArray)))
 
         // 아이템 범위별 색상
         val itemcolor = java.util.ArrayList<Int>()
@@ -434,15 +441,15 @@ class HomeReportFragment : Fragment() {
 
         // 7일 단위로 주간 리스트 만들기
         var timeWeekList1 = ArrayList<BigInteger>()     // 1주차 시간
-        var colorWeekList1 = ArrayList<Int>()    // 1주차 색상
+        var colorWeekList1 = ArrayList<Int>()           // 1주차 색상
         var timeWeekList2 = ArrayList<BigInteger>()     // 2주차 시간
-        var colorWeekList2 = ArrayList<Int>()    // 2주차 색상
+        var colorWeekList2 = ArrayList<Int>()           // 2주차 색상
         var timeWeekList3 = ArrayList<BigInteger>()     // 3주차 시간
-        var colorWeekList3 = ArrayList<Int>()    // 3주차 색상
+        var colorWeekList3 = ArrayList<Int>()           // 3주차 색상
         var timeWeekList4 = ArrayList<BigInteger>()     // 4주차 시간
-        var colorWeekList4 = ArrayList<Int>()    // 4주차 색상
+        var colorWeekList4 = ArrayList<Int>()           // 4주차 색상
         var timeWeekList5 = ArrayList<BigInteger>()     // 5주차 시간
-        var colorWeekList5 = ArrayList<Int>()    // 5주차 색상
+        var colorWeekList5 = ArrayList<Int>()           // 5주차 색상
 
         // 1주차
         // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
@@ -587,35 +594,40 @@ class HomeReportFragment : Fragment() {
         var monthlyBarChart = monthBarChartApperance(monthBarChart) // 월간 리포트 레이아웃 설정
         // 총시간에서의 백분율 구하기(밀리초)
         // 1주차
-        var timeArray1 = ArrayList<Double>()
+        var timeArray1 = ArrayList<Float>()
         for (i in 0 until timeWeekList1.size) {
-            timeArray1.add(timeWeekList1[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray1.add((timeWeekList1[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
         // 2주차
-        var timeArray2 = ArrayList<Double>()
+        var timeArray2 = ArrayList<Float>()
         for (i in 0 until timeWeekList2.size) {
-            timeArray1.add(timeWeekList2[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray1.add((timeWeekList2[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
         // 3주차
-        var timeArray3 = ArrayList<Double>()
+        var timeArray3 = ArrayList<Float>()
         for (i in 0 until timeWeekList3.size) {
-            timeArray3.add(timeWeekList3[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray3.add((timeWeekList3[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
         // 4주차
-        var timeArray4 = ArrayList<Double>()
+        var timeArray4 = ArrayList<Float>()
         for (i in 0 until timeWeekList4.size) {
-            timeArray4.add(timeWeekList4[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray4.add((timeWeekList4[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
         // 5주차
-        var timeArray5 = ArrayList<Double>()
+        var timeArray5 = ArrayList<Float>()
         for (i in 0 until timeWeekList5.size) {
-            timeArray4.add(timeWeekList5[i].toDouble() / totalMilli.toDouble() * 100.0)
+            timeArray4.add((timeWeekList5[i].toDouble() / totalMilli.toDouble() * 100.0).toFloat())
         }
 
         // BarChart에 표시될 데이터
         // 1주차
         val entry = ArrayList<BarEntry>()
-        for (i in 0 until timeArray1.size) {
+        entry.add(BarEntry(0f, floatArrayOf(timeArray1)))
+        entry.add(BarEntry(1f, floatArrayOf(timeArray2)))
+        entry.add(BarEntry(2f, floatArrayOf(timeArray3)))
+        entry.add(BarEntry(3f, floatArrayOf(timeArray4)))
+        entry.add(BarEntry(4f, floatArrayOf(timeArray5)))
+        /*for (i in 0 until timeArray1.size) {
             entry.add(BarEntry(0f, timeArray1[i].toFloat()))
         }
         // 2주차
@@ -633,14 +645,14 @@ class HomeReportFragment : Fragment() {
         // 5주차
         for (i in 0 until timeArray5.size) {
             entry.add(BarEntry(4f, timeArray5[i].toFloat()))
-        }
+        }*/
 
         // 아이템 범위별 색상
-        val itemcolor = java.util.ArrayList<Int>()
+        val itemcolor = ArrayList<Int>()
         for (i in 0 until colorWeekList1.size) {
             itemcolor.add(colorWeekList1[i])
         }
-        for (i in 0 until colorWeekList2.size) {
+        /*for (i in 0 until colorWeekList2.size) {
             itemcolor.add(colorWeekList2[i])
         }
         for (i in 0 until colorWeekList3.size) {
@@ -651,7 +663,7 @@ class HomeReportFragment : Fragment() {
         }
         for (i in 0 until colorWeekList5.size) {
             itemcolor.add(colorWeekList5[i])
-        }
+        }*/
 
         // 데이터를 막대모양으로 표시하기
         val barDataSet = BarDataSet(entry, "")
@@ -693,7 +705,7 @@ class HomeReportFragment : Fragment() {
         }
 
         monthBarChart.axisRight.apply { // 수평막대 기준 위쪽
-            setDrawAxisLine(false)  // 선X
+            setDrawAxisLine(false)      // 선X
             setDrawLabels(false)        // 값 세팅X
             setDrawGridLines(false)
         }
