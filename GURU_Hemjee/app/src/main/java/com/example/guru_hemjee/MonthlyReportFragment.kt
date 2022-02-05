@@ -1,6 +1,7 @@
 package com.example.guru_hemjee
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
@@ -253,6 +254,31 @@ class MonthlyReportFragment : Fragment() {
         selectBigGoalBtn2.setOnClickListener {
             reportSate = 0 // 가장 최신의 월간 리포트 띄우기
 
+            val dialog = GoalSelectDialog(requireContext(), selectBigGoalBtn2.text.toString(),"목표 선택", true)
+            dialog.goalSelectPop()
+
+            dialog.setOnClickedListener( object : GoalSelectDialog.ButtonClickListener{
+                override fun onClicked(changedBigGoalTitle: String) {
+                    selectBigGoalBtn2.text = changedBigGoalTitle
+                    if(changedBigGoalTitle=="전체"){
+                        selectBigGoalBtn2.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
+                        toggleState = false
+                    }
+                    else {
+                        dbManager = DBManager(context, "hamster_db", null, 1)
+                        sqlite = dbManager.readableDatabase
+                        cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$changedBigGoalTitle'",null)
+                        if(cursor.moveToNext()){
+                            selectBigGoalBtn2.iconTint = ColorStateList.valueOf(cursor.getInt(cursor.getColumnIndex("color")))
+                        }
+                        cursor.close()
+                        sqlite.close()
+                        dbManager.close()
+                        toggleState = true
+                        toggleGoal = changedBigGoalTitle
+                    }
+                }
+            })
             // todo: 요약
             //     if) 전체 클릭
             //      -> toggleState = false
