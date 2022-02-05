@@ -76,13 +76,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sqlitedb.close()
         dbManager.close()
 
-        // 세부 목표 리포트 DB의 is_active 필드 초기화
-        dbManager = DBManager(this, "hamster_db", null, 1)
-        sqlitedb = dbManager.writableDatabase
-        sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
-
-        sqlitedb.close()
-        dbManager.close()
+        // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
+        setDetailGoalReportDB()
 
         // 네비게이션 드로어 생성
         drawerLayout = findViewById(R.id.home_drawerLayout)
@@ -233,4 +228,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
+    // 어플을 킬 때 세부 목표 리포트 DB 데이터를 세팅해주는 함수
+    private fun setDetailGoalReportDB() {
+
+        // 세부 목표 리포트 DB의 is_active 필드 초기화
+        dbManager = DBManager(this, "hamster_db", null, 1)
+        sqlitedb = dbManager.writableDatabase
+        sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
+
+        sqlitedb.close()
+        dbManager.close()
+
+        // 세부 목표 리포트 DB에서 파일명이 저장되지 않은 데이터들은 삭제
+        dbManager = DBManager(this, "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
+
+        sqlitedb.close()
+        dbManager.close()
+    }
 }
