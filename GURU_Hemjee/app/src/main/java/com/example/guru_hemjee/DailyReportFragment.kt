@@ -62,8 +62,8 @@ class DailyReportFragment : Fragment() {
     var nowViewTime = nowTime
 
     // 2차원 배열(대표목표)
-    var bigGoalStringArray = Array(10, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-    var bigGoalIntArray = Array(10, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
+    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
+    var bigGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
     var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
 
     // 2차원 배열(세부목표)

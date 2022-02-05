@@ -255,7 +255,7 @@ class HomeAlbumFragment : Fragment() {
         var removeCount = 0 // 삭제한 뷰의 개수
 
         // 0 ~ totalCountIndex만큼 반복
-        for(index in 0..totalCountIndex)
+        for(index in 0..(totalCountIndex-1))
         {
             // DB 불러오기
             dbManager = DBManager(requireContext(), "hamster_db", null, 1)
