@@ -16,7 +16,6 @@ import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.get
 import java.text.SimpleDateFormat
 import java.util.*
@@ -402,14 +401,10 @@ class HomeAlbumFragment : Fragment() {
                 continue
 
             /** 날짜 데이터 가져와서 비교하기 **/
-            var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date"))
-
-            //빈 값이 들어갈 경우 넘기기
-            if(temp1 == null)
-                continue
+            var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
 
             // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
-            var temp2: String = "2021-02-05 00:00:00".split(" ")[0]
+            var temp2: String = temp1.split(" ")[0]
 
             // 2차 분리 - 연도/월/일 분리, 가져오기
             var tempYear: String = temp2.split("-")[0]
