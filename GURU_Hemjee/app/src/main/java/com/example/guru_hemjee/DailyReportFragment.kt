@@ -58,6 +58,9 @@ class DailyReportFragment : Fragment() {
     var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
     var nowDate = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
 
+    // 현재 페이지에 보여지는 날짜
+    var nowViewTime = nowTime
+
     // 2차원 배열(대표목표)
     var bigGoalStringArray = Array(10, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
     var bigGoalIntArray = Array(10, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
@@ -216,15 +219,17 @@ class DailyReportFragment : Fragment() {
             // 현재 날짜의 리포트를 보여주기
             dailyReportListLayout.removeAllViews()
             reportSate = 0
-            dayReport(nowTime)
+            nowViewTime = nowTime   // 오늘 날짜로 재설정
+            dayReport(nowViewTime)
         }
 
         // 이전 버튼 클릭 이벤트
         prevBtn1.setOnClickListener {
             // 이전 날짜의 리포트 보여주기
             dailyReportListLayout.removeAllViews()
-            reportSate += -1
-            dayReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 현재 상태에 맞춰서 날짜 전달
+            reportSate--    // 페이지 상태 감소(이전 페이지로 이동함)
+            nowViewTime = nowViewTime.minusDays(1)  // 하루 빼기
+            dayReport(nowViewTime) // 현재 상태에 맞춰서 날짜 전달
         }
 
         // 다음 버튼 클릭 이벤트
@@ -234,8 +239,9 @@ class DailyReportFragment : Fragment() {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 날짜의 리포트 보여주기
                 dailyReportListLayout.removeAllViews()
-                reportSate += 1
-                dayReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 하루 더하기
+                reportSate++    // 페이지 상태 증가(다음 페이지로 이동함)
+                nowViewTime = nowViewTime.plusDays(1) // 하루 더하기
+                dayReport(nowViewTime)
             }
         }
 

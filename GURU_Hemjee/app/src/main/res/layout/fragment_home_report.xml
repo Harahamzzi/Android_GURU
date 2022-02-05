@@ -42,7 +42,7 @@
 
             <TextView
                 android:id="@+id/dayTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="7dp"
                 android:fontFamily="@font/noto_sans"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/todayTimeTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginTop="1dp"
                 android:fontFamily="@font/noto_sans"
@@ -124,7 +124,7 @@
 
             <TextView
                 android:id="@+id/periodDayTextView"
-                android:layout_width="98.3dp"
+                android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="7dp"
                 android:fontFamily="@font/noto_sans"
@@ -141,7 +141,7 @@
 
             <TextView
                 android:id="@+id/weekTimeTextView"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginTop="1dp"
                 android:fontFamily="@font/noto_sans"
@@ -201,7 +201,7 @@
 
             <TextView
                 android:id="@+id/monthDayTextView"
-                android:layout_width="98.3dp"
+                android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="7dp"
                 android:fontFamily="@font/noto_sans"
@@ -218,7 +218,7 @@
 
             <TextView
                 android:id="@+id/monthTimeTextView"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginTop="1dp"
                 android:fontFamily="@font/noto_sans"

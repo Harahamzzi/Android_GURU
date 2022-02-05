@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.content.Intent
 import android.util.Log
 
 import android.database.Cursor
@@ -228,6 +229,17 @@ class HomeAlbumFragment : Fragment() {
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
 
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+
+                // AlbumMainActivity로 보내기
+                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
+                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
+                intent.putExtra("homeFlag", "GOAL")     // 대표 목표 앨범임을 알리는 플래그
+                intent.putExtra("goalName", goalName.text.toString())   // 대표 목표의 이름
+                startActivity(intent)
+            }
+
             // view 추가
             goalAlbumLayout.addView(view)
         }
@@ -256,8 +268,8 @@ class HomeAlbumFragment : Fragment() {
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             var goalName: String = goalNameTextView.text.toString()
 
-            // 세부 목표 리포트 + 세부 목표 DB 열기
-            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db "
+            // 세부 목표 리포트 DB 열기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db"
                     + " WHERE big_goal_name = '$goalName'", null)
 
             // 만일 해당 대표 목표에서 저장된 사진이 없다면
@@ -268,6 +280,8 @@ class HomeAlbumFragment : Fragment() {
 
                 // 삭제한 횟수 증가
                 removeCount++
+
+                continue
             }
 
             var isDone = false     // 날짜 비교 반복문 탈출하기 위한 flag
@@ -378,7 +392,6 @@ class HomeAlbumFragment : Fragment() {
 
         //사진 개수를 저장할 ArrayList
         var picNums = ArrayList<Int>()
-
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
@@ -390,6 +403,19 @@ class HomeAlbumFragment : Fragment() {
 
             // icon 값 받아와서 저장하기
             iconList.add(cursor.getInt(cursor.getColumnIndex("icon")))
+
+            // icon 값 tag로 저장하기
+            view.setTag(cursor.getInt(cursor.getColumnIndex("icon")))
+
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+                // AlbumMainActivity로 보내기
+                var intent = Intent(requireActivity(), AlbumMainActivity::class.java)
+                intent.putExtra("isHome", true)         // 홈에서 이동하는 것임을 알리는 플래그
+                intent.putExtra("homeFlag", "CATEGORY") // 카테고리 앨범임을 알리는 플래그
+                intent.putExtra("icon", view.tag as Int)       // 카테고리 아이콘 값
+                startActivity(intent)
+            }
 
             // view 추가
             categoryAlbumLayout.addView(view)
@@ -410,7 +436,6 @@ class HomeAlbumFragment : Fragment() {
 
         // 세부 목표 리포트
         cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
-
         cursor.moveToLast() // 최근 데이터를 가져오기 위해 맨 마지막으로 커서 이동
         cursor.moveToNext() // 다음 단계로 한 칸 이동(빈 곳을 가리키도록 함)
 
@@ -418,15 +443,15 @@ class HomeAlbumFragment : Fragment() {
         {
             /** 어떤 아이콘인지 구분하기 **/
             var tempIcon: Int = cursor.getInt(cursor.getColumnIndex("icon"))
+
             // 몇 번째 아이콘인지 뽑아오기
             var iconNum: Int = iconList.indexOf(tempIcon)
+
             // 해당 뷰 연결
             var view: View = categoryAlbumLayout.get(iconNum)
-            //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
-            if(++picNums[iconNum] >= 4)
-                continue
 
             /** 날짜 데이터 가져와서 비교하기 **/
+
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
 
             // 1차 분리 - 날짜와 시간 분리, 날짜 가져오기
@@ -440,6 +465,11 @@ class HomeAlbumFragment : Fragment() {
             // 오늘 날짜에 해당하는 데이터만 사진 가져와서 적용시키기
             if(year == tempYear && month == tempMonth && day == tempDay)
             {
+                //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
+                if(++picNums[iconNum] >= 4)
+                    continue
+
+                // 사진 경로 가져오기
                 var path = requireContext().filesDir.toString() + "/picture/"
                 path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
 
@@ -447,7 +477,6 @@ class HomeAlbumFragment : Fragment() {
                     var bitmap: Bitmap = BitmapFactory.decodeFile(path)
                     // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 155, true)
-
                     var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + picNums[iconNum], "id", requireContext().packageName))
                     categotyPhoto.setImageBitmap(reScaledBitmap)
                 }
@@ -457,7 +486,6 @@ class HomeAlbumFragment : Fragment() {
                 }
             }
         }
-
         cursor.close()
         sqlitedb.close()
         dbManager.close()
@@ -471,12 +499,12 @@ class HomeAlbumFragment : Fragment() {
 
         for(index in picNums.indices)
         {
+            Log.i ("정보태그", "${picNums[index]}")
             // 해당 카테고리에 들어가 있는 사진이 없다면
             if(picNums[index] == 0)
             {
                 // 해당 카테고리 폴더를 삭제한다
                 categoryAlbumLayout.removeViewAt(index - removeCount)
-
                 // 삭제한 횟수 증가
                 removeCount++
             }
