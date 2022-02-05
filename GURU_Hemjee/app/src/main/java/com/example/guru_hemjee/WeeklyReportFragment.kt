@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentTransaction
@@ -22,6 +23,8 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.LabelFormatter
+import java.lang.ArithmeticException
+import java.lang.Exception
 import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -70,14 +73,18 @@ class WeeklyReportFragment : Fragment() {
     var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
 
     // 2차원 배열(대표목표)
-    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-    var bigGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
-    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
+    lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
+
+//    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
+//    var bigGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
+//    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
 
     // 2차원 배열(세부목표)
-    var detailGoalStringArray = Array(30, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
-    var detailGoalIntArray = Array(30, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
-    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
+    lateinit var detailGoalArrayList: ArrayList<MutableMap<String, String>>
+
+//    var detailGoalStringArray = Array(30, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
+//    var detailGoalIntArray = Array(30, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
+//    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
     // 현재 리포트 화면 상태
     var reportSate: Int = 0 // 이번주
@@ -104,6 +111,11 @@ class WeeklyReportFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        //오늘 날짜 받아오기
+        var sf = SimpleDateFormat("yyyy-MM-dd")
+        val today = Date(System.currentTimeMillis())
+        val todayString = sf.format(today)
+
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_weekly_report, container, false)
 
@@ -130,38 +142,53 @@ class WeeklyReportFragment : Fragment() {
         var cursor: Cursor
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
+        //대표 목표가 초기화 되었는지 확인
+        var isBigGoalInitialised = false
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
         while (cursor.moveToNext()) {
-            var str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
-            var bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
-            var str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
-            var int_color = cursor.getInt(cursor.getColumnIndex("color")).toBigInteger()
+            val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+            val bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
+            val str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
+            val int_color = cursor.getInt(cursor.getColumnIndex("color")).toBigInteger()
 
             // 배열에 읽어온 값 저장
             var isFlag: Boolean = false // 중복값 확인
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
-            if (bigGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
-                bigGoalStringArray[num][0] = str_big_goal // 대표목표
-                bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
-                bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
-                bigGoalIntArray[num][1] = int_color // 대표목표 색상
-                ++num
-            } else { // 기존에 데이터가 있다면
-                for (i in 0 until num) {
-                    if (bigGoalStringArray[i][0] == str_big_goal && bigGoalStringArray[i][1] == date1[0]) { // 중복되는 값은 시간만 저장(같은 날짜의 대표목표)
-                        bigGoalIntArray[i][0] += bigint_time
+            if (!isBigGoalInitialised) { //처음 입력시 초기화
+                bigGoalArrayList = arrayListOf(
+                    mutableMapOf(
+                        "big_goal_name" to str_big_goal,
+                        "total_lock_time" to bigint_time.toString(),
+                        "lock_date" to date1[0],
+                        "color" to int_color.toString()
+                    )
+                )
+                isBigGoalInitialised = true
+
+            } else {//같은 날 같은 목표를 달성했다면 시간만 추가하고 새로 추가 X
+                var i = 0
+                while (i < bigGoalArrayList.size) {
+                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal && bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                        bigGoalArrayList[i]["total_lock_time"] =
+                            (bigGoalArrayList[i]["total_lock_time"]?.toInt()
+                                ?.plus(bigint_time.toInt())).toString()
                         isFlag = true
                         break
                     }
+                    i++
                 }
-                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
-                    bigGoalStringArray[num][0] = str_big_goal // 대표목표
-                    bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
-                    bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
-                    bigGoalIntArray[num][1] = int_color // 대표목표 색상
-                    ++num
+                if (!isFlag) {
+                    bigGoalArrayList.add(
+                        mutableMapOf(
+                            "big_goal_name" to str_big_goal,
+                            "total_lock_time" to bigint_time.toString(),
+                            "lock_date" to date1[0],
+                            "color" to int_color.toString()
+                        )
+                    )
                 }
             }
+
         }
         cursor.close()
 
@@ -169,52 +196,54 @@ class WeeklyReportFragment : Fragment() {
         var cursor3: Cursor
         cursor3 = sqlite.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
 
+        //세부목표가 초기화 되었는지 확인
+        var isDetailGoalInitialized = false
         while (cursor3.moveToNext()) {
             var str_detail_goal = cursor3.getString(cursor3.getColumnIndex("detail_goal_name"))
             var str_date = cursor3.getString(cursor3.getColumnIndex("lock_date")).toString()
             var int_icon = cursor3.getInt(cursor3.getColumnIndex("icon")).toBigInteger()
             var int_color = cursor3.getInt(cursor3.getColumnIndex("color")).toBigInteger()
+            var str_big_goal = cursor3.getString(cursor3.getColumnIndex("big_goal_name")).toString()
 
             // 배열에 읽어온 값 저장 (같은 날짜 내에 중복값 저장X)
             var isFlag: Boolean = false // 중복값 확인
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
-            if (detailGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
-                detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
-                detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
-                detailGoalIntArray[num2][0] = int_icon // 아이콘
-                detailGoalIntArray[num][1] = int_color // 색상
-                ++num2
-            } else { // 기존에 데이터가 있다면
-                for (i in 0 until num2) {
-                    if (detailGoalStringArray[i][0] == str_detail_goal && detailGoalStringArray[i][1] == date1[0]) {
+            if (!isDetailGoalInitialized) {
+                detailGoalArrayList = arrayListOf(
+                    mutableMapOf(
+                        "detail_goal_name" to str_detail_goal,
+                        "lock_date" to date1[0],
+                        "icon" to int_icon.toString(),
+                        "color" to int_color.toString(),
+                        "big_goal_name" to str_big_goal
+                    )
+                )
+                isDetailGoalInitialized = true
+
+            } else {
+                var i = 0
+                //기존에 값이 없을 때만 새로 추가
+                while (i < detailGoalArrayList.size) {
+                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal && detailGoalArrayList[i]["lock_date"] == date1[0]) {
                         isFlag = true
                         break
                     }
+                    i++
                 }
-                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
-                    detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
-                    detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
-                    detailGoalIntArray[num2][0] = int_icon // 아이콘
-                    detailGoalIntArray[num][1] = int_color // 색상
-                    ++num2
+                if (!isFlag) {
+                    detailGoalArrayList.add(
+                        mutableMapOf(
+                            "detail_goal_name" to str_detail_goal,
+                            "lock_date" to date1[0],
+                            "icon" to int_icon.toString(),
+                            "color" to int_color.toString(),
+                            "big_goal_name" to str_big_goal
+                        )
+                    )
                 }
             }
         }
         cursor3.close()
-
-        // 세부목표 db에서 저장된 값 읽어오기(대표목표)
-        var cursor4: Cursor
-        for (i in 0 until num2) {
-            cursor4 = sqlite.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '" + detailGoalStringArray[i][0] + "';", null)
-
-            while (cursor4.moveToNext()) {
-                var str_big_goal_name = cursor4.getString(cursor4.getColumnIndex("big_goal_name"))
-
-                // 배열에 읽어온 값 저장
-                detailGoalStringArray[i][2] = str_big_goal_name // 대표목표
-            }
-            cursor4.close()
-        }
 
         dbManager.close()
         sqlite.close()
@@ -237,7 +266,7 @@ class WeeklyReportFragment : Fragment() {
         prevBtn2.setOnClickListener {
             // 이전 주간 리포트 보여주기
             weeklyReportListLayout.removeAllViews()
-            reportSate += -7
+            reportSate -= 7
             weeklyReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 일주일 뺀 값 전달
         }
 
@@ -266,6 +295,7 @@ class WeeklyReportFragment : Fragment() {
                     if(changedBigGoalTitle=="전체"){
                         selectBigGoalBtn.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
                         toggleState = false
+                        weeklyReport(nowTime)
                     }
                     else {
                         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -279,6 +309,7 @@ class WeeklyReportFragment : Fragment() {
                         dbManager.close()
                         toggleState = true
                         toggleGoal = changedBigGoalTitle
+                        weeklyReport(nowTime)
                     }
                 }
             })
@@ -375,75 +406,78 @@ class WeeklyReportFragment : Fragment() {
 
     // 스택바 차트 세팅 함수
     fun weeklyStackBarChart(weekList: ArrayList<String>) {
+        weeklyStackBarChart.invalidate()
 
         val entry = ArrayList<BarEntry>()
-        val itemcolor = ArrayList<Int>()
-        var floatArray = Array(30, {Array(7, {0f}) })
+        val itemColor = ArrayList<Int>()
 
-        if (toggleState) { // 대표 목표 선택 중이라면
-            // 데이터(시간, 대표목표) 입력
-            for (i in 0 until num) {
-                for (j in 0 until weekList.size) {
-                    if (bigGoalStringArray[i][1] == weekList[j] && bigGoalStringArray[i][0] == toggleGoal) {
-                        var integer_hour : Long = (bigGoalIntArray[i][0].toLong() / (1000 * 60 * 60)) % 24
-                        var integer_min : Long = (bigGoalIntArray[i][0].toLong() / (1000 * 60)) % 60
-                        if (integer_hour.toInt() == 0) {
-                            floatArray[i][j] = integer_min.toFloat() // 분 저장
-                            Log.d("분 값 = ", floatArray[i][j].toString())
-                        } else {
-                            floatArray[i][j] = integer_hour.toFloat() // 시간 저장
-                            Log.d("시간 값 = ", floatArray[i][j].toString())
-                        }
-                        itemcolor.add(bigGoalIntArray[i][1].toInt())
+        if(toggleState){
+            var bigGoalTimeList = mutableListOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f)
+            for(i in 0 until bigGoalArrayList.size){
+                for(j in 0 until weekList.size){
+                    if(bigGoalArrayList[i]["lock_date"] == weekList[j] && bigGoalArrayList[i]["big_goal_name"] == toggleGoal){
+                        bigGoalTimeList[j] += bigGoalArrayList[i]["total_lock_time"]!!.toFloat()
+                        itemColor.add(bigGoalArrayList[i]["color"]!!.toInt())
+                        Log.i("color", "$itemColor")
                     }
                 }
-
-                for (i in 0 until num) {
-                    entry.add(BarEntry(0f, floatArray[i][0])) // 월요일
-                    entry.add(BarEntry(1f, floatArray[i][1])) // 화요일
-                    entry.add(BarEntry(2f, floatArray[i][2])) // 수요일
-                    entry.add(BarEntry(3f, floatArray[i][3])) // 목요일
-                    entry.add(BarEntry(4f, floatArray[i][4])) // 금요일
-                    entry.add(BarEntry(5f, floatArray[i][5])) // 토요일
-                    entry.add(BarEntry(6f, floatArray[i][6])) // 일요일
-                }
             }
-        } else { // 전체를 선택 중이라면
-            // 데이터(시간, 대표목표) 입력, 아이템 범위별 색상
-            for (i in 0 until num) {
-                for (j in 0 until weekList.size) {
-                    if (bigGoalStringArray[i][1] == weekList[j]) { // 해당 날짜에 잠금 기록이 있다면
-                        var integer_hour : Int = (bigGoalIntArray[i][0].toInt() / (1000 * 60 * 60)) % 24
-                        var integer_min : Int = (bigGoalIntArray[i][0].toInt() / (1000 * 60)) % 60
-                        if (integer_hour.toInt() == 0) {
-                            floatArray[i][j] = integer_min.toFloat() // 분 저장
-                            Log.d("분 값 = ", floatArray[i][j].toString())
-                        } else {
-                            floatArray[i][j] = integer_hour.toFloat() // 시간 저장
-                            Log.d("시간 값 = ", floatArray[i][j].toString())
+            for(i in 0 until weekList.size){
+                entry.add(BarEntry(i.toFloat(), floatArrayOf(bigGoalTimeList[i])))
+            }
+            Log.i("chart", "$entry")
+        } else {
+            var bigGoalNameList = ArrayList<String>()
+            var bigGoalTimeLists = ArrayList<MutableList<Float>>()
+
+            //사용가능한 대표 목표 이름 뽑기
+            for(i in 0 until bigGoalArrayList.size){
+                for(j in 0 until weekList.size){
+                    if(bigGoalArrayList[i]["lock_date"] == weekList[j]){
+                        if(!bigGoalNameList.contains(bigGoalArrayList[i]["big_goal_name"])){
+                            bigGoalNameList.add(bigGoalArrayList[i]["big_goal_name"]!!.toString())
+                            itemColor.add(bigGoalArrayList[i]["color"]!!.toInt())
                         }
-                        itemcolor.add(bigGoalIntArray[i][1].toInt())
                     }
                 }
             }
 
-            for (i in 0 until num) {
-                entry.add(BarEntry(0f, floatArray[i][0])) // 월요일
-                entry.add(BarEntry(1f, floatArray[i][1])) // 화요일
-                entry.add(BarEntry(2f, floatArray[i][2])) // 수요일
-                entry.add(BarEntry(3f, floatArray[i][3])) // 목요일
-                entry.add(BarEntry(4f, floatArray[i][4])) // 금요일
-                entry.add(BarEntry(5f, floatArray[i][5])) // 토요일
-                entry.add(BarEntry(6f, floatArray[i][6])) // 일요일
+            for(i in 0 until weekList.size){
+                var tempArrayList = MutableList(bigGoalNameList.size, {0.0f})
+                for(nameNum in 0 until bigGoalNameList.size){
+                    for(goalNum in 0 until bigGoalArrayList.size){
+                        if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
+                            tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()
+                        }
+                    }
+                }
+                bigGoalTimeLists.add(tempArrayList)
+            }
+
+            for(i in 0 until bigGoalTimeLists.size){
+                var tempList:Array<Float> = bigGoalTimeLists[i].toTypedArray()
+                var isZero = false
+                for(i in 0 until tempList.size){
+                    if(tempList[i]!=0.0f) {
+                        isZero = true
+                        break
+                    }
+                }
+
+                entry.add(BarEntry(i.toFloat(), floatArrayOf(tempList)))
             }
         }
 
         val barDataSet = BarDataSet(entry, "")
         barDataSet.apply {
-            colors = itemcolor
+            if(itemColor.size >= 1)
+                colors= itemColor
+            else
+                color = itemColor[0]
             valueTextColor = R.color.Black
             valueTextSize = 16f
         }
+        Log.i("Data", "${barDataSet.colors}")
 
         val barData = BarData(barDataSet)
         weeklyStackBarChart.apply {
@@ -476,9 +510,17 @@ class WeeklyReportFragment : Fragment() {
         }
     }
 
+    private fun floatArrayOf(elements: Array<Float>): FloatArray {
+        var temp: FloatArray = FloatArray(elements.size, {0.0f})
+        for(i in 0 until elements.size){
+            temp[i] = elements[i]
+        }
+
+        return temp
+    }
+
     // 날짜에 따른 리포트(선택지가 전체일 경우)
     fun weeklyReport(moveTime: ZonedDateTime) { // 지난 주 값
-
         weeklyReportListLayout.removeAllViews() // 초기화
 
         var weekList: ArrayList<String> = getWeekDate(moveTime)
@@ -489,17 +531,17 @@ class WeeklyReportFragment : Fragment() {
         var totalMilli: BigInteger = BigInteger.ZERO // 총 전체 잠금 시간
 
         if (toggleState) { // 대표 목표를 1개 클릭
-            for (i in 0 until num) {
+            for (i in 0 until bigGoalArrayList.size) {
                 for (j in 0 until weekList.size) {
-                    if (bigGoalStringArray[i][1] == weekList[j] && bigGoalStringArray[i][0] == toggleGoal) // 잠금 날짜와 대표목표가 같다면 총 시간 저장
-                       totalMilli += bigGoalIntArray[i][0]
+                    if (bigGoalArrayList[i]["lock_date"] == weekList[j] && bigGoalArrayList[i]["big_goal_name"] == toggleGoal) // 잠금 날짜와 대표목표가 같다면 총 시간 저장
+                       totalMilli += bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
                 }
             }
         } else { // 전체 선택
-            for (i in 0 until num) {
+            for (i in 0 until bigGoalArrayList.size) {
                 for (j in 0 until weekList.size) {
-                    if (bigGoalStringArray[i][1] == weekList[j]) // 잠금 날짜가 같다면 총 시간 저장
-                        totalMilli += bigGoalIntArray[i][0]
+                    if (bigGoalArrayList[i]["lock_date"] == weekList[j]) // 잠금 날짜가 같다면 총 시간 저장
+                        totalMilli += bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
                 }
             }
         }
@@ -509,9 +551,9 @@ class WeeklyReportFragment : Fragment() {
 
         // 스택바 차트 세팅
         var isBarFlag = false
-        for (i in 0 until num) {
+        for (i in 0 until bigGoalArrayList.size) {
             for (j in 0 until weekList.size) {
-                if (bigGoalStringArray[i][1] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
+                if (bigGoalArrayList[i]["lock_date"] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
                     weeklyStackBarChart(weekList)
                     weeklyStackBarChart.visibility = View.VISIBLE
                     noGoalTimeView2.visibility = View.INVISIBLE
@@ -527,30 +569,68 @@ class WeeklyReportFragment : Fragment() {
 
         // 동적 뷰를 활용한 대표목표 및 세부목표 리스트 만들기
         if (toggleState) { // 대표목표를 선택했다면
-            for (i in 0 until num2) { //detailGoalArray사용
+            val dayList = listOf<String>("월 ", "화 ","수 ","목 ","금 ","토 ","일 ")
+            var detailGoalName = ArrayList<String>()
+            var detailGoalDays = ArrayList<String>()
+            var detailGoalIcon = ArrayList<Int>()
+            var detailGoalColor = ArrayList<Int>()
+
+            for(i in 0 until detailGoalArrayList.size) {
+                if (detailGoalArrayList[i]["detail_goal_name"]!!.isNotBlank()) { // 아무값도 없거나 공백이 있는 경우가 아니라면
+                    for (j in 0 until weekList.size) {
+                        if (detailGoalArrayList[i]["lock_date"] == weekList[j] && detailGoalArrayList[i]["big_goal_name"] == toggleGoal) { // 해당 날짜의 값이고, 해당하는 대표목표라면
+                            if (!detailGoalName.contains(detailGoalArrayList[i]["detail_goal_name"])) {
+                                detailGoalName.add(detailGoalArrayList[i]["detail_goal_name"].toString())
+                                detailGoalDays.add(dayList[j])
+                                detailGoalIcon.add(detailGoalArrayList[i]["icon"]!!.toInt())
+                                detailGoalColor.add(detailGoalArrayList[i]["color"]!!.toInt())
+                            } else {
+                                detailGoalDays[detailGoalName.indexOf(detailGoalArrayList[i]["detail_goal_name"])] += dayList[j]
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            for (i in 0 until detailGoalName.size) { //detailGoalArray사용
                 // 동적 뷰 생성
                 var view: View = layoutInflater.inflate(R.layout.layout_detail_goal_report_text, weeklyReportListLayout, false)
 
                 // 아이콘과 세부목표 동적 객체 생성
                 var detailIconImg: ImageView = view.findViewById(R.id.detailIconImg)
                 var detailGoalTextview: TextView = view.findViewById(R.id.detailGoalTextview)
+                var detailGoalDayText: TextView = view.findViewById(R.id.detailDayview)
 
                 // 값 할당하기
-                if (detailGoalStringArray[i][0].isNotBlank()) { // 아무값도 없거나 공백이 있는 경우가 아니라면
-                    for (j in 0 until weekList.size) {
-                        if (detailGoalStringArray[i][1] == weekList[j] && detailGoalStringArray[i][2] == toggleGoal) { // 해당 날짜의 값이고, 해당하는 대표목표라면
-                            detailIconImg.setImageResource(detailGoalIntArray[i][0].toInt())
-                            detailIconImg.setColorFilter(detailGoalIntArray[i][1].toInt(), PorterDuff.Mode.SRC_IN)
-                            detailGoalTextview.text = detailGoalStringArray[i][0]
+                detailIconImg.setImageResource(detailGoalIcon[i])
+                detailIconImg.setColorFilter(detailGoalColor[i], PorterDuff.Mode.SRC_IN)
+                detailGoalTextview.text = detailGoalName[i]
+                detailGoalDayText.text = detailGoalDays[i]
+                // 레이아웃에 객체 추가
+                weeklyReportListLayout.addView(view)
+            }
 
-                            // 레이아웃에 객체 추가
-                            weeklyReportListLayout.addView(view)
+        } else { // 전체를 선택했다면
+            var bigGoalName = ArrayList<String>()
+            var bigGoalTime = ArrayList<Long>()
+            var bigGoalColor = ArrayList<Int>()
+            for (i in 0 until bigGoalArrayList.size) { //detailGoalArray사용
+                for(j in 0 until weekList.size){
+                    if(bigGoalArrayList[i]["lock_date"] == weekList[j]){
+                        if(!bigGoalName.contains(bigGoalArrayList[i]["big_goal_name"])){
+                            bigGoalName.add(bigGoalArrayList[i]["big_goal_name"].toString())
+                            bigGoalColor.add(bigGoalArrayList[i]["color"]!!.toInt())
+                            bigGoalTime.add(bigGoalArrayList[i]["total_lock_time"]!!.toLong())
+                        } else {
+                            var index = bigGoalName.indexOf(bigGoalArrayList[i]["big_goal_name"])
+                            bigGoalTime[index] = bigGoalTime[index] + bigGoalArrayList[i]["total_lock_time"]!!.toLong()
                         }
                     }
                 }
             }
-        } else { // 전체를 선택했다면
-            for (i in 0 until num2) { //detailGoalArray사용
+
+            for(i in 0 until bigGoalName.size){
                 // 동적 뷰 생성
                 var view: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, weeklyReportListLayout, false)
 
@@ -560,21 +640,15 @@ class WeeklyReportFragment : Fragment() {
                 var biglGoalTimeview: TextView = view.findViewById(R.id.biglGoalTimeview)
 
                 // 값 할당하기
-                if (bigGoalStringArray[i][0].isNotBlank()) { // 아무값도 없거나 공백이 있는 경우가 아니라면
-                    for (j in 0 until weekList.size) {
-                        if (bigGoalStringArray[i][1] == weekList[j]) { // 해당 날짜의 값이라면
-                            bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
-                            bigGoalColorImg.setColorFilter(bigGoalIntArray[i][1].toInt(), PorterDuff.Mode.SRC_IN)
-                            bigGoalTextview.text = bigGoalStringArray[i][0]
-                            var hour: Long = (bigGoalIntArray[i][0].toLong() / (1000 * 60 * 60)) % 24
-                            var min: Long = (bigGoalIntArray[i][0].toLong() / (1000 * 60)) % 60
-                            biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"
+                bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
+                bigGoalColorImg.setColorFilter(bigGoalColor[i], PorterDuff.Mode.SRC_IN)
+                bigGoalTextview.text = bigGoalName[i]
+                var hour: Long = (bigGoalTime[i] / (1000 * 60 * 60)) % 24
+                var min: Long = (bigGoalTime[i] / (1000 * 60)) % 60
+                biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"
 
-                            // 레이아웃에 객체 추가
-                            weeklyReportListLayout.addView(view)
-                        }
-                    }
-                }
+                // 레이아웃에 객체 추가
+                weeklyReportListLayout.addView(view)
             }
         }
     }
