@@ -52,11 +52,11 @@ class SubMainActivity : AppCompatActivity() {
                 transaction.commit()
             }
 
-            // 나의 성취 앨범 페이지 띄우기
-            "dailyAlbum" -> {
-                transaction.replace(R.id.fragment_main, DailyAlbumFragment())
-                transaction.commit()
-            }
+//            // 나의 성취 앨범 페이지 띄우기
+//            "dailyAlbum" -> {
+//                transaction.replace(R.id.fragment_main, DailyAlbumFragment())
+//                transaction.commit()
+//            }
 
             // 씨앗 상점 페이지 띄우기
             "seedMarket" -> {

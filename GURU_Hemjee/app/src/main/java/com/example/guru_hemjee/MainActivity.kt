@@ -195,8 +195,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 intent.putExtra("tag", "dailyReport")
             }
             R.id.action_album -> {
-                intent.putExtra("titleName", "나의 성취 앨범")
-                intent.putExtra("tag", "dailyAlbum")
+
+                // Navigation Drawer 닫기
+                drawerLayout.closeDrawers()
+
+                // AlbumMainActivity로 바로 이동
+                var tempIntent = Intent(this, AlbumMainActivity::class.java)
+                startActivity(tempIntent)
             }
             R.id.action_store -> {
                 intent.putExtra("titleName", "씨앗 상점")
@@ -214,7 +219,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Navigation Drawer를 통해 각 탭으로 전환시 동작(변경사항)
         when(item.itemId) {
-            R.id.action_goalAndTime, R.id.action_report, R.id.action_album,
+            R.id.action_goalAndTime, R.id.action_report,
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
 
                 // Navigation Drawer 닫기

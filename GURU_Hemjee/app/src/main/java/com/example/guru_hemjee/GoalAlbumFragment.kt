@@ -25,9 +25,6 @@ class GoalAlbumFragment : Fragment() {
     // 대표 목표별 앨범 사진이 들어갈 레이아웃
     private lateinit var goalAlbumLayout: GridLayout
 
-    // 드롭다운 메뉴
-    private lateinit var spinner: Spinner
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,46 +42,17 @@ class GoalAlbumFragment : Fragment() {
         // 위젯 연결
         goalAlbumLayout = requireView().findViewById(R.id.goalAlbum_goalAlbumLayout)
 
-        // spinner 연결
-        spinner = requireView().findViewById(R.id.goal_albumMenuSpinner)
-
-        // spinner 어댑터 설정
-        spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, android.R.layout.simple_spinner_item)
-
-        // spinner 아이템 선택 리스너
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-                when(position){
-
-                    // 목표 선택
-                    0 -> {
-                        Log.i ("정보태그", "일간 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, DailyAlbumFragment())
-                        transaction.commit()
-                    }
-
-                    // 카테고리 선택
-                    2 -> {
-                        Log.i ("정보태그", "카테고리 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, CategoryAlbumFragment())
-                        transaction.commit()
-                    }
-                }
-            }
-        }
-
         // 앨범 생성
-        applyDailyBigGoalPhoto()
+        applyBigGoalPhoto()
     }
 
     // 대표 목표별 앨범 사진 세팅하는 함수
-    private fun applyDailyBigGoalPhoto() {
+    private fun applyBigGoalPhoto() {
+
+        // 레이아웃 안의 모든 뷰 제거
+        goalAlbumLayout.removeAllViews()
+        // column 수를 2으로 세팅
+        goalAlbumLayout.columnCount = 2
 
         /** view 동적 생성, 대표 목표 이름과 색상 가져와서 세팅하기 - big_goal_db **/
 
@@ -100,11 +68,6 @@ class GoalAlbumFragment : Fragment() {
             // view goalAlbumLayout에 부풀리기
             var view: View = layoutInflater.inflate(R.layout.container_small_album, goalAlbumLayout, false)
 
-            // view에 클릭 리스너 달기
-            view.setOnClickListener {
-                //
-            }
-
             // 아이콘 색상을 대표 목표 색상으로 변경
             var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
             icon.setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
@@ -112,6 +75,26 @@ class GoalAlbumFragment : Fragment() {
             // 제목을 대표 목표 이름으로 변경
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+
+            // view에 클릭 리스너 달기
+            view.setOnClickListener {
+                // Spinner 숨기기
+                var spinner: Spinner = requireActivity().findViewById(R.id.albumMenuSpinner)
+                spinner.visibility = View.GONE
+
+                // 번들 생성(보낼 값 세팅)
+                var bundle = Bundle()
+                bundle.putString("flag", "GOAL")    // 목표 플래그
+                bundle.putString("goalName", goalName.text.toString())  // 목표이름
+
+                var fragment = SelectAlbumFragment()
+                fragment.arguments = bundle
+
+                // 해당 대표 목표의 전체 앨범 펼치기
+                var transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_main, fragment)
+                transaction.commit()
+            }
 
             // view 추가
             goalAlbumLayout.addView(view)
@@ -126,8 +109,6 @@ class GoalAlbumFragment : Fragment() {
         // goalAlbumLayout에 생성한 뷰 개수 가져오기
         var totalCount: Int = goalAlbumLayout.childCount
         var count: Int = 0
-
-
 
         while(count < totalCount)
         {
@@ -150,7 +131,7 @@ class GoalAlbumFragment : Fragment() {
             cursor.moveToNext()    // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
             // 세부 목표 리포트에서 파일명 가져와서 이미지 변경하기
-            while(cursor.moveToPrevious())
+            if(cursor.moveToPrevious())
             {
                 var path = requireContext().filesDir.toString() + "/picture/"
                 path += cursor.getString(cursor.getColumnIndex("photo_name")).toString()

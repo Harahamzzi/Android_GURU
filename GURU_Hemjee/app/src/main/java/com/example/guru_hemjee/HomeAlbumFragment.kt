@@ -422,7 +422,6 @@ class HomeAlbumFragment : Fragment() {
                     // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 155, true)
 
-                    // FIXME: 사진 파일 넣을 때 동작 수정
                     var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + picNums[iconNum], "id", requireContext().packageName))
                     categotyPhoto.setImageBitmap(reScaledBitmap)
                 }

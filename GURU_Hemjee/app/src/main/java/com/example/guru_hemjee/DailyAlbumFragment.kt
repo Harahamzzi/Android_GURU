@@ -15,15 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.FragmentTransaction
 import androidx.gridlayout.widget.GridLayout
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class DailyAlbumFragment : Fragment() {
-
-    // 스피너
-    private lateinit var spinner: Spinner
 
     // 화면에 보이는 날짜와 시간
     private lateinit var todayTextView: TextView
@@ -70,9 +68,6 @@ class DailyAlbumFragment : Fragment() {
         preButton = requireView().findViewById(R.id.dailyAlbum_prevButton)
         nextButton = requireView().findViewById(R.id.dailyAlbum_nextButton)
 
-        // spinner 연결
-        spinner = requireView().findViewById(R.id.daily_albumMenuSpinner)
-
         // 위젯에 오늘 날짜 입력
         // (현재 날짜를 오늘 날짜로 설정)
         nowDate = todayDate
@@ -106,37 +101,6 @@ class DailyAlbumFragment : Fragment() {
             }
         }
 
-
-        // spinner 어댑터 설정
-        spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, R.layout.spinner_item)
-
-        // spinner 아이템 선택 리스너
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-                when(position){
-
-                    // 목표 선택
-                    1 -> {
-                        Log.i ("정보태그", "목표 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, GoalAlbumFragment())
-                        transaction.commit()
-                    }
-
-                    // 카테고리 선택
-                    2 -> {
-                        Log.i ("정보태그", "카테고리 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, CategoryAlbumFragment())
-                        transaction.commit()
-                    }
-                }
-            }
-        }
 
         // 해당 날짜에서 총 잠금한 시간 불러오고 위젯에 적용시키기
         applyTotalDailyLockTime()
@@ -235,7 +199,7 @@ class DailyAlbumFragment : Fragment() {
                     imageView.layoutParams = imageViewParams
 
                     var bitmap: Bitmap = BitmapFactory.decodeFile(path)
-                    // 이미지 배율 크기 작업 - 132x120 크기로 재설정함
+                    // 이미지 배율 크기 작업 - 360x360 크기로 재설정함
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 360, 360, true)
                     imageView.setImageBitmap(reScaledBitmap)
 

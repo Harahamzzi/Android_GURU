@@ -3,7 +3,6 @@
     package="com.example.guru_hemjee">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -22,8 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GURU_Hemjee">
-        <activity android:name=".TutorialActivity"></activity>
-
+        <activity android:name=".AlbumMainActivity"></activity>
+        <activity android:name=".TutorialActivity" />
         <activity android:name=".SubMainActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".MainActivity">
