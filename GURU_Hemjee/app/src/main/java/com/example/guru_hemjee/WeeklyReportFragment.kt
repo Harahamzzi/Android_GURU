@@ -121,7 +121,6 @@ class WeeklyReportFragment : Fragment() {
 
         dailyBtn2 = view.findViewById(R.id.dailyBtn2)
         weeklyBtn2 = view.findViewById(R.id.weeklyBtn2)
-        monthlyBtn2 = view.findViewById(R.id.monthlyBtn2)
         moveWeeklyButton = view.findViewById(R.id.moveWeeklyButton)
         weeklyTextview = view.findViewById(R.id.weeklyTextview)
         weeklyTimeTextview = view.findViewById(R.id.weeklyTimeTextview)
@@ -347,10 +346,7 @@ class WeeklyReportFragment : Fragment() {
             goWeeklyReport()
         }
 
-        // 일간 버튼 클릭 이벤트
-        monthlyBtn2.setOnClickListener {
-            goMonthlyReport()
-        }
+       
 
         return view
     }
