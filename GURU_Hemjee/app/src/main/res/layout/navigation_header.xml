@@ -15,6 +15,7 @@
         android:text="햄찌 주인님, 안녕하세요."
         android:textColor="@color/Black"
         android:textSize="15sp"
+        android:fontFamily="@font/noto_sans"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

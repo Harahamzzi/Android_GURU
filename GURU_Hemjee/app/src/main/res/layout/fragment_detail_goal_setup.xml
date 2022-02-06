@@ -54,6 +54,7 @@
                     android:textAlignment="center"
                     android:textColor="@color/Black"
                     android:textSize="18sp"
+                    android:fontFamily="@font/noto_sans"
                     tools:singleLine="true" />
 
                 <ImageButton
@@ -73,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="17dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="세부목표"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
