@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:scaleType="fitCenter"
                 android:src="@drawable/title_image" />
-        </Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"

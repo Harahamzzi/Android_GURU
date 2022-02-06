@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.FragmentTransaction
 
 class AlbumMainActivity : AppCompatActivity() {
@@ -30,6 +31,10 @@ class AlbumMainActivity : AppCompatActivity() {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // spinner 연결
         spinner = findViewById(R.id.albumMenuSpinner)

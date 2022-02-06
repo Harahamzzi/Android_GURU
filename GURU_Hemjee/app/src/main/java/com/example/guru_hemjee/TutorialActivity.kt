@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 
 class TutorialActivity : AppCompatActivity() {
 
@@ -21,6 +22,10 @@ class TutorialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         //초기화면 1.5초 후 종료하기
         startImageView = findViewById(R.id.startImageView)
