@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -204,7 +205,8 @@ class HomeReportFragment : Fragment() {
             for(nameNum in 0 until bigGoalNameList.size){
                 for(goalNum in 0 until bigGoalArrayList.size){
                     if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
-                        tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()
+                        tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)/24 //시간
+                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60)%60) / 100 //분
                     }
                 }
             }
@@ -248,14 +250,18 @@ class HomeReportFragment : Fragment() {
             setMaxVisibleValueCount(7) // 그래프 최대 개수
             setDrawValueAboveBar(false) // 차트 입력값 아래로
         }
+        val weekXLables = arrayListOf<String>("월","화","수","목","금","토","일")
         weeklyStackBarChart.xAxis.apply { // 아래 라벨 x축
-            isEnabled = false // 라벨 표시X
+            isEnabled = true // 라벨 표시
             position = XAxis.XAxisPosition.BOTTOM
-            setDrawGridLines(true) // 격자구조X
+            setDrawGridLines(false) // 격자구조X
+            valueFormatter = IndexAxisValueFormatter(weekXLables)
         }
         weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
             isEnabled = true // 라벨 표시X
-            setDrawLabels(false) // 값 세팅X
+            setDrawLabels(true) // 값 세팅X
+            textColor = R.color.Black
+            textSize = 14f
         }
         weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X

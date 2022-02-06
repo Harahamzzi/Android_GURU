@@ -17,23 +17,32 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentTransaction
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.*
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.LabelFormatter
+import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ArithmeticException
 import java.lang.Exception
+import java.lang.IndexOutOfBoundsException
 import java.math.BigInteger
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.round
 
 class WeeklyReportFragment : Fragment() {
 
@@ -407,12 +416,16 @@ class WeeklyReportFragment : Fragment() {
         val entry = ArrayList<BarEntry>()
         val itemColor = ArrayList<Int>()
 
+        val df = DecimalFormat("##.##")
+
         if(toggleState){
             var bigGoalTimeList = mutableListOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f)
             for(i in 0 until bigGoalArrayList.size){
                 for(j in 0 until weekList.size){
                     if(bigGoalArrayList[i]["lock_date"] == weekList[j] && bigGoalArrayList[i]["big_goal_name"] == toggleGoal){
-                        bigGoalTimeList[j] += bigGoalArrayList[i]["total_lock_time"]!!.toFloat()
+                        bigGoalTimeList[j] += bigGoalArrayList[i]["total_lock_time"]!!.toFloat()/(1000*60*60)/24//시간
+                        bigGoalTimeList[j] += bigGoalArrayList[i]["total_lock_time"]!!.toFloat()/(1000*60)%60/100//분
+                        bigGoalTimeList[j] = round(bigGoalTimeList[j]*100)/100
                         itemColor.add(bigGoalArrayList[i]["color"]!!.toInt())
                         Log.i("color", "$itemColor")
                     }
@@ -443,7 +456,9 @@ class WeeklyReportFragment : Fragment() {
                 for(nameNum in 0 until bigGoalNameList.size){
                     for(goalNum in 0 until bigGoalArrayList.size){
                         if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
-                            tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()
+                            tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)/24 //시간
+                            tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60)%60) / 100 //분
+                            tempArrayList[nameNum] = round(tempArrayList[nameNum]*100)/100
                         }
                     }
                 }
@@ -472,6 +487,7 @@ class WeeklyReportFragment : Fragment() {
                 color = itemColor[0]
             valueTextColor = R.color.Black
             valueTextSize = 16f
+            //valueFormatter = GraphYAxisValueFormatter()
         }
         Log.i("Data", "${barDataSet.colors}")
 
@@ -488,23 +504,32 @@ class WeeklyReportFragment : Fragment() {
             setMaxVisibleValueCount(7) // 그래프 최대 개수
             setDrawValueAboveBar(false) // 차트 입력값 아래로
         }
+        val weekXLables = arrayListOf<String>("월","화","수","목","금","토","일")
         weeklyStackBarChart.xAxis.apply { // 아래 라벨 x축
-            isEnabled = false // 라벨 표시X
+            isEnabled = true // 라벨 표시X
             position = XAxis.XAxisPosition.BOTTOM
-            setDrawGridLines(true) // 격자구조X
+            setDrawGridLines(false) // 격자구조X
+            valueFormatter = IndexAxisValueFormatter(weekXLables)
         }
         weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
-            isEnabled = true // 라벨 표시X
-            setDrawLabels(false) // 값 세팅X
+            isEnabled = true // 라벨 표시
+            setDrawLabels(true) // 값 세팅
+            textColor = R.color.Black
+            textSize = 14f
         }
         weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X
-            textColor = R.color.Black
-            textSize = 14f
-            // axisMaximum = 0f // 최소값
-            // axisMaximum = 18f // 최대값
         }
     }
+
+//    inner class GraphYAxisValueFormatter(): ValueFormatter() {
+//        override fun getFormattedValue(value: Float, axis: AxisBase?): String {
+//            var df = DecimalFormat("##.##")
+//            var valueList = df.format(value).toString().split(".")
+//
+//            return "$valueList[0]시간 ${valueList[1]}분"
+//        }
+//    }
 
     private fun floatArrayOf(elements: Array<Float>): FloatArray {
         var temp: FloatArray = FloatArray(elements.size, {0.0f})
