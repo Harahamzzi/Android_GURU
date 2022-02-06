@@ -120,7 +120,7 @@ class DetailGoalSetupFragment : Fragment() {
             var int_icon = cursor.getInt(cursor.getColumnIndex("icon"))
 
             // 동적 뷰 생성
-            var view = layoutInflater.inflate(R.layout.layout_detail_goal_text, detailGoalListLayout, false)
+            var view = layoutInflater.inflate(R.layout.container_detail_goal_text, detailGoalListLayout, false)
 
             // 아이콘과 EditText, 레이아웃 객체 동적 생성
             var detailGoalIconBtn : ImageButton = view.findViewById(R.id.detailGoalIconBtn)
@@ -180,7 +180,7 @@ class DetailGoalSetupFragment : Fragment() {
         // +버튼을 눌렀을 경우
         plusDetailGoalBtn.setOnClickListener {
             // 동적 뷰 생성
-            var view = layoutInflater.inflate(R.layout.layout_detail_goal, detailGoalListLayout, false)
+            var view = layoutInflater.inflate(R.layout.container_goal_detail_goal, detailGoalListLayout, false)
             // isEditing = true
             // Log.d("+버튼을 눌렀을 경우 ", isEditing.toString())
 

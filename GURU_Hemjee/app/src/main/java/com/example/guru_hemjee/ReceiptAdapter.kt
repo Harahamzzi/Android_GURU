@@ -28,7 +28,7 @@ class ReceiptAdapter(val context: Context, private val items: ArrayList<ReceiptI
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptAdapter.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.listview_market_reciept_list, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.container_market_reciept_list, parent, false)
         return ViewHolder(view)
     }
 

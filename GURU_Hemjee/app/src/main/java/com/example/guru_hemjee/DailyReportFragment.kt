@@ -359,7 +359,7 @@ class DailyReportFragment : Fragment() {
         // 동적 뷰를 활용한 세부목표 리스트 만들기
         for (i in 0 until num2) { //detailGoalArray사용
             // 동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.layout_daily_report_text, dailyReportListLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_daily_report_text, dailyReportListLayout, false)
 
             // 아이콘과 세부목표 동적 객체 생성
             var dailyIconImg: ImageView = view.findViewById(R.id.dailyIconImg)

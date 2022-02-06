@@ -619,7 +619,7 @@ class WeeklyReportFragment : Fragment() {
 
             for (i in 0 until detailGoalName.size) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.layout_detail_goal_report_text, weeklyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, weeklyReportListLayout, false)
 
                 // 아이콘과 세부목표 동적 객체 생성
                 var detailIconImg: ImageView = view.findViewById(R.id.detailIconImg)
@@ -656,7 +656,7 @@ class WeeklyReportFragment : Fragment() {
 
             for(i in 0 until bigGoalName.size){
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, weeklyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, weeklyReportListLayout, false)
 
                 // 대표목표 동적 객체 생성
                 var bigGoalColorImg: ImageView = view.findViewById(R.id.bigGoalColorImg)

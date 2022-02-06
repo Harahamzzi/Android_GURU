@@ -333,7 +333,7 @@ class HomeReportFragment : Fragment() {
 
         for(i in 0 until bigGoalName.size){
             // 동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, weeklyGoalListLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, weeklyGoalListLayout, false)
 
             // 대표목표 동적 객체 생성
             var bigGoalColorImg: ImageView = view.findViewById(R.id.bigGoalColorImg)
@@ -462,7 +462,7 @@ class HomeReportFragment : Fragment() {
 
         // 리스트 개수만큼 동적 뷰 생성
         for (i in 0 until nowDateBigGoalList.size) {
-            var view2: View = layoutInflater.inflate(R.layout.layout_daily_home_report, dailyGoalListLayout, false)
+            var view2: View = layoutInflater.inflate(R.layout.container_daily_home_report, dailyGoalListLayout, false)
 
             // 동적 객체 생성 (색상 이미지, 대표목표, 막대 그래프)
             var bigGoalColorImg: ImageView = view2.findViewById(R.id.bigGoalColorImg)

@@ -24,7 +24,7 @@ class DetailGoalListAdapter(val context: Context, private val items: ArrayList<D
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.listview_lock_detail_gaol, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.container_lock_detail_gaol, parent, false)
         return ViewHolder(view)
     }
 

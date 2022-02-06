@@ -412,7 +412,7 @@ class LockActivity : AppCompatActivity() {
             while(cursor.moveToNext())
             {
                 // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
-                var view: View = layoutInflater.inflate(R.layout.container_detail_goal, detailGoalListContainer, false)
+                var view: View = layoutInflater.inflate(R.layout.container_lock_detail_goal, detailGoalListContainer, false)
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)

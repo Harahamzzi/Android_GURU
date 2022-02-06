@@ -30,7 +30,7 @@ class BigGoalListViewAdapter(private val items: MutableList<BigGoalListViewItem>
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View { // 자식 뷰들 중 한개를 리턴, 리스트뷰에 넣을 아이템 설정
         var convertView = view // 해당 메소드가 호출되는 시점에서 position에 위치하는 자식 뷰
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent?.context).inflate(R.layout.listview_biggoal_item, parent, false)
+            convertView = LayoutInflater.from(parent?.context).inflate(R.layout.container_biggoal_item, parent, false)
         }
 
         // 커스텀한 리스트뷰에 있는 요소들을 연결

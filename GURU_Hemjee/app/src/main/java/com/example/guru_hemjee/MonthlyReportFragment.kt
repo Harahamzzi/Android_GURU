@@ -517,7 +517,7 @@ class MonthlyReportFragment : Fragment() {
         if (toggleState) { // 대표목표를 선택했다면
             for (i in 0 until num2) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.layout_detail_goal_report_text, monthlyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, monthlyReportListLayout, false)
 
                 // 아이콘과 세부목표 동적 객체 생성
                 var detailIconImg: ImageView = view.findViewById(R.id.detailIconImg)
@@ -540,7 +540,7 @@ class MonthlyReportFragment : Fragment() {
         } else { // 전체를 선택했다면
             for (i in 0 until num2) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.layout_big_goal_report_text, monthlyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, monthlyReportListLayout, false)
 
                 // 대표목표 동적 객체 생성
                 var bigGoalColorImg: ImageView = view.findViewById(R.id.bigGoalColorImg)

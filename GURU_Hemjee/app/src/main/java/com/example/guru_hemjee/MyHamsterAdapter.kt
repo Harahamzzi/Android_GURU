@@ -42,7 +42,7 @@ class MyHamsterAdapter(val context: Context, private val items:ArrayList<MyHamst
 
     //바인드할 객체 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHamsterAdapter.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.listview_my_hamster_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.container_my_hamster_item, parent, false)
         return ViewHolder(view, itemClick)
     }
 

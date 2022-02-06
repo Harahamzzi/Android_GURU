@@ -46,7 +46,7 @@ class MarketItemAdapter(val context: Context, private val items: ArrayList<Marke
     //바인드할 객체 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         //바인딩 당할 item xml 파일명 지정
-        val view = LayoutInflater.from(context).inflate(R.layout.listview_market_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.container_market_item, parent, false)
         return ViewHolder(view, itemClick)
     }
 
