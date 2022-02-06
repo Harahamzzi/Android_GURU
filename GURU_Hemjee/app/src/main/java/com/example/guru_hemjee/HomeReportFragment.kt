@@ -75,7 +75,6 @@ class HomeReportFragment : Fragment() {
 
         // 오늘 날짜 불러오기
         todayDate = LocalDateTime.now()
-        todayDate = todayDate.plusHours(9) // 한국 시간
 
         // 일간
         dayTextView = requireView().findViewById(R.id.dayTextView)

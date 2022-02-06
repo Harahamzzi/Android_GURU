@@ -1,4 +1,5 @@
 package com.example.guru_hemjee
+import android.util.Log
 
 import android.content.Context
 import android.database.Cursor
@@ -55,7 +56,7 @@ class DailyReportFragment : Fragment() {
     lateinit var noGoalTimeView: TextView
 
     // 현재 날짜
-    var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
+    var nowTime = ZonedDateTime.now()
     var nowDate = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
 
     // 현재 페이지에 보여지는 날짜
@@ -110,7 +111,7 @@ class DailyReportFragment : Fragment() {
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
         dailyReportListLayout.removeAllViews()
-
+        Log.i ("정보태그", "$nowTime")
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlite = dbManager.readableDatabase

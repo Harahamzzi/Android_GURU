@@ -57,7 +57,6 @@ class DailyAlbumFragment : Fragment() {
 
         // 오늘 날짜 불러오기
         todayDate = LocalDateTime.now()
-        todayDate = todayDate.plusHours(9)   // 9시간을 더해 한국 시간과 맞춤
 
         // 위젯 연결
         todayTextView = requireView().findViewById(R.id.dailyAlbum_dateTextView)

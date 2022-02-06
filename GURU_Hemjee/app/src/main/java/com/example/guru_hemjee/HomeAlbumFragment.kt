@@ -74,7 +74,7 @@ class HomeAlbumFragment : Fragment() {
 
 
         // 현재 날짜 불러오기
-        today = SimpleDateFormat("yyyy.MM.dd").format(Date(System.currentTimeMillis() + 32400000))
+        today = SimpleDateFormat("yyyy.MM.dd").format(Date(System.currentTimeMillis()))
         // 현재 날짜 위젯에 집어넣기
         dateTextView.text = today
 
