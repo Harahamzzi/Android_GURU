@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.components.XAxis
@@ -165,14 +166,16 @@ class HomeReportFragment : Fragment() {
                     )
                 }
             }
-
         }
         cursor.close()
         dbManager.close()
         sqlite.close()
 
-
-        weeklyReport(ZonedDateTime.now((ZoneId.of("Asia/Seoul"))))
+        if(isBigGoalInitialised){
+            weeklyReport(ZonedDateTime.now((ZoneId.of("Asia/Seoul"))))
+        } else {
+            Toast.makeText(context, "수행한 기록이 없습니다.", Toast.LENGTH_SHORT).show()
+        }
 
 //        // 월간 리포트 함수
 //        createMonthlyReport(nowDate)

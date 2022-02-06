@@ -257,7 +257,7 @@ class WeeklyReportFragment : Fragment() {
         sqlite.close()
 
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
-        if (reportSate == 0) { // 지난주
+        if (reportSate == 0 && isBigGoalInitialised && isDetailGoalInitialized) { // 지난주
             weeklyReportListLayout.removeAllViews()
             weeklyReport(nowTime) // 현재 날짜 넣기
         }
@@ -267,7 +267,8 @@ class WeeklyReportFragment : Fragment() {
             // 최신 리포트(지난주 리포트)를 보여주기
             weeklyReportListLayout.removeAllViews()
             reportSate = 0
-            weeklyReport(nowTime)
+            if(isBigGoalInitialised && isDetailGoalInitialized)
+                weeklyReport(nowTime)
         }
 
         // 이전 버튼 클릭 이벤트
@@ -275,7 +276,8 @@ class WeeklyReportFragment : Fragment() {
             // 이전 주간 리포트 보여주기
             weeklyReportListLayout.removeAllViews()
             reportSate -= 7
-            weeklyReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 일주일 뺀 값 전달
+            if(isBigGoalInitialised && isDetailGoalInitialized)
+                weeklyReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 일주일 뺀 값 전달
         }
 
         // 다음 버튼 클릭 이벤트
@@ -286,7 +288,8 @@ class WeeklyReportFragment : Fragment() {
             } else { // 다음 주간의 리포트 보여주기
                 weeklyReportListLayout.removeAllViews()
                 reportSate += 7
-                weeklyReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 일주일 더한 값 전달
+                if(isBigGoalInitialised && isDetailGoalInitialized)
+                    weeklyReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 일주일 더한 값 전달
             }
         }
 
