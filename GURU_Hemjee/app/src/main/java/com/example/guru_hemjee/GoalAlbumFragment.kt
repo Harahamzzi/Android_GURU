@@ -1,6 +1,5 @@
 package com.example.guru_hemjee
 
-import android.widget.Toast
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -46,8 +45,8 @@ class GoalAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        goalAlbumLayout = requireView().findViewById(R.id.goalAlbum_goalAlbumLayout)
-        blankFrameLayout = requireView().findViewById(R.id.goalAlbum_frameLayout)
+        goalAlbumLayout = requireView().findViewById(R.id.albumGoal_albumGoalGridLayout)
+        blankFrameLayout = requireView().findViewById(R.id.albumGoal_FrameLayout)
 
         // 앨범 생성
         applyBigGoalPhoto()

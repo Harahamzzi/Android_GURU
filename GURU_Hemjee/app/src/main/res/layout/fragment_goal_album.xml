@@ -7,7 +7,7 @@
     tools:context=".GoalAlbumFragment" >
 
     <FrameLayout
-        android:id="@+id/goalAlbum_frameLayout"
+        android:id="@+id/albumGoal_FrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -25,7 +25,7 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/goalAlbum_scrollView"
+        android:id="@+id/albumGoal_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/goalAlbum_goalAlbumLayout"
+            android:id="@+id/albumGoal_albumGoalGridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
