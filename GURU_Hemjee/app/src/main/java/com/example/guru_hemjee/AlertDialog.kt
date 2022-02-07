@@ -14,53 +14,51 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
     private var okString: String = okString
     private var isNeedDrawable: Boolean = isNeedDrawable
 
-    private lateinit var popTitleTextView: TextView
-    private lateinit var cancelImageButton: ImageButton
-    private lateinit var confirmSeedButton: Button
-    private lateinit var confirmButton: Button
+    private lateinit var pop_titleTextView: TextView
+    private lateinit var pop_cancelButton: ImageButton
+    private lateinit var pop_confirmSeedButton: Button
+    private lateinit var pop_confrimButton: Button
 
-    private lateinit var hamsterTalkTextView: TextView
+    private lateinit var pop_alertPopHamsterTalkTextView: TextView
 
 
-    fun AlertDialog(){
+    fun AlertDialog() {
         dialog.show()
         dialog.setContentView(R.layout.popup_alert)
 
-        popTitleTextView = dialog.findViewById(R.id.pop_titleTextView)
-        cancelImageButton = dialog.findViewById(R.id.pop_cancelButton)
-        confirmSeedButton = dialog.findViewById(R.id.pop_confirmSeedButton)
-        confirmButton = dialog.findViewById(R.id.pop_confrimButton)
-        hamsterTalkTextView = dialog.findViewById(R.id.pop_alertPopHamsterTalkTextView)
+        pop_titleTextView = dialog.findViewById(R.id.pop_titleTextView)
+        pop_cancelButton = dialog.findViewById(R.id.pop_cancelButton)
+        pop_confirmSeedButton = dialog.findViewById(R.id.pop_confirmSeedButton)
+        pop_confrimButton = dialog.findViewById(R.id.pop_confrimButton)
+        pop_alertPopHamsterTalkTextView = dialog.findViewById(R.id.pop_alertPopHamsterTalkTextView)
 
-        if(talkText != null){
-            hamsterTalkTextView.text = talkText
+        if (talkText != null) {
+            pop_alertPopHamsterTalkTextView.text = talkText
         }
 
-        popTitleTextView.text = title
-        if(isNeedDrawable){
-            confirmButton.visibility = View.GONE
-            confirmSeedButton.text = okString
+        pop_titleTextView.text = title
+        if (isNeedDrawable) {
+            pop_confrimButton.visibility = View.GONE
+            pop_confirmSeedButton.text = okString
 
-            confirmSeedButton.setOnClickListener {
+            pop_confirmSeedButton.setOnClickListener {
                 onClickListener.onClicked(true)
                 dialog.dismiss()
             }
         } else {
-            confirmSeedButton.visibility = View.GONE
-            confirmButton.text = okString
+            pop_confirmSeedButton.visibility = View.GONE
+            pop_confrimButton.text = okString
 
-            confirmButton.setOnClickListener{
+            pop_confrimButton.setOnClickListener{
                 onClickListener.onClicked(true)
                 dialog.dismiss()
             }
         }
 
-        cancelImageButton.setOnClickListener {
+        pop_cancelButton.setOnClickListener {
             onClickListener.onClicked(false)
             dialog.dismiss()
         }
-
-
     }
 
     interface ButtonClickListener {
