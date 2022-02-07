@@ -24,7 +24,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <LinearLayout
-                android:id="@+id/reportButtonLayout"
+                android:id="@+id/reportWeekly_reportButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/dailyBtn2"
+                    android:id="@+id/reportWeekly_dailyButton"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_daily_report_button1"
@@ -48,7 +48,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/weeklyBtn2"
+                    android:id="@+id/reportWeekly_weeklyButton"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_monthly_report_button2"
@@ -64,7 +64,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/moveWeeklyButton"
+                android:id="@+id/reportWeekly_moveWeeklyButton"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="22dp"
@@ -73,11 +73,11 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_outline_today_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout"
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout"
                 app:tint="@color/Black" />
 
             <TextView
-                android:id="@+id/weeklyTextview"
+                android:id="@+id/reportWeekly_weeklyDateTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="151dp"
@@ -87,13 +87,13 @@
                 android:text="1월 10일 - 1월 16일"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/moveWeeklyButton"
+                app:layout_constraintEnd_toStartOf="@+id/reportWeekly_moveWeeklyButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout"
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout"
                 tools:fontFamily="@font/noto_sans" />
 
             <TextView
-                android:id="@+id/weeklyTimeTextview"
+                android:id="@+id/reportWeekly_weeklyTimeTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -104,21 +104,21 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyDateTextview" />
 
             <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/weeklyStackBarChart"
+                android:id="@+id/reportWeekly_weeklyStackBarChart"
                 android:layout_width="300dp"
                 android:layout_height="160dp"
                 android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toStartOf="@+id/nextBtn2"
-                app:layout_constraintStart_toEndOf="@+id/prevBtn2"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview">
+                app:layout_constraintEnd_toStartOf="@+id/reportWeekly_nextButton"
+                app:layout_constraintStart_toEndOf="@+id/reportWeekly_prevButton"
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyTimeTextview">
 
             </com.github.mikephil.charting.charts.BarChart>
 
             <ImageButton
-                android:id="@+id/prevBtn2"
+                android:id="@+id/reportWeekly_prevButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="17dp"
@@ -127,10 +127,10 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/prev_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout" />
 
             <ImageButton
-                android:id="@+id/nextBtn2"
+                android:id="@+id/reportWeekly_nextButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginTop="134dp"
@@ -139,10 +139,10 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/next_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/moveWeeklyButton" />
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_moveWeeklyButton" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/selectBigGoalBtn"
+                android:id="@+id/reportWeekly_selectBigGoalButton"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="180dp"
                 android:layout_height="30dp"
@@ -167,11 +167,11 @@
                 app:iconTint="@color/Black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyStackBarChart"
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyStackBarChart"
                 tools:fontFamily="@font/noto_sans" />
 
             <LinearLayout
-                android:id="@+id/weeklyReportListLayout"
+                android:id="@+id/reportWeekly_weeklyReportListLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -180,15 +180,15 @@
                 android:layout_marginBottom="50dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/bottomSpace"
+                app:layout_constraintBottom_toTopOf="@+id/reportWeekly_bottomSpace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/selectBigGoalBtn">
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_selectBigGoalButton">
 
             </LinearLayout>
 
             <Space
-                android:id="@+id/bottomSpace"
+                android:id="@+id/reportWeekly_bottomSpace"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
@@ -197,7 +197,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/noGoalTimeView2"
+                android:id="@+id/reportWeekly_noGoalTimeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="77dp"
@@ -208,7 +208,7 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview"
+                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyTimeTextview"
                 tools:fontFamily="@font/noto_sans" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

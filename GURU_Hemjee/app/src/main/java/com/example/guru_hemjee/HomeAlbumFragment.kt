@@ -69,10 +69,10 @@ class HomeAlbumFragment : Fragment() {
         dateTextView = requireView().findViewById(R.id.homeAlbum_dateTextView)
         timeTextView = requireView().findViewById(R.id.homeAlbum_timeTextView)
 
-        scrollView = requireView().findViewById(R.id.homeAlbum_scrollView)
+        scrollView = requireView().findViewById(R.id.homeAlbum_ScrollView)
         goalAlbumLayout = requireView().findViewById(R.id.homeAlbum_goalAlbumLayout)
         categoryAlbumLayout = requireView().findViewById(R.id.homeAlbum_categoryLinearLayout)
-        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_frameLayout)
+        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_FrameLayout)
 
         for(i: Int in 1..6) // 1~6까지 반복
         {
