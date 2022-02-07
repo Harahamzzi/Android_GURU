@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -21,7 +22,6 @@ class BigGoalModifyFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
     lateinit var dbManager: DBManager
-    lateinit var dbManager2: DBManager
     lateinit var sqlitedb: SQLiteDatabase
     lateinit var sqlitedb2: SQLiteDatabase
 
@@ -51,8 +51,8 @@ class BigGoalModifyFragment : Fragment() {
     lateinit var modTodayLockMinView: EditText // 분
 
     // 삭제, 확인 버튼
-    lateinit var modDeleteButton: androidx.appcompat.widget.AppCompatButton // 삭제 버튼
-    lateinit var modCompleteButton: androidx.appcompat.widget.AppCompatButton // 확인 버튼
+    lateinit var modDeleteButton: AppCompatButton // 삭제 버튼
+    lateinit var modCompleteButton: AppCompatButton // 확인 버튼
 
     private lateinit var str_big_goal: String // 대표목표
     private var integer_color: Int = 0 // 대표목표 색상
@@ -180,10 +180,7 @@ class BigGoalModifyFragment : Fragment() {
             }
         }
 
-        // 대표목표 DB
         dbManager = DBManager(context, "hamster_db", null, 1)
-        // 세부목표 DB
-        dbManager2 = DBManager(context, "hamster_db", null, 1)
 
         // 확인버튼을 눌렀을 경우
         modCompleteButton.setOnClickListener {
@@ -280,7 +277,7 @@ class BigGoalModifyFragment : Fragment() {
                         sqlitedb2.close()
                         sqlitedb.close()
 
-                        sqlitedb = dbManager2.writableDatabase
+                        sqlitedb = dbManager.writableDatabase
                         sqlitedb.execSQL("UPDATE detail_goal_db SET big_goal_name = '" + big_goal + "' WHERE big_goal_name = '" + str_big_goal + "';")
                         sqlitedb.close()
 
@@ -292,15 +289,18 @@ class BigGoalModifyFragment : Fragment() {
                     }
                 }
             }
-
+            sqlitedb.close()
+            sqlitedb2.close()
+            dbManager.close()
 
         }
 
         // 삭제 버튼을 눌렀을 경우
         modDeleteButton.setOnClickListener {
             dbManager = DBManager(context, "hamster_db", null, 1)
-            sqlitedb = dbManager.readableDatabase
+            sqlitedb = dbManager.writableDatabase
 
+            sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
             sqlitedb.close()
             dbManager.close()
@@ -310,7 +310,7 @@ class BigGoalModifyFragment : Fragment() {
             val bundle = Bundle()
             bundle.putString("bundle_biggoal", str_big_goal)
 
-            setupFragment.setArguments(bundle)
+            setupFragment.arguments = bundle
 
             transaction.replace(R.id.fragment_main, SetupFragment())
             transaction.commit() // 저장
