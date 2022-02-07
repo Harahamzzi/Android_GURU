@@ -82,9 +82,13 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 상단 알림 표시 삭제
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.deleteNotificationChannel("channel_1")
+        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+        {
+            // 상단 알림 표시 삭제
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.deleteNotificationChannel("channel_1")
+        }
 
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
