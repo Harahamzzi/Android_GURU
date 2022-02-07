@@ -63,14 +63,20 @@ class DailyReportFragment : Fragment() {
     var nowViewTime = nowTime
 
     // 2차원 배열(대표목표)
-    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-    var bigGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
-    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
+    private lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
+    private var isBigGoalInitialised = false
+
+//    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
+//    var bigGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
+//    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
 
     // 2차원 배열(세부목표)
-    var detailGoalStringArray = Array(20, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
-    var detailGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
-    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
+    private lateinit var detailGoalArrayList: ArrayList<MutableMap<String, String>>
+    private var isDetailGoalInitialized = false
+
+//    var detailGoalStringArray = Array(20, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
+//    var detailGoalIntArray = Array(20, {Array(2, {BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
+//    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
     // 현재 리포트 화면 상태
     var reportSate: Int = 0 // 오늘
@@ -129,13 +135,48 @@ class DailyReportFragment : Fragment() {
             // 배열에 읽어온 값 저장
             var isFlag: Boolean = false // 중복값 확인
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
-            if (bigGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
-                bigGoalStringArray[num][0] = str_big_goal // 대표목표
-                bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
-                bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
-                bigGoalIntArray[num][1] = int_color // 대표목표 색상
-                ++num
-            } else { // 기존에 데이터가 있다면
+            if(!isBigGoalInitialised){ //처음 입력시에는 초기화
+                bigGoalArrayList = arrayListOf(
+                    mutableMapOf(
+                        "big_goal_name" to str_big_goal,
+                        "total_lock_time" to bigint_time.toString(),
+                        "lock_date" to date1[0],
+                        "color" to int_color.toString()
+                    )
+                )
+                isBigGoalInitialised = true
+            } else {//같은 날 같은 목표를 달성했다면 시간만 추가하고 새로 추가 X
+                var isFlag: Boolean = false // 중복값 확인
+                var i = 0
+                while (i < bigGoalArrayList.size) {
+                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal && bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                        bigGoalArrayList[i]["total_lock_time"] =
+                            (bigGoalArrayList[i]["total_lock_time"]?.toInt()
+                                ?.plus(bigint_time.toInt())).toString()
+                        isFlag = true
+                        break
+                    }
+                    i++
+                }
+                if (!isFlag) {
+                    bigGoalArrayList.add(
+                        mutableMapOf(
+                            "big_goal_name" to str_big_goal,
+                            "total_lock_time" to bigint_time.toString(),
+                            "lock_date" to date1[0],
+                            "color" to int_color.toString()
+                        )
+                    )
+                }
+            }
+//
+//            if (bigGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
+//                bigGoalStringArray[num][0] = str_big_goal // 대표목표
+//                bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
+//                bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
+//                bigGoalIntArray[num][1] = int_color // 대표목표 색상
+//                ++num
+//            } else { // 기존에 데이터가 있다면
 //                for (i in 0 until num) {
 //                    if (bigGoalStringArray[i][0] == str_big_goal && bigGoalStringArray[i][1] == date1[0]) { // 중복되는 값은 시간만 저장(같은 날짜의 대표목표)
 //                        bigGoalIntArray[i][0] += bigint_time
@@ -150,7 +191,7 @@ class DailyReportFragment : Fragment() {
 //                    bigGoalIntArray[num][1] = int_color // 대표목표 색상
 //                    ++num
 //                }
-            }
+//            }
         }
         cursor.close()
 
@@ -163,48 +204,48 @@ class DailyReportFragment : Fragment() {
             var str_date = cursor3.getString(cursor3.getColumnIndex("lock_date")).toString()
             var int_icon = cursor3.getInt(cursor3.getColumnIndex("icon")).toBigInteger()
             var int_color = cursor3.getInt(cursor3.getColumnIndex("color")).toBigInteger()
+            var str_big_goal = cursor3.getString(cursor3.getColumnIndex("big_goal_name")).toString()
 
             // 배열에 읽어온 값 저장 (같은 날짜 내에 중복값 저장X)
             var isFlag: Boolean = false // 중복값 확인
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
-            if (detailGoalStringArray.isNullOrEmpty()) { // 처음 저장하는 거라면
-                detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
-                detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
-                detailGoalIntArray[num2][0] = int_icon // 아이콘
-                detailGoalIntArray[num2][1] = int_color // 색상
-                ++num2
-            } else { // 기존에 데이터가 있다면
-//                for (i in 0 until num2) {
-//                    if (detailGoalStringArray[i][0] == str_detail_goal && detailGoalStringArray[i][1] == date1[0]) {
-//                        isFlag = true
-//                        break
-//                    }
-//                }
-//                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
-//                    detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
-//                    detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
-//                    detailGoalIntArray[num2][0] = int_icon // 아이콘
-//                    detailGoalIntArray[num2][1] = int_color // 색상
-//                    ++num2
-//                }
+            if (!isDetailGoalInitialized) {
+                detailGoalArrayList = arrayListOf(
+                    mutableMapOf(
+                        "detail_goal_name" to str_detail_goal,
+                        "lock_date" to date1[0],
+                        "icon" to int_icon.toString(),
+                        "color" to int_color.toString(),
+                        "big_goal_name" to str_big_goal
+                    )
+                )
+                isDetailGoalInitialized = true
+
+            } else {
+                var isFlag: Boolean = false // 중복값 확인
+                var i = 0
+                //기존에 값이 없을 때만 새로 추가
+                while (i < detailGoalArrayList.size) {
+                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal && detailGoalArrayList[i]["lock_date"] == date1[0]) {
+                        isFlag = true
+                        break
+                    }
+                    i++
+                }
+                if (!isFlag) {
+                    detailGoalArrayList.add(
+                        mutableMapOf(
+                            "detail_goal_name" to str_detail_goal,
+                            "lock_date" to date1[0],
+                            "icon" to int_icon.toString(),
+                            "color" to int_color.toString(),
+                            "big_goal_name" to str_big_goal
+                        )
+                    )
+                }
             }
         }
         cursor3.close()
-
-        // 세부목표 db에서 저장된 값 읽어오기(대표목표)
-        var cursor4: Cursor
-        for (i in 0 until num2) {
-            cursor4 = sqlite.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '" + detailGoalStringArray[i][0] + "';", null)
-
-            while (cursor4.moveToNext()) {
-                var str_big_goal_name = cursor4.getString(cursor4.getColumnIndex("big_goal_name"))
-
-                // 배열에 읽어온 값 저장
-                detailGoalStringArray[i][2] = str_big_goal_name // 대표목표
-            }
-            cursor4.close()
-        }
-
         dbManager.close()
         sqlite.close()
 
@@ -292,16 +333,16 @@ class DailyReportFragment : Fragment() {
 
         // 데이터(시간, 대표목표) 입력
         val entry = ArrayList<PieEntry>()
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate)
-                entry.add(PieEntry(bigGoalIntArray[i][0].toFloat(), ""))
+        for (i in 0 until bigGoalArrayList.size) {
+            if (bigGoalArrayList[i]["lock_date"] == moveDate)
+                entry.add(PieEntry(bigGoalArrayList[i]["total_lock_time"]!!.toFloat(), ""))
         }
 
         // 아이템 범위별 색상
         val itemcolor = ArrayList<Int>()
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate)
-                itemcolor.add(bigGoalIntArray[i][1].toInt())
+        for (i in 0 until bigGoalArrayList.size) {
+            if (bigGoalArrayList[i]["lock_date"] == moveDate)
+                itemcolor.add(bigGoalArrayList[i]["color"]!!.toInt())
         }
 
         val pieDataSet = PieDataSet(entry, "")
@@ -331,9 +372,11 @@ class DailyReportFragment : Fragment() {
         dailyTextview.text = splitDate[1] + "월 " + splitDate[2] + "일 " + splitDate[3] + "요일"
 
         var totalMilli: BigInteger = BigInteger.ZERO
-        for (i in 0 until num) {
-            if (bigGoalStringArray[i][1] == moveDate) { // 해당 날짜값의 시간만 가져와서 적용
-                totalMilli += bigGoalIntArray[i][0]
+        if(isBigGoalInitialised){
+            for (i in 0 until bigGoalArrayList.size) {
+                if (bigGoalArrayList[i]["lock_date"] == moveDate) { // 해당 날짜값의 시간만 가져와서 적용
+                    totalMilli += bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
+                }
             }
         }
         var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
@@ -342,13 +385,15 @@ class DailyReportFragment : Fragment() {
 
         // 파이차트 세팅
         var isPieFlag = false
-        for (i in 0 until num) { // 해당 날짜와 관련한 값이 1개라도 있다면 파이차트 생성
-            if (bigGoalStringArray[i][1] == moveDate) {
-                dailyPieChart(moveDate)
-                dailyPieChart.visibility = View.VISIBLE
-                noGoalTimeView.visibility = View.INVISIBLE
-                isPieFlag = true
-                break
+        if(isBigGoalInitialised){
+            for (i in 0 until bigGoalArrayList.size) { // 해당 날짜와 관련한 값이 1개라도 있다면 파이차트 생성
+                if (bigGoalArrayList[i]["lock_date"] == moveDate) {
+                    dailyPieChart(moveDate)
+                    dailyPieChart.visibility = View.VISIBLE
+                    noGoalTimeView.visibility = View.INVISIBLE
+                    isPieFlag = true
+                    break
+                }
             }
         }
         if (!isPieFlag) { // 일치하는 날짜 값이 없다면 파이차트 숨기기
@@ -357,25 +402,28 @@ class DailyReportFragment : Fragment() {
         }
 
         // 동적 뷰를 활용한 세부목표 리스트 만들기
-        for (i in 0 until num2) { //detailGoalArray사용
-            // 동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.container_daily_report_text, dailyReportListLayout, false)
+        if(isDetailGoalInitialized){
+            for (i in 0 until detailGoalArrayList.size) { //detailGoalArray사용
+                // 동적 뷰 생성
+                var view: View = layoutInflater.inflate(R.layout.container_daily_report_text, dailyReportListLayout, false)
 
-            // 아이콘과 세부목표 동적 객체 생성
-            var dailyIconImg: ImageView = view.findViewById(R.id.dailyIconImg)
-            var dailyDetailTextview: TextView = view.findViewById(R.id.dailyDetailTextview)
+                // 아이콘과 세부목표 동적 객체 생성
+                var dailyIconImg: ImageView = view.findViewById(R.id.dailyIconImg)
+                var dailyDetailTextview: TextView = view.findViewById(R.id.dailyDetailTextview)
 
-            // 값 할당하기
-            if (detailGoalStringArray[i][0].isNotBlank()) { // 아무값도 없거나 공백이 있는 경우가 아니라면
-                if (detailGoalStringArray[i][1] == moveDate) { // 해당 날짜의 값이라면
-                    dailyIconImg.setImageResource(detailGoalIntArray[i][0].toInt())
-                    dailyIconImg.setColorFilter(detailGoalIntArray[i][1].toInt(), PorterDuff.Mode.SRC_IN)
-                    dailyDetailTextview.text = detailGoalStringArray[i][0]
+                // 값 할당하기
+                if (isDetailGoalInitialized) { // 아무값도 없거나 공백이 있는 경우가 아니라면
+                    if (detailGoalArrayList[i]["lock_date"] == moveDate) { // 해당 날짜의 값이라면
+                        dailyIconImg.setImageResource(detailGoalArrayList[i]["icon"]!!.toInt())
+                        dailyIconImg.setColorFilter(detailGoalArrayList[i]["color"]!!.toInt(), PorterDuff.Mode.SRC_IN)
+                        dailyDetailTextview.text = detailGoalArrayList[i]["detail_goal_name"]
 
-                    // 레이아웃에 객체 추가
-                    dailyReportListLayout.addView(view)
+                        // 레이아웃에 객체 추가
+                        dailyReportListLayout.addView(view)
+                    }
                 }
             }
         }
+
     }
 }

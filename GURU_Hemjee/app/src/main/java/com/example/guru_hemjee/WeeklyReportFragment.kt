@@ -147,7 +147,6 @@ class WeeklyReportFragment : Fragment() {
                     )
                 )
                 isBigGoalInitialised = true
-
             } else {//같은 날 같은 목표를 달성했다면 시간만 추가하고 새로 추가 X
                 var isFlag: Boolean = false // 중복값 확인
                 var i = 0
@@ -188,7 +187,6 @@ class WeeklyReportFragment : Fragment() {
             var str_big_goal = cursor3.getString(cursor3.getColumnIndex("big_goal_name")).toString()
 
             // 배열에 읽어온 값 저장 (같은 날짜 내에 중복값 저장X)
-            var isFlag: Boolean = false // 중복값 확인
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
             if (!isDetailGoalInitialized) {
                 detailGoalArrayList = arrayListOf(
@@ -203,6 +201,7 @@ class WeeklyReportFragment : Fragment() {
                 isDetailGoalInitialized = true
 
             } else {
+                var isFlag: Boolean = false // 중복값 확인
                 var i = 0
                 //기존에 값이 없을 때만 새로 추가
                 while (i < detailGoalArrayList.size) {
