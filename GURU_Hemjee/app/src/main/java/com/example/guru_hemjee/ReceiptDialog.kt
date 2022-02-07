@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -29,19 +28,19 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
         dialog.setContentView(R.layout.popup_receipt)
 
         //기존 씨앗
-        originalSeedTextView = dialog.findViewById(R.id.originalSeedTextView)
+        originalSeedTextView = dialog.findViewById(R.id.pop_originalSeedTextView)
         originalSeedTextView.text = originalSeed
 
         //사용 씨앗
-        usedSeedsTextView = dialog.findViewById(R.id.usedSeedsTextView)
+        usedSeedsTextView = dialog.findViewById(R.id.pop_usedSeedsTextView)
         usedSeedsTextView.text = reducedSeed
 
         //결과 씨앗
-        remnantSeedsTextView = dialog.findViewById(R.id.remnantSeedsTextView)
+        remnantSeedsTextView = dialog.findViewById(R.id.pop_remnantSeedsTextView)
         remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed.toInt()).toString()
 
         //아이템 리스트
-        receiptItemRecyclerView = dialog.findViewById(R.id.receiptItemRecyclerView)
+        receiptItemRecyclerView = dialog.findViewById(R.id.pop_receiptItemRecyclerView)
         val items = ArrayList<ReceiptItem>()
         val receiptAdapter = ReceiptAdapter(context, items)
         receiptItemRecyclerView.adapter = receiptAdapter
@@ -66,14 +65,14 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
         dbManager.close()
 
         //구매 확인
-        val buy = dialog.findViewById<ImageButton>(R.id.okBuyImageButton)
+        val buy = dialog.findViewById<ImageButton>(R.id.pop_okBuyImageButton)
         buy.setOnClickListener {
             onClickListener.onClicked(true, remnantSeedsTextView.text.toString().toInt())
             dialog.dismiss()
         }
 
         //구매 취소
-        val cancel = dialog.findViewById<ImageButton>(R.id.receiptCancelImageButton)
+        val cancel = dialog.findViewById<ImageButton>(R.id.pop_receiptCancelImageButton)
         cancel.setOnClickListener {
             onClickListener.onClicked(false, null)
             dialog.dismiss()
