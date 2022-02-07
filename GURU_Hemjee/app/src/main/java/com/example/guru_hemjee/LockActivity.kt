@@ -1,7 +1,5 @@
 package com.example.guru_hemjee
 
-import android.app.NotificationManager
-import android.content.Context
 import android.util.Log
 import android.content.Intent
 import android.database.Cursor
@@ -33,11 +31,11 @@ import kotlin.concurrent.timer
 class LockActivity : AppCompatActivity() {
 
     //씨앗 관련
-    private lateinit var seedPointView: TextView
+    private lateinit var Lock_seedPointView: TextView
 
     //햄스터 장식 관련
-    private lateinit var clothFrameLayout: FrameLayout
-    private lateinit var bgFrameLayout: FrameLayout
+    private lateinit var lockHamsterClothFrameLayout: FrameLayout
+    private lateinit var lockBGFrameLayout: FrameLayout
 
     //시간 조절 버튼
     private lateinit var timeMinusImageButton: ImageButton
@@ -50,7 +48,7 @@ class LockActivity : AppCompatActivity() {
     //나가기 버튼
     private lateinit var lockExitImageButton: ImageButton//첫번째
     private lateinit var exitImageButton: ImageButton//두번째
-    private lateinit var exitTextView: TextView
+    private lateinit var lockExitTextView: TextView
 
     // 타이머 시간 관련
     private lateinit var lockHourTextView: TextView
@@ -68,7 +66,7 @@ class LockActivity : AppCompatActivity() {
     private lateinit var bigGoalTotalTime: BigInteger
 
     // progress bar
-    private lateinit var progressBar: CircleProgressBar
+    private lateinit var timeLeftCircleProgressBar: CircleProgressBar
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -82,12 +80,12 @@ class LockActivity : AppCompatActivity() {
     private var rewardSeed = 0
 
     // 세부 목표 리스트 관련
-    private lateinit var detailGoalListContainer: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
+    private lateinit var Lock_detailGoalLinearLayout: LinearLayout  // 세부 목표들 전체가 담길 레이아웃(기존 레이아웃)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
+//        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함(안전을 위해 주석 처리)
 //        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
 //        {
 //            // 상단 알림 표시 삭제
@@ -102,7 +100,6 @@ class LockActivity : AppCompatActivity() {
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)   // 기본 잠금화면 해제시키기
-//        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)     // 화면 켜기..?
 
         setContentView(R.layout.activity_lock)
 
@@ -113,9 +110,9 @@ class LockActivity : AppCompatActivity() {
         //나가기 관련
         lockExitImageButton = findViewById(R.id.lockExitImageButton)
         exitImageButton = findViewById(R.id.exitImageButton)
-        exitTextView = findViewById(R.id.lockExitTextView)
+        lockExitTextView = findViewById(R.id.lockExitTextView)
         exitImageButton.visibility = View.GONE
-        exitTextView.visibility = View.GONE
+        lockExitTextView.visibility = View.GONE
 
         phoneButton = findViewById(R.id.phoneButton)
         messageButton = findViewById(R.id.messageButton)
@@ -124,36 +121,33 @@ class LockActivity : AppCompatActivity() {
         lockMinTextView = findViewById(R.id.lockMinTextView)
         lockSecTextView = findViewById(R.id.lockSecTextView)
 
-        seedPointView = findViewById(R.id.Lock_seedPointView)
+        Lock_seedPointView = findViewById(R.id.Lock_seedPointView)
 
-        progressBar = findViewById(R.id.timeLeftCircleProgressBar)
+        timeLeftCircleProgressBar = findViewById(R.id.timeLeftCircleProgressBar)
 
-        detailGoalListContainer = findViewById(R.id.Lock_detailGoalLinearLayout)
+        Lock_detailGoalLinearLayout = findViewById(R.id.Lock_detailGoalLinearLayout)
 
         //씨앗 세팅
-        seedPointView.text = intent.getStringExtra("seed")
+        Lock_seedPointView.text = intent.getStringExtra("seed")
         hamsterName = intent.getStringExtra("hamsterName")
 
         //햄스터 세팅
-        bgFrameLayout = findViewById(R.id.lockBGFrameLayout)
-        clothFrameLayout= findViewById(R.id.lockHamsterClothFrameLayout)
-        FunUpDateHamzzi.upDate(this, bgFrameLayout, clothFrameLayout, false, false)
+        lockBGFrameLayout = findViewById(R.id.lockBGFrameLayout)
+        lockHamsterClothFrameLayout= findViewById(R.id.lockHamsterClothFrameLayout)
+        FunUpDateHamzzi.upDate(this, lockBGFrameLayout, lockHamsterClothFrameLayout, false, false)
 
         // 타이머 세팅
         lockHourTextView.setText(intent.getStringExtra("hour"))
         lockMinTextView.setText(intent.getStringExtra("min"))
         lockSecTextView.setText(intent.getStringExtra("sec"))
 
-        totalTime = (lockHourTextView.text.toString().toInt() * 3600) + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt()
+        totalTime = ((lockHourTextView.text.toString().toInt() * 3600)
+                + (lockMinTextView.text.toString().toInt() * 60) + lockSecTextView.text.toString().toInt())
         time = totalTime
 
-//        var timeTemp = intent.getStringExtra("time")
-//        var sf = SimpleDateFormat("hh:mm:ss")
-//        time = sf.parse(timeTemp).getTime().toInt()
-
-        // progressBar 세팅
-        progressBar.progress = 0
-        progressBar.max = totalTime
+        // timeLeftCircleProgressBar 세팅
+        timeLeftCircleProgressBar.progress = 0
+        timeLeftCircleProgressBar.max = totalTime
 
         // 세부 목표 동적 생성 및 세팅
         addDetailGoal()
@@ -177,12 +171,12 @@ class LockActivity : AppCompatActivity() {
         //나가기 버튼들
         lockExitImageButton.setOnClickListener {//첫번째 나가기 버튼
             exitImageButton.visibility = View.VISIBLE
-            exitTextView.visibility = View.VISIBLE
+            lockExitTextView.visibility = View.VISIBLE
             lockExitImageButton.visibility = View.GONE
 
             Handler().postDelayed({
                 exitImageButton.visibility = View.GONE;
-                exitTextView.visibility = View.GONE
+                lockExitTextView.visibility = View.GONE
                 lockExitImageButton.visibility = View.VISIBLE;
             }, 2500L)
         }
@@ -221,7 +215,7 @@ class LockActivity : AppCompatActivity() {
 
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
-            seedPointView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
+            Lock_seedPointView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
         }
 
         cursor.close()
@@ -243,7 +237,7 @@ class LockActivity : AppCompatActivity() {
             // 목표를 달성했다면
             if(cursor.getString(cursor.getColumnIndex("photo_name")) != null)
             {
-                var view: View = detailGoalListContainer.get(i)
+                var view: View = Lock_detailGoalLinearLayout.get(i)
 
                 // 버튼 리스너 제거
                 var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
@@ -284,7 +278,8 @@ class LockActivity : AppCompatActivity() {
         if (isTimerCansel)
         {
             // 나갈 수 있는 팝업창 띄우기
-            finalOK("잠금 종료!", "+${rewardSeed}", true, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
+            finalOK("잠금 종료!", "+${rewardSeed}", true,
+                    true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
         }
     }
 
@@ -332,7 +327,7 @@ class LockActivity : AppCompatActivity() {
             }
 
             time--  // 시간 감소
-            progressBar.progress++  // progress 수치 증가
+            timeLeftCircleProgressBar.progress++  // progress 수치 증가
 
             // 타이머 종료
             if (hour <= 0 && min <= 0 && sec <= 0)
@@ -354,7 +349,8 @@ class LockActivity : AppCompatActivity() {
                         var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate))
 
                         // 데이터 추가
-                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', " +
+                                "$bigGoalTotalTime, $bigGoalColor, '$resultDate');")
 
                         sqlitedb.close()
                         dbManager.close()
@@ -364,7 +360,8 @@ class LockActivity : AppCompatActivity() {
                         seedChange(rewardSeed)
 
                         // 나갈 수 있는 팝업창 띄우기
-                        finalOK("잠금 종료!", "+${rewardSeed}", true, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
+                        finalOK("잠금 종료!", "+${rewardSeed}", true,
+                                true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
                     catch (e: WindowManager.BadTokenException) {
                         Log.e("lockExitException", "잠금 종료 팝업창 오류..")
@@ -488,7 +485,7 @@ class LockActivity : AppCompatActivity() {
             while(cursor.moveToNext())
             {
                 // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
-                var view: View = layoutInflater.inflate(R.layout.container_lock_detail_goal, detailGoalListContainer, false)
+                var view: View = layoutInflater.inflate(R.layout.container_lock_detail_goal, Lock_detailGoalLinearLayout, false)
 
                 // icon 변경
                 var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
@@ -513,12 +510,12 @@ class LockActivity : AppCompatActivity() {
                     intent.putExtra("detailGoalName", textView.text)    // 세부 목표 이름 보내기
                     intent.putExtra("detailGoalCount", detailGoalCount) // 총 세부 목표 개수 보내기
                     intent.putExtra("totalLockTime", totalTime)         // 총 잠금 시간 보내기
-                    intent.putExtra("seedPoint", seedPointView.text.toString().toInt()) // 현재 씨앗 개수 보내기
+                    intent.putExtra("seedPoint", Lock_seedPointView.text.toString().toInt()) // 현재 씨앗 개수 보내기
                     startActivity(intent)
                 }
 
                 // 위젯 추가
-                detailGoalListContainer.addView(view)
+                Lock_detailGoalLinearLayout.addView(view)
 
                 // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
                 sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, big_goal_name, is_active)"
@@ -540,11 +537,12 @@ class LockActivity : AppCompatActivity() {
 
     // 시간 감소 팝업
     private fun showTimeMinusPopUp() {
-        val dialog = AlertDialog(this, "10분 줄이기", "-40      ", true,"고작 10분 줄이려고\n씨앗 40개나 쓰냐 햄찌...?")
+        val dialog = AlertDialog(this, "10분 줄이기", "-40      ",
+                true,"고작 10분 줄이려고\n씨앗 40개나 쓰냐 햄찌...?")
         dialog.AlertDialog()
 
         // 만일 현재 보유 씨앗이 구매 비용(=40)보다 많다면 -> 정상 구매
-        if(seedPointView.text.toString().toInt() > 40)
+        if(Lock_seedPointView.text.toString().toInt() > 40)
         {
             dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
                 override fun onClicked(isConfirm: Boolean) {
@@ -553,7 +551,8 @@ class LockActivity : AppCompatActivity() {
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
                         {
-                            finalOK("10분 줄이기", "확인", false, false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
+                            finalOK("10분 줄이기", "확인", false,
+                                    false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
                             time -= 600     // 잔여 시간 10분 감소
                         }
                         // 현재 잔여 시간이 10분 이하일 경우
@@ -561,7 +560,7 @@ class LockActivity : AppCompatActivity() {
                         {
                             time = 0        // 잔여 시간 0으로 세팅
                         }
-                        progressBar.progress += 600 // 10분만큼 진행도 증가
+                        timeLeftCircleProgressBar.progress += 600 // 10분만큼 진행도 증가
                         seedChange(-40)     // 씨앗 차감
                     }
                 }
@@ -574,7 +573,8 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
+                        finalOK("구매 불가", "확인", false,
+                                false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -583,16 +583,18 @@ class LockActivity : AppCompatActivity() {
 
     // 시간 추가 팝업
     private fun showTimePlusPopUp() {
-        val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기", false, "좋아 좋아 더 열심히!!!\n더 씨앗을 버는 거다 햄찌!!")
+        val dialog = AlertDialog(this, "10분 늘리기", "10분 늘리기",
+                false, "좋아 좋아 더 열심히!!!\n더 씨앗을 버는 거다 햄찌!!")
         dialog.AlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("10분 늘리기", "확인", false, false, "좋아! 끝까지 가보는 거다 햄찌!\n해바라기 씨를 위해!")
+                    finalOK("10분 늘리기", "확인", false,
+                            false, "좋아! 끝까지 가보는 거다 햄찌!\n해바라기 씨를 위해!")
 
                     time += 600                         // 잔여시간 10분 늘리기
-                    progressBar.max = totalTime + 600   // 전체 진행도(max)값 10분만큼 확장
+                    timeLeftCircleProgressBar.max = totalTime + 600   // 전체 진행도(max)값 10분만큼 확장
                 }
             }
         })
@@ -600,11 +602,12 @@ class LockActivity : AppCompatActivity() {
 
     // (나가기 구매를 통한)나가기 팝업
     private fun showExitPop() {
-        val dialog = AlertDialog(this,"잠금 종료하기", "-180      ", true, "진짜 갈꺼냐 햄찌...?\n여기서 진짜 포기냐 햄찌??")
+        val dialog = AlertDialog(this,"잠금 종료하기", "-180      ",
+                true, "진짜 갈꺼냐 햄찌...?\n여기서 진짜 포기냐 햄찌??")
         dialog.AlertDialog()
 
         // 만일 현재 보유 씨앗이 구매 비용(=180)보다 많다면 -> 정상 구매
-        if(seedPointView.text.toString().toInt() > 180)
+        if(Lock_seedPointView.text.toString().toInt() > 180)
         {
             dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
                 override fun onClicked(isConfirm: Boolean) {
@@ -628,7 +631,8 @@ class LockActivity : AppCompatActivity() {
                             SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate))
 
                         // 대표 목표 리포트 데이터 추가
-                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
+                        sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', " +
+                                "$bigGoalTotalTime, $bigGoalColor, '$resultDate');")
 
                         sqlitedb.close()
                         dbManager.close()
@@ -690,7 +694,8 @@ class LockActivity : AppCompatActivity() {
                         rewardSeed = bigGoalTotalTime.toInt()/60000
                         seedChange(rewardSeed)
 
-                        finalOK("잠금 종료하기", "${rewardSeed-180}", true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
+                        finalOK("잠금 종료하기", "${rewardSeed-180}", true,
+                                true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
                     }
                 }
             })
@@ -702,7 +707,8 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
+                        finalOK("구매 불가", "확인", false,
+                                false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -745,7 +751,7 @@ class LockActivity : AppCompatActivity() {
 
     // 씨앗 변화
     private fun seedChange(change: Int) {
-        var changedSeed = seedPointView.text.toString().toInt() + change
+        var changedSeed = Lock_seedPointView.text.toString().toInt() + change
 
         dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.writableDatabase
@@ -754,7 +760,7 @@ class LockActivity : AppCompatActivity() {
         sqlitedb.close()
         dbManager.close()
 
-        seedPointView.text = changedSeed.toString()
+        Lock_seedPointView.text = changedSeed.toString()
     }
 
 }

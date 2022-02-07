@@ -33,57 +33,57 @@ import kotlin.collections.ArrayList
 class MonthlyReportFragment : Fragment() {
 
     // db
-    lateinit var dbManager: DBManager
-    lateinit var sqlite: SQLiteDatabase
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlite: SQLiteDatabase
 
     // 일간, 주간, 월간
-    lateinit var dailyBtn3: AppCompatButton
-    lateinit var weeklyBtn3: AppCompatButton
-    lateinit var monthlyBtn3: AppCompatButton
+    private lateinit var reportMonthly_dailyButton: AppCompatButton
+    private lateinit var reportMonthly_weeklyButton: AppCompatButton
+    private lateinit var reportMonthly_monthlyButton: AppCompatButton
 
     // 최신 월간 리포트 화면으로 이동하는 달력 버튼
-    lateinit var moveMonthlyButton: ImageButton
+    private lateinit var reportMonthly_moveMonthlyButton: ImageButton
 
     // 날짜 & 시간
-    lateinit var monthlyTextview: TextView
-    lateinit var monthlyTimeTextview: TextView
+    private lateinit var reportMonthly_monthlyDateTextview: TextView
+    private lateinit var reportMonthly_monthlyTimeTextview: TextView
 
     // 이전 & 다음 버튼
-    lateinit var prevBtn3: ImageButton
-    lateinit var nextBtn3: ImageButton
+    private lateinit var reportMonthly_prevButton: ImageButton
+    private lateinit var reportMonthly_nextButton: ImageButton
 
     // 스택바 차트
-    lateinit var monthlyBarChart: BarChart
+    private lateinit var reportMonthly_monthlyStackBarChart: BarChart
 
     // 대표목표 선택 버튼
-    lateinit var selectBigGoalBtn2: MaterialButton
+    private lateinit var reportMonthly_selectBigGoalButton: MaterialButton
 
     // 대표목표&세부목표 리스트를 저장할 리니어 레이아웃
-    lateinit var monthlyReportListLayout: LinearLayout
+    private lateinit var reportMonthly_monthlyReportListLayout: LinearLayout
 
     // 텍스트뷰
-    lateinit var noGoalTimeView3: TextView
+    private lateinit var reportMonthly_noGoalTimeView: TextView
 
     // 현재 날짜
-    var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
+    private var nowTime = ZonedDateTime.now((ZoneId.of("Asia/Seoul")))
 
     // 2차원 배열(대표목표)
-    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-    var bigGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
-    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
+    private var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
+    private var bigGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
+    private var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
 
     // 2차원 배열(세부목표)
-    var detailGoalStringArray = Array(30, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
-    var detailGoalIntArray = Array(30, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
-    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
+    private var detailGoalStringArray = Array(30, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
+    private var detailGoalIntArray = Array(30, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
+    private var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
     // 현재 리포트 화면 상태
-    var reportSate: Int = 0 // 이번주
-    var toggleState: Boolean = false // 대표목표 선택 버튼의 클릭 여부(false=전체 선택, true=대표목표 선택)
-    lateinit var toggleGoal: String // 선택한 대표목표
+    private var reportSate: Int = 0 // 이번주
+    private var toggleState: Boolean = false // 대표목표 선택 버튼의 클릭 여부(false=전체 선택, true=대표목표 선택)
+    private lateinit var toggleGoal: String // 선택한 대표목표
 
-    var totalDetailGoalList = ArrayList<String>()
-    var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var totalDetailGoalList = ArrayList<String>()
+    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -106,21 +106,21 @@ class MonthlyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_monthly_report, container, false)
 
-        dailyBtn3 = view.findViewById(R.id.reportMonthly_dailyButton)
-        weeklyBtn3 = view.findViewById(R.id.reportMonthly_weeklyButton)
-        monthlyBtn3 = view.findViewById(R.id.monthlyBtn3)
-        moveMonthlyButton = view.findViewById(R.id.reportMonthly_moveMonthlyButton)
-        monthlyTextview = view.findViewById(R.id.reportMonthly_monthlyDateTextview)
-        monthlyTimeTextview = view.findViewById(R.id.reportMonthly_monthlyTimeTextview)
-        prevBtn3 = view.findViewById(R.id.reportMonthly_prevButton)
-        nextBtn3 = view.findViewById(R.id.reportMonthly_nextButton)
-        monthlyBarChart = view.findViewById(R.id.reportMonthly_monthlyStackBarChart)
-        selectBigGoalBtn2 = view.findViewById(R.id.reportMonthly_selectBigGoalButton)
-        monthlyReportListLayout = view.findViewById(R.id.reportMonthly_monthlyReportListLayout)
-        noGoalTimeView3 = view.findViewById(R.id.reportMonthly_noGoalTimeView)
+        reportMonthly_dailyButton = view.findViewById(R.id.reportMonthly_dailyButton)
+        reportMonthly_weeklyButton = view.findViewById(R.id.reportMonthly_weeklyButton)
+        reportMonthly_monthlyButton = view.findViewById(R.id.reportMonthly_monthlyButton)
+        reportMonthly_moveMonthlyButton = view.findViewById(R.id.reportMonthly_moveMonthlyButton)
+        reportMonthly_monthlyDateTextview = view.findViewById(R.id.reportMonthly_monthlyDateTextview)
+        reportMonthly_monthlyTimeTextview = view.findViewById(R.id.reportMonthly_monthlyTimeTextview)
+        reportMonthly_prevButton = view.findViewById(R.id.reportMonthly_prevButton)
+        reportMonthly_nextButton = view.findViewById(R.id.reportMonthly_nextButton)
+        reportMonthly_monthlyStackBarChart = view.findViewById(R.id.reportMonthly_monthlyStackBarChart)
+        reportMonthly_selectBigGoalButton = view.findViewById(R.id.reportMonthly_selectBigGoalButton)
+        reportMonthly_monthlyReportListLayout = view.findViewById(R.id.reportMonthly_monthlyReportListLayout)
+        reportMonthly_noGoalTimeView = view.findViewById(R.id.reportMonthly_noGoalTimeView)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
-        monthlyReportListLayout.removeAllViews()
+        reportMonthly_monthlyReportListLayout.removeAllViews()
 
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -220,50 +220,50 @@ class MonthlyReportFragment : Fragment() {
 
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
         if (reportSate == 0) { // 지난달
-            monthlyReportListLayout.removeAllViews()
+            reportMonthly_monthlyReportListLayout.removeAllViews()
             monthlyReport(nowTime) // 현재 날짜 넣기
         }
 
         // 달력 버튼 클릭 이벤트
-        moveMonthlyButton.setOnClickListener {
+        reportMonthly_moveMonthlyButton.setOnClickListener {
             // 최신 리포트(지난달 리포트)를 보여주기
-            monthlyReportListLayout.removeAllViews()
+            reportMonthly_monthlyReportListLayout.removeAllViews()
             reportSate = 0
             monthlyReport(nowTime)
         }
 
         // 이전 버튼 클릭 이벤트
-        prevBtn3.setOnClickListener {
+        reportMonthly_prevButton.setOnClickListener {
             // 이전달 리포트 보여주기
-            monthlyReportListLayout.removeAllViews()
+            reportMonthly_monthlyReportListLayout.removeAllViews()
             reportSate -= 1
             monthlyReport(nowTime.minusMonths(Math.abs(reportSate).toLong())) // 한달을 뺀 값 전달
         }
 
         // 다음 버튼 클릭 이벤트
-        nextBtn3.setOnClickListener {
+        reportMonthly_nextButton.setOnClickListener {
             // 현재 리포트를 보고 있다면
             if (reportSate == 0) {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 달 리포트 보여주기
-                monthlyReportListLayout.removeAllViews()
+                reportMonthly_monthlyReportListLayout.removeAllViews()
                 reportSate += 1
                 monthlyReport(nowTime.plusMonths(Math.abs(reportSate).toLong())) // 한달을 더한 값 전달
             }
         }
 
         // 대표목표 토글 클릭 이벤트
-        selectBigGoalBtn2.setOnClickListener {
+        reportMonthly_selectBigGoalButton.setOnClickListener {
             reportSate = 0 // 가장 최신의 월간 리포트 띄우기
 
-            val dialog = GoalSelectDialog(requireContext(), selectBigGoalBtn2.text.toString(),"목표 선택", true)
+            val dialog = GoalSelectDialog(requireContext(), reportMonthly_selectBigGoalButton.text.toString(),"목표 선택", true)
             dialog.goalSelectPop()
 
             dialog.setOnClickedListener( object : GoalSelectDialog.ButtonClickListener{
                 override fun onClicked(changedBigGoalTitle: String) {
-                    selectBigGoalBtn2.text = changedBigGoalTitle
+                    reportMonthly_selectBigGoalButton.text = changedBigGoalTitle
                     if(changedBigGoalTitle=="전체"){
-                        selectBigGoalBtn2.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
+                        reportMonthly_selectBigGoalButton.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
                         toggleState = false
                     }
                     else {
@@ -271,7 +271,7 @@ class MonthlyReportFragment : Fragment() {
                         sqlite = dbManager.readableDatabase
                         cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$changedBigGoalTitle'",null)
                         if(cursor.moveToNext()){
-                            selectBigGoalBtn2.iconTint = ColorStateList.valueOf(cursor.getInt(cursor.getColumnIndex("color")))
+                            reportMonthly_selectBigGoalButton.iconTint = ColorStateList.valueOf(cursor.getInt(cursor.getColumnIndex("color")))
                         }
                         cursor.close()
                         sqlite.close()
@@ -281,40 +281,20 @@ class MonthlyReportFragment : Fragment() {
                     }
                 }
             })
-            // todo: 요약
-            //     if) 전체 클릭
-            //      -> toggleState = false
-            //      -> 버튼의 색상이랑 글씨도 바꾸기
-            //     else if) 대표목표를 1개라도 클릭
-            //      -> toggleState = true
-            //      -> toggleGoal = 선택한 대표목표를 할당
-            //      -> 나중에 toggleGoal을 통해서 대표목표 값을 비교할 예정
-            //      -> 버튼의 색상이랑 글씨도 바꾸기
-            // if () {
-            //     toggleState = false
-            //     weeklyReport(nowTime)
-            // } else if () {
-            //     toggleState = true
-            //     toggleStateIndex = 0
-            //     weeklyReport(nowTime)
-            //     toggleGoal = 선택한 대표목표 값
-            //      ... 버튼의 색상, 글씨 바꾸기
-            // } else if () {
-            //
-            // }
         }
+
         // 일간 버튼 클릭 이벤트
-        dailyBtn3.setOnClickListener {
+        reportMonthly_dailyButton.setOnClickListener {
             goDailyReport()
         }
 
         // 주간 버튼 클릭 이벤트
-        weeklyBtn3.setOnClickListener {
+        reportMonthly_weeklyButton.setOnClickListener {
             goWeeklyReport()
         }
 
         // 월간 버튼 클릭 이벤트
-        monthlyBtn3.setOnClickListener {
+        reportMonthly_monthlyButton.setOnClickListener {
             goMonthlyReport()
         }
 
@@ -322,7 +302,7 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // DailyReportFragment로 화면 전환
-    fun goDailyReport() {
+    private fun goDailyReport() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, DailyReportFragment())
@@ -331,7 +311,7 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // WeeklyReportFragmnet로 화면 전환
-    fun goWeeklyReport() {
+    private fun goWeeklyReport() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, WeeklyReportFragment())
@@ -340,7 +320,7 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // MonthlyReportfragment로 화면을 전환하는 함수
-    fun goMonthlyReport() {
+    private fun goMonthlyReport() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, MonthlyReportFragment())
@@ -349,7 +329,7 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // 입력받은 날짜의 1일~마지막일 저장하기
-    fun getMonthlyDate(moveTime: ZonedDateTime): ArrayList<String> {
+    private fun getMonthlyDate(moveTime: ZonedDateTime): ArrayList<String> {
         val calendar = Calendar.getInstance()
         val nowDate = SimpleDateFormat("yyyy-MM-dd-E") // 현재 년도, 월, 일
         var totalMoveTime = moveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E"))
@@ -376,7 +356,7 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // 차트 세팅 함수
-    fun monthlyBarChart(monthlyList: ArrayList<String>) {
+    private fun monthlyBarChart(monthlyList: ArrayList<String>) {
 
         val entry = ArrayList<BarEntry>()
         val itemcolor = ArrayList<Int>()
@@ -438,7 +418,7 @@ class MonthlyReportFragment : Fragment() {
         }
 
         val barData = BarData(barDataSet)
-        monthlyBarChart.apply {
+        reportMonthly_monthlyStackBarChart.apply {
             data = barData
             description.isEnabled = false // 그래프 이름 띄우기X
             legend.isEnabled = false // x-value값 안보이게
@@ -450,16 +430,16 @@ class MonthlyReportFragment : Fragment() {
             setMaxVisibleValueCount(7) // 그래프 최대 개수
             setDrawValueAboveBar(false) // 차트 입력값 아래로
         }
-        monthlyBarChart.xAxis.apply { // 아래 라벨 x축
+        reportMonthly_monthlyStackBarChart.xAxis.apply { // 아래 라벨 x축
             isEnabled = false // 라벨 표시X
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(true) // 격자구조X
         }
-        monthlyBarChart.axisLeft.apply { // 왼쪽 y축
+        reportMonthly_monthlyStackBarChart.axisLeft.apply { // 왼쪽 y축
             isEnabled = false // 라벨 표시X
             setDrawLabels(false) // 값 세팅X
         }
-        monthlyBarChart.axisRight.apply { // 오른쪽 y축
+        reportMonthly_monthlyStackBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시x
             textColor = R.color.Black
             textSize = 14f
@@ -469,12 +449,12 @@ class MonthlyReportFragment : Fragment() {
     }
 
     // 월간 리포트
-    fun monthlyReport(moveTime: ZonedDateTime) { // 지난 달 값
+    private fun monthlyReport(moveTime: ZonedDateTime) { // 지난 달 값
 
-        monthlyReportListLayout.removeAllViews() // 초기화
+        reportMonthly_monthlyReportListLayout.removeAllViews() // 초기화
         var monthlyList: ArrayList<String> = getMonthlyDate(moveTime)
         val splitDate = monthlyList[0].split('-') // 년도, 월, 일, 요일
-        monthlyTextview.text = splitDate[0] + "년 " + splitDate[1] + "월"
+        reportMonthly_monthlyDateTextview.text = splitDate[0] + "년 " + splitDate[1] + "월"
 
         var totalMilli: BigInteger = BigInteger.ZERO // 총 전체 잠금 시간
 
@@ -495,7 +475,7 @@ class MonthlyReportFragment : Fragment() {
         }
         var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
         var integer_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
-        monthlyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        reportMonthly_monthlyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
 
         // 차트 세팅
         var isBarFlag = false
@@ -503,23 +483,23 @@ class MonthlyReportFragment : Fragment() {
             for (j in 0 until monthlyList.size) {
                 if (bigGoalStringArray[i][1] == monthlyList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
                     monthlyBarChart(monthlyList)
-                    monthlyBarChart.visibility = View.VISIBLE
-                    noGoalTimeView3.visibility = View.INVISIBLE
+                    reportMonthly_monthlyStackBarChart.visibility = View.VISIBLE
+                    reportMonthly_noGoalTimeView.visibility = View.INVISIBLE
                     isBarFlag = true
                     break
                 }
             }
         }
         if (!isBarFlag) { // 일치하는 날짜 값이 없다면 차트 숨기기
-            monthlyBarChart.visibility = View.INVISIBLE
-            noGoalTimeView3.visibility = View.VISIBLE
+            reportMonthly_monthlyStackBarChart.visibility = View.INVISIBLE
+            reportMonthly_noGoalTimeView.visibility = View.VISIBLE
         }
 
         // 동적 뷰를 활용한 대표목표 및 세부목표 리스트 만들기
         if (toggleState) { // 대표목표를 선택했다면
             for (i in 0 until num2) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, monthlyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, reportMonthly_monthlyReportListLayout, false)
 
                 // 아이콘과 세부목표 동적 객체 생성
                 var detailIconImg: ImageView = view.findViewById(R.id.detailIconImg)
@@ -534,7 +514,7 @@ class MonthlyReportFragment : Fragment() {
                             detailGoalTextview.text = detailGoalStringArray[i][0]
 
                             // 레이아웃에 객체 추가
-                            monthlyReportListLayout.addView(view)
+                            reportMonthly_monthlyReportListLayout.addView(view)
                         }
                     }
                 }
@@ -542,7 +522,7 @@ class MonthlyReportFragment : Fragment() {
         } else { // 전체를 선택했다면
             for (i in 0 until num2) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, monthlyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, reportMonthly_monthlyReportListLayout, false)
 
                 // 대표목표 동적 객체 생성
                 var bigGoalColorImg: ImageView = view.findViewById(R.id.bigGoalColorImg)
@@ -561,7 +541,7 @@ class MonthlyReportFragment : Fragment() {
                             bigGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"
 
                             // 레이아웃에 객체 추가
-                            monthlyReportListLayout.addView(view)
+                            reportMonthly_monthlyReportListLayout.addView(view)
                         }
                     }
                 }

@@ -24,30 +24,26 @@ import java.time.format.DateTimeFormatter
 class DailyAlbumFragment : Fragment() {
 
     // 화면에 보이는 날짜와 시간
-    private lateinit var todayTextView: TextView
-    private lateinit var totalTimeTextView: TextView
+    private lateinit var albumDaily_DateTextView: TextView
+    private lateinit var albumDaily_timeTextView: TextView
 
     // 날짜 이동 버튼
-    private lateinit var preButton: ImageButton
-    private lateinit var nextButton: ImageButton
+    private lateinit var albumDaily_prevButton: ImageButton
+    private lateinit var albumDaily_nextButton: ImageButton
 
     // 현재(오늘) 날짜 관련
     private lateinit var todayDate: LocalDateTime   // 오늘 날짜(전체)
     private lateinit var nowDate: LocalDateTime     // 현재 설정된 날짜
 
     // 앨범 사진들이 들어갈 레이아웃
-    private lateinit var dailyAlbumGridLayout: GridLayout
+    private lateinit var albumDaily_GridLayout: GridLayout
 
     // 저장된 사진이 없을 때 보여줄 레이아웃
-    private lateinit var blankFrameLayout: FrameLayout
+    private lateinit var albumDaily_FrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -62,24 +58,24 @@ class DailyAlbumFragment : Fragment() {
         todayDate = LocalDateTime.now()
 
         // 위젯 연결
-        todayTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
-        totalTimeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
+        albumDaily_DateTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
+        albumDaily_timeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
 
-        dailyAlbumGridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
-        blankFrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
+        albumDaily_GridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
+        albumDaily_FrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
 
-        preButton = requireView().findViewById(R.id.albumDaily_prevButton)
-        nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
+        albumDaily_prevButton = requireView().findViewById(R.id.albumDaily_prevButton)
+        albumDaily_nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
 
         // 위젯에 오늘 날짜 입력
         // (현재 날짜를 오늘 날짜로 설정)
         nowDate = todayDate
-        todayTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        albumDaily_DateTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         // 이전/이후 날짜 이동 버튼 클릭 리스너 설정
-        preButton.setOnClickListener {
+        albumDaily_prevButton.setOnClickListener {
             nowDate = nowDate.minusDays(1)  // 하루 전 날짜로 변경
-            todayTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  // 위젯에 날짜 적용
+            albumDaily_DateTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  // 위젯에 날짜 적용
 
             // 해당 날짜에서 총 잠금한 시간 불러오고 위젯에 적용시키기
             applyTotalDailyLockTime()
@@ -87,14 +83,14 @@ class DailyAlbumFragment : Fragment() {
             // 해당 날짜에서 달성한 목표의 사진을 불러와서 띄우기
             applyTotalDailyPhoto()
         }
-        nextButton.setOnClickListener {
+        albumDaily_nextButton.setOnClickListener {
             // 현재 설정된 날짜가 오늘 날짜인지 확인
             if(nowDate == todayDate)    // 이동하지 X
                 Toast.makeText(requireActivity().applicationContext,"현재 화면이 가장 최근 일자입니다.",Toast.LENGTH_SHORT).show()
             else
             {
                 nowDate = nowDate.plusDays(1)   // 하루 후 날짜로 변경
-                todayTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  // 위젯에 날짜 적용
+                albumDaily_DateTextView.text = nowDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))  // 위젯에 날짜 적용
 
                 // 해당 날짜에서 총 잠금한 시간 불러오고 위젯에 적용시키기
                 applyTotalDailyLockTime()
@@ -116,9 +112,9 @@ class DailyAlbumFragment : Fragment() {
     private fun applyTotalDailyLockTime() {
 
         // 해당 날짜 불러오기
-        var year: String = todayTextView.text.toString().split("-")[0]
-        var month: String = todayTextView.text.toString().split("-")[1]
-        var day: String = todayTextView.text.toString().split("-")[2]
+        var year: String = albumDaily_DateTextView.text.toString().split("-")[0]
+        var month: String = albumDaily_DateTextView.text.toString().split("-")[1]
+        var day: String = albumDaily_DateTextView.text.toString().split("-")[2]
 
         var dayTotalLockTime: Int = 0   // 총 잠금한 시간을 저장할 변수
 
@@ -150,7 +146,7 @@ class DailyAlbumFragment : Fragment() {
         var tempMin = dayTotalLockTime / 1000 / 60 % 60    // 분
         var tempSec = dayTotalLockTime / 1000 % 60         // 초
 
-        totalTimeTextView.text = "$tempHour : $tempMin : $tempSec"
+        albumDaily_timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
         cursor.close()
         sqlitedb.close()
@@ -161,22 +157,23 @@ class DailyAlbumFragment : Fragment() {
     private fun applyTotalDailyPhoto() {
 
         // 모든 뷰 클리어
-        dailyAlbumGridLayout.removeAllViews()
+        albumDaily_GridLayout.removeAllViews()
 
         // 사진들을 보여줄 레이아웃 활성화
-        dailyAlbumGridLayout.visibility = View.VISIBLE
+        albumDaily_GridLayout.visibility = View.VISIBLE
         // 사진이 없을 때 보여줄 레이아웃 비활성화
-        blankFrameLayout.visibility = View.GONE
+        albumDaily_FrameLayout.visibility = View.GONE
 
         // 해당 날짜 불러오기
-        var year: String = todayTextView.text.toString().split("-")[0]
-        var month: String = todayTextView.text.toString().split("-")[1]
-        var day: String = todayTextView.text.toString().split("-")[2]
+        var year: String = albumDaily_DateTextView.text.toString().split("-")[0]
+        var month: String = albumDaily_DateTextView.text.toString().split("-")[1]
+        var day: String = albumDaily_DateTextView.text.toString().split("-")[2]
 
         // 세부 목표 리포트 DB 열기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE photo_name IS NOT NULL", null)
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE " +
+                "photo_name IS NOT NULL", null)
         cursor.moveToLast() // 맨 끝으로 이동
         cursor.moveToNext() // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
@@ -212,7 +209,8 @@ class DailyAlbumFragment : Fragment() {
                     // imageView 생성
                     var imageView: ImageView = ImageView(requireContext())
 
-                    var imageViewParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    var imageViewParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT)
                     imageViewParams.gravity = Gravity.CENTER
 
                     imageView.layoutParams = imageViewParams
@@ -229,7 +227,7 @@ class DailyAlbumFragment : Fragment() {
                     }
 
                     // 레이아웃에 이미지 뷰 넣기
-                    dailyAlbumGridLayout.addView(imageView)
+                    albumDaily_GridLayout.addView(imageView)
 
                 }
                 catch(e: Exception) {
@@ -246,15 +244,15 @@ class DailyAlbumFragment : Fragment() {
 
         // 불러올 사진이 없을 경우 dailyAlbumGridLayout에 담겨있는 View가 없어 Exception이 발생한다.
         try {
-            dailyAlbumGridLayout.get(0)
+            albumDaily_GridLayout.get(0)
         }
         // Exception이 발생했을 시
         catch(e: IndexOutOfBoundsException) {
 
             // 사진들을 보여줄 레이아웃 비활성화
-            dailyAlbumGridLayout.visibility = View.GONE
+            albumDaily_GridLayout.visibility = View.GONE
             // 사진이 없을 때 보여줄 레이아웃 활성화
-            blankFrameLayout.visibility = View.VISIBLE
+            albumDaily_FrameLayout.visibility = View.VISIBLE
         }
     }
 }

@@ -21,34 +21,32 @@ import androidx.fragment.app.FragmentTransaction
 class DetailGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
-    lateinit var dbManager: DBManager
-    lateinit var sqlitedb: SQLiteDatabase
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
 
     // 세부목표 리스트가 들어갈 리니어 레이아웃
-    lateinit var detailGoalListLayout : LinearLayout
-    // 전체 레이아웃
-    // lateinit var detailGoalSetupLayout : ConstraintLayout
+    private lateinit var goalDetail_detailGoalListLayout: LinearLayout
 
     // 세부 목표
-    lateinit var bigGoalTextView : TextView // 대표목표
-    lateinit var bigGoalColorImageView : ImageView // 색상(원형 아이콘)
-    lateinit var plusDetailGoalBtn : ImageButton // + 아이콘(세부목표 추가)
-    lateinit var editBigGoalBtn : ImageButton // 연필 아이콘(대표목표 수정)
-    lateinit var completeBtn : AppCompatButton // 확인버튼
-    lateinit var goalDetail_backButton: AppCompatButton // 취소버튼
+    private lateinit var goalDetail_bigGoalTextView: TextView // 대표목표
+    private lateinit var goalDetail_bigGoalColorImageView: ImageView // 색상(원형 아이콘)
+    private lateinit var goalDetail_plusDetailGoalButton: ImageButton // + 아이콘(세부목표 추가)
+    private lateinit var goalDetail_editBigGoalButton: ImageButton // 연필 아이콘(대표목표 수정)
+    private lateinit var goalDetail_storeButton: AppCompatButton // 확인버튼
+    private lateinit var goalDetail_backButton: AppCompatButton // 취소버튼
 
     // 배열
-    var iconList = ArrayList<ImageButton>() // 아이콘
-    var textdetailGoalList = ArrayList<TextView>() //목표 리스트
-    var bigGoalList = ArrayList<String>() //대표 목표 리스트
-    var sebuMenuList = ArrayList<ImageButton>() // 세부메뉴
+    private var iconList = ArrayList<ImageButton>() // 아이콘
+    private var textdetailGoalList = ArrayList<TextView>() // 목표 리스트
+    private var bigGoalList = ArrayList<String>() // 대표 목표 리스트
+    private var sebuMenuList = ArrayList<ImageButton>() // 세부메뉴
 
-    var origin = 0
+    private var origin = 0
 
     private lateinit var str_biggoal : String // 대표목표
     private var integer_color : Int = 0 // 대표목표 색상
 
-    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
+    private var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,13 +69,12 @@ class DetailGoalSetupFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_detail_goal_setup, container, false)
 
-        detailGoalListLayout = view.findViewById(R.id.goalDetail_detailGoalListLayout)
-        // detailGoalSetupLayout = view.findViewById(R.id.detailGoalSetupLayout)
-        bigGoalTextView = view.findViewById(R.id.goalDetail_bigGoalTextView)
-        bigGoalColorImageView = view.findViewById(R.id.goalDetail_bigGoalColorImageView)
-        plusDetailGoalBtn = view.findViewById(R.id.goalDetail_plusDetailGoalButton)
-        editBigGoalBtn = view.findViewById(R.id.goalDetail_editBigGoalButton)
-        completeBtn = view.findViewById(R.id.goalDetail_storeButton)
+        goalDetail_detailGoalListLayout = view.findViewById(R.id.goalDetail_detailGoalListLayout)
+        goalDetail_bigGoalTextView = view.findViewById(R.id.goalDetail_bigGoalTextView)
+        goalDetail_bigGoalColorImageView = view.findViewById(R.id.goalDetail_bigGoalColorImageView)
+        goalDetail_plusDetailGoalButton = view.findViewById(R.id.goalDetail_plusDetailGoalButton)
+        goalDetail_editBigGoalButton = view.findViewById(R.id.goalDetail_editBigGoalButton)
+        goalDetail_storeButton = view.findViewById(R.id.goalDetail_storeButton)
         goalDetail_backButton = view.findViewById(R.id.goalDetail_backButton)
 
         // SetupFragment 또는 BigGoalModifyFragment에서 넘어온 (대표 목표)값 받기
@@ -102,8 +99,8 @@ class DetailGoalSetupFragment : Fragment() {
             dbManager.close()
 
             // 위젯에 반영하기
-            bigGoalTextView.text = str_biggoal
-            bigGoalColorImageView.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
+            goalDetail_bigGoalTextView.text = str_biggoal
+            goalDetail_bigGoalColorImageView.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
         }
 
         /** 만약에 이전에 저장해둔 값이 있다면 리스트 가져와서 레이아웃에 반영하기 **/
@@ -111,15 +108,15 @@ class DetailGoalSetupFragment : Fragment() {
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '"+bigGoalTextView.text.toString()+"';", null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '"+goalDetail_bigGoalTextView.text.toString()+"';", null)
         var num : Int = 0 // 리스트 개수
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             // 대표목표에 해당하는 커서에 있는 값들 가져오기
             var str_detail = cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString()
             var int_icon = cursor.getInt(cursor.getColumnIndex("icon"))
 
             // 동적 뷰 생성
-            var view = layoutInflater.inflate(R.layout.container_detail_goal_text, detailGoalListLayout, false)
+            var view = layoutInflater.inflate(R.layout.container_detail_goal_text, goalDetail_detailGoalListLayout, false)
 
             // 아이콘과 EditText, 레이아웃 객체 동적 생성
             var detailGoalIconBtn : ImageButton = view.findViewById(R.id.detailGoalIconBtn)
@@ -140,7 +137,6 @@ class DetailGoalSetupFragment : Fragment() {
             //세부 목표 수정
             sebuMenuBtn.setOnClickListener {
                 showDetailEditPopUp(detailGoalTextView, textdetailGoalList.indexOf(detailGoalTextView))
-
             }
 
             detailGoalTextView.text = str_detail
@@ -152,7 +148,7 @@ class DetailGoalSetupFragment : Fragment() {
             bigGoalList.add(str_biggoal)
             sebuMenuList.add(sebuMenuBtn)
 
-            detailGoalListLayout.addView(view)
+            goalDetail_detailGoalListLayout.addView(view)
             num++
             origin++
         }
@@ -161,7 +157,7 @@ class DetailGoalSetupFragment : Fragment() {
         dbManager.close()
 
         // 연필 아이콘을 클릭했을 경우
-        editBigGoalBtn.setOnClickListener {
+        goalDetail_editBigGoalButton.setOnClickListener {
             // 대표목표 수정 화면으로 이동
             val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             val modifyFragment = BigGoalModifyFragment()
@@ -175,14 +171,10 @@ class DetailGoalSetupFragment : Fragment() {
             transaction.commit()
         }
 
-        // var isEditing : Boolean = false // 텍스트뷰, 에디트텍스트뷰의 상태를 점검
-
         // +버튼을 눌렀을 경우
-        plusDetailGoalBtn.setOnClickListener {
+        goalDetail_plusDetailGoalButton.setOnClickListener {
             // 동적 뷰 생성
-            var view = layoutInflater.inflate(R.layout.container_goal_detail_goal, detailGoalListLayout, false)
-            // isEditing = true
-            // Log.d("+버튼을 눌렀을 경우 ", isEditing.toString())
+            var view = layoutInflater.inflate(R.layout.container_goal_detail_goal, goalDetail_detailGoalListLayout, false)
 
             // 아이콘과 EditText, 레이아웃 객체 동적 생성
             var detailGoalIconBtn : ImageButton = view.findViewById<ImageButton>(R.id.detailGoalIconBtn)
@@ -204,43 +196,13 @@ class DetailGoalSetupFragment : Fragment() {
             textdetailGoalList.add(detailGoalEditText)
             bigGoalList.add(str_biggoal)
 
-            detailGoalListLayout.addView(view)
+            goalDetail_detailGoalListLayout.addView(view)
 
             num++ // 추가한 목표 개수 증가
         }
 
-        // editText가 아니라 다른 곳을 클릭할 경우 방법(1)
-        /*detailGoalSetupLayout.setOnClickListener {
-            // 키보드 숨기기
-            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.applicationWindowToken, 0)
-            // textView상태로 바꾸기
-            isEditing = false
-            Log.d("레이아웃 리스너안에 ", isEditing.toString())
-        }*/
-
-        // EditText <-> TextView 전환
-        /*if (isEditing) { // editText 상태일 경우
-            Log.d("if문안에", isEditing.toString())
-            detailGoalTextView.visibility = View.INVISIBLE
-            detailGoalEditText.visibility = View.VISIBLE
-            detailGoalEditText.text = detailGoalTextView.text as Editable?
-        }
-        else if (!isEditing) { // textview 상태일 경우
-            Log.d("else if문안에", isEditing.toString())
-            detailGoalEditText.visibility = View.INVISIBLE
-            detailGoalTextView.visibility = View.VISIBLE
-            detailGoalTextView.text = detailGoalEditText.text.toString()
-        }*/
-
-        /*detailGoalSetupLayout.setOnClickListener{
-            Log.d("키보드 내림", "키보드내리기")
-            val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(detailGoalEditText.windowToken, 0)
-        }*/
-
         // 확인버튼을 눌렀다면
-        completeBtn.setOnClickListener {
+        goalDetail_storeButton.setOnClickListener {
             // DB에 데이터 쓰기(세부 목표)
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
@@ -256,12 +218,6 @@ class DetailGoalSetupFragment : Fragment() {
                 var iconName : Int = iconList[i].getTag() as Int
                 var bigGoal: String = bigGoalList[i]
 
-//                if(detailGoal == ""){
-//                    isValid = false
-//                    Toast.makeText(context, "비어있는 목표는 저장 될 수 없습니다!", Toast.LENGTH_SHORT).show()
-//                    break
-//                }
-
                 for(item in textdetailGoalList){
                     if(item.text.toString() == detailGoal && item != textdetailGoalList[i]){
                         isValid = false
@@ -273,7 +229,7 @@ class DetailGoalSetupFragment : Fragment() {
                 dbManager = DBManager(context, "hamster_db", null, 1)
                 sqlitedb = dbManager.readableDatabase
                 cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '${detailGoal}'",null)
-                if(cursor.moveToNext()){
+                if (cursor.moveToNext()) {
                     isValid = false
                     Toast.makeText(context, "중복되는 목표가 있습니다!(${detailGoal})", Toast.LENGTH_SHORT).show()
                 }
@@ -320,7 +276,7 @@ class DetailGoalSetupFragment : Fragment() {
     }
 
     // setupfragment로 화면을 전환하는 함수
-    fun goSetUp() {
+    private fun goSetUp() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, SetupFragment())

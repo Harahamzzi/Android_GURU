@@ -10,26 +10,26 @@ import androidx.appcompat.app.ActionBar
 
 // 홈(MainActivity) -> 나의 성취 앨범
 // 나의 성취 앨범 Fragment 화면들을 보여주는 Activity 화면
-// 스피터를 통해 일간, (대표)목표별, 카테고리별 앨범이 보여진다.
+// 스피너를 통해 일간, (대표)목표별, 카테고리별 앨범이 보여진다.
 class AlbumMainActivity : AppCompatActivity() {
 
     // 타이틀 관련
-    lateinit var titleTextView: TextView
-    lateinit var titleButton: ImageView
+    private lateinit var sub_titleTextView: TextView
+    private lateinit var sub_titleButton: ImageView
 
     // 스피너
-    private lateinit var spinner: Spinner
+    private lateinit var albumMenuSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_main)
 
         // 타이틀 관련 연결
-        titleTextView = findViewById(R.id.sub_titleTextView)
-        titleButton = findViewById(R.id.sub_titleButton)
+        sub_titleTextView = findViewById(R.id.sub_titleTextView)
+        sub_titleButton = findViewById(R.id.sub_titleButton)
 
         // 타이틀 뒤로가기 버튼에 리스너 달기
-        titleButton.setOnClickListener {
+        sub_titleButton.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -38,14 +38,14 @@ class AlbumMainActivity : AppCompatActivity() {
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
-        // spinner 연결
-        spinner = findViewById(R.id.albumMenuSpinner)
+        // albumMenuSpinner 연결
+        albumMenuSpinner = findViewById(R.id.albumMenuSpinner)
 
-        // spinner 어댑터 설정
-        spinner.adapter = ArrayAdapter.createFromResource(this, R.array.spinnerAlbumList, R.layout.spinner_item)
+        // albumMenuSpinner 어댑터 설정
+        albumMenuSpinner.adapter = ArrayAdapter.createFromResource(this, R.array.spinnerAlbumList, R.layout.spinner_item)
 
-        // spinner 아이템 선택 리스너
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        // albumMenuSpinner 아이템 선택 리스너
+        albumMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -78,7 +78,7 @@ class AlbumMainActivity : AppCompatActivity() {
 
                     // 그 외
                     else -> {
-                        Log.e("오류태그", "그 외..스피너 메뉴 눌림")
+                        Log.e("오류태그", "그 외 스피너 메뉴 눌림")
                     }
                 }
             }
@@ -88,7 +88,7 @@ class AlbumMainActivity : AppCompatActivity() {
 
         if(intent.getBooleanExtra("isHome", false))
         {
-            spinner.visibility = View.GONE
+            albumMenuSpinner.visibility = View.GONE
 
             // Home - 목표 앨범에서 온 경우
             if(intent.getStringExtra("homeFlag") == "GOAL")

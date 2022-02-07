@@ -34,7 +34,7 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var imagePreview: ImageView
 
     // 저장 버튼
-    private lateinit var saveButton: ImageButton
+    private lateinit var saveImageButton: ImageButton
 
     // 카메라 관련..필요한 변수
     private lateinit var currentPhotoPath: String
@@ -63,8 +63,8 @@ class CameraActivity : AppCompatActivity() {
 
         // 위젯 연결
         imagePreview = findViewById(R.id.imagePreview)
-        saveButton = findViewById(R.id.saveImageButton)
-        saveButton.setOnClickListener {
+        saveImageButton = findViewById(R.id.saveImageButton)
+        saveImageButton.setOnClickListener {
             saveImage() // 이미지 저장
         }
 
@@ -95,7 +95,8 @@ class CameraActivity : AppCompatActivity() {
                 var tempDir: File = cacheDir
 
                 // 임시 촬영 파일 세팅
-                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("ko", "KR")).format(Date(System.currentTimeMillis()))
+                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss",
+                        Locale("ko", "KR")).format(Date(System.currentTimeMillis()))
                 val imageFileName: String = timeStamp + "_"
 
                 var tempImage = File.createTempFile(
@@ -185,7 +186,7 @@ class CameraActivity : AppCompatActivity() {
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 
-    // 이미지를 저장하는 메소드(api 29 미만..?)
+    // 이미지를 저장하는 메소드
     private fun saveImage() {
         try {
             // 저장할 파일 경로
@@ -236,9 +237,11 @@ class CameraActivity : AppCompatActivity() {
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
             // 날짜 넣기
-            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' WHERE detail_goal_name = '$goalName' AND is_active = 1")
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' " +
+                    "WHERE detail_goal_name = '$goalName' AND is_active = 1")
             // 파일명 넣기
-            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET photo_name = '$fileName' WHERE detail_goal_name = '$goalName' AND is_active = 1")
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET photo_name = '$fileName' " +
+                    "WHERE detail_goal_name = '$goalName' AND is_active = 1")
 
             sqlitedb.close()
             dbManager.close()
@@ -254,7 +257,8 @@ class CameraActivity : AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, R.drawable.popup_goal, "좋아! 끝까지 가보는거다 햄찌!\n해바라기 씨를 위해!")
+        val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, R.drawable.popup_goal,
+                "좋아! 끝까지 가보는거다 햄찌!\n해바라기 씨를 위해!")
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
@@ -277,60 +281,4 @@ class CameraActivity : AppCompatActivity() {
             }
         })
     }
-
-    //    // 이미지 저장 메소드(api 29 이상..?)
-//    private fun saveImage() {
-//        val fileName = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".jpg"
-//
-//        // ContentValues는 ContentResolver가 처리할 수 있는 값을 저장해 둘 목적으로 사용됨
-//        val contentValues = ContentValues()
-//        contentValues.apply {
-//            put(MediaStore.Images.Media.RELATIVE_PATH, "DCIM/ImageSave")    // 경로 설정
-//            put(MediaStore.Images.Media.DISPLAY_NAME, fileName)             // 파일 이름을 put
-//            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-//            contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)    // 저장소 독점 설정
-//        }
-//
-//        // 이미지를 저장할 uri
-//        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-//
-//        try {
-//            if(uri != null)
-//            {   // write 모드로 file을 open한다
-//                val image = contentResolver.openFileDescriptor(uri, "w", null)
-//
-//                if(image != null)
-//                {   // preview에 올려놨던 사진 bitmap으로 가져오기
-//                    var drawable: BitmapDrawable = imagePreview.drawable as BitmapDrawable
-//                    var bitmap: Bitmap = drawable.bitmap
-//
-//                    val fos = FileOutputStream(image.fileDescriptor)
-//                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, fos)
-//                    fos.close()
-//
-//                    contentValues.clear()
-//                    contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)    // 저장소 독점을 해제
-//                    contentResolver.update(uri, contentValues, null, null)
-//
-//                    // 잠금화면으로 다시 이동
-//                    var intent = Intent(this, LockActivity::class.java)
-//                    startActivity(intent)
-//                }
-//            }
-//        }
-//        catch(e: FileNotFoundException) {
-//            Log.e("오류태그", "FileNotFoundException")
-//            e.printStackTrace()
-//        }
-//        catch(e: IOException)
-//        {
-//            Log.e("오류태그", "IOException")
-//            e.printStackTrace()
-//        }
-//        catch(e: Exception)
-//        {
-//            Log.e("오류태그", "이미지 저장 메소드 Exception")
-//            e.printStackTrace()
-//        }
-//    }
 }

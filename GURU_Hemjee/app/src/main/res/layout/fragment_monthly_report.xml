@@ -62,7 +62,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/monthlyBtn3"
+                    android:id="@+id/reportMonthly_monthlyButton"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_monthly_report_button2"
