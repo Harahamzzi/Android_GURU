@@ -49,7 +49,6 @@ class HomeReportFragment : Fragment() {
     lateinit var weekTimeTextView: TextView // 총 잠금시간
     lateinit var weeklyStackBarChart: BarChart  // 차트
     lateinit var weeklyGoalListLayout: LinearLayout // 대표목표 리스트가 들어갈 레이아웃
-    var isBigGoalInitialised = false
 
 //    // 월간
 //    lateinit var monthDayTextView: TextView // 날짜
@@ -121,6 +120,7 @@ class HomeReportFragment : Fragment() {
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
         lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>    // 2차원 배열(대표목표)
+        var isBigGoalInitialised = false
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
         while (cursor.moveToNext()) {
             val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
@@ -176,7 +176,7 @@ class HomeReportFragment : Fragment() {
         if(!isBigGoalInitialised){
             Toast.makeText(context, "수행한 기록이 없습니다.", Toast.LENGTH_SHORT).show()
         }
-        weeklyReport(ZonedDateTime.now(), bigGoalArrayList)
+        weeklyReport(ZonedDateTime.now(), bigGoalArrayList, isBigGoalInitialised)
 //        // 월간 리포트 함수
 //        createMonthlyReport(nowDate)
     }
@@ -282,7 +282,7 @@ class HomeReportFragment : Fragment() {
     }
 
     // 날짜에 따른 리포트
-    fun weeklyReport(moveTime: ZonedDateTime, bigGoalArrayList: ArrayList<MutableMap<String, String>>) { // 지난 주 값
+    fun weeklyReport(moveTime: ZonedDateTime, bigGoalArrayList: ArrayList<MutableMap<String, String>>, isBigGoalInitialised: Boolean) { // 지난 주 값
         weeklyGoalListLayout.removeAllViews() // 초기화
 
         var weekList: ArrayList<String> = getWeekDate(moveTime)
