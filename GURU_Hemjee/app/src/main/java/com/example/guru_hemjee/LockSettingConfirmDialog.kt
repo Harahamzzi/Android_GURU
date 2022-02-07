@@ -2,15 +2,12 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.database.Cursor
 import android.graphics.PorterDuff
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 import java.util.*
 
 class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor: Int, time: String) {

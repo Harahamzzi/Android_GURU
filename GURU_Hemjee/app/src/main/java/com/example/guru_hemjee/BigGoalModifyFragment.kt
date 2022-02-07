@@ -18,7 +18,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import java.lang.Exception
 
-// 현재 존재하는 대표 목표를 수정하는 fragment 화면
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정(Setup) -> DetailGoalSetupFragment에서 연필 아이콘 클릭시
+//      -> BigGoalModigyFragment
+// 현재 존재하는 대표 목표를 수정하는 Fragment 화면
 class BigGoalModifyFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

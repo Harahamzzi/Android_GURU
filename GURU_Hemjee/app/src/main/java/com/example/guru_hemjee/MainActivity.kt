@@ -1,18 +1,11 @@
 package com.example.guru_hemjee
 
 import android.Manifest
-import android.app.PendingIntent.getActivity
 import android.content.Intent
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
-import android.os.Build
 import android.widget.Toast
-
 import android.os.Bundle
-import android.provider.Settings
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
