@@ -221,7 +221,6 @@ class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼�
     fun goSetUp() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
-                //?.remove(this)
                 ?.replace(R.id.fragment_main, SetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 ?.commit()
