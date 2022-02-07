@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
+// 홈 화면의 시작 버튼(HomeFragment) -> 잠금 화면
+// 잠금을 실행시켜 타이머와 세부 목표 목록이 있는 잠금 화면을 보여주기 위한 fragment 화면
 @Suppress("DEPRECATION")    // 사용하지 말아야 할 메소드 관련 경고 억제
 class LockActivity : AppCompatActivity() {
 

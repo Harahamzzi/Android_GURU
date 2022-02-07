@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
 
+// 잠금을 실행 했을 때의 잠금 서비스를 구동하기 위한 서비스 클래스
 class LockScreenService : Service() {
 
     private val receiver = object: BroadcastReceiver() {

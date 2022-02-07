@@ -23,7 +23,8 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-// 일간별 분석 리포트를 보여주는 fragment 화면
+// 홈(MainActivity) -> SubMainActivity -> 분석 리포트
+// 일간별 분석 리포트를 보여주는 Fragment 화면
 // 해당 날짜에서의 목표별 총 잠금시간/총 잠금시간 비율로 통계를 보여준다.
 class DailyReportFragment : Fragment() {
 

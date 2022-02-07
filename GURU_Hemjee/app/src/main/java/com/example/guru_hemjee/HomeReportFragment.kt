@@ -31,7 +31,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.round
 
 // MainActivity -> 홈 리포트
-// 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 리포트 fragment 화면
+// 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 리포트 Fragment 화면
 // 해당 날짜를 기준으로 하나의 일간, 주간 분석 리포트를 보여준다.
 class HomeReportFragment : Fragment() {
 

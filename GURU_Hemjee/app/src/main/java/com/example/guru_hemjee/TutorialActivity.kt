@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 
+// 앱을 처음 실행했을 때 보여주는 튜토리얼 Activity 화면
 class TutorialActivity : AppCompatActivity() {
 
     //튜토리얼 초기 화면

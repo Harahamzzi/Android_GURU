@@ -18,7 +18,9 @@ import android.widget.*
 import androidx.gridlayout.widget.GridLayout
 import androidx.activity.OnBackPressedCallback
 
-
+// 나의 성취 앨범(AlbumMainActivity) -> 목표 or 카테고리 -> 해당 폴더 클릭시 나온다.
+// 또는 홈 앨범(HomeAlbumFragment) -> 목표 or 카테고리 폴더를 클릭시 나온다.
+// 대표 목표 앨범 폴더, 카테고리 앨범 폴더를 클릭했을 때 나오는 전체 사진 Fragment 화면
 class SelectAlbumFragment : Fragment() {
 
     // 위젯

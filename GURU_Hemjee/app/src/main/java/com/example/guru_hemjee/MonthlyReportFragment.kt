@@ -28,6 +28,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
+// 원래는 홈(MainActivity) -> 목표 리포트 -> 월간에 들어갈 화면이었다.
+// 월간 리포트 Fragment 화면(미구현)
 class MonthlyReportFragment : Fragment() {
 
     // db
