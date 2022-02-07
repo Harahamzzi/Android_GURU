@@ -16,9 +16,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/hara_hamzzi_icon"
+        android:icon="@mipmap/ic_hamezzie"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_hamezzie_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GURU_Hemjee">
         <activity android:name=".AlbumMainActivity"></activity>
