@@ -66,6 +66,7 @@ class WeeklyReportFragment : Fragment() {
 
     // 현재 날짜
     var nowTime = ZonedDateTime.now()
+    var nowViewTime = nowTime
 
     // 2차원 배열(대표목표)
     lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
@@ -248,9 +249,9 @@ class WeeklyReportFragment : Fragment() {
         prevBtn2.setOnClickListener {
             // 이전 주간 리포트 보여주기
             weeklyReportListLayout.removeAllViews()
-            reportSate -= 7
-            if(isBigGoalInitialised && isDetailGoalInitialized)
-                weeklyReport(nowTime.minusDays(Math.abs(reportSate).toLong())) // 일주일 뺀 값 전달
+            reportSate--
+            nowViewTime = nowViewTime.minusDays(7)
+            weeklyReport(nowViewTime)
         }
 
         // 다음 버튼 클릭 이벤트
@@ -260,9 +261,9 @@ class WeeklyReportFragment : Fragment() {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 주간의 리포트 보여주기
                 weeklyReportListLayout.removeAllViews()
-                reportSate += 7
-                if(isBigGoalInitialised && isDetailGoalInitialized)
-                    weeklyReport(nowTime.plusDays(Math.abs(reportSate).toLong())) // 일주일 더한 값 전달
+                reportSate++
+                nowViewTime = nowViewTime.plusDays(7)
+                weeklyReport(nowViewTime)
             }
         }
 

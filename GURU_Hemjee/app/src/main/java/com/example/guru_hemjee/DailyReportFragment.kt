@@ -58,7 +58,6 @@ class DailyReportFragment : Fragment() {
 
     // 현재 날짜
     var nowTime = ZonedDateTime.now()
-    var nowDate = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
 
     // 현재 페이지에 보여지는 날짜
     var nowViewTime = nowTime
@@ -142,7 +141,11 @@ class DailyReportFragment : Fragment() {
                 var isFlag: Boolean = false // 중복값 확인
                 var i = 0
                 while (i < bigGoalArrayList.size) {
-                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal && bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                    //기존에 있는 목표인지 확인(이름과 색상 모두 고려)
+                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal &&
+                        bigGoalArrayList[i]["color"]!!.toBigInteger() == int_color &&
+                        bigGoalArrayList[i]["lock_date"] == date1[0]) {
+
                         bigGoalArrayList[i]["total_lock_time"] =
                             (bigGoalArrayList[i]["total_lock_time"]?.toInt()
                                 ?.plus(bigint_time.toInt())).toString()
