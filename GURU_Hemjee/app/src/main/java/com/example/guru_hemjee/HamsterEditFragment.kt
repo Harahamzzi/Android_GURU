@@ -1,8 +1,11 @@
 package com.example.guru_hemjee
 
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +32,7 @@ class HamsterEditFragment() : Fragment() {
     private lateinit var myHFurnitureImageButton: ImageButton
     private lateinit var myHWallpaperImageButton: ImageButton
 
-    private lateinit var myHItemList: RecyclerView
+    private lateinit var myHItemLinearLayout: LinearLayout
     private var selectedItems = ArrayList<String>()
     private var preselectedItems = ArrayList<String>()
     private var currentInventory = "clo"
@@ -85,7 +88,7 @@ class HamsterEditFragment() : Fragment() {
         myHWallpaperImageButton = requireView().findViewById(R.id.myHamster_wallPaperImageButton)
         myHInventoryBgImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
 
-        myHItemList = requireView().findViewById(R.id.myHamster_itemList)
+        myHItemLinearLayout = requireView().findViewById(R.id.myHamster_itemList)
 
         upDateInventory(currentInventory)
 
@@ -204,82 +207,94 @@ class HamsterEditFragment() : Fragment() {
 
     //인밴토리 확인
     private fun upDateInventory(name: String) {
-        val items = ArrayList<MyHamsterItem>()
-        var deselectedItems = ArrayList<String>()
-        //어뎁터 생성: itemClick 함수 정의(MyHamsterAdapter 참고)
-        val myHamsterAdapter = MyHamsterAdapter(requireContext(), items){ item, isClicked ->
-            if(isClicked){
-                //같은 유형(옷끼리, 모자끼리, 배경끼리) 겹치지 않게 하기 + click 내용 반영하기
-                dbManager = DBManager(requireContext(), "hamster_db", null, 1)
-                sqlitedb = dbManager.readableDatabase
-                val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_bought = 1 AND category = '${item.category}'", null)
-                while(cursor.moveToNext()){
-                    val tempName = cursor.getString(cursor.getColumnIndex("item_name"))
-                    if(selectedItems.contains(tempName) && tempName != item.name) {
-                        selectedItems.remove(tempName)
-                        deselectedItems.add(tempName)
-                    }
-                }
-                cursor.close()
-                sqlitedb.close()
-                dbManager.close()
+        //layout 초기화
+        myHItemLinearLayout.removeAllViews()
 
-                selectedItems.add(item.name)
-
-                upDateInventory(currentInventory)
-            } else {
-                selectedItems.remove(item.name)
-                deselectedItems.add(item.name)
-            }
-
-            //화면 표시
-            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
-            sqlitedb = dbManager.writableDatabase
-            for(item in selectedItems){
-                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
-            }
-            for(item in deselectedItems){
-                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
-            }
-            sqlitedb.close()
-            dbManager.close()
-
-            deselectedItems.clear()
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
-        }
-        myHItemList.adapter = myHamsterAdapter
-
-        //리스트 가져와서 적용하기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        //사용중인 아이템을 우선 배정
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '$name' AND is_bought = 1 AND is_using = 1",null)
+        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '$name' AND is_bought = 1",null)
+
         while(cursor.moveToNext()){
+            //동적 뷰 생성
+            var view: View = layoutInflater.inflate(R.layout.container_my_hamster_item, myHItemLinearLayout, false)
+
+            var itemImageView = view.findViewById<ImageView>(R.id.myHItemBgImageView)
+
             val marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
-            val itemName = cursor.getString(cursor.getColumnIndex("item_name"))
+            val itemName = cursor.getString(cursor.getColumnIndex("item_name")).toString()
             val itemCategory = cursor.getString(cursor.getColumnIndex("category")).toString()
             val id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
 
-            items.addAll(listOf(MyHamsterItem(id, itemName, itemCategory, selectedItems.contains(itemName))))
+            //배경 설정
+            itemImageView.setImageResource(id)
+            if(selectedItems.contains(itemName)){
+                itemImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
+            } else {
+                itemImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
+            }
 
+            view.setOnClickListener {
+                //선택 해제할 아이템이 들어감
+                var deselectItems = ArrayList<String>()
+
+                val dbManager2 = DBManager(requireContext(), "hamster_db", null, 1)
+                var sqlitedb2 = dbManager2.readableDatabase
+
+                //선택 해제 중이라면
+                if(!selectedItems.contains(itemName)){
+                    itemImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
+
+                    //같은 카테고리의 아이템이 선택중이면 선택해제
+                    val cursor2: Cursor = sqlitedb2.rawQuery("SELECT * FROM hamster_deco_info_db WHERE category = '${itemCategory}'", null)
+                    while(cursor2.moveToNext()){
+                        val tempName = cursor2.getString(cursor2.getColumnIndex("item_name"))
+
+                        if(selectedItems.contains(tempName) && tempName != itemName) {
+                            selectedItems.remove(tempName)
+                            deselectItems.add(tempName)
+                        }
+                    }
+                    cursor2.close()
+
+                    selectedItems.add(itemName)
+
+                    upDateInventory(currentInventory)
+                    FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
+
+                }
+                //선택중이라면
+                else {
+                    itemImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
+                    selectedItems.remove(itemName)
+                    deselectItems.add(itemName)
+                }
+                sqlitedb2.close()
+
+                //화면 표시
+                sqlitedb2 = dbManager.writableDatabase
+                for(item in selectedItems){
+                    sqlitedb2.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+                }
+                for(item in deselectItems){
+                    sqlitedb2.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+                }
+                sqlitedb2.close()
+                dbManager2.close()
+
+                deselectItems.clear()
+                FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
+
+                Log.i("item", "${selectedItems}")
+            }
+
+            myHItemLinearLayout.addView(view)
         }
-
-        //이외의 아이템 이후에 배정
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '$name' AND is_bought = 1 AND is_using = 0",null)
-        while(cursor.moveToNext()){
-            val marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
-            val itemName = cursor.getString(cursor.getColumnIndex("item_name"))
-            val itemCategory = cursor.getString(cursor.getColumnIndex("category")).toString()
-            val id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
-
-            items.addAll(listOf(MyHamsterItem(id, itemName, itemCategory, selectedItems.contains(itemName))))
-
-        }
-        myHamsterAdapter.notifyDataSetChanged() // 리스트 갱신
         cursor.close()
         sqlitedb.close()
         dbManager.close()
     }
+
+
 
 }
