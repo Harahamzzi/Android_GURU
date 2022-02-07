@@ -17,7 +17,8 @@ import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
 import java.lang.IndexOutOfBoundsException
 
-
+// 나의 성취 앨범(AlbumMainActivity) - 목표별
+// 대표 목표별 앨범 폴더들을 보여주는 fragment 화면
 class GoalAlbumFragment : Fragment() {
 
     //DB 관련

@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentTransaction
 import java.util.*
 import java.text.SimpleDateFormat
 
-
-class BigGoalSetupFragment : Fragment() { // 대표 목표 추가 프래그먼트
+// 대표 목표 추가 프래그먼트
+class BigGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
     lateinit var dbManager: DBManager

@@ -21,7 +21,7 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 
-
+// 세부 목표를 수정할 수 있는 fragment 페이지
 class DetailGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

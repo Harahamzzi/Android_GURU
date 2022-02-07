@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 
+// 최종 확인 Dialog를 띄우기 위한 클래스
 class FinalOKDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val picSource: Int?, val talkText: String?) {
     private val dialog = Dialog(context)
 

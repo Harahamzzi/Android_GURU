@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+// 각 시간값(문자열)을 받아 변환하여 문자열로 반환하는 변환 클래스
 class FunTimeConvert {
 
     companion object {

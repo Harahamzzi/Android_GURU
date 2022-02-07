@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
+// 잠금 시간 및 목표 설정/확인을 할 때 보이는 세부 목록 리스트를 생성하는 어댑터
 class DetailGoalListAdapter(val context: Context, private val items: ArrayList<DetailGoalItem>): RecyclerView.Adapter<DetailGoalListAdapter.ViewHolder>(){
 
     inner class ViewHolder(view: View?): RecyclerView.ViewHolder(view!!){

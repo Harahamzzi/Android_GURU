@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 
+// 햄찌의 이름을 수정할 때 보이는 팝업 화면
 class HamsterEditNameDialog(context: Context, name: String?) {
     private val dialog = Dialog(context)
 

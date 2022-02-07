@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import java.lang.Exception
 
+// 현재 존재하는 대표 목표를 수정하는 fragment 화면
 class BigGoalModifyFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

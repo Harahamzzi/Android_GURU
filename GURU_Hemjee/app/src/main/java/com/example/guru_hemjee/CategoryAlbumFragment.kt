@@ -16,7 +16,8 @@ import androidx.core.view.get
 import androidx.fragment.app.FragmentTransaction
 import java.lang.IndexOutOfBoundsException
 
-
+// 나의 성취 앨범(AlbumMainActivity) - 카테고리별
+// 카테고리 분류의 앨범 폴더들을 생성 후 보여주는 fragment 화면
 class CategoryAlbumFragment : Fragment() {
 
 //    // 드롭다운 메뉴
