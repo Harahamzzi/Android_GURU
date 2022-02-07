@@ -118,7 +118,7 @@ class GoalAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(index)
+            var view: View = goalAlbumLayout.get(index - removeCount)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)

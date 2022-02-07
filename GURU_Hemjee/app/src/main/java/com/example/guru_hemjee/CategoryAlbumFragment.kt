@@ -219,7 +219,7 @@ class CategoryAlbumFragment : Fragment() {
         for(index in picNums.indices)
         {
             // 해당 카테고리에 들어가 있는 사진이 없다면
-            if(picNums[index] == 0)
+            if(picNums[index - removeCount] == 0)
             {
                 // 해당 카테고리 폴더를 삭제한다
                 categoryAlbumLayout.removeViewAt(index - removeCount)
