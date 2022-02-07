@@ -136,20 +136,20 @@ class DailyReportFragment : Fragment() {
                 bigGoalIntArray[num][1] = int_color // 대표목표 색상
                 ++num
             } else { // 기존에 데이터가 있다면
-                for (i in 0 until num) {
-                    if (bigGoalStringArray[i][0] == str_big_goal && bigGoalStringArray[i][1] == date1[0]) { // 중복되는 값은 시간만 저장(같은 날짜의 대표목표)
-                        bigGoalIntArray[i][0] += bigint_time
-                        isFlag = true
-                        break
-                    }
-                }
-                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
-                    bigGoalStringArray[num][0] = str_big_goal // 대표목표
-                    bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
-                    bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
-                    bigGoalIntArray[num][1] = int_color // 대표목표 색상
-                    ++num
-                }
+//                for (i in 0 until num) {
+//                    if (bigGoalStringArray[i][0] == str_big_goal && bigGoalStringArray[i][1] == date1[0]) { // 중복되는 값은 시간만 저장(같은 날짜의 대표목표)
+//                        bigGoalIntArray[i][0] += bigint_time
+//                        isFlag = true
+//                        break
+//                    }
+//                }
+//                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
+//                    bigGoalStringArray[num][0] = str_big_goal // 대표목표
+//                    bigGoalIntArray[num][0] = bigint_time // 대표목표 총 수행 시간
+//                    bigGoalStringArray[num][1] = date1[0] // 년도-월-일-요일 형태로 저장
+//                    bigGoalIntArray[num][1] = int_color // 대표목표 색상
+//                    ++num
+//                }
             }
         }
         cursor.close()
@@ -174,19 +174,19 @@ class DailyReportFragment : Fragment() {
                 detailGoalIntArray[num2][1] = int_color // 색상
                 ++num2
             } else { // 기존에 데이터가 있다면
-                for (i in 0 until num2) {
-                    if (detailGoalStringArray[i][0] == str_detail_goal && detailGoalStringArray[i][1] == date1[0]) {
-                        isFlag = true
-                        break
-                    }
-                }
-                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
-                    detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
-                    detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
-                    detailGoalIntArray[num2][0] = int_icon // 아이콘
-                    detailGoalIntArray[num2][1] = int_color // 색상
-                    ++num2
-                }
+//                for (i in 0 until num2) {
+//                    if (detailGoalStringArray[i][0] == str_detail_goal && detailGoalStringArray[i][1] == date1[0]) {
+//                        isFlag = true
+//                        break
+//                    }
+//                }
+//                if (!isFlag) { // 중복값이 없었다면, 새로운 값 저장
+//                    detailGoalStringArray[num2][0] = str_detail_goal // 세부목표
+//                    detailGoalStringArray[num2][1] = date1[0] // 잠금 날짜(// 년도-월-일-요일 형태로 저장)
+//                    detailGoalIntArray[num2][0] = int_icon // 아이콘
+//                    detailGoalIntArray[num2][1] = int_color // 색상
+//                    ++num2
+//                }
             }
         }
         cursor3.close()

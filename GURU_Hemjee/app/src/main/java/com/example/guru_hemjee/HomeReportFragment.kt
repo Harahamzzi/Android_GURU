@@ -205,13 +205,11 @@ class HomeReportFragment : Fragment() {
             for (nameNum in 0 until bigGoalNameList.size){
                 for (goalNum in 0 until bigGoalArrayList.size){
                     if (bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
-                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60*60)/24).toFloat() //시간
-                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60)%60).toFloat() / 100 //분
+                        tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)
                         if (tempArrayList[nameNum] != 0f){
                             tempArrayList[nameNum] = round(tempArrayList[nameNum]*100) /100
                         } else {
-
-                            tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000)%60) / 10000 //초
+                            tempArrayList[nameNum] = round(tempArrayList[nameNum]*10000) /10000
                         }
                     }
                 }

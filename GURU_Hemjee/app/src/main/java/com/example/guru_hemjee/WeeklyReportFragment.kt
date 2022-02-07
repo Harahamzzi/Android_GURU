@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
@@ -12,34 +11,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentTransaction
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.*
-import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.slider.LabelFormatter
-import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.ArithmeticException
-import java.lang.Exception
-import java.lang.IndexOutOfBoundsException
 import java.math.BigInteger
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.round
@@ -86,18 +72,10 @@ class WeeklyReportFragment : Fragment() {
     //대표 목표가 초기화 되었는지 확인
     private var isBigGoalInitialised = false
 
-//    var bigGoalStringArray = Array(20, {Array(2, {""}) }) // 10행 2열, 하나의 행에 (대표목표,날짜) 순으로 저장
-//    var bigGoalIntArray = Array(20, {Array(2, { BigInteger.ZERO}) }) // 10행 2열, 하나의 행에 (시간, 색상) 순으로 저장
-//    var num = 0 // bigGoalStringArray와 bigGoalIntArray의 index
-
     // 2차원 배열(세부목표)
     lateinit var detailGoalArrayList: ArrayList<MutableMap<String, String>>
     //세부목표가 초기화 되었는지 확인
     private var isDetailGoalInitialized = false
-
-//    var detailGoalStringArray = Array(30, {Array(3, {""}) }) // 20행 3열, 하나의 행에 (세부목표,날짜,대표목표) 순으로 저장
-//    var detailGoalIntArray = Array(30, {Array(2, { BigInteger.ZERO}) }) // 20행 2열, 하나의 행에 (아이콘,색상) 순으로 저장
-//    var num2 = 0 // detailGoalStringArray와 detailGoalIntArray의 index
 
     // 현재 리포트 화면 상태
     var reportSate: Int = 0 // 이번주
@@ -399,27 +377,32 @@ class WeeklyReportFragment : Fragment() {
         val df = DecimalFormat("##.##")
 
         if(toggleState){
+            var isThereRecord = false
             var bigGoalTimeList = mutableListOf<Float>(0f, 0f, 0f, 0f, 0f, 0f, 0f)
             for(i in 0 until bigGoalArrayList.size){
                 for(j in 0 until weekList.size){
                     if(bigGoalArrayList[i]["lock_date"] == weekList[j] && bigGoalArrayList[i]["big_goal_name"] == toggleGoal){
-                        bigGoalTimeList[j] += (bigGoalArrayList[i]["total_lock_time"]!!.toInt()/(1000*60*60)/24).toFloat()//시간
-                        bigGoalTimeList[j] += (bigGoalArrayList[i]["total_lock_time"]!!.toInt()/(1000*60)%60).toFloat()/100//분
+                        bigGoalTimeList[j] += bigGoalArrayList[i]["total_lock_time"]!!.toFloat()/(1000*60*60)
                         if (bigGoalTimeList[j] != 0f){
                             bigGoalTimeList[j] = round(bigGoalTimeList[j]*100) /100
                         } else {
-                            bigGoalTimeList[j] += (bigGoalArrayList[i]["total_lock_time"]!!.toFloat()/(1000)%60) / 10000 //초
+                            bigGoalTimeList[j] = round(bigGoalTimeList[j]*10000) /10000
                         }
                         itemColor.add(bigGoalArrayList[i]["color"]!!.toInt())
-                        Log.i("color", "$itemColor")
+                        isThereRecord = true
                     }
                 }
+            }
+            Log.i("lock", "$bigGoalTimeList")
+
+            //해당 대표 목표의 잠금 기록이 없을 경우
+            if(!isThereRecord){
+                itemColor.add(R.color.Black)
             }
 
             for(i in 0 until weekList.size){
                 entry.add(BarEntry(i.toFloat(), floatArrayOf(bigGoalTimeList[i])))
             }
-            Log.i("chart", "$entry")
         } else {
             var bigGoalNameList = ArrayList<String>()
             var bigGoalTimeLists = ArrayList<MutableList<Float>>()
@@ -436,34 +419,28 @@ class WeeklyReportFragment : Fragment() {
                 }
             }
 
+            //사용가능한 대표 목표 목록으로 사용 시간 구하기
             for(i in 0 until weekList.size){
                 var tempArrayList = MutableList(bigGoalNameList.size, {0.0f})
                 for(nameNum in 0 until bigGoalNameList.size){
                     for(goalNum in 0 until bigGoalArrayList.size){
                         if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
-                            tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60*60)/24).toFloat() //시간
-                            tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60)%60).toFloat() / 100 //분
+                            tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)
                             if (tempArrayList[nameNum] != 0f){
                                 tempArrayList[nameNum] = round(tempArrayList[nameNum]*100) /100
                             } else {
-                                tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000)%60) / 10000 //초
+                                tempArrayList[nameNum] = round(tempArrayList[nameNum]*10000) /10000
                             }
                         }
                     }
                 }
                 bigGoalTimeLists.add(tempArrayList)
+
+                Log.i("lock", "$tempArrayList")
             }
 
             for(i in 0 until bigGoalTimeLists.size){
                 var tempList:Array<Float> = bigGoalTimeLists[i].toTypedArray()
-                var isZero = false
-                for(i in 0 until tempList.size){
-                    if(tempList[i]!=0.0f) {
-                        isZero = true
-                        break
-                    }
-                }
-
                 entry.add(BarEntry(i.toFloat(), floatArrayOf(tempList)))
             }
         }
@@ -477,7 +454,6 @@ class WeeklyReportFragment : Fragment() {
             valueTextColor = R.color.Black
             valueTextSize = 16f
         }
-        Log.i("Data", "${barDataSet.colors}")
 
         val barData = BarData(barDataSet)
         weeklyStackBarChart.apply {
