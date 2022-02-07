@@ -9,49 +9,51 @@ import android.widget.TextView
 
 // 앨범 폴더가 아닌 개별 사진을 클릭했을 때 나오는 Dialog
 class PhotoDialog(private val context: Context, private val photoPath: String, private val icon: Int,
-                  private val detailGoalName: String, private val bigGoalName: String, private val date: String, private val color: Int) {
+                  private val detailGoalName: String, private val bigGoalName: String,
+                  private val date: String, private val color: Int) {
     private val dialog = Dialog(context)
 
     //사진
-    private lateinit var photoImageView: ImageView
+    private lateinit var pop_photoImageView: ImageView
 
     //아이콘
-    private lateinit var iconImageView: ImageView
+    private lateinit var pop_photoIconImageView: ImageView
 
     //목표 제목들
-    private lateinit var detailGoalTextView: TextView
-    private lateinit var bigGoalTextView: TextView
+    private lateinit var pop_photoDetailGoalTextView: TextView
+    private lateinit var pop_photoBigGoalTextView: TextView
 
     //날짜
-    private lateinit var dateTextView: TextView
+    private lateinit var pop_photoDateTextView: TextView
 
+    //팝업 표시
     fun photoPopUp() {
         dialog.show()
         dialog.setContentView(R.layout.popup_photo_detail)
 
         //사진
-        photoImageView = dialog.findViewById(R.id.pop_photoImageView)
+        pop_photoImageView = dialog.findViewById(R.id.pop_photoImageView)
         //아이콘
-        iconImageView = dialog.findViewById(R.id.pop_photoIconImageView)
+        pop_photoIconImageView = dialog.findViewById(R.id.pop_photoIconImageView)
         //목표 제목들
-        detailGoalTextView = dialog.findViewById(R.id.pop_photoDetailGoalTextView)
-        bigGoalTextView = dialog.findViewById(R.id.pop_photoBigGoalTextView)
+        pop_photoDetailGoalTextView = dialog.findViewById(R.id.pop_photoDetailGoalTextView)
+        pop_photoBigGoalTextView = dialog.findViewById(R.id.pop_photoBigGoalTextView)
         //날짜
-        dateTextView = dialog.findViewById(R.id.pop_photoDateTextView)
+        pop_photoDateTextView = dialog.findViewById(R.id.pop_photoDateTextView)
 
         //사진 적용
         var bitmap = BitmapFactory.decodeFile(photoPath)
-        photoImageView.setImageBitmap(bitmap)
+        pop_photoImageView.setImageBitmap(bitmap)
 
         //아이콘 적용
-        iconImageView.setImageResource(icon)
-        iconImageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        pop_photoIconImageView.setImageResource(icon)
+        pop_photoIconImageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
         //목표 제목 적용
-        detailGoalTextView.text = detailGoalName
-        bigGoalTextView.text = bigGoalName
+        pop_photoDetailGoalTextView.text = detailGoalName
+        pop_photoBigGoalTextView.text = bigGoalName
 
         //날짜 적용
-        dateTextView.text = date.replace('-', '.')
+        pop_photoDateTextView.text = date.replace('-', '.')
     }
 }

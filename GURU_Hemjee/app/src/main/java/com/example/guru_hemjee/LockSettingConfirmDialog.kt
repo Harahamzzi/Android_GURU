@@ -10,11 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
+//잠금 확인 팝업
 class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor: Int, time: String) {
     private val dialog = Dialog(context)
 
-    private lateinit var lock: ImageButton
-    private lateinit var cancel: ImageButton
+    //잠금 시작, 취소 버튼
+    private lateinit var pop_settingOkImageButton2: ImageButton
+    private lateinit var pop_lockCancelImageButton2: ImageButton
 
     //시간 관련
     private var timeArray = time.split(':')
@@ -23,24 +25,24 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
     private lateinit var sec: TextView
 
     //대표 목표 관련
-    private lateinit var goalTitleTextView: TextView
-    private lateinit var goalColorImageView: ImageView
+    private lateinit var pop_goalTitleTextView2: TextView
+    private lateinit var pop_lockSetConfirmGoalColorImageView2: ImageView
     private var goalName = goalName
     private var goalColor = goalColor
 
     //달성 가능한 세부 목표
-    private lateinit var detailGoalItemRecyclerView: RecyclerView
+    private lateinit var pop_lockSettingConfirmDetailGoalRecyclerView: RecyclerView
 
+    //팝업 표시
     fun myDig(){
         dialog.show()
         dialog.setContentView(R.layout.popup_lock_setting_confirm)
 
-        //대표 목표 수정하기
-        goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView2)
-        goalColorImageView = dialog.findViewById(R.id.pop_lockSetConfirmGoalColorImageView2)
-        goalTitleTextView.text = goalName
-        goalColorImageView.setColorFilter(goalColor, PorterDuff.Mode.SRC_IN)
-
+        //선택된 대표 목표로 수정(색도 표시)
+        pop_goalTitleTextView2 = dialog.findViewById(R.id.pop_goalTitleTextView2)
+        pop_lockSetConfirmGoalColorImageView2 = dialog.findViewById(R.id.pop_lockSetConfirmGoalColorImageView2)
+        pop_goalTitleTextView2.text = goalName
+        pop_lockSetConfirmGoalColorImageView2.setColorFilter(goalColor, PorterDuff.Mode.SRC_IN)
 
         //시간 연결
         hour = dialog.findViewById(R.id.pop_hourTimeTextView)
@@ -50,28 +52,31 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
         sec = dialog.findViewById(R.id.pop_secTimeTextView)
         sec.text = timeArray[2]
 
-        lock = dialog.findViewById<ImageButton>(R.id.pop_settingOkImageButton2)
-        lock.setOnClickListener {
+        //잠금 버튼
+        pop_settingOkImageButton2 = dialog.findViewById<ImageButton>(R.id.pop_settingOkImageButton2)
+        pop_settingOkImageButton2.setOnClickListener {
             onClickListener.onClicked(true)
             dialog.dismiss()
         }
 
-        cancel = dialog.findViewById<ImageButton>(R.id.pop_lockCancelImageButton2)
-        cancel.setOnClickListener {
+        //취소 버튼
+        pop_lockCancelImageButton2 = dialog.findViewById<ImageButton>(R.id.pop_lockCancelImageButton2)
+        pop_lockCancelImageButton2.setOnClickListener {
             onClickListener.onClicked(false)
             dialog.dismiss()
         }
 
-        //목표 리스트 연결
-        detailGoalItemRecyclerView = dialog.findViewById(R.id.pop_lockSettingConfirmDetailGoalRecyclerView)
+        //세부 목표 리스트 연결
+        pop_lockSettingConfirmDetailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingConfirmDetailGoalRecyclerView)
         if(goalName != "목표를 생성해주세요"){
             val items = ArrayList<DetailGoalItem>()
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
-            detailGoalItemRecyclerView.adapter = detailGoalListAdapter
+            pop_lockSettingConfirmDetailGoalRecyclerView.adapter = detailGoalListAdapter
 
             var dbManager = DBManager(context, "hamster_db", null, 1)
             var sqlitedb = dbManager.readableDatabase
-            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '$goalName'", null)
+            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE " +
+                    "big_goal_name = '$goalName'", null)
 
             while(cursor.moveToNext()){
                 val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))

@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
 
+//세부 목표 아이콘 변경 팝업
 class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
     private val dialog = Dialog(context)
 
@@ -15,241 +16,248 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
     private lateinit var okImageButton: ImageButton
 
     //RadioGroup들
-    private lateinit var iconGroup1: RadioGroup
-    private lateinit var iconGroup2: RadioGroup
-    private lateinit var iconGroup3: RadioGroup
+    private lateinit var pop_iconGroup1: RadioGroup
+    private lateinit var pop_iconGroup2: RadioGroup
+    private lateinit var pop_iconGroup3: RadioGroup
 
     //RadioButton들
-    private lateinit var icon1RadioButton: RadioButton
-    private lateinit var icon2RadioButton: RadioButton
-    private lateinit var icon3RadioButton: RadioButton
-    private lateinit var icon4RadioButton: RadioButton
-    private lateinit var icon5RadioButton: RadioButton
-    private lateinit var icon6RadioButton: RadioButton
-    private lateinit var icon7RadioButton: RadioButton
-    private lateinit var icon8RadioButton: RadioButton
-    private lateinit var icon9RadioButton: RadioButton
-    private lateinit var icon10RadioButton: RadioButton
-    private lateinit var icon11RadioButton: RadioButton
-    private lateinit var icon12RadioButton: RadioButton
-    private lateinit var icon13RadioButton: RadioButton
-    private lateinit var icon14RadioButton: RadioButton
-    private lateinit var icon15RadioButton: RadioButton
+    private lateinit var pop_icon1: RadioButton
+    private lateinit var pop_icon2: RadioButton
+    private lateinit var pop_icon3: RadioButton
+    private lateinit var pop_icon4: RadioButton
+    private lateinit var pop_icon5: RadioButton
+    private lateinit var pop_icon6: RadioButton
+    private lateinit var pop_icon7: RadioButton
+    private lateinit var pop_icon8: RadioButton
+    private lateinit var pop_icon9: RadioButton
+    private lateinit var pop_icon10: RadioButton
+    private lateinit var pop_icon11: RadioButton
+    private lateinit var pop_icon12: RadioButton
+    private lateinit var pop_icon13: RadioButton
+    private lateinit var pop_icon14: RadioButton
+    private lateinit var pop_icon15: RadioButton
 
     //icon
     private var icon: Int = originIcon
 
+    //아이콘 변경 팝업
     fun iconPopUp() {
         dialog.show()
         dialog.setContentView(R.layout.popup_icon_list)
 
-        iconGroup1 = dialog.findViewById(R.id.pop_iconGroup1)
-        iconGroup2 = dialog.findViewById(R.id.pop_iconGroup2)
-        iconGroup3 = dialog.findViewById(R.id.pop_iconGroup3)
+        //라디오 버튼 그룹 연결
+        pop_iconGroup1 = dialog.findViewById(R.id.pop_iconGroup1)
+        pop_iconGroup2 = dialog.findViewById(R.id.pop_iconGroup2)
+        pop_iconGroup3 = dialog.findViewById(R.id.pop_iconGroup3)
 
-        icon1RadioButton = dialog.findViewById(R.id.pop_icon1)
-        icon2RadioButton = dialog.findViewById(R.id.pop_icon2)
-        icon3RadioButton = dialog.findViewById(R.id.pop_icon3)
-        icon4RadioButton = dialog.findViewById(R.id.pop_icon4)
-        icon5RadioButton = dialog.findViewById(R.id.pop_icon5)
-        icon6RadioButton = dialog.findViewById(R.id.pop_icon6)
-        icon7RadioButton = dialog.findViewById(R.id.pop_icon7)
-        icon8RadioButton = dialog.findViewById(R.id.pop_icon8)
-        icon9RadioButton = dialog.findViewById(R.id.pop_icon9)
-        icon10RadioButton = dialog.findViewById(R.id.pop_icon10)
-        icon11RadioButton = dialog.findViewById(R.id.pop_icon11)
-        icon12RadioButton = dialog.findViewById(R.id.pop_icon12)
-        icon13RadioButton = dialog.findViewById(R.id.pop_icon13)
-        icon14RadioButton = dialog.findViewById(R.id.pop_icon14)
-        icon15RadioButton = dialog.findViewById(R.id.pop_icon15)
+        //라디오 버튼 연결
+        pop_icon1 = dialog.findViewById(R.id.pop_icon1)
+        pop_icon2 = dialog.findViewById(R.id.pop_icon2)
+        pop_icon3 = dialog.findViewById(R.id.pop_icon3)
+        pop_icon4 = dialog.findViewById(R.id.pop_icon4)
+        pop_icon5 = dialog.findViewById(R.id.pop_icon5)
+        pop_icon6 = dialog.findViewById(R.id.pop_icon6)
+        pop_icon7 = dialog.findViewById(R.id.pop_icon7)
+        pop_icon8 = dialog.findViewById(R.id.pop_icon8)
+        pop_icon9 = dialog.findViewById(R.id.pop_icon9)
+        pop_icon10 = dialog.findViewById(R.id.pop_icon10)
+        pop_icon11 = dialog.findViewById(R.id.pop_icon11)
+        pop_icon12 = dialog.findViewById(R.id.pop_icon12)
+        pop_icon13 = dialog.findViewById(R.id.pop_icon13)
+        pop_icon14 = dialog.findViewById(R.id.pop_icon14)
+        pop_icon15 = dialog.findViewById(R.id.pop_icon15)
 
+        //라디오 버튼이 미리 설정된 버튼과 같으면 강조 표시
         if(R.drawable.ic_outline_menu_book_24==icon){
-            icon1RadioButton.isChecked = true
-            icon1RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon1.isChecked = true
+            pop_icon1.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_play_lesson_24==icon){
-            icon2RadioButton.isChecked = true
-            icon2RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon2.isChecked = true
+            pop_icon2.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_school_24==icon){
-            icon3RadioButton.isChecked = true
-            icon3RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon3.isChecked = true
+            pop_icon3.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.dumble_icon==icon){
-            icon4RadioButton.isChecked = true
-            icon4RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon4.isChecked = true
+            pop_icon4.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_forest_24==icon){
-            icon5RadioButton.isChecked = true
-            icon5RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon5.isChecked = true
+            pop_icon5.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_sports_esports_24==icon){
-            icon6RadioButton.isChecked = true
-            icon6RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon6.isChecked = true
+            pop_icon6.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_computer_24==icon){
-            icon7RadioButton.isChecked = true
-            icon7RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon7.isChecked = true
+            pop_icon7.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_piano_24==icon){
-            icon8RadioButton.isChecked = true
-            icon8RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon8.isChecked = true
+            pop_icon8.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_ramen_dining_24==icon){
-            icon9RadioButton.isChecked = true
-            icon9RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon9.isChecked = true
+            pop_icon9.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_local_cafe_24==icon){
-            icon10RadioButton.isChecked = true
-            icon10RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon10.isChecked = true
+            pop_icon10.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_business_center_24==icon){
-            icon11RadioButton.isChecked = true
-            icon11RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon11.isChecked = true
+            pop_icon11.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_storefront_24==icon){
-            icon12RadioButton.isChecked = true
-            icon12RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon12.isChecked = true
+            pop_icon12.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_draw_24==icon){
-            icon13RadioButton.isChecked = true
-            icon13RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon13.isChecked = true
+            pop_icon13.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_savings_24==icon){
-            icon14RadioButton.isChecked = true
-            icon14RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon14.isChecked = true
+            pop_icon14.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
         else if(R.drawable.ic_outline_query_stats_24==icon){
-            icon15RadioButton.isChecked = true
-            icon15RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+            pop_icon15.isChecked = true
+            pop_icon15.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
 
-        iconGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
+        //그룹에 버튼 연결, 버튼 연결 시 설정
+        pop_iconGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when(checkedId){
                 R.id.pop_icon1 -> {
                     colorGray()
-                    iconGroup3.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon1RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup3.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon1.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_menu_book_24
                 }
                 R.id.pop_icon2 -> {
                     colorGray()
-                    iconGroup3.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon2RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup3.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon2.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_play_lesson_24
                 }
                 R.id.pop_icon3 -> {
                     colorGray()
-                    iconGroup3.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon3RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup3.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon3.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_school_24
                 }
                 R.id.pop_icon4 -> {
                     colorGray()
-                    iconGroup3.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon4RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup3.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon4.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.dumble_icon
                 }
                 R.id.pop_icon5 -> {
                     colorGray()
-                    iconGroup3.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon5RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup3.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon5.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_forest_24
                 }
             }
         }
-        iconGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
+        pop_iconGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_icon6 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup3.clearCheck()
-                    icon6RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup3.clearCheck()
+                    pop_icon6.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_sports_esports_24
                 }
                 R.id.pop_icon7 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup3.clearCheck()
-                    icon7RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup3.clearCheck()
+                    pop_icon7.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_computer_24
                 }
                 R.id.pop_icon8 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup3.clearCheck()
-                    icon8RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup3.clearCheck()
+                    pop_icon8.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_piano_24
                 }
                 R.id.pop_icon9 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup3.clearCheck()
-                    icon9RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup3.clearCheck()
+                    pop_icon9.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_ramen_dining_24
                 }
                 R.id.pop_icon10 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup3.clearCheck()
-                    icon10RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup3.clearCheck()
+                    pop_icon10.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_local_cafe_24
                 }
             }
         }
-        iconGroup3.setOnCheckedChangeListener { radioGroup, checkedId ->
+        pop_iconGroup3.setOnCheckedChangeListener { radioGroup, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_icon11 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon11RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon11.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_business_center_24
                 }
                 R.id.pop_icon12 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon12RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon12.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_storefront_24
                 }
                 R.id.pop_icon13 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon13RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon13.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_draw_24
                 }
                 R.id.pop_icon14 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon14RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon14.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_savings_24
                 }
                 R.id.pop_icon15 -> {
                     colorGray()
-                    iconGroup1.clearCheck()
-                    iconGroup2.clearCheck()
-                    icon15RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
+                    pop_iconGroup1.clearCheck()
+                    pop_iconGroup2.clearCheck()
+                    pop_icon15.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_query_stats_24
                 }
             }
         }
 
+        //취소 버튼
         cancelImageButton = dialog.findViewById(R.id.pop_iconCancelImageButton)
         cancelImageButton.setOnClickListener {
             onClickListener.onClick(false, originIcon)
             dialog.dismiss()
         }
 
+        //확인 버튼
         okImageButton = dialog.findViewById(R.id.pop_iconOkImageButton)
         okImageButton.setOnClickListener {
             onClickListener.onClick(true, icon)
@@ -268,22 +276,23 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         onClickListener = listener
     }
 
+    //버튼 초기화(회색 처리)
     private fun colorGray() {
-        icon1RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon2RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon3RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon4RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon5RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon6RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon7RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon8RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon9RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon10RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon11RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon12RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon13RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon14RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        icon15RadioButton.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon1.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon2.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon3.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon4.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon5.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon6.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon7.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon8.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon9.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon10.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon11.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon12.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon13.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon14.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        pop_icon15.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
     }
 
 }
