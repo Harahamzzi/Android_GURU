@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 // 세부 목표를 수정할 수 있는 fragment 페이지
@@ -174,6 +175,8 @@ class DetailGoalSetupFragment : Fragment() {
 
             modifyFragment.setArguments(bundle)
             transaction.replace(R.id.fragment_main, modifyFragment)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            transaction.addToBackStack("ModifyGoal")
             transaction.commit()
         }
 
@@ -328,7 +331,7 @@ class DetailGoalSetupFragment : Fragment() {
                 ?.replace(R.id.fragment_main, SetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 ?.commit()
-        requireActivity().supportFragmentManager.popBackStack()
+        requireActivity().supportFragmentManager.popBackStack("DetailGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     private fun showIconPopUp(color: Int, iconButton: ImageButton) {

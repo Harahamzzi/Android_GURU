@@ -140,7 +140,7 @@ class SetupFragment : Fragment() {
 
                     transaction.replace(R.id.fragment_main, detailGoalSetupFragment) // 해당 레이아웃을 프래그먼트로 변경
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    transaction.addToBackStack(null)
+                    transaction.addToBackStack("DetailGoal")
                     transaction.commit() // 저장
                 }
             }
@@ -169,7 +169,7 @@ class SetupFragment : Fragment() {
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, BigGoalSetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.addToBackStack(null)
+                ?.addToBackStack("BigGoal")
                 ?.commit()
     }
 
