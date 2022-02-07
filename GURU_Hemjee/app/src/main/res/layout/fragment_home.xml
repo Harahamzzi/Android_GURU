@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/homeFragment"
+    android:id="@+id/home_fragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -16,10 +16,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalTime">
+        app:layout_constraintTop_toBottomOf="@+id/home_goalTimeTextView">
 
         <FrameLayout
-            android:id="@+id/mainBGFrameLayout"
+            android:id="@+id/home_BGFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
         </FrameLayout>
 
         <ImageView
-            android:id="@+id/mainHamsterImageView"
+            android:id="@+id/home_hamsterImageView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
@@ -42,21 +42,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mainBGFrameLayout" />
+            app:layout_constraintTop_toTopOf="@+id/home_BGFrameLayout" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/home_speechBubbleImageView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/speech_ballon"
-            app:layout_constraintBottom_toTopOf="@+id/mainHamsterImageView"
+            app:layout_constraintBottom_toTopOf="@+id/home_hamsterImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/mainHamsterTalkTextView"
+            android:id="@+id/home_hamsterTalkTextView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
@@ -65,13 +65,13 @@
             android:gravity="center"
             android:text="앗 미안;; ㅎㅎ\n난 F는 상대 안해줘;;ㅎㅎ..."
             android:textColor="@color/Black"
-            app:layout_constraintBottom_toTopOf="@+id/mainHamsterImageView"
+            app:layout_constraintBottom_toTopOf="@+id/home_hamsterImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="@+id/home_speechBubbleImageView" />
 
         <FrameLayout
-            android:id="@+id/mainClothFrameLayout"
+            android:id="@+id/home_clothFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
@@ -86,7 +86,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/mainTopImageView"
+        android:id="@+id/home_topImageView"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginTop="100dp"
@@ -97,7 +97,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/mainButtomImageView"
+        android:id="@+id/home_bottomImageView"
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:layout_marginBottom="40dp"
@@ -109,7 +109,7 @@
         app:srcCompat="@drawable/main_white_bottom" />
 
     <TextView
-        android:id="@+id/Home_seedPointView"
+        android:id="@+id/home_seedPointTextView"
         android:layout_width="80dp"
         android:layout_height="28dp"
         android:layout_marginTop="8dp"
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/home_TextView"
         android:layout_width="58.3dp"
         android:layout_height="17dp"
         android:fontFamily="@font/noto_sans"
@@ -139,10 +139,10 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Home_seedPointView" />
+        app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/goalSelectButton"
+        android:id="@+id/home_goalSelectButton"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="162dp"
         android:layout_height="30dp"
@@ -170,10 +170,10 @@
         app:iconTint="@color/Orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/home_TextView" />
 
     <TextView
-        android:id="@+id/goalTime"
+        android:id="@+id/home_goalTimeTextView"
         android:layout_width="match_parent"
         android:layout_height="33dp"
         android:layout_marginTop="8dp"
@@ -186,10 +186,10 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalSelectButton" />
+        app:layout_constraintTop_toBottomOf="@+id/home_goalSelectButton" />
 
     <Button
-        android:id="@+id/startButton"
+        android:id="@+id/home_startButton"
         android:layout_width="160dp"
         android:layout_height="47dp"
         android:layout_marginBottom="50dp"
