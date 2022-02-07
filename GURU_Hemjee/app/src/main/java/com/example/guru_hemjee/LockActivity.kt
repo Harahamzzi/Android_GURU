@@ -16,6 +16,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.dinuscxj.progressbar.CircleProgressBar
@@ -81,6 +82,10 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 상단 알림 표시 삭제
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
