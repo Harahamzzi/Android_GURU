@@ -24,8 +24,8 @@ import kotlin.collections.ArrayList
 // 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 앨범 fragment 화면
 class HomeAlbumFragment : Fragment() {
 
-    private lateinit var dateTextView: TextView // 오늘 날짜
-    private lateinit var timeTextView: TextView // 오늘 총 잠금한 시간
+    private lateinit var homeAlbum_dateTextView: TextView // 오늘 날짜
+    private lateinit var homeAlbum_timeTextView: TextView // 오늘 총 잠금한 시간
 
     // 현재 날짜 저장 변수
     private lateinit var today: String  // 현재 날짜(전체)
@@ -34,27 +34,23 @@ class HomeAlbumFragment : Fragment() {
     private lateinit var day: String    // 현재 일
 
     // 전체 스크롤뷰
-    private lateinit var scrollView: ScrollView
+    private lateinit var homeAlbum_ScrollView: ScrollView
 
     // 상단 전체 사진 이미지 뷰 ArrayList
     private var todayPhoto = ArrayList<ImageView>()
 
     // 대표 목표별 앨범 사진이 들어갈 레이아웃
-    private lateinit var goalAlbumLayout: GridLayout
+    private lateinit var homeAlbum_goalAlbumLayout: GridLayout
 
     // 카테고리별 앨범 사진이 들어갈 레이아웃
-    private lateinit var categoryAlbumLayout: LinearLayout
+    private lateinit var homeAlbum_categoryLinearLayout: LinearLayout
 
     // 저장된 사진이 없을 때 보여줄 레이아웃
-    private lateinit var blankFrameLayout: FrameLayout
+    private lateinit var homeAlbum_FrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -65,17 +61,18 @@ class HomeAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        dateTextView = requireView().findViewById(R.id.homeAlbum_dateTextView)
-        timeTextView = requireView().findViewById(R.id.homeAlbum_timeTextView)
+        homeAlbum_dateTextView = requireView().findViewById(R.id.homeAlbum_dateTextView)
+        homeAlbum_timeTextView = requireView().findViewById(R.id.homeAlbum_timeTextView)
 
-        scrollView = requireView().findViewById(R.id.homeAlbum_ScrollView)
-        goalAlbumLayout = requireView().findViewById(R.id.homeAlbum_goalAlbumLayout)
-        categoryAlbumLayout = requireView().findViewById(R.id.homeAlbum_categoryLinearLayout)
-        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_FrameLayout)
+        homeAlbum_ScrollView = requireView().findViewById(R.id.homeAlbum_ScrollView)
+        homeAlbum_goalAlbumLayout = requireView().findViewById(R.id.homeAlbum_goalAlbumLayout)
+        homeAlbum_categoryLinearLayout = requireView().findViewById(R.id.homeAlbum_categoryLinearLayout)
+        homeAlbum_FrameLayout = requireView().findViewById(R.id.homeAlbum_FrameLayout)
 
         for(i: Int in 1..6) // 1~6까지 반복
         {
-            var tempPhotoView: ImageView = requireView().findViewById(resources.getIdentifier("homeAlbum_albumView$i", "id", requireContext().packageName))
+            var tempPhotoView: ImageView = requireView().findViewById(resources.getIdentifier("homeAlbum_albumView$i",
+                    "id", requireContext().packageName))
             todayPhoto.add(tempPhotoView)
         }
 
@@ -83,7 +80,7 @@ class HomeAlbumFragment : Fragment() {
         // 현재 날짜 불러오기
         today = SimpleDateFormat("yyyy.MM.dd").format(Date(System.currentTimeMillis()))
         // 현재 날짜 위젯에 집어넣기
-        dateTextView.text = today
+        homeAlbum_dateTextView.text = today
 
         // 현재 연도/월/일 각각 뽑아오기
         year = today.split(".")[0]
@@ -94,21 +91,21 @@ class HomeAlbumFragment : Fragment() {
         applyTotalDailyLockTime()
 
         // 전체 스크롤뷰 활성화
-        scrollView.visibility = View.VISIBLE
+        homeAlbum_ScrollView.visibility = View.VISIBLE
         // 사진이 없을 때 보여줄 레이아웃 비활성화
-        blankFrameLayout.visibility = View.GONE
+        homeAlbum_FrameLayout.visibility = View.GONE
 
         // 오늘 달성한 목표들의 사진 불러오기 & 위젯에 적용
         // 사진의 세팅 여부를 isDone 플래그로 받음(t: 사진을 하나 이상 세팅함, f: 하나도 세팅하지 않음)
         var isDone: Boolean = applyTotalDailyPhoto()
 
         // 대표 목표별 앨범 클리어
-        goalAlbumLayout.removeAllViews()
+        homeAlbum_goalAlbumLayout.removeAllViews()
         // 대표 목표별 앨범 세팅
         applyDailyBigGoalPhoto()
 
         // 카테고리별 앨범 클리어
-        categoryAlbumLayout.removeAllViews()
+        homeAlbum_categoryLinearLayout.removeAllViews()
         // 카테고리별 앨범 세팅
         applyDailyCategoryPhoto()
 
@@ -119,7 +116,7 @@ class HomeAlbumFragment : Fragment() {
 
         // 불러올 사진이 없을 경우 goalAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
         try {
-            goalAlbumLayout.get(0)
+            homeAlbum_goalAlbumLayout.get(0)
         }
         // Exception이 발생했을 시
         catch(e: IndexOutOfBoundsException) {
@@ -127,7 +124,7 @@ class HomeAlbumFragment : Fragment() {
             blankCount++
         }
         try {
-            categoryAlbumLayout.get(0)
+            homeAlbum_categoryLinearLayout.get(0)
         }
         // Exception이 발생했을 시
         catch(e: IndexOutOfBoundsException) {
@@ -142,9 +139,9 @@ class HomeAlbumFragment : Fragment() {
         if (blankCount == 3)
         {
             // 전체 스크롤뷰 바활성화
-            scrollView.visibility = View.INVISIBLE
+            homeAlbum_ScrollView.visibility = View.INVISIBLE
             // 사진이 없을 때 보여줄 레이아웃 활성화
-            blankFrameLayout.visibility = View.VISIBLE
+            homeAlbum_FrameLayout.visibility = View.VISIBLE
         }
     }
 
@@ -180,7 +177,7 @@ class HomeAlbumFragment : Fragment() {
         var tempMin = dayTotalLockTime / 1000 / 60 % 60   // 분
         var tempSec = dayTotalLockTime / 1000 % 60        // 초
 
-        timeTextView.text = "$tempHour : $tempMin : $tempSec"
+        homeAlbum_timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
         cursor.close()
         sqlitedb.close()
@@ -193,7 +190,8 @@ class HomeAlbumFragment : Fragment() {
         // 세부 목표 리포트 DB 열기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE photo_name IS NOT NULL", null)
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db " +
+                "WHERE photo_name IS NOT NULL", null)
         cursor.moveToLast() // 맨 끝으로 이동
         cursor.moveToNext() // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
@@ -277,7 +275,7 @@ class HomeAlbumFragment : Fragment() {
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
-            var view: View = layoutInflater.inflate(R.layout.container_small_album, goalAlbumLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_small_album, homeAlbum_goalAlbumLayout, false)
 
             // 제목을 대표 목표 이름으로 변경
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -298,7 +296,7 @@ class HomeAlbumFragment : Fragment() {
             }
 
             // view 추가
-            goalAlbumLayout.addView(view)
+            homeAlbum_goalAlbumLayout.addView(view)
         }
 
         cursor.close()
@@ -315,12 +313,13 @@ class HomeAlbumFragment : Fragment() {
         for (index in tempBigGoalNameList.indices)
         {
             // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터들만 가져옴
-            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${tempBigGoalNameList[index]}'", null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE " +
+                    "big_goal_name = '${tempBigGoalNameList[index]}'", null)
 
             if (cursor.moveToNext())
             {
                 // 해당 뷰 가져오기
-                var view: View = goalAlbumLayout.get(index)
+                var view: View = homeAlbum_goalAlbumLayout.get(index)
 
                 // 해당 뷰의 아이콘 색상을 대표 목표 색상으로 변경
                 var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
@@ -336,7 +335,7 @@ class HomeAlbumFragment : Fragment() {
         /** 세부 목표 리포트 + 세부 목표 DB에서 사진 뽑아오기 - detail_goal_time_report_db + detail_goal_db **/
 
         // goalAlbumLayout에 생성한 뷰 개수 가져오기
-        var totalCountIndex: Int = goalAlbumLayout.childCount - 1
+        var totalCountIndex: Int = homeAlbum_goalAlbumLayout.childCount - 1
         var removeCount = 0 // 삭제한 뷰의 개수
 
         // 0 ~ totalCountIndex만큼 반복
@@ -347,7 +346,7 @@ class HomeAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(index - removeCount)
+            var view: View = homeAlbum_goalAlbumLayout.get(index - removeCount)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -361,7 +360,7 @@ class HomeAlbumFragment : Fragment() {
             if(!cursor.moveToNext())
             {
                 // 해당 대표 목표 폴더 삭제
-                goalAlbumLayout.removeViewAt(index - removeCount)
+                homeAlbum_goalAlbumLayout.removeViewAt(index - removeCount)
 
                 // 삭제한 횟수 증가
                 removeCount++
@@ -420,7 +419,8 @@ class HomeAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터만 가져오기
-            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '$goalName'", null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE " +
+                    "big_goal_name = '$goalName'", null)
 
             // 대표 목표별 총 잠금한 시간 변수
             var totalGoalLockTime: Int = 0
@@ -480,7 +480,7 @@ class HomeAlbumFragment : Fragment() {
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
-            var view: View = layoutInflater.inflate(R.layout.container_big_album, categoryAlbumLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_big_album, homeAlbum_categoryLinearLayout, false)
 
             // 아이콘 변경
             var icon: ImageView = view.findViewById(R.id.bigAlbum_albumIconImageView)
@@ -503,7 +503,7 @@ class HomeAlbumFragment : Fragment() {
             }
 
             // view 추가
-            categoryAlbumLayout.addView(view)
+            homeAlbum_categoryLinearLayout.addView(view)
 
             //사진 개수 추가
             picNums.add(0)
@@ -533,7 +533,7 @@ class HomeAlbumFragment : Fragment() {
             var iconNum: Int = iconList.indexOf(tempIcon)
 
             // 해당 뷰 연결
-            var view: View = categoryAlbumLayout.get(iconNum)
+            var view: View = homeAlbum_categoryLinearLayout.get(iconNum)
 
             /** 날짜 데이터 가져와서 비교하기 **/
 
@@ -562,7 +562,8 @@ class HomeAlbumFragment : Fragment() {
                     var bitmap: Bitmap = BitmapFactory.decodeFile(path)
                     // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
                     var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 155, true)
-                    var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + picNums[iconNum], "id", requireContext().packageName))
+                    var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView"
+                            + picNums[iconNum], "id", requireContext().packageName))
                     categotyPhoto.setImageBitmap(reScaledBitmap)
                 }
                 catch(e: Exception) {
@@ -589,7 +590,7 @@ class HomeAlbumFragment : Fragment() {
             if(picNums[index - removeCount] == 0)
             {
                 // 해당 카테고리 폴더를 삭제한다
-                categoryAlbumLayout.removeViewAt(index - removeCount)
+                homeAlbum_categoryLinearLayout.removeViewAt(index - removeCount)
                 // 삭제한 횟수 증가
                 removeCount++
             }

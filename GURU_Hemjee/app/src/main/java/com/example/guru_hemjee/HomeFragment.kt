@@ -22,35 +22,31 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment() {
 
     //씨앗 개수
-    private lateinit var seedPointView: TextView
+    private lateinit var home_seedPointTextView: TextView
 
     //시작 버튼
-    private lateinit var startButton: Button
+    private lateinit var home_startButton: Button
 
     //잠금 수정 버튼
-    private lateinit var goalSelectButton: MaterialButton
+    private lateinit var home_goalSelectButton: MaterialButton
     private var bigGoalName: String = ""
     private var bigGoalColor: Int = 0
 
     //잠금 시간 안내
     private var time = "00:00:00"
-    private lateinit var goalTime: TextView
+    private lateinit var home_goalTimeTextView: TextView
 
     //햄찌 관련
-    private lateinit var mainBGFrameLayout: FrameLayout
-    private lateinit var mainClothFrameLayout: FrameLayout
+    private lateinit var home_BGFrameLayout: FrameLayout
+    private lateinit var home_clothFrameLayout: FrameLayout
     //햄찌 말 관련
     private var hamsterTalkList = ArrayList<String>()
-    private lateinit var hamsterTalkTextView: TextView
+    private lateinit var home_hamsterTalkTextView: TextView
 
     //db관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
     private lateinit var hamName: String
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -62,13 +58,13 @@ class HomeFragment : Fragment() {
         super.onStart()
 
         //씨앗 표시
-        seedPointView = requireView().findViewById(R.id.home_seedPointTextView)
+        home_seedPointTextView = requireView().findViewById(R.id.home_seedPointTextView)
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
         var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
-            seedPointView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
+            home_seedPointTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
             hamName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
 
@@ -77,7 +73,7 @@ class HomeFragment : Fragment() {
         dbManager.close()
 
         //잠금 버튼 수정
-        goalSelectButton = requireView().findViewById(R.id.home_goalSelectButton)
+        home_goalSelectButton = requireView().findViewById(R.id.home_goalSelectButton)
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor= sqlitedb.rawQuery("SELECT * FROM big_goal_db",null)
@@ -87,9 +83,9 @@ class HomeFragment : Fragment() {
             bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
             time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time"))
 
-            goalSelectButton.text = bigGoalName
-            goalSelectButton.setTextColor(resources.getColor(R.color.Black))
-            goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
+            home_goalSelectButton.text = bigGoalName
+            home_goalSelectButton.setTextColor(resources.getColor(R.color.Black))
+            home_goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
 
             isThereBigGoal = true
         }
@@ -100,11 +96,11 @@ class HomeFragment : Fragment() {
         if(!isThereBigGoal){
             bigGoalName = "목표를 생성해주세요"
             bigGoalColor = R.color.Gray
-            goalSelectButton.text = bigGoalName
-            goalSelectButton.setTextColor(bigGoalColor)
-            goalSelectButton.setIconTintResource(R.color.Gray)
+            home_goalSelectButton.text = bigGoalName
+            home_goalSelectButton.setTextColor(bigGoalColor)
+            home_goalSelectButton.setIconTintResource(R.color.Gray)
         }
-        goalSelectButton.setOnClickListener {
+        home_goalSelectButton.setOnClickListener {
             showLockSettingPopUp()
         }
 
@@ -133,9 +129,9 @@ class HomeFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
 
-        mainBGFrameLayout = requireView().findViewById(R.id.home_BGFrameLayout)
-        mainClothFrameLayout = requireView().findViewById(R.id.home_clothFrameLayout)
-        FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false, false)
+        home_BGFrameLayout = requireView().findViewById(R.id.home_BGFrameLayout)
+        home_clothFrameLayout = requireView().findViewById(R.id.home_clothFrameLayout)
+        FunUpDateHamzzi.upDate(requireContext(), home_BGFrameLayout, home_clothFrameLayout, false, false)
 
         //햄찌 말 처리
         hamsterTalkList.add("미안하지만\n햄찌는 F 상대 안한다 햄찌,,")
@@ -153,33 +149,34 @@ class HomeFragment : Fragment() {
         hamsterTalkList.add("미래에 후회하는 나?\n미래에 뿌듯한 나?")
         hamsterTalkList.add("24시간은 생각보다\n모자르다 햄찌!!")
         val listSize = hamsterTalkList.size
-        hamsterTalkTextView = requireView().findViewById(R.id.home_hamsterTalkTextView)
+        home_hamsterTalkTextView = requireView().findViewById(R.id.home_hamsterTalkTextView)
         val random = Random()
         var num = random.nextInt(listSize)
-        hamsterTalkTextView.text = hamsterTalkList[num]
-        hamsterTalkTextView.setOnClickListener {
+        home_hamsterTalkTextView.text = hamsterTalkList[num]
+        home_hamsterTalkTextView.setOnClickListener {
             var newNum = random.nextInt(listSize)
             //이전 말과 무조건 다르게 나오게 처리
             while(newNum == num){
                 newNum = random.nextInt(listSize)
             }
             num = newNum
-            hamsterTalkTextView.text = hamsterTalkList[num]
+            home_hamsterTalkTextView.text = hamsterTalkList[num]
         }
 
 
         //잠금 시간 안내
-        goalTime = requireView().findViewById(R.id.home_goalTimeTextView)
-        goalTime.text = time.split(':')[0]+"시 " + time.split(':')[1]+"분 " +time.split(':')[2]+"초"
+        home_goalTimeTextView = requireView().findViewById(R.id.home_goalTimeTextView)
+        home_goalTimeTextView.text = (time.split(':')[0]+"시 " + time.split(':')[1] + "분 "
+                + time.split(':')[2]+"초")
 
         //lock 화면 연결
-        startButton = requireView().findViewById(R.id.home_startButton)
-        startButton.setOnClickListener {
+        home_startButton = requireView().findViewById(R.id.home_startButton)
+        home_startButton.setOnClickListener {
             if(!isThereBigGoal)   {
                 Toast.makeText(context, "목표를 생성해주세요!", Toast.LENGTH_SHORT).show()
             } else {
                 showSettingConfirmPopUp()
-                hamsterTalkTextView.callOnClick()
+                home_hamsterTalkTextView.callOnClick()
             }
         }
 
@@ -200,11 +197,11 @@ class HomeFragment : Fragment() {
                     var intent = Intent(requireActivity(), LockActivity::class.java)
 
                     // 유저 정보 보내기
-                    intent.putExtra("seed", seedPointView.text)
+                    intent.putExtra("seed", home_seedPointTextView.text)
                     intent.putExtra("hamsterName", hamName)
 
                     // 대표 목표 이름 보내기
-                    intent.putExtra("bigGoalName", goalSelectButton.text)
+                    intent.putExtra("bigGoalName", home_goalSelectButton.text)
 
                     // 타이머 시간 데이터 보내기
                     intent.putExtra("hour", time.split(':')[0])
@@ -227,14 +224,14 @@ class HomeFragment : Fragment() {
             override fun onClicked(isChanged: Boolean, bigGoalTitle: String, changedBigGoalColor: Int, getTime: String) {
                 if(isChanged){
                     bigGoalName = bigGoalTitle
-                    goalSelectButton.text = bigGoalTitle
+                    home_goalSelectButton.text = bigGoalTitle
                     bigGoalColor = changedBigGoalColor
-                    goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
+                    home_goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
                     if(getTime != "00:00:00"){
                         time = getTime
                     }
                     var timeArray = time.split(':')
-                    goalTime.text = timeArray[0] + "시 " + timeArray[1]+"분 " + timeArray[2]+"초"
+                    home_goalTimeTextView.text = timeArray[0] + "시 " + timeArray[1]+"분 " + timeArray[2]+"초"
                 }
             }
         })

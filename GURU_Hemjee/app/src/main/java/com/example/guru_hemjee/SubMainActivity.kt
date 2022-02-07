@@ -12,8 +12,8 @@ import androidx.appcompat.app.ActionBar
 class SubMainActivity : AppCompatActivity() {
 
     // 타이틀 관련
-    lateinit var titleTextView: TextView
-    lateinit var titleButton: ImageView
+    private lateinit var sub_titleTextView: TextView
+    private lateinit var sub_titleButton: ImageView
 
     // fragment 페이지 태그
     private var pageTag: String = ""
@@ -27,14 +27,14 @@ class SubMainActivity : AppCompatActivity() {
         actionBar?.hide()
 
         // 타이틀 관련 연결
-        titleTextView = findViewById(R.id.sub_titleTextView)
-        titleButton = findViewById(R.id.sub_titleButton)
+        sub_titleTextView = findViewById(R.id.sub_titleTextView)
+        sub_titleButton = findViewById(R.id.sub_titleButton)
 
         // 타이틀 이름 설정
-        titleTextView.text = intent.getStringExtra("titleName")
+        sub_titleTextView.text = intent.getStringExtra("titleName")
 
         // 타이틀 뒤로가기 버튼에 리스너 달기
-        titleButton.setOnClickListener {
+        sub_titleButton.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -57,11 +57,7 @@ class SubMainActivity : AppCompatActivity() {
                 transaction.commit()
             }
 
-//            // 나의 성취 앨범 페이지 띄우기
-//            "dailyAlbum" -> {
-//                transaction.replace(R.id.fragment_main, DailyAlbumFragment())
-//                transaction.commit()
-//            }
+            // 나의 성취 앨범은 MainActivity에서 AlbumMainActivity로 가도록 함
 
             // 씨앗 상점 페이지 띄우기
             "seedMarket" -> {
@@ -81,10 +77,5 @@ class SubMainActivity : AppCompatActivity() {
                 transaction.commit()
             }
         }
-    }
-
-    // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 }

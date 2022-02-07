@@ -19,9 +19,9 @@ import java.lang.IndexOutOfBoundsException
 class CategoryAlbumFragment : Fragment() {
 
     // 사진을 담을 레이아웃
-    private lateinit var categoryAlbumLayout: LinearLayout
+    private lateinit var albumCategory_CategoryLinearLayout: LinearLayout
     // 저장된 사진이 없을 때 보여줄 레이아웃
-    private lateinit var blankFrameLayout: FrameLayout
+    private lateinit var albumCategory_FrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -38,8 +38,8 @@ class CategoryAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        categoryAlbumLayout = requireView().findViewById(R.id.albumCategory_CategoryLinearLayout)
-        blankFrameLayout = requireView().findViewById(R.id.albumCategory_FrameLayout)
+        albumCategory_CategoryLinearLayout = requireView().findViewById(R.id.albumCategory_CategoryLinearLayout)
+        albumCategory_FrameLayout = requireView().findViewById(R.id.albumCategory_FrameLayout)
 
         // 사진 세팅
         applyCategoryPhoto()
@@ -49,12 +49,12 @@ class CategoryAlbumFragment : Fragment() {
     private fun applyCategoryPhoto() {
 
         // 모든 뷰 제거
-        categoryAlbumLayout.removeAllViews()
+        albumCategory_CategoryLinearLayout.removeAllViews()
 
         // 사진들을 보여줄 레이아웃 활성화
-        categoryAlbumLayout.visibility = View.VISIBLE
+        albumCategory_CategoryLinearLayout.visibility = View.VISIBLE
         // 사진이 없을 때 보여줄 레이아웃 비활성화
-        blankFrameLayout.visibility = View.GONE
+        albumCategory_FrameLayout.visibility = View.GONE
 
         /** 아이콘 뽑아오기 & 뷰 생성해놓기 **/
 
@@ -74,7 +74,7 @@ class CategoryAlbumFragment : Fragment() {
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
-            var view: View = layoutInflater.inflate(R.layout.container_big_album, categoryAlbumLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_big_album, albumCategory_CategoryLinearLayout, false)
 
             // 아이콘 변경
             var icon: ImageView = view.findViewById(R.id.bigAlbum_albumIconImageView)
@@ -107,7 +107,7 @@ class CategoryAlbumFragment : Fragment() {
             }
 
             // view 추가
-            categoryAlbumLayout.addView(view)
+            albumCategory_CategoryLinearLayout.addView(view)
 
             //사진 개수 추가
             picNums.add(0)
@@ -136,7 +136,7 @@ class CategoryAlbumFragment : Fragment() {
             // 몇 번째 아이콘인지 뽑아오기
             var iconNum: Int = iconList.indexOf(tempIcon)
             // 해당 뷰 연결
-            var view: View = categoryAlbumLayout.get(iconNum)
+            var view: View = albumCategory_CategoryLinearLayout.get(iconNum)
 
             //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
             if(++picNums[iconNum] >= 4)
@@ -151,7 +151,8 @@ class CategoryAlbumFragment : Fragment() {
                 // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
                 var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 156, 155, true)
 
-                var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView" + picNums[iconNum], "id", requireContext().packageName))
+                var categotyPhoto: ImageView = view.findViewById(resources.getIdentifier("bigAlbum_bigAlbumImageView"
+                        + picNums[iconNum], "id", requireContext().packageName))
                 categotyPhoto.setImageBitmap(reScaledBitmap)
             }
             catch(e: Exception) {
@@ -177,7 +178,7 @@ class CategoryAlbumFragment : Fragment() {
             if(picNums[index - removeCount] == 0)
             {
                 // 해당 카테고리 폴더를 삭제한다
-                categoryAlbumLayout.removeViewAt(index - removeCount)
+                albumCategory_CategoryLinearLayout.removeViewAt(index - removeCount)
 
                 // 삭제한 횟수 증가
                 removeCount++
@@ -188,15 +189,15 @@ class CategoryAlbumFragment : Fragment() {
 
         // 불러올 사진이 없을 경우 categoryAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
         try {
-            categoryAlbumLayout.get(0)
+            albumCategory_CategoryLinearLayout.get(0)
         }
         // Exception이 발생했을 시
         catch(e: IndexOutOfBoundsException) {
 
             // 사진들을 보여줄 레이아웃 비활성화
-            categoryAlbumLayout.visibility = View.GONE
+            albumCategory_CategoryLinearLayout.visibility = View.GONE
             // 사진이 없을 때 보여줄 레이아웃 활성화
-            blankFrameLayout.visibility = View.VISIBLE
+            albumCategory_FrameLayout.visibility = View.VISIBLE
         }
     }
 }

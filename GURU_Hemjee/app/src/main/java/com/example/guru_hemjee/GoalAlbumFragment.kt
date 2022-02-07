@@ -25,15 +25,10 @@ class GoalAlbumFragment : Fragment() {
     private lateinit var sqlitedb: SQLiteDatabase
 
     // 대표 목표별 앨범 사진이 들어갈 레이아웃
-    private lateinit var goalAlbumLayout: GridLayout
+    private lateinit var albumGoal_albumGoalGridLayout: GridLayout
 
     // 저장된 사진이 없을 때 보여줄 레이아웃
-    private lateinit var blankFrameLayout: FrameLayout
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var albumGoal_FrameLayout: FrameLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +40,8 @@ class GoalAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        goalAlbumLayout = requireView().findViewById(R.id.albumGoal_albumGoalGridLayout)
-        blankFrameLayout = requireView().findViewById(R.id.albumGoal_FrameLayout)
+        albumGoal_albumGoalGridLayout = requireView().findViewById(R.id.albumGoal_albumGoalGridLayout)
+        albumGoal_FrameLayout = requireView().findViewById(R.id.albumGoal_FrameLayout)
 
         // 앨범 생성
         applyBigGoalPhoto()
@@ -56,15 +51,15 @@ class GoalAlbumFragment : Fragment() {
     private fun applyBigGoalPhoto() {
 
         // 레이아웃 안의 모든 뷰 제거
-        goalAlbumLayout.removeAllViews()
+        albumGoal_albumGoalGridLayout.removeAllViews()
 
         // 사진들을 보여줄 레이아웃 활성화
-        goalAlbumLayout.visibility = View.VISIBLE
+        albumGoal_albumGoalGridLayout.visibility = View.VISIBLE
         // 사진이 없을 때 보여줄 레이아웃 비활성화
-        blankFrameLayout.visibility = View.GONE
+        albumGoal_FrameLayout.visibility = View.GONE
 
         // column 수를 2으로 세팅
-        goalAlbumLayout.columnCount = 2
+        albumGoal_albumGoalGridLayout.columnCount = 2
 
         /** view 동적 생성, 대표 목표 이름 가져와서 세팅하기 - big_goal_time_report_db **/
 
@@ -81,7 +76,7 @@ class GoalAlbumFragment : Fragment() {
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
-            var view: View = layoutInflater.inflate(R.layout.container_small_album, goalAlbumLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_small_album, albumGoal_albumGoalGridLayout, false)
 
             // 제목을 대표 목표 이름으로 변경
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -111,7 +106,7 @@ class GoalAlbumFragment : Fragment() {
             }
 
             // view 추가
-            goalAlbumLayout.addView(view)
+            albumGoal_albumGoalGridLayout.addView(view)
         }
 
         cursor.close()
@@ -128,12 +123,13 @@ class GoalAlbumFragment : Fragment() {
         for (index in tempBigGoalNameList.indices)
         {
             // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터들만 가져옴
-            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${tempBigGoalNameList[index]}'", null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE " +
+                    "big_goal_name = '${tempBigGoalNameList[index]}'", null)
 
             if (cursor.moveToNext())
             {
                 // 해당 뷰 가져오기
-                var view: View = goalAlbumLayout.get(index)
+                var view: View = albumGoal_albumGoalGridLayout.get(index)
 
                 // 해당 뷰의 아이콘 색상을 대표 목표 색상으로 변경
                 var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
@@ -148,7 +144,7 @@ class GoalAlbumFragment : Fragment() {
         /** 세부 목표 리포트 + 세부 목표 DB에서 사진 뽑아오기 - detail_goal_time_report_db + detail_goal_db **/
 
         // goalAlbumLayout에 생성한 뷰 개수 가져오기
-        var totalCountIndex: Int = goalAlbumLayout.childCount - 1
+        var totalCountIndex: Int = albumGoal_albumGoalGridLayout.childCount - 1
         var removeCount = 0 // 삭제한 뷰의 개수
 
         // 0 ~ totalCountIndex만큼 반복
@@ -159,7 +155,7 @@ class GoalAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(index - removeCount)
+            var view: View = albumGoal_albumGoalGridLayout.get(index - removeCount)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -173,7 +169,7 @@ class GoalAlbumFragment : Fragment() {
             if(!cursor.moveToNext())
             {
                 // 해당 대표 목표 폴더 삭제
-                goalAlbumLayout.removeViewAt(index - removeCount)
+                albumGoal_albumGoalGridLayout.removeViewAt(index - removeCount)
 
                 // 삭제한 횟수 증가
                 removeCount++
@@ -213,7 +209,8 @@ class GoalAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터만 가져오기
-            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '$goalName'", null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE " +
+                    "big_goal_name = '$goalName'", null)
 
             // 대표 목표별 총 잠금한 시간 변수
             var totalGoalLockTime: Int = 0
@@ -241,15 +238,15 @@ class GoalAlbumFragment : Fragment() {
 
         // 불러올 사진이 없을 경우 goalAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
         try {
-            goalAlbumLayout.get(0)
+            albumGoal_albumGoalGridLayout.get(0)
         }
         // Exception이 발생했을 시
         catch(e: IndexOutOfBoundsException) {
 
             // 사진들을 보여줄 레이아웃 비활성화
-            goalAlbumLayout.visibility = View.GONE
+            albumGoal_albumGoalGridLayout.visibility = View.GONE
             // 사진이 없을 때 보여줄 레이아웃 활성화
-            blankFrameLayout.visibility = View.VISIBLE
+            albumGoal_FrameLayout.visibility = View.VISIBLE
         }
     }
 }
