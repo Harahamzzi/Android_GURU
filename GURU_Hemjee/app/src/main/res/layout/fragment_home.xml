@@ -31,10 +31,13 @@
 
         <ImageView
             android:id="@+id/mainHamsterImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="125dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="135dp"
+            android:minHeight="200dp"
             android:src="@drawable/hamzzi3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +45,6 @@
             app:layout_constraintTop_toTopOf="@+id/mainBGFrameLayout" />
 
         <ImageView
-            android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="50dp"
@@ -71,7 +73,9 @@
             android:id="@+id/mainClothFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="125dp"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="135dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

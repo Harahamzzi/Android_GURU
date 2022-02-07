@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.appcompat.app.ActionBar
 
 class SubMainActivity : AppCompatActivity() {
 
@@ -20,6 +21,10 @@ class SubMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_main)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 타이틀 관련 연결
         titleTextView = findViewById(R.id.sub_titleTextView)

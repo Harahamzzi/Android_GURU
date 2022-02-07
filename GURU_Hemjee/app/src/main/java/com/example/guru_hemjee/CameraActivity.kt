@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.appcompat.app.ActionBar
 import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileNotFoundException
@@ -47,6 +48,10 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 화면 켜진 상태를 유지
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,

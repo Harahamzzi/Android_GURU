@@ -14,6 +14,7 @@ import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -78,6 +79,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
         setDetailGoalReportDB()
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 네비게이션 드로어 생성
         drawerLayout = findViewById(R.id.home_drawerLayout)

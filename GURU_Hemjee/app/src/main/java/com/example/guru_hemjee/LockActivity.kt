@@ -16,6 +16,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.dinuscxj.progressbar.CircleProgressBar
@@ -89,6 +90,10 @@ class LockActivity : AppCompatActivity() {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.deleteNotificationChannel("channel_1")
         }
+        
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 잠금화면으로 쓰이기 위한 플래그 지정
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)   // 기본 잠금화면보다 우선 출력
