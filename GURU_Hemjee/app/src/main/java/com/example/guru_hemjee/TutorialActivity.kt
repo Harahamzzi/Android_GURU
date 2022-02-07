@@ -11,11 +11,11 @@ import androidx.appcompat.app.ActionBar
 class TutorialActivity : AppCompatActivity() {
 
     //튜토리얼 초기 화면
-    private lateinit var startImageView: ImageView
+    private lateinit var tutorial_startImageView: ImageView
 
     //이름 입력 칸, 튜토리얼 끝내기
-    private lateinit var nameEditTextView: EditText
-    private lateinit var backButton: Button
+    private lateinit var tutorial_hamsterNameEditText: EditText
+    private lateinit var tutorial_goBackButton: Button
 
     //튜토리얼 안내 이미지
     private var imageButton = ArrayList<ImageButton>()
@@ -29,29 +29,29 @@ class TutorialActivity : AppCompatActivity() {
         actionBar?.hide()
 
         //초기화면 1.5초 후 종료하기
-        startImageView = findViewById(R.id.startImageView)
+        tutorial_startImageView = findViewById(R.id.tutorial_startImageView)
         Handler().postDelayed({
-            startImageView.visibility = View.GONE
+            tutorial_startImageView.visibility = View.GONE
         }, 1500L)
 
 
         for(i in 1..20){
-            imageButton.add(findViewById(resources.getIdentifier("tutorial${i}ImageButton", "id", packageName)))
+            imageButton.add(findViewById(resources.getIdentifier("tutorial_${i}ImageButton", "id", packageName)))
             imageButton[i-1].setOnClickListener {
                 it.visibility = View.INVISIBLE
             }
         }
 
-        nameEditTextView = findViewById(R.id.tutorialHamsterNameEditText)
-        backButton = findViewById(R.id.goBackButton)
-        backButton.setOnClickListener {
-            if(nameEditTextView.text.toString() == ""){
+        tutorial_hamsterNameEditText = findViewById(R.id.tutorial_hamsterNameEditText)
+        tutorial_goBackButton = findViewById(R.id.tutorial_goBackButton)
+        tutorial_goBackButton.setOnClickListener {
+            if(tutorial_hamsterNameEditText.text.toString() == ""){
                 Toast.makeText(this, "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else {
                 var dbManager = DBManager(this, "hamster_db", null, 1)
                 var sqlitedb = dbManager.writableDatabase
 
-                sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('${nameEditTextView.text.toString()}', 0, '00:00:00')")
+                sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('${tutorial_hamsterNameEditText.text.toString()}', 0, '00:00:00')")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg1', 10, 'bg', 'bg', 'bg_bg_10', 'market_bg_10', '', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg2', 1000, 'bg', 'bg', 'bg_bg_1000', 'market_bg_1000', '', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_toystory', 1500, 'bg', 'bg', 'bg_bg_1500', 'market_bg_1500', '', 0, 0, 0)")

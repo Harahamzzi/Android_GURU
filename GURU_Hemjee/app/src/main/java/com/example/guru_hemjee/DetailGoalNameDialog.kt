@@ -8,40 +8,44 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 
+//세부 목표 이름 수정 팝업
 class DetailGoalNameDialog(val context: Context, name: String) {
     private val dialog = Dialog(context)
 
     //기존 이름 textView
-    private lateinit var nameTextView: TextView
+    private lateinit var pop_originDetailGoalNameTextView: TextView
     private var name = name
 
     //수정 이름 editText
-    private lateinit var editNameEditText: EditText
+    private lateinit var pop_detailNameEditText: EditText
 
     //취소, 확인 버튼
-    private lateinit var hamsterCancelImageButton: ImageButton
-    private lateinit var nameEditImageButton: ImageButton
+    private lateinit var pop_goalNameEditCancelImageButton: ImageButton
+    private lateinit var pop_detailGoalNameOkImageButton: ImageButton
 
-    fun EditName() {
+    //팝업 표시
+    fun editNamePoPup() {
         dialog.show()
         dialog.setContentView(R.layout.popup_detail_goal_name_edit)
 
         //기존 이름
-        nameTextView = dialog.findViewById(R.id.pop_originDetailGoalNameTextView)
-        nameTextView.text = name
+        pop_originDetailGoalNameTextView = dialog.findViewById(R.id.pop_originDetailGoalNameTextView)
+        pop_originDetailGoalNameTextView.text = name
 
-        editNameEditText = dialog.findViewById(R.id.pop_detailNameEditText)
-        hamsterCancelImageButton = dialog.findViewById(R.id.pop_goalNameEditCancelImageButton)
-        nameEditImageButton = dialog.findViewById(R.id.pop_detailGoalNameOkImageButton)
+        //변경 이름
+        pop_detailNameEditText = dialog.findViewById(R.id.pop_detailNameEditText)
+        pop_goalNameEditCancelImageButton = dialog.findViewById(R.id.pop_goalNameEditCancelImageButton)
+        pop_detailGoalNameOkImageButton = dialog.findViewById(R.id.pop_detailGoalNameOkImageButton)
 
-        hamsterCancelImageButton.setOnClickListener {
+        //취소 버튼
+        pop_goalNameEditCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null)
             dialog.dismiss()
         }
 
-        //이름 설정
-        nameEditImageButton.setOnClickListener {
-            var changedName = editNameEditText.text.toString()
+        //이름 설정(확인 버튼, 공백이거나 이미 있는 목표면 수정하지 않음)
+        pop_detailGoalNameOkImageButton.setOnClickListener {
+            var changedName = pop_detailNameEditText.text.toString()
             if(changedName != ""){
                 var isValid = true
                 var dbManager = DBManager(context, "hamster_db", null, 1)
@@ -68,6 +72,7 @@ class DetailGoalNameDialog(val context: Context, name: String) {
         }
     }
 
+    //인자를 넘겨주기 위한 클릭 인터페이스(팝업을 띄우는 화면에서 처리)
     interface ButtonClickListener {
         fun onClicked(isChanged: Boolean, name: String?)
     }

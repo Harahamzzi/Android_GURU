@@ -8,43 +8,45 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+//씨앗 상점의 영수증 팝업
 class ReceiptDialog(private val context: Context, private val originalSeed: String, private val reducedSeed: String, val itemNames: ArrayList<String>) {
     private val dialog = Dialog(context)
 
     //기존 씨앗
-    private lateinit var originalSeedTextView: TextView
+    private lateinit var pop_originalSeedTextView: TextView
 
     //사용 씨앗
-    private lateinit var usedSeedsTextView: TextView
+    private lateinit var pop_usedSeedsTextView: TextView
 
     //결과 씨앗
-    private lateinit var remnantSeedsTextView: TextView
+    private lateinit var pop_remnantSeedsTextView: TextView
 
     //아이템 리스트
-    private lateinit var receiptItemRecyclerView: RecyclerView
+    private lateinit var pop_receiptItemRecyclerView: RecyclerView
 
     fun receiptPop(){
         dialog.show()
         dialog.setContentView(R.layout.popup_receipt)
 
         //기존 씨앗
-        originalSeedTextView = dialog.findViewById(R.id.pop_originalSeedTextView)
-        originalSeedTextView.text = originalSeed
+        pop_originalSeedTextView = dialog.findViewById(R.id.pop_originalSeedTextView)
+        pop_originalSeedTextView.text = originalSeed
 
         //사용 씨앗
-        usedSeedsTextView = dialog.findViewById(R.id.pop_usedSeedsTextView)
-        usedSeedsTextView.text = reducedSeed
+        pop_usedSeedsTextView = dialog.findViewById(R.id.pop_usedSeedsTextView)
+        pop_usedSeedsTextView.text = reducedSeed
 
         //결과 씨앗
-        remnantSeedsTextView = dialog.findViewById(R.id.pop_remnantSeedsTextView)
-        remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed.toInt()).toString()
+        pop_remnantSeedsTextView = dialog.findViewById(R.id.pop_remnantSeedsTextView)
+        pop_remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed.toInt()).toString()
 
         //아이템 리스트
-        receiptItemRecyclerView = dialog.findViewById(R.id.pop_receiptItemRecyclerView)
+        pop_receiptItemRecyclerView = dialog.findViewById(R.id.pop_receiptItemRecyclerView)
         val items = ArrayList<ReceiptItem>()
         val receiptAdapter = ReceiptAdapter(context, items)
-        receiptItemRecyclerView.adapter = receiptAdapter
+        pop_receiptItemRecyclerView.adapter = receiptAdapter
 
+        //아이템 리스트에 동적으로 연결
         val dbManager = DBManager(context, "hamster_db", null, 1)
         val sqlitedb: SQLiteDatabase = dbManager.readableDatabase
         val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_bought = 0",null)
@@ -65,20 +67,18 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
         dbManager.close()
 
         //구매 확인
-        val buy = dialog.findViewById<ImageButton>(R.id.pop_okBuyImageButton)
-        buy.setOnClickListener {
-            onClickListener.onClicked(true, remnantSeedsTextView.text.toString().toInt())
+        val pop_okBuyImageButton = dialog.findViewById<ImageButton>(R.id.pop_okBuyImageButton)
+        pop_okBuyImageButton.setOnClickListener {
+            onClickListener.onClicked(true, pop_remnantSeedsTextView.text.toString().toInt())
             dialog.dismiss()
         }
 
         //구매 취소
-        val cancel = dialog.findViewById<ImageButton>(R.id.pop_receiptCancelImageButton)
-        cancel.setOnClickListener {
+        val pop_receiptCancelImageButton = dialog.findViewById<ImageButton>(R.id.pop_receiptCancelImageButton)
+        pop_receiptCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null)
             dialog.dismiss()
         }
-
-
     }
 
 

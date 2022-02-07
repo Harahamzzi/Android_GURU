@@ -7,23 +7,24 @@ import android.graphics.PorterDuff
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
+//잠금 설정 팝업
 class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: Int, time: String) {
     private var context = context
     private var dialog = Dialog(context)
 
     //기본 취소, 확인 버튼
-    private lateinit var lockCancelImageButton: ImageButton
-    private lateinit var settingOkImageButton: ImageButton
+    private lateinit var pop_lockCancelImageButton: ImageButton
+    private lateinit var pop_settingOkImageButton: ImageButton
 
     //대표 목표 수정 버튼
-    private lateinit var goalColorImageView: ImageView
-    private lateinit var goalTitleTextView: TextView
-    private lateinit var changeGoalButton: TextView
+    private lateinit var pop_lockSettingGoalColorImageView: ImageView
+    private lateinit var pop_goalTitleTextView: TextView
+    private lateinit var pop_changeGoalButton: TextView
 
     //시간 관련
-    private lateinit var hourEditText: EditText
-    private lateinit var minEditText: EditText
-    private lateinit var secEditText: EditText
+    private lateinit var pop_hourTimeEditText: EditText
+    private lateinit var pop_minTimeEditText: EditText
+    private lateinit var pop_secTimeEditText: EditText
 
     //기본 정보 관련
     private var bigGoalTitle: String = bigGoalTitle
@@ -32,31 +33,32 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
     private var timeArray = time.split(':')
 
     //달성 가능한 세부 목표 리스트
-    private lateinit var detailGoalRecyclerView: RecyclerView
+    private lateinit var pop_lockSettingDetailGoalRecyclerView: RecyclerView
 
+    //팝업 표시
     fun lockSetting(){
         dialog.show()
         dialog.setContentView(R.layout.popup_lock_setting)
 
         //가져온 대표 목표 제목으로 수정, 대표 목표 색상으로 변경
-        goalColorImageView = dialog.findViewById(R.id.pop_lockSettingGoalColorImageView)
-        goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView)
-        goalTitleTextView.text = bigGoalTitle
-        goalColorImageView.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
+        pop_lockSettingGoalColorImageView = dialog.findViewById(R.id.pop_lockSettingGoalColorImageView)
+        pop_goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView)
+        pop_goalTitleTextView.text = bigGoalTitle
+        pop_lockSettingGoalColorImageView.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
 
         //기본 시간 설정
-        hourEditText = dialog.findViewById<EditText>(R.id.pop_hourTimeEditText)
-        minEditText = dialog.findViewById<EditText>(R.id.pop_minTimeEditText)
-        secEditText = dialog.findViewById<EditText>(R.id.pop_secTimeEditText)
+        pop_hourTimeEditText = dialog.findViewById<EditText>(R.id.pop_hourTimeEditText)
+        pop_minTimeEditText = dialog.findViewById<EditText>(R.id.pop_minTimeEditText)
+        pop_secTimeEditText = dialog.findViewById<EditText>(R.id.pop_secTimeEditText)
         timeHintSet()
 
         //상세 목표 리스트
-        detailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingDetailGoalRecyclerView)
+        pop_lockSettingDetailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingDetailGoalRecyclerView)
         upDateGoalList(bigGoalTitle, bigGoalColor)
 
         //대표 목표 수정
-        changeGoalButton = dialog.findViewById(R.id.pop_changeGoalButton)
-        changeGoalButton.setOnClickListener {
+        pop_changeGoalButton = dialog.findViewById(R.id.pop_changeGoalButton)
+        pop_changeGoalButton.setOnClickListener {
             //대표 목표 수정을 위한 팝업 연결
             val subDialog = GoalSelectDialog(context, bigGoalTitle, "목표 변경", false)
             subDialog.goalSelectPop()
@@ -65,17 +67,18 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
             subDialog.setOnClickedListener(object : GoalSelectDialog.ButtonClickListener{
                 override fun onClicked(changedBigGoalTitle: String) {
                     bigGoalTitle = changedBigGoalTitle
-                    goalTitleTextView.text = changedBigGoalTitle
+                    pop_goalTitleTextView.text = changedBigGoalTitle
 
                     var dbManager = DBManager(context, "hamster_db", null, 1)
                     var sqlitedb = dbManager.readableDatabase
-                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$bigGoalTitle'",null)
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE " +
+                            "big_goal_name = '$bigGoalTitle'",null)
                     if (cursor.moveToNext()){
                         bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
                         time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time"))
                         timeArray = time.split(':')
                         timeHintSet()
-                        goalColorImageView.setColorFilter(bigGoalColor)
+                        pop_lockSettingGoalColorImageView.setColorFilter(bigGoalColor)
                     }
                     cursor.close()
                     sqlitedb.close()
@@ -88,23 +91,26 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
 
 
         //설정 취소 버튼
-        lockCancelImageButton = dialog.findViewById(R.id.pop_lockCancelImageButton)
-        lockCancelImageButton.setOnClickListener {
-            onClickListener.onClicked(false, "목표를 생성해주세요", context.resources.getColor(R.color.Gray),"")
+        pop_lockCancelImageButton = dialog.findViewById(R.id.pop_lockCancelImageButton)
+        pop_lockCancelImageButton.setOnClickListener {
+            onClickListener.onClicked(false, "목표를 생성해주세요",
+                context.resources.getColor(R.color.Gray),"")
             dialog.dismiss()
         }
 
         //설정 확인 버튼
-        settingOkImageButton = dialog.findViewById(R.id.pop_settingOkImageButton)
-        settingOkImageButton.setOnClickListener {
-            //시간이 올바르게 들어갔는지 확인
-
+        pop_settingOkImageButton = dialog.findViewById(R.id.pop_settingOkImageButton)
+        pop_settingOkImageButton.setOnClickListener {
             //시간 갱신
-            if(hourEditText.text.toString() != "" || minEditText.text.toString() != "" || secEditText.text.toString() != ""){
-                if((hourEditText.text.toString() != "" && hourEditText.text.toString().toInt() > 23) || (minEditText.text.toString() != "" && minEditText.text.toString().toInt() > 59)||(secEditText.text.toString() != "" && secEditText.text.toString().toInt() > 59))
+            if(pop_hourTimeEditText.text.toString() != "" || pop_minTimeEditText.text.toString() != ""
+                || pop_secTimeEditText.text.toString() != ""){
+                if((pop_hourTimeEditText.text.toString() != "" && pop_hourTimeEditText.text.toString().toInt() > 23) ||
+                    (pop_minTimeEditText.text.toString() != "" && pop_minTimeEditText.text.toString().toInt() > 59)||
+                    (pop_secTimeEditText.text.toString() != "" && pop_secTimeEditText.text.toString().toInt() > 59))
                     Toast.makeText(context, "올바른 시간을 입력해주세요!", Toast.LENGTH_SHORT).show()
                 else{
-                    time = FunTimeConvert.timeConvert(hourEditText.text.toString(), minEditText.text.toString(), secEditText.text.toString())
+                    time = FunTimeConvert.timeConvert(pop_hourTimeEditText.text.toString(),
+                        pop_minTimeEditText.text.toString(), pop_secTimeEditText.text.toString())
 
                     onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
                     dialog.dismiss()
@@ -117,15 +123,18 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
         }
     }
 
+    //세부 목표 리스트 표시
     private fun upDateGoalList(bigGoalName: String, bigGoalColor: Int){
+        //대표 목표가 있을 경우("목표를 생성해주세요"는 대표 목표가 없을 때 받아옴)
         if(bigGoalName != "목표를 생성해주세요"){
             val items = ArrayList<DetailGoalItem>()
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
-            detailGoalRecyclerView.adapter = detailGoalListAdapter
+            pop_lockSettingDetailGoalRecyclerView.adapter = detailGoalListAdapter
 
             var dbManager = DBManager(context, "hamster_db", null, 1)
             var sqlitedb = dbManager.readableDatabase
-            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '$bigGoalName'", null)
+            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE " +
+                    "big_goal_name = '$bigGoalName'", null)
 
             while(cursor.moveToNext()){
                 val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
@@ -141,10 +150,11 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
         }
     }
 
+    //시간 힌트 설정
     private fun timeHintSet(){
-        hourEditText.hint = timeArray[0]
-        minEditText.hint = timeArray[1]
-        secEditText.hint =timeArray[2]
+        pop_hourTimeEditText.hint = timeArray[0]
+        pop_minTimeEditText.hint = timeArray[1]
+        pop_secTimeEditText.hint =timeArray[2]
     }
 
     interface ButtonClickListener {

@@ -61,7 +61,7 @@ class SubMainActivity : AppCompatActivity() {
 
             // 씨앗 상점 페이지 띄우기
             "seedMarket" -> {
-                transaction.replace(R.id.fragment_main, SeedMarket())
+                transaction.replace(R.id.fragment_main, SeedMarketFragment())
                 transaction.commit()
             }
 
