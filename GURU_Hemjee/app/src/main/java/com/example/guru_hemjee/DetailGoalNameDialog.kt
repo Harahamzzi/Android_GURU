@@ -7,7 +7,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.contentValuesOf
 
 class DetailGoalNameDialog(val context: Context, name: String) {
     private val dialog = Dialog(context)

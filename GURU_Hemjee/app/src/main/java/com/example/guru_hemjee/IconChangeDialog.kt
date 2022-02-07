@@ -2,17 +2,10 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 
 class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
     private val dialog = Dialog(context)

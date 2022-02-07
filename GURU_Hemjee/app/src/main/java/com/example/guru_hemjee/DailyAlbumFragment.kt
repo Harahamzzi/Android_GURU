@@ -1,13 +1,11 @@
 package com.example.guru_hemjee
+
 import android.widget.Toast
-
-
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment

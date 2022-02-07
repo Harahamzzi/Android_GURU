@@ -2,7 +2,6 @@ package com.example.guru_hemjee
 
 import android.content.Intent
 import android.util.Log
-
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap

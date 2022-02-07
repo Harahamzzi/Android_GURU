@@ -1,6 +1,6 @@
 package com.example.guru_hemjee
-import android.util.Log
 
+import android.util.Log
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase

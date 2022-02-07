@@ -1,19 +1,13 @@
 package com.example.guru_hemjee
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
 import android.text.TextUtils
-import android.util.LayoutDirection
 import android.widget.*
-import androidx.core.view.ViewCompat
-import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
 class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: String, val isReport: Boolean) {
     private var context = context

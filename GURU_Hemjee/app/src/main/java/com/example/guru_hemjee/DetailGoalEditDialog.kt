@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.widget.ImageButton
 import android.widget.TextView
-import kotlinx.android.synthetic.main.popup_detail_goal.*
 
 class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: String) {
     private val dialog = Dialog(context)

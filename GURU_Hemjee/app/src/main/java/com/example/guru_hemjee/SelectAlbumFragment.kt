@@ -1,4 +1,5 @@
 package com.example.guru_hemjee
+
 import android.widget.Toast
 import android.content.Context
 import android.database.Cursor
@@ -7,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.util.Log
-
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
