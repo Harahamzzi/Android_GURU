@@ -40,6 +40,7 @@
                     android:layout_height="32dp"
                     android:background="@drawable/solid_daily_report_button1"
                     android:button="@null"
+                    android:fontFamily="@font/noto_sans"
                     android:text="일간"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
@@ -53,6 +54,7 @@
                     android:background="@drawable/solid_monthly_report_button2"
                     android:button="@null"
                     android:checked="true"
+                    android:fontFamily="@font/noto_sans"
                     android:text="주간"
                     android:textAlignment="center"
                     android:textColor="@color/Black"
@@ -87,13 +89,15 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/moveWeeklyButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout"
+                tools:fontFamily="@font/noto_sans" />
 
             <TextView
                 android:id="@+id/weeklyTimeTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="00시간 00분"
                 android:textColor="@color/Black"
                 android:textSize="26sp"
@@ -163,7 +167,8 @@
                 app:iconTint="@color/Black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyStackBarChart" />
+                app:layout_constraintTop_toBottomOf="@+id/weeklyStackBarChart"
+                tools:fontFamily="@font/noto_sans" />
 
             <LinearLayout
                 android:id="@+id/weeklyReportListLayout"
@@ -203,7 +208,8 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextview"
+                tools:fontFamily="@font/noto_sans" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

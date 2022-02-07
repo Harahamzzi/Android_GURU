@@ -29,6 +29,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.round
 
 
 class HomeReportFragment : Fragment() {
@@ -49,6 +50,7 @@ class HomeReportFragment : Fragment() {
     lateinit var weeklyStackBarChart: BarChart  // 차트
     lateinit var weeklyGoalListLayout: LinearLayout // 대표목표 리스트가 들어갈 레이아웃
     lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>    // 2차원 배열(대표목표)
+    var isBigGoalInitialised = false
 
 //    // 월간
 //    lateinit var monthDayTextView: TextView // 날짜
@@ -119,8 +121,6 @@ class HomeReportFragment : Fragment() {
         var cursor: Cursor
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
-        //대표 목표가 초기화 되었는지 확인
-        var isBigGoalInitialised = false
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
         while (cursor.moveToNext()) {
             val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
@@ -170,12 +170,10 @@ class HomeReportFragment : Fragment() {
         dbManager.close()
         sqlite.close()
 
-        if(isBigGoalInitialised){
-            weeklyReport(ZonedDateTime.now((ZoneId.of("Asia/Seoul"))))
-        } else {
+        if(!isBigGoalInitialised){
             Toast.makeText(context, "수행한 기록이 없습니다.", Toast.LENGTH_SHORT).show()
         }
-
+        weeklyReport(ZonedDateTime.now())
 //        // 월간 리포트 함수
 //        createMonthlyReport(nowDate)
     }
@@ -202,13 +200,19 @@ class HomeReportFragment : Fragment() {
             }
         }
 
-        for(i in 0 until weekList.size){
+        for (i in 0 until weekList.size){
             var tempArrayList = MutableList(bigGoalNameList.size, {0.0f})
-            for(nameNum in 0 until bigGoalNameList.size){
-                for(goalNum in 0 until bigGoalArrayList.size){
-                    if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
-                        tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)/24 //시간
-                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60)%60) / 100 //분
+            for (nameNum in 0 until bigGoalNameList.size){
+                for (goalNum in 0 until bigGoalArrayList.size){
+                    if (bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
+                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60*60)/24).toFloat() //시간
+                        tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toInt()/(1000*60)%60).toFloat() / 100 //분
+                        if (tempArrayList[nameNum] != 0f){
+                            tempArrayList[nameNum] = round(tempArrayList[nameNum]*100) /100
+                        } else {
+
+                            tempArrayList[nameNum] += (bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000)%60) / 10000 //초
+                        }
                     }
                 }
             }
@@ -264,6 +268,7 @@ class HomeReportFragment : Fragment() {
             setDrawLabels(true) // 값 세팅X
             textColor = R.color.Black
             textSize = 14f
+            axisMinimum = 0.0f
         }
         weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X
@@ -285,26 +290,35 @@ class HomeReportFragment : Fragment() {
 
         var totalMilli: BigInteger = BigInteger.ZERO // 총 전체 잠금 시간
 
-        for (i in 0 until bigGoalArrayList.size) {
-            for (j in 0 until weekList.size) {
-                if (bigGoalArrayList[i]["lock_date"] == weekList[j]) // 잠금 날짜가 같다면 총 시간 저장
-                    totalMilli += bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
+        if(isBigGoalInitialised){
+            for (i in 0 until bigGoalArrayList.size) {
+                for (j in 0 until weekList.size) {
+                    if (bigGoalArrayList[i]["lock_date"] == weekList[j]) // 잠금 날짜가 같다면 총 시간 저장
+                        totalMilli += bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
+                }
             }
         }
 
-        var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
-        var integer_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
-        weekTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()
+        var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
+        if (integer_hour == 0 && integer_min == 0){
+            var integer_sec: Int = (totalMilli.toLong() / (1000)%60).toInt()
+            weekTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분 " + integer_sec+"초"
+        } else {
+            weekTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        }
 
         // 스택바 차트 세팅
         var isBarFlag = false
-        for (i in 0 until bigGoalArrayList.size) {
-            for (j in 0 until weekList.size) {
-                if (bigGoalArrayList[i]["lock_date"] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
-                    setWeeklyStackBarChart(weekList)
-                    weeklyStackBarChart.visibility = View.VISIBLE
-                    isBarFlag = true
-                    break
+        if(isBigGoalInitialised){
+            for (i in 0 until bigGoalArrayList.size) {
+                for (j in 0 until weekList.size) {
+                    if (bigGoalArrayList[i]["lock_date"] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
+                        setWeeklyStackBarChart(weekList)
+                        weeklyStackBarChart.visibility = View.VISIBLE
+                        isBarFlag = true
+                        break
+                    }
                 }
             }
         }
@@ -316,20 +330,24 @@ class HomeReportFragment : Fragment() {
         var bigGoalName = ArrayList<String>()
         var bigGoalTime = ArrayList<Long>()
         var bigGoalColor = ArrayList<Int>()
-        for (i in 0 until bigGoalArrayList.size) { //detailGoalArray사용
-            for(j in 0 until weekList.size){
-                if(bigGoalArrayList[i]["lock_date"] == weekList[j]){
-                    if(!bigGoalName.contains(bigGoalArrayList[i]["big_goal_name"])){
-                        bigGoalName.add(bigGoalArrayList[i]["big_goal_name"].toString())
-                        bigGoalColor.add(bigGoalArrayList[i]["color"]!!.toInt())
-                        bigGoalTime.add(bigGoalArrayList[i]["total_lock_time"]!!.toLong())
-                    } else {
-                        var index = bigGoalName.indexOf(bigGoalArrayList[i]["big_goal_name"])
-                        bigGoalTime[index] = bigGoalTime[index] + bigGoalArrayList[i]["total_lock_time"]!!.toLong()
+
+        if(isBigGoalInitialised){
+            for (i in 0 until bigGoalArrayList.size) { //detailGoalArray사용
+                for(j in 0 until weekList.size){
+                    if(bigGoalArrayList[i]["lock_date"] == weekList[j]){
+                        if(!bigGoalName.contains(bigGoalArrayList[i]["big_goal_name"])){
+                            bigGoalName.add(bigGoalArrayList[i]["big_goal_name"].toString())
+                            bigGoalColor.add(bigGoalArrayList[i]["color"]!!.toInt())
+                            bigGoalTime.add(bigGoalArrayList[i]["total_lock_time"]!!.toLong())
+                        } else {
+                            var index = bigGoalName.indexOf(bigGoalArrayList[i]["big_goal_name"])
+                            bigGoalTime[index] = bigGoalTime[index] + bigGoalArrayList[i]["total_lock_time"]!!.toLong()
+                        }
                     }
                 }
             }
         }
+
 
         for(i in 0 until bigGoalName.size){
             // 동적 뷰 생성
@@ -344,9 +362,14 @@ class HomeReportFragment : Fragment() {
             bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
             bigGoalColorImg.setColorFilter(bigGoalColor[i], PorterDuff.Mode.SRC_IN)
             bigGoalTextview.text = bigGoalName[i]
-            var hour: Long = (bigGoalTime[i] / (1000 * 60 * 60)) % 24
-            var min: Long = (bigGoalTime[i] / (1000 * 60)) % 60
-            biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"
+            var hour: Int = ((bigGoalTime[i] / (1000 * 60 * 60)) % 24).toInt()
+            var min: Int = ((bigGoalTime[i] / (1000 * 60)) % 60).toInt()
+            if(hour == 0 && min == 0){
+                var sec: Int = ((bigGoalTime[i] / (1000)) % 60).toInt()
+                biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분 " + sec.toString() + "초"
+            } else {
+                biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"
+            }
 
             // 레이아웃에 객체 추가
             weeklyGoalListLayout.addView(view)
@@ -361,8 +384,6 @@ class HomeReportFragment : Fragment() {
         var date = nowDate.parse(totalMoveTime) // ZonedDateTime -> Date
 
         calendar.time = date // Date
-
-        calendar.add(Calendar.DATE, -7) // moveTime으로부터 일주일전 날짜로 세팅
 
         // 지난주의 월요일부터 일요일까지의 날짜를 배열에 저장
         var weekList = ArrayList<String>()
