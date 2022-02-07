@@ -117,7 +117,7 @@
                     android:layout_width="160dp"
                     android:layout_height="0dp"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/marketItemList"
+                    app:layout_constraintBottom_toTopOf="@+id/scrollView2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_weight="1">
@@ -147,22 +147,28 @@
                         android:src="@drawable/ic_outline_wallpaper_24" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/marketItemList"
-                    android:layout_width="0dp"
+                <HorizontalScrollView
+                    android:id="@+id/scrollView2"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="9dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    app:layout_constraintVertical_weight="3" />
+                    app:layout_constraintVertical_weight="3">
+
+                    <LinearLayout
+                        android:id="@+id/marketItemList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
