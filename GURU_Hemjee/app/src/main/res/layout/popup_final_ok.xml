@@ -5,7 +5,7 @@
     android:layout_height="351dp">
 
     <TextView
-        android:id="@+id/finalOkTitleTextView"
+        android:id="@+id/pop_finalOkTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/okPopMainImageView"
+        android:id="@+id/pop_okPopMainImageView"
         android:layout_width="0dp"
         android:layout_height="240dp"
         android:layout_marginTop="12dp"
@@ -27,11 +27,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/finalOkTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pop_finalOkTitleTextView"
         app:srcCompat="@drawable/popup_basic_ham" />
 
     <TextView
-        android:id="@+id/okPopHamsterTalkTextView"
+        android:id="@+id/pop_okPopHamsterTalkTextView"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_marginTop="17dp"
@@ -42,10 +42,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/okPopMainImageView" />
+        app:layout_constraintTop_toTopOf="@+id/pop_okPopMainImageView" />
 
     <Button
-        android:id="@+id/okButton"
+        android:id="@+id/pop_okButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginBottom="17dp"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/plainOkButton"
+        android:id="@+id/pop_plainOkButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginBottom="17dp"

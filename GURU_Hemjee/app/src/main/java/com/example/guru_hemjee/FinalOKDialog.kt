@@ -26,11 +26,11 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
         dialog.setCancelable(false) // 화면 밖 터치시 팝업창이 닫히지 않게 함
         dialog.setContentView(R.layout.popup_final_ok)
 
-        popTitleTextView = dialog.findViewById(R.id.finalOkTitleTextView)
-        confirmSeedButton = dialog.findViewById(R.id.okButton)
-        confirmButton = dialog.findViewById(R.id.plainOkButton)
-        hamsterTalkTextView = dialog.findViewById(R.id.okPopHamsterTalkTextView)
-        okPopMainImageView = dialog.findViewById(R.id.okPopMainImageView)
+        popTitleTextView = dialog.findViewById(R.id.pop_finalOkTitleTextView)
+        confirmSeedButton = dialog.findViewById(R.id.pop_okButton)
+        confirmButton = dialog.findViewById(R.id.pop_plainOkButton)
+        hamsterTalkTextView = dialog.findViewById(R.id.pop_okPopHamsterTalkTextView)
+        okPopMainImageView = dialog.findViewById(R.id.pop_okPopMainImageView)
 
         if(picSource != null){
             okPopMainImageView.setImageResource(picSource)
