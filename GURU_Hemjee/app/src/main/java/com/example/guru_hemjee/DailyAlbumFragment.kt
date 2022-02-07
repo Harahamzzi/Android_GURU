@@ -16,10 +16,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
-import androidx.fragment.app.FragmentTransaction
 import androidx.gridlayout.widget.GridLayout
 import java.lang.IndexOutOfBoundsException
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -66,14 +64,14 @@ class DailyAlbumFragment : Fragment() {
         todayDate = LocalDateTime.now()
 
         // 위젯 연결
-        todayTextView = requireView().findViewById(R.id.dailyAlbum_dateTextView)
-        totalTimeTextView = requireView().findViewById(R.id.dailyAlbum_timeTextView)
+        todayTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
+        totalTimeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
 
-        dailyAlbumGridLayout = requireView().findViewById(R.id.dailyAlbum_GridLayout)
-        blankFrameLayout = requireView().findViewById(R.id.dailyAlbum_frameLayout)
+        dailyAlbumGridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
+        blankFrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
 
-        preButton = requireView().findViewById(R.id.dailyAlbum_prevButton)
-        nextButton = requireView().findViewById(R.id.dailyAlbum_nextButton)
+        preButton = requireView().findViewById(R.id.albumDaily_prevButton)
+        nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
 
         // 위젯에 오늘 날짜 입력
         // (현재 날짜를 오늘 날짜로 설정)

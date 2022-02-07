@@ -48,27 +48,26 @@
 <!--    </androidx.appcompat.widget.Toolbar>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <androidx.appcompat.widget.AppCompatSpinner-->
-<!--            android:id="@+id/daily_albumMenuSpinner"-->
-<!--            android:background="@drawable/spinner_select_background"-->
-<!--            android:layout_width="80dp"-->
-<!--            android:layout_height="23dp"-->
-<!--            android:layout_marginTop="28dp"-->
-<!--            android:layout_marginEnd="17dp"-->
-<!--            android:theme="@style/Spinner"-->
-<!--            android:entries="@array/spinnerAlbumList"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <!--        <androidx.appcompat.widget.AppCompatSpinner-->
+        <!--            android:id="@+id/daily_albumMenuSpinner"-->
+        <!--            android:background="@drawable/spinner_select_background"-->
+        <!--            android:layout_width="80dp"-->
+        <!--            android:layout_height="23dp"-->
+        <!--            android:layout_marginTop="28dp"-->
+        <!--            android:layout_marginEnd="17dp"-->
+        <!--            android:theme="@style/Spinner"-->
+        <!--            android:entries="@array/spinnerAlbumList"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
-            android:id="@+id/dailyAlbum_dateTextView"
+            android:id="@+id/albumDaily_DateTextView"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginTop="15dp"
@@ -92,10 +91,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dailyAlbum_dateTextView">
+            app:layout_constraintTop_toBottomOf="@+id/albumDaily_DateTextView">
 
             <ImageButton
-                android:id="@+id/dailyAlbum_prevButton"
+                android:id="@+id/albumDaily_prevButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -103,7 +102,7 @@
                 android:src="@drawable/prev_button" />
 
             <TextView
-                android:id="@+id/dailyAlbum_timeTextView"
+                android:id="@+id/albumDaily_timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -115,7 +114,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/dailyAlbum_nextButton"
+                android:id="@+id/albumDaily_nextButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -127,13 +126,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/dailyAlbum_frameLayout"
+        android:id="@+id/albumDaily_FrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/LightGray"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dailyAlbum_scrollView">
+        app:layout_constraintTop_toTopOf="@+id/albumDaily_ScrollView">
 
         <TextView
             android:layout_width="wrap_content"
@@ -146,7 +145,7 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/dailyAlbum_scrollView"
+        android:id="@+id/albumDaily_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="47dp"
@@ -156,7 +155,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/dailyAlbum_GridLayout"
+            android:id="@+id/albumDaily_GridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:columnCount="3"
