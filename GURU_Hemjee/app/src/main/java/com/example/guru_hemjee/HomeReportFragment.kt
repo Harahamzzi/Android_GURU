@@ -163,7 +163,11 @@ class HomeReportFragment : Fragment() {
         if(!isBigGoalInitialised){
             Toast.makeText(context, "수행한 기록이 없습니다.", Toast.LENGTH_SHORT).show()
         }
-        weeklyReport(ZonedDateTime.now(), bigGoalArrayList, isBigGoalInitialised)
+        if(isBigGoalInitialised){
+            weeklyReport(ZonedDateTime.now(), bigGoalArrayList, isBigGoalInitialised)
+        } else {
+            weeklyReport(ZonedDateTime.now(), ArrayList<MutableMap<String, String>>(), isBigGoalInitialised)
+        }
     }
 
     // 스택바 차트 세팅 함수
