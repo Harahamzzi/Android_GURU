@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
 import androidx.fragment.app.FragmentTransaction
+import java.lang.IndexOutOfBoundsException
 
 
 class CategoryAlbumFragment : Fragment() {
@@ -23,6 +24,8 @@ class CategoryAlbumFragment : Fragment() {
 
     // 사진을 담을 레이아웃
     private lateinit var categoryAlbumLayout: LinearLayout
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var blankFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -44,7 +47,8 @@ class CategoryAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        categoryAlbumLayout = requireView().findViewById(R.id.album_categoryLinearLayout)
+        categoryAlbumLayout = requireView().findViewById(R.id.categoryAlbum__categoryLinearLayout)
+        blankFrameLayout = requireView().findViewById(R.id.categoryAlbum_frameLayout)
 
         // 사진 세팅
         applyCategoryPhoto()
@@ -100,6 +104,11 @@ class CategoryAlbumFragment : Fragment() {
 
         // 모든 뷰 제거
         categoryAlbumLayout.removeAllViews()
+
+        // 사진들을 보여줄 레이아웃 활성화
+        categoryAlbumLayout.visibility = View.VISIBLE
+        // 사진이 없을 때 보여줄 레이아웃 비활성화
+        blankFrameLayout.visibility = View.GONE
 
         /** 아이콘 뽑아오기 & 뷰 생성해놓기 **/
 
@@ -227,6 +236,21 @@ class CategoryAlbumFragment : Fragment() {
                 // 삭제한 횟수 증가
                 removeCount++
             }
+        }
+
+        /** 현재 불러올 사진이 없어 빈 화면이라면 메시지 띄우기 **/
+
+        // 불러올 사진이 없을 경우 categoryAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
+        try {
+            categoryAlbumLayout.get(0)
+        }
+        // Exception이 발생했을 시
+        catch(e: IndexOutOfBoundsException) {
+
+            // 사진들을 보여줄 레이아웃 비활성화
+            categoryAlbumLayout.visibility = View.GONE
+            // 사진이 없을 때 보여줄 레이아웃 활성화
+            blankFrameLayout.visibility = View.VISIBLE
         }
     }
 }

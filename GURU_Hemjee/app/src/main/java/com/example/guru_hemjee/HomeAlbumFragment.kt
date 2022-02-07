@@ -13,11 +13,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import androidx.gridlayout.widget.GridLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.view.get
+import java.lang.IndexOutOfBoundsException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -34,6 +33,9 @@ class HomeAlbumFragment : Fragment() {
     private lateinit var month: String  // 현재 월
     private lateinit var day: String    // 현재 일
 
+    // 전체 스크롤뷰
+    private lateinit var scrollView: ScrollView
+
     // 상단 전체 사진 이미지 뷰 ArrayList
     private var todayPhoto = ArrayList<ImageView>()
 
@@ -42,6 +44,9 @@ class HomeAlbumFragment : Fragment() {
 
     // 카테고리별 앨범 사진이 들어갈 레이아웃
     private lateinit var categoryAlbumLayout: LinearLayout
+
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var blankFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -63,8 +68,10 @@ class HomeAlbumFragment : Fragment() {
         dateTextView = requireView().findViewById(R.id.homeAlbum_dateTextView)
         timeTextView = requireView().findViewById(R.id.homeAlbum_timeTextView)
 
+        scrollView = requireView().findViewById(R.id.homeAlbum_scrollView)
         goalAlbumLayout = requireView().findViewById(R.id.homeAlbum_goalAlbumLayout)
         categoryAlbumLayout = requireView().findViewById(R.id.homeAlbum_categoryLinearLayout)
+        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_frameLayout)
 
         for(i: Int in 1..6) // 1~6까지 반복
         {
@@ -86,8 +93,14 @@ class HomeAlbumFragment : Fragment() {
         // 오늘 총 잠금한 시간 불러오기 & 위젯에 적용
         applyTotalDailyLockTime()
 
+        // 전체 스크롤뷰 활성화
+        scrollView.visibility = View.VISIBLE
+        // 사진이 없을 때 보여줄 레이아웃 비활성화
+        blankFrameLayout.visibility = View.GONE
+
         // 오늘 달성한 목표들의 사진 불러오기 & 위젯에 적용
-        applyTotalDailyPhoto()
+        // 사진의 세팅 여부를 isDone 플래그로 받음(t: 사진을 하나 이상 세팅함, f: 하나도 세팅하지 않음)
+        var isDone: Boolean = applyTotalDailyPhoto()
 
         // 대표 목표별 앨범 클리어
         goalAlbumLayout.removeAllViews()
@@ -98,6 +111,41 @@ class HomeAlbumFragment : Fragment() {
         categoryAlbumLayout.removeAllViews()
         // 카테고리별 앨범 세팅
         applyDailyCategoryPhoto()
+
+        /** 현재 불러올 사진이 없어 빈 화면이라면 메시지 띄우기 **/
+
+        // 불러올 사진이 아예 없는 경우를 카운트하는 변수
+        var blankCount: Int = 0
+
+        // 불러올 사진이 없을 경우 goalAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
+        try {
+            goalAlbumLayout.get(0)
+        }
+        // Exception이 발생했을 시
+        catch(e: IndexOutOfBoundsException) {
+
+            blankCount++
+        }
+        try {
+            categoryAlbumLayout.get(0)
+        }
+        // Exception이 발생했을 시
+        catch(e: IndexOutOfBoundsException) {
+
+            blankCount++
+        }
+        // 당일 사진을 불러올 게 없을 때
+        if (!isDone)
+            blankCount++
+
+        // 만일 세 부분 모두에서 불러올 사진이 없었을 경우
+        if (blankCount == 3)
+        {
+            // 전체 스크롤뷰 바활성화
+            scrollView.visibility = View.INVISIBLE
+            // 사진이 없을 때 보여줄 레이아웃 활성화
+            blankFrameLayout.visibility = View.VISIBLE
+        }
     }
 
     // 오늘 총 잠금한 시간 불러오고 위젯에 적용시키는 함수
@@ -141,7 +189,7 @@ class HomeAlbumFragment : Fragment() {
 
     // 오늘 달성한 목표의 사진을 불러오고 위젯에 세팅하는 함수
     // 사진은 최대 최근 6개까지만 불러옴
-    private fun applyTotalDailyPhoto() {
+    private fun applyTotalDailyPhoto(): Boolean {
         // 세부 목표 리포트 DB 열기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -149,7 +197,8 @@ class HomeAlbumFragment : Fragment() {
         cursor.moveToLast() // 맨 끝으로 이동
         cursor.moveToNext() // 한 단계 앞으로(빈 곳을 가리키도록 함)
 
-        var count: Int = 0
+        var count: Int = 0  // daily 사진의 개수를 세는 카운트(최대 6장의 사진만 불러오기 때문)
+        var isDone = false  // 사진을 하나라도 세팅했는지 구별하는 변수
 
         while(count < 6 && cursor.moveToPrevious()) {
             var detailGoalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
@@ -190,6 +239,9 @@ class HomeAlbumFragment : Fragment() {
                         val dialog = PhotoDialog(requireContext(), path, icon, detailGoalName, bigGoalName, temp2, color)
                         dialog.photoPopUp()
                     }
+
+                    // 사진을 세팅했으므로 flag true로 변경
+                    isDone = true
                 }
                 catch(e: Exception) {
                     Log.e("오류태그", "오늘 사진 로드/세팅 실패 \n${e.printStackTrace()}")
@@ -202,6 +254,9 @@ class HomeAlbumFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        // 사진 세팅 플래그 반환
+        return isDone
     }
 
     // 대표 목표별 앨범 사진 세팅하는 함수
