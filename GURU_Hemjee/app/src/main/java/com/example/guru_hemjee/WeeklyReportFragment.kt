@@ -271,8 +271,6 @@ class WeeklyReportFragment : Fragment() {
 
         // 대표목표 토글 클릭 이벤트
         selectBigGoalBtn.setOnClickListener {
-            reportSate = 0 // 가장 최신의 주간 리포트 띄우기
-
             val dialog = GoalSelectDialog(requireContext(), selectBigGoalBtn.text.toString(),"목표 선택", true)
             dialog.goalSelectPop()
 
