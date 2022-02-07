@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SeedMarket">
+    tools:context=".SeedMarketFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:id="@+id/marketBGFrameLayout"
+                android:id="@+id/market_BGFrameLayout"
                 android:layout_width="376dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="1dp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/hamzziImage"
+                android:id="@+id/market_hamzziImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/hamzzi_full_screen"
@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
-                android:id="@+id/marketClothFrameLayout"
+                android:id="@+id/market_ClothFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/marketSeedTextView"
+                android:id="@+id/market_SeedTextView"
                 android:layout_width="80dp"
                 android:layout_height="28dp"
                 android:layout_marginTop="7dp"
@@ -72,7 +72,7 @@
 
 
             <ImageView
-                android:id="@+id/inventoryBacgroundImageView"
+                android:id="@+id/market_inventoryBacgroundImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_gravity="bottom|center_horizontal"
@@ -82,11 +82,11 @@
                 android:layout_marginBottom="6dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/hamster_inventory_bg"
-                app:layout_constraintBottom_toBottomOf="@+id/marketBGFrameLayout"
-                app:layout_constraintEnd_toEndOf="@id/marketBGFrameLayout"
+                app:layout_constraintBottom_toBottomOf="@+id/market_BGFrameLayout"
+                app:layout_constraintEnd_toEndOf="@id/market_BGFrameLayout"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/marketBGFrameLayout"
-                app:layout_constraintTop_toTopOf="@+id/marketBGFrameLayout" />
+                app:layout_constraintStart_toStartOf="@id/market_BGFrameLayout"
+                app:layout_constraintTop_toTopOf="@+id/market_BGFrameLayout" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout4"
@@ -96,13 +96,13 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/inventoryBacgroundImageView"
-                app:layout_constraintEnd_toEndOf="@+id/inventoryBacgroundImageView"
-                app:layout_constraintStart_toStartOf="@+id/inventoryBacgroundImageView"
-                app:layout_constraintTop_toTopOf="@+id/inventoryBacgroundImageView">
+                app:layout_constraintBottom_toBottomOf="@+id/market_inventoryBacgroundImageView"
+                app:layout_constraintEnd_toEndOf="@+id/market_inventoryBacgroundImageView"
+                app:layout_constraintStart_toStartOf="@+id/market_inventoryBacgroundImageView"
+                app:layout_constraintTop_toTopOf="@+id/market_inventoryBacgroundImageView">
 
                 <ImageView
-                    android:id="@+id/marketInventorybgImageView"
+                    android:id="@+id/market_inventorybgImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
@@ -123,7 +123,7 @@
                     app:layout_constraintVertical_weight="1">
 
                     <ImageButton
-                        android:id="@+id/marketClothImageButton"
+                        android:id="@+id/market_ClothImageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -131,7 +131,7 @@
                         android:src="@drawable/ic_outline_checkroom_24" />
 
                     <ImageButton
-                        android:id="@+id/marketFurnitureImageButton"
+                        android:id="@+id/market_FurnitureImageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -139,7 +139,7 @@
                         android:src="@drawable/ic_outline_chair_24" />
 
                     <ImageButton
-                        android:id="@+id/marketWallPaparImageButton"
+                        android:id="@+id/market_WallPaparImageButton"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -164,7 +164,7 @@
                     app:layout_constraintVertical_weight="3">
 
                     <LinearLayout
-                        android:id="@+id/marketItemList"
+                        android:id="@+id/market_ItemList"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal" />
@@ -189,7 +189,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/market_textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
@@ -201,7 +201,7 @@
                 android:textSize="12sp" />
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/market_view"
                 android:layout_width="0.8dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
@@ -209,7 +209,7 @@
                 android:background="@color/Black" />
 
             <TextView
-                android:id="@+id/toBeUsedSeedTextView"
+                android:id="@+id/market_toBeUsedSeedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
@@ -223,7 +223,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/buyImageButton"
+                android:id="@+id/market_buyImageButton"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="1dp"

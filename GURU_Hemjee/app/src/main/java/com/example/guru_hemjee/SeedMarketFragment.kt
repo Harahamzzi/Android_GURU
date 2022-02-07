@@ -5,41 +5,41 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
 
-class SeedMarket : Fragment() {
+//씨앗 상점 페이지
+//아이템 구매 Fragment 화면
+class SeedMarketFragment : Fragment() {
 
     //씨앗 관련
-    private lateinit var marketSeedTextView: TextView
-    private lateinit var marketReducedSeedTextView: TextView
+    private lateinit var market_SeedTextView: TextView
+    private lateinit var market_toBeUsedSeedTextView: TextView
 
     //구매 관련
-    private lateinit var buyImageButton: ImageButton
+    private lateinit var market_buyImageButton: ImageButton
     private var preselectedItems = ArrayList<String>()//이미 적용되어 있던 아이템 리스트
     private var selectedItems = ArrayList<String>() //선택한 아이템 리스트
 
     //인벤토리 배경 관련
-    private lateinit var bgImageView: ImageView //인벤토리 배경
-    private lateinit var clothImageButton: ImageButton //옷 버튼
-    private lateinit var furnitureImageButton: ImageButton//기구 버튼
-    private lateinit var wallPaperImageButton: ImageButton//배경 버튼
+    private lateinit var market_inventorybgImageView: ImageView //인벤토리 배경
+    private lateinit var market_ClothImageButton: ImageButton //옷 버튼
+    private lateinit var market_FurnitureImageButton: ImageButton//기구 버튼
+    private lateinit var market_WallPaparImageButton: ImageButton//배경 버튼
 
     //인벤토리 리스트 관련
-    private lateinit var marketLinearLayout: LinearLayout
+    private lateinit var market_ItemList: LinearLayout
     private var currentInventory: String = "clo"
 
     //가격 arrayList
     private var priceArrayList = ArrayList<Pair<String, Int>>()
 
     //햄찌 장식(배경) 관련
-    private lateinit var marketBGFrameLayout: FrameLayout
-    private lateinit var marketClothFrameLayout: FrameLayout
+    private lateinit var market_BGFrameLayout: FrameLayout
+    private lateinit var market_ClothFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -62,15 +62,15 @@ class SeedMarket : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //씨앗 관련
-        marketSeedTextView = requireView().findViewById(R.id.marketSeedTextView)
-        marketReducedSeedTextView = requireView().findViewById(R.id.toBeUsedSeedTextView)
+        market_SeedTextView = requireView().findViewById(R.id.market_SeedTextView)
+        market_toBeUsedSeedTextView = requireView().findViewById(R.id.market_toBeUsedSeedTextView)
 
         //기본 정보 가져오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
-            marketSeedTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
+            market_SeedTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString()
             hamsterName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
         cursor.close()
@@ -78,10 +78,11 @@ class SeedMarket : Fragment() {
         dbManager.close()
 
         //구매 버튼
-        buyImageButton = requireView().findViewById(R.id.buyImageButton)
-        buyImageButton.setOnClickListener {
-            if(marketReducedSeedTextView.text.toString().toInt() > marketSeedTextView.text.toString().toInt()){
-                val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인", false, R.drawable.popup_low_balance, null)
+        market_buyImageButton = requireView().findViewById(R.id.market_buyImageButton)
+        market_buyImageButton.setOnClickListener {
+            if(market_toBeUsedSeedTextView.text.toString().toInt() > market_SeedTextView.text.toString().toInt()){
+                val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
+                    false, R.drawable.popup_low_balance, null)
                 dialog.alertDialog()
 
                 dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
@@ -95,35 +96,35 @@ class SeedMarket : Fragment() {
         }
 
         //인벤토리 배경 관련
-        bgImageView = requireView().findViewById(R.id.marketInventorybgImageView)
-        clothImageButton = requireView().findViewById(R.id.marketClothImageButton)
-        furnitureImageButton = requireView().findViewById(R.id.marketFurnitureImageButton)
-        wallPaperImageButton = requireView().findViewById(R.id.marketWallPaparImageButton)
+        market_inventorybgImageView = requireView().findViewById(R.id.market_inventorybgImageView)
+        market_ClothImageButton = requireView().findViewById(R.id.market_ClothImageButton)
+        market_FurnitureImageButton = requireView().findViewById(R.id.market_FurnitureImageButton)
+        market_WallPaparImageButton = requireView().findViewById(R.id.market_WallPaparImageButton)
 
         //인벤토리 리스트 뷰
-        marketLinearLayout = requireView().findViewById(R.id.marketItemList)
+        market_ItemList = requireView().findViewById(R.id.market_ItemList)
 
         //인벤토리 초기 화면
         //화면 초기화
         upDateInventory(currentInventory)
 
-        clothImageButton.setOnClickListener {
+        market_ClothImageButton.setOnClickListener {
             currentInventory = "clo"
             upDateInventory("clo")
-            bgImageView.setImageResource(R.drawable.inventory_cloth)
+            market_inventorybgImageView.setImageResource(R.drawable.inventory_cloth)
         }
-        furnitureImageButton.setOnClickListener {
+        market_FurnitureImageButton.setOnClickListener {
             currentInventory = "furni"
             upDateInventory("furni")
-            bgImageView.setImageResource(R.drawable.inventory_furniture)
+            market_inventorybgImageView.setImageResource(R.drawable.inventory_furniture)
         }
-        wallPaperImageButton.setOnClickListener {
+        market_WallPaparImageButton.setOnClickListener {
             currentInventory = "bg"
             upDateInventory("bg")
-            bgImageView.setImageResource(R.drawable.inventory_wallpapare)
+            market_inventorybgImageView.setImageResource(R.drawable.inventory_wallpapare)
         }
 
-        //햄찌 선처리
+        //햄찌 선처리(미리 적용된 것들 처리
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
@@ -152,10 +153,10 @@ class SeedMarket : Fragment() {
         dbManager.close()
 
         //햄찌(배경) 업데이트
-        marketBGFrameLayout = requireView().findViewById(R.id.marketBGFrameLayout)
-        marketClothFrameLayout = requireView().findViewById(R.id.marketClothFrameLayout)
+        market_BGFrameLayout = requireView().findViewById(R.id.market_BGFrameLayout)
+        market_ClothFrameLayout = requireView().findViewById(R.id.market_ClothFrameLayout)
         //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
-        FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
+        FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout, market_ClothFrameLayout, true, true)
 
         preusingItems.clear()
         selectedItems.addAll(preselectedItems)
@@ -173,7 +174,8 @@ class SeedMarket : Fragment() {
         }
 
         //다이얼 로그에서 넘기기
-        val dialog = ReceiptDialog(requireContext(), marketSeedTextView.text.toString(), marketReducedSeedTextView.text.toString(), buyItems)
+        val dialog = ReceiptDialog(requireContext(), market_SeedTextView.text.toString(),
+            market_toBeUsedSeedTextView.text.toString(), buyItems)
         dialog.receiptPop()
 
         dialog.setOnClickedListener(object : ReceiptDialog.ButtonClickListener {
@@ -204,12 +206,13 @@ class SeedMarket : Fragment() {
                     sqlitedb.close()
                     dbManager.close()
 
-                    marketReducedSeedTextView.text = "0"
+                    market_toBeUsedSeedTextView.text = "0"
 
-                    marketSeedTextView.text = seed.toString()
+                    market_SeedTextView.text = seed.toString()
 
                     //구매 확인 완료 팝업
-                    val dialog = FinalOKDialog(requireContext(),"구매 확인", "확인", false, R.drawable.popup_confirm_buy, null)
+                    val dialog = FinalOKDialog(requireContext(),"구매 확인", "확인",
+                        false, R.drawable.popup_confirm_buy, null)
                     dialog.alertDialog()
 
                     dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
@@ -232,10 +235,11 @@ class SeedMarket : Fragment() {
                     sqlitedb.close()
                     dbManager.close()
 
-                    marketReducedSeedTextView.text = "0"
+                    market_toBeUsedSeedTextView.text = "0"
                     upDateInventory(currentInventory)
 
-                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
+                    FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout,
+                        market_ClothFrameLayout, true, true)
                 }
             }
         })
@@ -244,16 +248,17 @@ class SeedMarket : Fragment() {
     //인밴토리 업데이트
     private fun upDateInventory(name: String) {
         //layout 초기화
-        marketLinearLayout.removeAllViews()
+        market_ItemList.removeAllViews()
 
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         //유형에 따라 list 가져오기
-        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '${name}' AND is_bought = 0",null)
+        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE " +
+                "type = '${name}' AND is_bought = 0",null)
 
         while(cursor.moveToNext()){
             //동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.container_market_item, marketLinearLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_market_item, market_ItemList, false)
 
             var itemImageView = view.findViewById<ImageView>(R.id.marketItemBgImageView)
             var priceTextView = view.findViewById<TextView>(R.id.marketItemSeedTextView)
@@ -288,7 +293,8 @@ class SeedMarket : Fragment() {
                     itemImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
 
                     //같은 카테고리의 아이템이 선택중이면 선택해제
-                    val cursor2: Cursor = sqlitedb2.rawQuery("SELECT * FROM hamster_deco_info_db WHERE category = '${itemCategory}'", null)
+                    val cursor2: Cursor = sqlitedb2.rawQuery("SELECT * FROM hamster_deco_info_db " +
+                            "WHERE category = '${itemCategory}'", null)
                     while(cursor2.moveToNext()){
                         val tempName = cursor2.getString(cursor2.getColumnIndex("item_name"))
 
@@ -302,7 +308,8 @@ class SeedMarket : Fragment() {
                     selectedItems.add(itemName)
 
                     upDateInventory(currentInventory)
-                    FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
+                    FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout,
+                        market_ClothFrameLayout, true, true)
 
                 }
                 //선택중이라면
@@ -326,13 +333,12 @@ class SeedMarket : Fragment() {
 
                 deselectItems.clear()
                 priceReset()
-                FunUpDateHamzzi.upDate(requireContext(), marketBGFrameLayout, marketClothFrameLayout, true, true)
-
-                Log.i("item", "${selectedItems}")
+                FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout,
+                    market_ClothFrameLayout, true, true)
             }
             priceArrayList.add(Pair(itemName, price))
 
-            marketLinearLayout.addView(view)
+            market_ItemList.addView(view)
         }
         cursor.close()
         sqlitedb.close()
@@ -354,13 +360,13 @@ class SeedMarket : Fragment() {
         }
 
         //씨앗
-        marketReducedSeedTextView.text = newPrice.toString()
+        market_toBeUsedSeedTextView.text = newPrice.toString()
 
         //사용 예정 씨앗 관리(보유 씨앗 갯수를 초과하면 붉은색으로)
-        if(newPrice > marketSeedTextView.text.toString().toInt()){
-            marketReducedSeedTextView.setTextColor(Color.RED)
+        if(newPrice > market_SeedTextView.text.toString().toInt()){
+            market_toBeUsedSeedTextView.setTextColor(Color.RED)
         } else {
-            marketReducedSeedTextView.setTextColor(resources.getColor(R.color.Black))
+            market_toBeUsedSeedTextView.setTextColor(resources.getColor(R.color.Black))
         }
 
     }

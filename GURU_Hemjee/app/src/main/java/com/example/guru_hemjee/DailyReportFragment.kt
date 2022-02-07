@@ -1,6 +1,5 @@
 package com.example.guru_hemjee
 
-import android.util.Log
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -29,39 +28,39 @@ import java.util.*
 class DailyReportFragment : Fragment() {
 
     // db
-    lateinit var dbManager: DBManager
-    lateinit var sqlite: SQLiteDatabase
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlite: SQLiteDatabase
 
     // 일간, 주간, 월간
-    lateinit var dailyBtn: AppCompatButton
-    lateinit var weeklyBtn: AppCompatButton
-    lateinit var monthlyBtn: AppCompatButton
+    private lateinit var reportDaily_dailyButton: AppCompatButton
+    private lateinit var reportDaily_weeklyButton: AppCompatButton
+    //lateinit var monthlyBtn: AppCompatButton
 
     // 오늘 리포트 화면으로 이동하는 달력 버튼
-    lateinit var moveTodayButton: ImageButton
+    private lateinit var reportDaily_moveTodayButton: ImageButton
 
     // 날짜 & 시간
-    lateinit var dailyTextview: TextView
-    lateinit var dailyTimeTextview: TextView
+    private lateinit var reportDaily_dateTextview: TextView
+    private lateinit var reportDaily_totalTimeTextview: TextView
 
     // 이전 & 다음 버튼
-    lateinit var prevBtn1: ImageButton
-    lateinit var nextBtn1: ImageButton
+    private lateinit var reportDaily_prevButton: ImageButton
+    private lateinit var reportDaily_nextButton: ImageButton
 
     // 파이 차트
-    lateinit var dailyPieChart: PieChart
+    private lateinit var reportDaily_pieChart: PieChart
 
     // 세부목표 리스트를 저장할 리니어 레이아웃
-    lateinit var dailyReportListLayout: LinearLayout
+    private lateinit var reportDaily_reportListLayout: LinearLayout
 
     // 텍스트뷰
-    lateinit var noGoalTimeView: TextView
+    private lateinit var reportDaily_noGoalTimeTextView: TextView
 
     // 현재 날짜
-    var nowTime = ZonedDateTime.now()
+    private var nowTime = ZonedDateTime.now()
 
     // 현재 페이지에 보여지는 날짜
-    var nowViewTime = nowTime
+    private var nowViewTime = nowTime
 
     // 2차원 배열(대표목표)
     private lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
@@ -72,9 +71,8 @@ class DailyReportFragment : Fragment() {
     private var isDetailGoalInitialized = false
 
     // 현재 리포트 화면 상태
-    var reportSate: Int = 0 // 오늘
-
-    var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var reportSate: Int = 0 // 오늘
+    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -97,24 +95,23 @@ class DailyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_daily_report, container, false)
 
-        dailyBtn = view.findViewById(R.id.reportDaily_dailyButton)
-        weeklyBtn = view.findViewById(R.id.reportDaily_weeklyButton)
-        moveTodayButton = view.findViewById(R.id.reportDaily_moveTodayButton)
-        dailyTextview = view.findViewById(R.id.reportDaily_dateTextview)
-        dailyTimeTextview = view.findViewById(R.id.reportDaily_totalTimeTextview)
-        prevBtn1 = view.findViewById(R.id.reportDaily_prevButton)
-        nextBtn1 = view.findViewById(R.id.reportDaily_nextButton)
-        dailyPieChart = view.findViewById(R.id.reportDaily_pieChart)
-        dailyReportListLayout = view.findViewById(R.id.reportDaily_reportListLayout)
-        noGoalTimeView = view.findViewById(R.id.reportDaily_noGoalTimeTextView)
+        reportDaily_dailyButton = view.findViewById(R.id.reportDaily_dailyButton)
+        reportDaily_weeklyButton = view.findViewById(R.id.reportDaily_weeklyButton)
+        reportDaily_moveTodayButton = view.findViewById(R.id.reportDaily_moveTodayButton)
+        reportDaily_dateTextview = view.findViewById(R.id.reportDaily_dateTextview)
+        reportDaily_totalTimeTextview = view.findViewById(R.id.reportDaily_totalTimeTextview)
+        reportDaily_prevButton = view.findViewById(R.id.reportDaily_prevButton)
+        reportDaily_nextButton = view.findViewById(R.id.reportDaily_nextButton)
+        reportDaily_pieChart = view.findViewById(R.id.reportDaily_pieChart)
+        reportDaily_reportListLayout = view.findViewById(R.id.reportDaily_reportListLayout)
+        reportDaily_noGoalTimeTextView = view.findViewById(R.id.reportDaily_noGoalTimeTextView)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
-        dailyReportListLayout.removeAllViews()
-        Log.i ("정보태그", "$nowTime")
+        reportDaily_reportListLayout.removeAllViews()
+
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlite = dbManager.readableDatabase
-
         var cursor: Cursor
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
@@ -200,7 +197,8 @@ class DailyReportFragment : Fragment() {
                 var i = 0
                 //기존에 값이 없을 때만 새로 추가
                 while (i < detailGoalArrayList.size) {
-                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal && detailGoalArrayList[i]["lock_date"] == date1[0]) {
+                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal
+                        && detailGoalArrayList[i]["lock_date"] == date1[0]) {
                         isFlag = true
                         break
                     }
@@ -225,35 +223,35 @@ class DailyReportFragment : Fragment() {
 
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
         if (reportSate == 0) { // 오늘
-            dailyReportListLayout.removeAllViews()
+            reportDaily_reportListLayout.removeAllViews()
             dayReport(nowTime)
         }
 
         // 달력 버튼 클릭 이벤트
-        moveTodayButton.setOnClickListener {
+        reportDaily_moveTodayButton.setOnClickListener {
             // 현재 날짜의 리포트를 보여주기
-            dailyReportListLayout.removeAllViews()
+            reportDaily_reportListLayout.removeAllViews()
             reportSate = 0
             nowViewTime = nowTime   // 오늘 날짜로 재설정
             dayReport(nowViewTime)
         }
 
         // 이전 버튼 클릭 이벤트
-        prevBtn1.setOnClickListener {
+        reportDaily_prevButton.setOnClickListener {
             // 이전 날짜의 리포트 보여주기
-            dailyReportListLayout.removeAllViews()
+            reportDaily_reportListLayout.removeAllViews()
             reportSate--    // 페이지 상태 감소(이전 페이지로 이동함)
             nowViewTime = nowViewTime.minusDays(1)  // 하루 빼기
             dayReport(nowViewTime) // 현재 상태에 맞춰서 날짜 전달
         }
 
         // 다음 버튼 클릭 이벤트
-        nextBtn1.setOnClickListener {
+        reportDaily_nextButton.setOnClickListener {
             // 현재 리포트를 보고 있다면
             if (reportSate == 0) {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 날짜의 리포트 보여주기
-                dailyReportListLayout.removeAllViews()
+                reportDaily_reportListLayout.removeAllViews()
                 reportSate++    // 페이지 상태 증가(다음 페이지로 이동함)
                 nowViewTime = nowViewTime.plusDays(1) // 하루 더하기
                 dayReport(nowViewTime)
@@ -261,12 +259,12 @@ class DailyReportFragment : Fragment() {
         }
 
         // 일간 버튼 클릭 이벤트
-        dailyBtn.setOnClickListener {
+        reportDaily_dailyButton.setOnClickListener {
             goDailyReport()
         }
 
         // 주간 버튼 클릭 이벤트
-        weeklyBtn.setOnClickListener {
+        reportDaily_weeklyButton.setOnClickListener {
             goWeeklyReport()
         }
 
@@ -274,7 +272,7 @@ class DailyReportFragment : Fragment() {
     }
 
     // DailyReportFragment로 화면 전환
-    fun goDailyReport() {
+    private fun goDailyReport() {
         mainActivity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.fragment_main, DailyReportFragment())
@@ -283,7 +281,7 @@ class DailyReportFragment : Fragment() {
     }
 
     // WeeklyReportFragmnet로 화면 전환
-    fun goWeeklyReport() {
+    private fun goWeeklyReport() {
         mainActivity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.fragment_main, WeeklyReportFragment())
@@ -292,18 +290,18 @@ class DailyReportFragment : Fragment() {
     }
 
     // MonthlyReportfragment로 화면을 전환하는 함수
-    fun goMonthlyReport() {
-        mainActivity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(R.id.fragment_main, MonthlyReportFragment())
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            ?.commit()
-    }
+//    private fun goMonthlyReport() {
+//        mainActivity?.supportFragmentManager
+//            ?.beginTransaction()
+//            ?.replace(R.id.fragment_main, MonthlyReportFragment())
+//            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//            ?.commit()
+//    }
 
     // 파이차트 세팅 함수
-    fun dailyPieChart(moveDate: String) {
+    private fun dailyPieChart(moveDate: String) {
 
-        dailyPieChart.setUsePercentValues(true) // 100%범위로 계산
+        reportDaily_pieChart.setUsePercentValues(true) // 100%범위로 계산
 
         // 데이터(시간, 대표목표) 입력
         val entry = ArrayList<PieEntry>()
@@ -327,7 +325,7 @@ class DailyReportFragment : Fragment() {
         }
 
         val pieData = PieData(pieDataSet)
-        dailyPieChart.apply {
+        reportDaily_pieChart.apply {
             data = pieData
             description.isEnabled = false // 그래프이름 띄우기X
             isRotationEnabled = false // 애니메이션 효과X
@@ -340,10 +338,10 @@ class DailyReportFragment : Fragment() {
     }
 
     // 날짜에 따른 리포트
-    fun dayReport(moveTime: ZonedDateTime) {
+    private fun dayReport(moveTime: ZonedDateTime) {
         var moveDate = moveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E")) // 년도, 월, 일, 요일
         val splitDate = moveDate.split('-') // 년도, 월, 일, 요일
-        dailyTextview.text = splitDate[1] + "월 " + splitDate[2] + "일 " + splitDate[3] + "요일"
+        reportDaily_dateTextview.text = splitDate[1] + "월 " + splitDate[2] + "일 " + splitDate[3] + "요일"
 
         var totalMilli: BigInteger = BigInteger.ZERO
         if(isBigGoalInitialised){
@@ -355,7 +353,7 @@ class DailyReportFragment : Fragment() {
         }
         var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
         var integer_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
-        dailyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        reportDaily_totalTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
 
         // 파이차트 세팅
         var isPieFlag = false
@@ -363,25 +361,25 @@ class DailyReportFragment : Fragment() {
             for (i in 0 until bigGoalArrayList.size) { // 해당 날짜와 관련한 값이 1개라도 있다면 파이차트 생성
                 if (bigGoalArrayList[i]["lock_date"] == moveDate) {
                     dailyPieChart(moveDate)
-                    dailyPieChart.visibility = View.VISIBLE
-                    noGoalTimeView.visibility = View.INVISIBLE
+                    reportDaily_pieChart.visibility = View.VISIBLE
+                    reportDaily_noGoalTimeTextView.visibility = View.INVISIBLE
                     isPieFlag = true
                     break
                 }
             }
         }
         if (!isPieFlag) { // 일치하는 날짜 값이 없다면 파이차트 숨기기
-            dailyPieChart.visibility = View.INVISIBLE
-            noGoalTimeView.visibility = View.VISIBLE
+            reportDaily_pieChart.visibility = View.INVISIBLE
+            reportDaily_noGoalTimeTextView.visibility = View.VISIBLE
         }
 
-        // 동적 뷰를 활용한 세부목표 리스트 만들기
+        // 동적 뷰를 활용한 목표 리스트 만들기
         if (isBigGoalInitialised){
             for (i in 0 until bigGoalArrayList.size){
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.container_goal_daily_big_goal, dailyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_goal_daily_big_goal, reportDaily_reportListLayout, false)
 
-                // 아이콘과 세부목표 동적 객체 생성
+                // 아이콘과 대표 목표 동적 객체 생성
                 var bigGoalColor: ImageView = view.findViewById(R.id.container_bigGoalColor)
                 var bigGoalTitleTextView: TextView = view.findViewById(R.id.container_bigGaolTextView)
                 var bigGoalTimeTextView: TextView = view.findViewById(R.id.container_bigGoalTime)
@@ -403,13 +401,13 @@ class DailyReportFragment : Fragment() {
                     }
 
                     // 레이아웃에 객체 추가
-                    dailyReportListLayout.addView(view)
+                    reportDaily_reportListLayout.addView(view)
 
                     //아래에 세부 목표 붙이기
                     if(isDetailGoalInitialized){
                         for (j in 0 until detailGoalArrayList.size) {
                             // 동적 뷰 생성
-                            var view: View = layoutInflater.inflate(R.layout.container_goal_daily_detail_goal, dailyReportListLayout, false)
+                            var view: View = layoutInflater.inflate(R.layout.container_goal_daily_detail_goal, reportDaily_reportListLayout, false)
 
                             // 아이콘과 세부목표 동적 객체 생성
                             var dailyIconImg: ImageView = view.findViewById(R.id.container_reportDaily_detailGoalIconImageView)
@@ -423,7 +421,7 @@ class DailyReportFragment : Fragment() {
                                 dailyDetailTextview.text = detailGoalArrayList[j]["detail_goal_name"]
 
                                 // 레이아웃에 객체 추가
-                                dailyReportListLayout.addView(view)
+                                reportDaily_reportListLayout.addView(view)
                             }
                         }
                     }

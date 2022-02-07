@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,55 +34,55 @@ import kotlin.math.round
 class WeeklyReportFragment : Fragment() {
 
     // db
-    lateinit var dbManager: DBManager
-    lateinit var sqlite: SQLiteDatabase
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlite: SQLiteDatabase
 
     // 일간, 주간
-    lateinit var dailyBtn2: AppCompatButton
-    lateinit var weeklyBtn2: AppCompatButton
+    private lateinit var reportWeekly_dailyButton: AppCompatButton
+    private lateinit var reportWeekly_weeklyButton: AppCompatButton
     //lateinit var monthlyBtn2: AppCompatButton
 
     // 최신 주간 리포트 화면으로 이동하는 달력 버튼
-    lateinit var moveWeeklyButton: ImageButton
+    private lateinit var reportWeekly_moveWeeklyButton: ImageButton
 
     // 날짜 & 시간
-    lateinit var weeklyTextview: TextView
-    lateinit var weeklyTimeTextview: TextView
+    private lateinit var reportWeekly_weeklyDateTextview: TextView
+    private lateinit var reportWeekly_weeklyTimeTextview: TextView
 
     // 이전 & 다음 버튼
-    lateinit var prevBtn2: ImageButton
-    lateinit var nextBtn2: ImageButton
+    private lateinit var reportWeekly_prevButton: ImageButton
+    private lateinit var reportWeekly_nextButton: ImageButton
 
     // 스택바 차트
-    lateinit var weeklyStackBarChart: BarChart
+    private lateinit var reportWeekly_weeklyStackBarChart: BarChart
 
     // 대표목표 선택 버튼
-    lateinit var selectBigGoalBtn: MaterialButton
+    private lateinit var reportWeekly_selectBigGoalButton: MaterialButton
 
     // 대표목표&세부목표 리스트를 저장할 리니어 레이아웃
-    lateinit var weeklyReportListLayout: LinearLayout
+    private lateinit var reportWeekly_weeklyReportListLayout: LinearLayout
 
     // 텍스트뷰
-    lateinit var noGoalTimeView2: TextView
+    private lateinit var reportWeekly_noGoalTimeView: TextView
 
     // 현재 날짜
-    var nowTime = ZonedDateTime.now()
-    var nowViewTime = nowTime
+    private var nowTime = ZonedDateTime.now()
+    private var nowViewTime = nowTime
 
     // 2차원 배열(대표목표)
-    lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
+    private lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>
     //대표 목표가 초기화 되었는지 확인
     private var isBigGoalInitialised = false
 
     // 2차원 배열(세부목표)
-    lateinit var detailGoalArrayList: ArrayList<MutableMap<String, String>>
+    private lateinit var detailGoalArrayList: ArrayList<MutableMap<String, String>>
     //세부목표가 초기화 되었는지 확인
     private var isDetailGoalInitialized = false
 
     // 현재 리포트 화면 상태
-    var reportSate: Int = 0 // 이번주
-    var toggleState: Boolean = false // 대표목표 선택 버튼의 클릭 여부(false=전체 선택, true=대표목표 선택)
-    lateinit var toggleGoal: String // 선택한 대표목표
+    private var reportSate: Int = 0 // 이번주
+    private var toggleState: Boolean = false // 대표목표 선택 버튼의 클릭 여부(false=전체 선택, true=대표목표 선택)
+    private lateinit var toggleGoal: String // 선택한 대표목표
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -97,7 +96,7 @@ class WeeklyReportFragment : Fragment() {
         mainActivity = null
     }
 
-    var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,26 +107,26 @@ class WeeklyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_weekly_report, container, false)
 
-        dailyBtn2 = view.findViewById(R.id.reportWeekly_dailyButton)
-        weeklyBtn2 = view.findViewById(R.id.reportWeekly_weeklyButton)
-        moveWeeklyButton = view.findViewById(R.id.reportWeekly_moveWeeklyButton)
-        weeklyTextview = view.findViewById(R.id.reportWeekly_weeklyDateTextview)
-        weeklyTimeTextview = view.findViewById(R.id.reportWeekly_weeklyTimeTextview)
-        prevBtn2 = view.findViewById(R.id.reportWeekly_prevButton)
-        nextBtn2 = view.findViewById(R.id.reportWeekly_nextButton)
-        weeklyStackBarChart = view.findViewById(R.id.reportWeekly_weeklyStackBarChart)
-        selectBigGoalBtn = view.findViewById(R.id.reportWeekly_selectBigGoalButton)
-        weeklyReportListLayout = view.findViewById(R.id.reportWeekly_weeklyReportListLayout)
-        noGoalTimeView2 = view.findViewById(R.id.reportWeekly_noGoalTimeView)
+        //위젯 연결
+        reportWeekly_dailyButton = view.findViewById(R.id.reportWeekly_dailyButton)
+        reportWeekly_weeklyButton = view.findViewById(R.id.reportWeekly_weeklyButton)
+        reportWeekly_moveWeeklyButton = view.findViewById(R.id.reportWeekly_moveWeeklyButton)
+        reportWeekly_weeklyDateTextview = view.findViewById(R.id.reportWeekly_weeklyDateTextview)
+        reportWeekly_weeklyTimeTextview = view.findViewById(R.id.reportWeekly_weeklyTimeTextview)
+        reportWeekly_prevButton = view.findViewById(R.id.reportWeekly_prevButton)
+        reportWeekly_nextButton = view.findViewById(R.id.reportWeekly_nextButton)
+        reportWeekly_weeklyStackBarChart = view.findViewById(R.id.reportWeekly_weeklyStackBarChart)
+        reportWeekly_selectBigGoalButton = view.findViewById(R.id.reportWeekly_selectBigGoalButton)
+        reportWeekly_weeklyReportListLayout = view.findViewById(R.id.reportWeekly_weeklyReportListLayout)
+        reportWeekly_noGoalTimeView = view.findViewById(R.id.reportWeekly_noGoalTimeView)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
-        weeklyReportListLayout.removeAllViews()
-        weeklyStackBarChart.invalidate()
+        reportWeekly_weeklyReportListLayout.removeAllViews()
+        reportWeekly_weeklyStackBarChart.invalidate()
 
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlite = dbManager.readableDatabase
-
         var cursor: Cursor
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
@@ -183,7 +182,6 @@ class WeeklyReportFragment : Fragment() {
         // 세부목표 리포트 db에서 저장된 값 읽어오기(세부목표, 잠금 날짜, 아이콘, 색상)
         var cursor3: Cursor
         cursor3 = sqlite.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
-
         while (cursor3.moveToNext()) {
             var str_detail_goal = cursor3.getString(cursor3.getColumnIndex("detail_goal_name"))
             var str_date = cursor3.getString(cursor3.getColumnIndex("lock_date")).toString()
@@ -210,7 +208,8 @@ class WeeklyReportFragment : Fragment() {
                 var i = 0
                 //기존에 값이 없을 때만 새로 추가
                 while (i < detailGoalArrayList.size) {
-                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal && detailGoalArrayList[i]["lock_date"] == date1[0]) {
+                    if (detailGoalArrayList[i]["detail_goal_name"] == str_detail_goal &&
+                        detailGoalArrayList[i]["lock_date"] == date1[0]) {
                         isFlag = true
                         break
                     }
@@ -230,41 +229,40 @@ class WeeklyReportFragment : Fragment() {
             }
         }
         cursor3.close()
-
         dbManager.close()
         sqlite.close()
 
         // 위젯에 값 적용하기(날짜, 총 수행 시간) - 오늘기준
         if (reportSate == 0) { // 지난주
-            weeklyReportListLayout.removeAllViews()
+            reportWeekly_weeklyReportListLayout.removeAllViews()
             weeklyReport(nowTime) // 현재 날짜 넣기
         }
 
         // 달력 버튼 클릭 이벤트
-        moveWeeklyButton.setOnClickListener {
+        reportWeekly_moveWeeklyButton.setOnClickListener {
             // 최신 리포트를 보여주기
-            weeklyReportListLayout.removeAllViews()
+            reportWeekly_weeklyReportListLayout.removeAllViews()
             reportSate = 0
             nowViewTime = nowTime
             weeklyReport(nowTime)
         }
 
         // 이전 버튼 클릭 이벤트
-        prevBtn2.setOnClickListener {
+        reportWeekly_prevButton.setOnClickListener {
             // 이전 주간 리포트 보여주기
-            weeklyReportListLayout.removeAllViews()
+            reportWeekly_weeklyReportListLayout.removeAllViews()
             reportSate--
             nowViewTime = nowViewTime.minusDays(7)
             weeklyReport(nowViewTime)
         }
 
         // 다음 버튼 클릭 이벤트
-        nextBtn2.setOnClickListener {
+        reportWeekly_nextButton.setOnClickListener {
             // 현재 리포트를 보고 있다면
             if (reportSate == 0) {
                 Toast.makeText(context, "현재 화면이 가장 최신 리포트 화면입니다.", Toast.LENGTH_SHORT).show()
             } else { // 다음 주간의 리포트 보여주기
-                weeklyReportListLayout.removeAllViews()
+                reportWeekly_weeklyReportListLayout.removeAllViews()
                 reportSate++
                 nowViewTime = nowViewTime.plusDays(7)
                 weeklyReport(nowViewTime)
@@ -272,24 +270,26 @@ class WeeklyReportFragment : Fragment() {
         }
 
         // 대표목표 토글 클릭 이벤트
-        selectBigGoalBtn.setOnClickListener {
-            val dialog = GoalSelectDialog(requireContext(), selectBigGoalBtn.text.toString(),"목표 선택", true)
+        reportWeekly_selectBigGoalButton.setOnClickListener {
+            val dialog = GoalSelectDialog(requireContext(), reportWeekly_selectBigGoalButton.text.toString(),
+                "목표 선택", true)
             dialog.goalSelectPop()
 
             dialog.setOnClickedListener( object : GoalSelectDialog.ButtonClickListener{
                 override fun onClicked(changedBigGoalTitle: String) {
-                    selectBigGoalBtn.text = changedBigGoalTitle
+                    reportWeekly_selectBigGoalButton.text = changedBigGoalTitle
                     if(changedBigGoalTitle=="전체"){
-                        selectBigGoalBtn.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
+                        reportWeekly_selectBigGoalButton.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
                         toggleState = false
                         weeklyReport(nowViewTime)
                     }
                     else {
                         dbManager = DBManager(context, "hamster_db", null, 1)
                         sqlite = dbManager.readableDatabase
-                        cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$changedBigGoalTitle'",null)
+                        cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE " +
+                                "big_goal_name = '$changedBigGoalTitle'",null)
                         if(cursor.moveToNext()){
-                            selectBigGoalBtn.iconTint = ColorStateList.valueOf(cursor.getInt(cursor.getColumnIndex("color")))
+                            reportWeekly_selectBigGoalButton.iconTint = ColorStateList.valueOf(cursor.getInt(cursor.getColumnIndex("color")))
                         }
                         cursor.close()
                         sqlite.close()
@@ -303,12 +303,12 @@ class WeeklyReportFragment : Fragment() {
         }
 
         // 일간 버튼 클릭 이벤트
-        dailyBtn2.setOnClickListener {
+        reportWeekly_dailyButton.setOnClickListener {
             goDailyReport()
         }
 
         // 주간 버튼 클릭 이벤트
-        weeklyBtn2.setOnClickListener {
+        reportWeekly_weeklyButton.setOnClickListener {
             goWeeklyReport()
         }
 
@@ -321,7 +321,7 @@ class WeeklyReportFragment : Fragment() {
     }
 
     // DailyReportFragment로 화면 전환
-    fun goDailyReport() {
+    private fun goDailyReport() {
         mainActivity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.fragment_main, DailyReportFragment())
@@ -330,7 +330,7 @@ class WeeklyReportFragment : Fragment() {
     }
 
     // WeeklyReportFragmnet로 화면 전환
-    fun goWeeklyReport() {
+    private fun goWeeklyReport() {
         mainActivity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(R.id.fragment_main, WeeklyReportFragment())
@@ -339,7 +339,7 @@ class WeeklyReportFragment : Fragment() {
     }
 
     // MonthlyReportfragment로 화면을 전환하는 함수
-//    fun goMonthlyReport() {
+//    private fun goMonthlyReport() {
 //        mainActivity?.supportFragmentManager
 //            ?.beginTransaction()
 //            ?.replace(R.id.fragment_main, MonthlyReportFragment())
@@ -348,7 +348,7 @@ class WeeklyReportFragment : Fragment() {
 //    }
 
     // 입력받은 날짜 근처의 월요일~일요일(7일) 구하기
-    fun getWeekDate(moveTime: ZonedDateTime): ArrayList<String> {
+    private fun getWeekDate(moveTime: ZonedDateTime): ArrayList<String> {
         val calendar = Calendar.getInstance()
         val nowDate = SimpleDateFormat("yyyy-MM-dd-E") // 현재 년도, 월, 일
         var totalMoveTime = moveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E"))
@@ -370,8 +370,8 @@ class WeeklyReportFragment : Fragment() {
     }
 
     // 스택바 차트 세팅 함수
-    fun weeklyStackBarChart(weekList: ArrayList<String>) {
-        weeklyStackBarChart.invalidate()
+    private fun weeklyStackBarChart(weekList: ArrayList<String>) {
+        reportWeekly_weeklyStackBarChart.invalidate()
 
         val entry = ArrayList<BarEntry>()
         val itemColor = ArrayList<Int>()
@@ -395,7 +395,6 @@ class WeeklyReportFragment : Fragment() {
                     }
                 }
             }
-            Log.i("lock", "$bigGoalTimeList")
 
             //해당 대표 목표의 잠금 기록이 없을 경우
             if(!isThereRecord){
@@ -426,7 +425,8 @@ class WeeklyReportFragment : Fragment() {
                 var tempArrayList = MutableList(bigGoalNameList.size, {0.0f})
                 for(nameNum in 0 until bigGoalNameList.size){
                     for(goalNum in 0 until bigGoalArrayList.size){
-                        if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i] && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
+                        if(bigGoalArrayList[goalNum]["lock_date"] == weekList[i]
+                            && bigGoalArrayList[goalNum]["big_goal_name"] == bigGoalNameList[nameNum]){
                             tempArrayList[nameNum] += bigGoalArrayList[goalNum]["total_lock_time"]!!.toFloat()/(1000*60*60)
                             if (tempArrayList[nameNum] != 0f){
                                 tempArrayList[nameNum] = round(tempArrayList[nameNum]*100) /100
@@ -437,8 +437,6 @@ class WeeklyReportFragment : Fragment() {
                     }
                 }
                 bigGoalTimeLists.add(tempArrayList)
-
-                Log.i("lock", "$tempArrayList")
             }
 
             for(i in 0 until bigGoalTimeLists.size){
@@ -456,9 +454,8 @@ class WeeklyReportFragment : Fragment() {
             valueTextColor = R.color.Black
             valueTextSize = 16f
         }
-
         val barData = BarData(barDataSet)
-        weeklyStackBarChart.apply {
+        reportWeekly_weeklyStackBarChart.apply {
             data = barData
             description.isEnabled = false // 그래프 이름 띄우기X
             legend.isEnabled = false // x-value값 안보이게
@@ -472,24 +469,25 @@ class WeeklyReportFragment : Fragment() {
         }
         //x축 라벨(요일)추가
         val weekXLables = arrayListOf<String>("월","화","수","목","금","토","일")
-        weeklyStackBarChart.xAxis.apply { // 아래 라벨 x축
+        reportWeekly_weeklyStackBarChart.xAxis.apply { // 아래 라벨 x축
             isEnabled = true // 라벨 표시X
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(false) // 격자구조X
             valueFormatter = IndexAxisValueFormatter(weekXLables)
         }
-        weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
+        reportWeekly_weeklyStackBarChart.axisLeft.apply { // 왼쪽 y축
             isEnabled = true // 라벨 표시
             setDrawLabels(true) // 값 세팅
             textColor = R.color.Black
             textSize = 14f
             axisMinimum = 0.0f
         }
-        weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
+        reportWeekly_weeklyStackBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X
         }
     }
 
+    //floatArrayOf로 데이터 변경
     private fun floatArrayOf(elements: Array<Float>): FloatArray {
         var temp: FloatArray = FloatArray(elements.size, {0.0f})
         for(i in 0 until elements.size){
@@ -500,13 +498,13 @@ class WeeklyReportFragment : Fragment() {
     }
 
     // 날짜에 따른 리포트(선택지가 전체일 경우)
-    fun weeklyReport(moveTime: ZonedDateTime) { // 지난 주 값
-        weeklyReportListLayout.removeAllViews() // 초기화
+    private fun weeklyReport(moveTime: ZonedDateTime) { // 지난 주 값
+        reportWeekly_weeklyReportListLayout.removeAllViews() // 초기화
 
         var weekList: ArrayList<String> = getWeekDate(moveTime)
         var monday = weekList[0].split('-') // 월요일
         var sunday = weekList[6].split('-') // 일요일
-        weeklyTextview.text = monday[1] + "월 " + monday[2] + "일 - " + sunday[1] + "월 " + sunday[2] + "일"
+        reportWeekly_weeklyDateTextview.text = monday[1] + "월 " + monday[2] + "일 - " + sunday[1] + "월 " + sunday[2] + "일"
 
         var isBarFlag = false
         //대표 목표 기록이 있는 경우에만
@@ -532,9 +530,9 @@ class WeeklyReportFragment : Fragment() {
             var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
             if (integer_hour == 0 && integer_min == 0){
                 var integer_sec: Int = (totalMilli.toLong() / (1000)%60).toInt()
-                weeklyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분 " + integer_sec+"초"
+                reportWeekly_weeklyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분 " + integer_sec+"초"
             } else {
-                weeklyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+                reportWeekly_weeklyTimeTextview.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
             }
 
 
@@ -543,8 +541,8 @@ class WeeklyReportFragment : Fragment() {
                 for (j in 0 until weekList.size) {
                     if (bigGoalArrayList[i]["lock_date"] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
                         weeklyStackBarChart(weekList)
-                        weeklyStackBarChart.visibility = View.VISIBLE
-                        noGoalTimeView2.visibility = View.INVISIBLE
+                        reportWeekly_weeklyStackBarChart.visibility = View.VISIBLE
+                        reportWeekly_noGoalTimeView.visibility = View.INVISIBLE
                         isBarFlag = true
                         break
                     }
@@ -553,8 +551,8 @@ class WeeklyReportFragment : Fragment() {
         }
 
         if (!isBarFlag) { // 일치하는 날짜 값이 없다면 스택바 차트 숨기기
-            weeklyStackBarChart.visibility = View.INVISIBLE
-            noGoalTimeView2.visibility = View.VISIBLE
+            reportWeekly_weeklyStackBarChart.visibility = View.INVISIBLE
+            reportWeekly_noGoalTimeView.visibility = View.VISIBLE
         }
 
         // 동적 뷰를 활용한 대표목표 및 세부목표 리스트 만들기
@@ -588,7 +586,7 @@ class WeeklyReportFragment : Fragment() {
 
             for (i in 0 until detailGoalName.size) { //detailGoalArray사용
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, weeklyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_detail_goal_report_text, reportWeekly_weeklyReportListLayout, false)
 
                 // 아이콘과 세부목표 동적 객체 생성
                 var detailIconImg: ImageView = view.findViewById(R.id.detailIconImg)
@@ -601,7 +599,7 @@ class WeeklyReportFragment : Fragment() {
                 detailGoalTextview.text = detailGoalName[i]
                 detailGoalDayText.text = detailGoalDays[i]
                 // 레이아웃에 객체 추가
-                weeklyReportListLayout.addView(view)
+                reportWeekly_weeklyReportListLayout.addView(view)
             }
 
         } else { // 전체를 선택했다면
@@ -629,7 +627,7 @@ class WeeklyReportFragment : Fragment() {
 
             for(i in 0 until bigGoalName.size){
                 // 동적 뷰 생성
-                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, weeklyReportListLayout, false)
+                var view: View = layoutInflater.inflate(R.layout.container_big_goal_report_text, reportWeekly_weeklyReportListLayout, false)
 
                 // 대표목표 동적 객체 생성
                 var bigGoalColorImg: ImageView = view.findViewById(R.id.bigGoalColorImg)
@@ -651,7 +649,7 @@ class WeeklyReportFragment : Fragment() {
 
 
                 // 레이아웃에 객체 추가
-                weeklyReportListLayout.addView(view)
+                reportWeekly_weeklyReportListLayout.addView(view)
             }
         }
     }

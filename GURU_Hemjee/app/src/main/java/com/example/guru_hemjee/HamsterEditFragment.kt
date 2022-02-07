@@ -5,41 +5,40 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
 
 // 나의 햄찌 관리 페이지
 // 햄찌를 관리할 수 있는 Fragment 화면
 class HamsterEditFragment() : Fragment() {
 
     //함께한, 이름 관련
-    private lateinit var hamsterNameTextView: TextView
-    private lateinit var totalSpentTimeTextView: TextView
-    lateinit var hamsterName: String
+    private lateinit var myHamster_hamsterNameTextView: TextView
+    private lateinit var myHamster_totalSpentTimeTextView: TextView
+    private lateinit var hamsterName: String
 
     //변경 관련 버튼들
-    private lateinit var myHNameEditImageButton: ImageButton
-    private lateinit var myHamsterApplyImageButton: ImageButton
+    private lateinit var myHamster_nameEditImageButton: ImageButton
+    private lateinit var myHamster_applyImageButton: ImageButton
 
     //인벤토리 관련 요소들
-    private lateinit var myHInventoryBgImageView: ImageView
-    private lateinit var myHClothImageButton: ImageButton
-    private lateinit var myHFurnitureImageButton: ImageButton
-    private lateinit var myHWallpaperImageButton: ImageButton
+    private lateinit var myHamster_inventoryImageView: ImageView
+    private lateinit var myHamster_clothImageButton: ImageButton
+    private lateinit var myHamster_furnitureImageButton: ImageButton
+    private lateinit var myHamster_wallPaperImageButton: ImageButton
 
-    private lateinit var myHItemLinearLayout: LinearLayout
-    private var selectedItems = ArrayList<String>()
-    private var preselectedItems = ArrayList<String>()
-    private var currentInventory = "clo"
+    //아이템 리스트 관련
+    private lateinit var myHamster_itemList: LinearLayout //아이템 리스트
+    private var selectedItems = ArrayList<String>() //선택 중인 아이템 리스트
+    private var preselectedItems = ArrayList<String>() //이미 적용되어있던 아이템 리스트
+    private var currentInventory = "clo" //현제 인밴토리 위치
 
     //배경(옷, 배경, 가구) 관련
-    private lateinit var myHBGFrameLayout: FrameLayout
-    private lateinit var myHClothFrameLayout: FrameLayout
+    private lateinit var myHamster_BGFrameLayout: FrameLayout
+    private lateinit var myHamster_clothFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -61,15 +60,16 @@ class HamsterEditFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //이름, 함께한 시간
-        hamsterNameTextView = requireView().findViewById(R.id.myHamster_hamsterNameTextView)
-        totalSpentTimeTextView = requireView().findViewById(R.id.myHamster_totalSpentTimeTextView)
+        myHamster_hamsterNameTextView = requireView().findViewById(R.id.myHamster_hamsterNameTextView)
+        myHamster_totalSpentTimeTextView = requireView().findViewById(R.id.myHamster_totalSpentTimeTextView)
 
+        //햄찌 이름과 총 함께한 시간 반영
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         var cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
         if(cursor.moveToNext()){
-            hamsterNameTextView.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
-            totalSpentTimeTextView.text = cursor.getString(cursor.getColumnIndex("total_time")).toString()
+            myHamster_hamsterNameTextView.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
+            myHamster_totalSpentTimeTextView.text = cursor.getString(cursor.getColumnIndex("total_time")).toString()
             hamsterName = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
         }
         cursor.close()
@@ -77,19 +77,19 @@ class HamsterEditFragment() : Fragment() {
         dbManager.close()
 
         //이름 변경 팝업 연결
-        myHNameEditImageButton = requireView().findViewById(R.id.myHamster_nameEditImageButton)
-        myHNameEditImageButton.setOnClickListener {
+        myHamster_nameEditImageButton = requireView().findViewById(R.id.myHamster_nameEditImageButton)
+        myHamster_nameEditImageButton.setOnClickListener {
             hNameEditPopUp()
         }
 
         //인벤토리 버튼에 따라 인벤토리 변화
-        myHClothImageButton = requireView().findViewById(R.id.myHamster_clothImageButton)
-        myHFurnitureImageButton = requireView().findViewById(R.id.myHamster_furnitureImageButton)
-        myHWallpaperImageButton = requireView().findViewById(R.id.myHamster_wallPaperImageButton)
-        myHInventoryBgImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
+        myHamster_clothImageButton = requireView().findViewById(R.id.myHamster_clothImageButton)
+        myHamster_furnitureImageButton = requireView().findViewById(R.id.myHamster_furnitureImageButton)
+        myHamster_wallPaperImageButton = requireView().findViewById(R.id.myHamster_wallPaperImageButton)
+        myHamster_inventoryImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
+        myHamster_itemList = requireView().findViewById(R.id.myHamster_itemList)
 
-        myHItemLinearLayout = requireView().findViewById(R.id.myHamster_itemList)
-
+        //인벤토리에 아이템 연결
         upDateInventory(currentInventory)
 
         //사용 중인 아이템 미리 선택하기
@@ -112,32 +112,31 @@ class HamsterEditFragment() : Fragment() {
         preusingItems.clear()
         selectedItems.addAll(preselectedItems)
 
-        upDateInventory("clo")
-
-        myHClothImageButton.setOnClickListener {
+        //인벤토리 위치이동 버튼 연결(옷, 가구, 배경)
+        myHamster_clothImageButton.setOnClickListener {
             currentInventory = "clo"
             upDateInventory("clo")
-            myHInventoryBgImageView.setImageResource(R.drawable.inventory_cloth)
+            myHamster_inventoryImageView.setImageResource(R.drawable.inventory_cloth)
         }
-        myHFurnitureImageButton.setOnClickListener {
+        myHamster_furnitureImageButton.setOnClickListener {
             currentInventory = "furni"
             upDateInventory("furni")
-            myHInventoryBgImageView.setImageResource(R.drawable.inventory_furniture)
+            myHamster_inventoryImageView.setImageResource(R.drawable.inventory_furniture)
         }
-        myHWallpaperImageButton.setOnClickListener {
+        myHamster_wallPaperImageButton.setOnClickListener {
             currentInventory = "bg"
             upDateInventory("bg")
-            myHInventoryBgImageView.setImageResource(R.drawable.inventory_wallpapare)
+            myHamster_inventoryImageView.setImageResource(R.drawable.inventory_wallpapare)
         }
 
         //배경(옷, 가구, 배경)
-        myHBGFrameLayout = requireView().findViewById(R.id.myHamster_BGFrameLayout)
-        myHClothFrameLayout = requireView().findViewById(R.id.myHamster_clothFrameLayout)
-        FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
+        myHamster_BGFrameLayout = requireView().findViewById(R.id.myHamster_BGFrameLayout)
+        myHamster_clothFrameLayout = requireView().findViewById(R.id.myHamster_clothFrameLayout)
+        FunUpDateHamzzi.upDate(requireContext(), myHamster_BGFrameLayout, myHamster_clothFrameLayout, true, false)
 
         //적용 버튼
-        myHamsterApplyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
-        myHamsterApplyImageButton.setOnClickListener {
+        myHamster_applyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
+        myHamster_applyImageButton.setOnClickListener {
             //사용 중임을 해제할 리스트
             var deSelectItems = ArrayList<String>()
 
@@ -170,11 +169,13 @@ class HamsterEditFragment() : Fragment() {
             preselectedItems.clear()
             preselectedItems.addAll(selectedItems)
 
+            //인벤토리, 아이템 리스트 업데이트
             upDateInventory(currentInventory)
-            FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
+            FunUpDateHamzzi.upDate(requireContext(), myHamster_BGFrameLayout, myHamster_clothFrameLayout, true, false)
 
-
-            val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인", false, R.drawable.popup_applyed, null)
+            //적용 완료 팝업 연결
+            val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인",
+                false, R.drawable.popup_applyed, null)
             dialog.alertDialog()
 
             dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
@@ -182,14 +183,12 @@ class HamsterEditFragment() : Fragment() {
                     //내용 없음
                 }
             })
-
-            Toast.makeText(requireContext(), "적용 되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
     //이름 변경 팝업
     private fun hNameEditPopUp() {
-        val dialog = HamsterEditNameDialog(requireContext(), hamsterNameTextView.text.toString())
+        val dialog = HamsterEditNameDialog(requireContext(), myHamster_hamsterNameTextView.text.toString())
         dialog.EditName()
 
         dialog.setOnClickedListener(object : HamsterEditNameDialog.ButtonClickListener{
@@ -198,8 +197,9 @@ class HamsterEditFragment() : Fragment() {
                     //이름 변경 db와 ui에 반영
                     dbManager = DBManager(requireContext(), "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
-                    hamsterNameTextView.text = name
-                    sqlitedb.execSQL("UPDATE basic_info_db SET hamster_name = '${name}' WHERE hamster_name = '${hamsterName}'")
+                    myHamster_hamsterNameTextView.text = name
+                    sqlitedb.execSQL("UPDATE basic_info_db SET hamster_name = '${name}' WHERE" +
+                            " hamster_name = '${hamsterName}'")
                 }
             }
         })
@@ -208,18 +208,19 @@ class HamsterEditFragment() : Fragment() {
     //인밴토리 확인
     private fun upDateInventory(name: String) {
         //layout 초기화
-        myHItemLinearLayout.removeAllViews()
+        myHamster_itemList.removeAllViews()
 
+        //구매한 아이템만 가져와서 보여줌
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-
-        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = '$name' AND is_bought = 1",null)
+        val cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE " +
+                "type = '$name' AND is_bought = 1",null)
 
         while(cursor.moveToNext()){
             //동적 뷰 생성
-            var view: View = layoutInflater.inflate(R.layout.container_my_hamster_item, myHItemLinearLayout, false)
+            var view: View = layoutInflater.inflate(R.layout.container_my_hamster_item, myHamster_itemList, false)
 
-            var itemImageView = view.findViewById<ImageView>(R.id.myHItemBgImageView)
+            var myHItemBgImageView = view.findViewById<ImageView>(R.id.myHItemBgImageView)
 
             val marketPic = cursor.getString(cursor.getColumnIndex("market_pic"))
             val itemName = cursor.getString(cursor.getColumnIndex("item_name")).toString()
@@ -227,11 +228,11 @@ class HamsterEditFragment() : Fragment() {
             val id = this.resources.getIdentifier(marketPic, "drawable", requireActivity().packageName)
 
             //배경 설정
-            itemImageView.setImageResource(id)
+            myHItemBgImageView.setImageResource(id)
             if(selectedItems.contains(itemName)){
-                itemImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
+                myHItemBgImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
             } else {
-                itemImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
+                myHItemBgImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
             }
 
             view.setOnClickListener {
@@ -243,10 +244,11 @@ class HamsterEditFragment() : Fragment() {
 
                 //선택 해제 중이라면
                 if(!selectedItems.contains(itemName)){
-                    itemImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
+                    myHItemBgImageView.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.SeedBrown))
 
                     //같은 카테고리의 아이템이 선택중이면 선택해제
-                    val cursor2: Cursor = sqlitedb2.rawQuery("SELECT * FROM hamster_deco_info_db WHERE category = '${itemCategory}'", null)
+                    val cursor2: Cursor = sqlitedb2.rawQuery("SELECT * FROM hamster_deco_info_db " +
+                            "WHERE category = '${itemCategory}'", null)
                     while(cursor2.moveToNext()){
                         val tempName = cursor2.getString(cursor2.getColumnIndex("item_name"))
 
@@ -259,13 +261,15 @@ class HamsterEditFragment() : Fragment() {
 
                     selectedItems.add(itemName)
 
+                    //인벤토리, 화면 업데이트
                     upDateInventory(currentInventory)
-                    FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
+                    FunUpDateHamzzi.upDate(requireContext(), myHamster_BGFrameLayout,
+                        myHamster_clothFrameLayout, true, true)
 
                 }
-                //선택중이라면
+                //이미 선택중이라면
                 else {
-                    itemImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
+                    myHItemBgImageView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#00756557"))
                     selectedItems.remove(itemName)
                     deselectItems.add(itemName)
                 }
@@ -283,12 +287,11 @@ class HamsterEditFragment() : Fragment() {
                 dbManager2.close()
 
                 deselectItems.clear()
-                FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, true)
-
-                Log.i("item", "${selectedItems}")
+                FunUpDateHamzzi.upDate(requireContext(), myHamster_BGFrameLayout,
+                    myHamster_clothFrameLayout, true, true)
             }
 
-            myHItemLinearLayout.addView(view)
+            myHamster_itemList.addView(view)
         }
         cursor.close()
         sqlitedb.close()
