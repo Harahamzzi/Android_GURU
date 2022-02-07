@@ -326,7 +326,8 @@ class BigGoalModifyFragment : Fragment() {
 
         bundle.putString("bundle_biggoal", big_goal)
         detailGoalSetupFragment.arguments = bundle
-        transaction.replace(R.id.fragment_main, detailGoalSetupFragment)
+        transaction.remove(this)
         transaction.commit() // 저장
+        requireActivity().supportFragmentManager.popBackStack()
     }
 }

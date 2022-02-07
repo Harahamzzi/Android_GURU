@@ -175,6 +175,7 @@ class DetailGoalSetupFragment : Fragment() {
             modifyFragment.setArguments(bundle)
 
             transaction.replace(R.id.fragment_main, modifyFragment)
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
@@ -308,7 +309,7 @@ class DetailGoalSetupFragment : Fragment() {
             sqlitedb.close()
             dbManager.close()
             if(isValid){
-                goSetUp() // 이전화면으로 돌아가기
+                goSetUp()
                 Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -326,10 +327,10 @@ class DetailGoalSetupFragment : Fragment() {
     fun goSetUp() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
-                //?.remove(this)
-                ?.replace(R.id.fragment_main, SetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                ?.remove(this)
                 ?.commit()
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     private fun showIconPopUp(color: Int, iconButton: ImageButton) {
