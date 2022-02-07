@@ -50,7 +50,7 @@ class TutorialActivity : AppCompatActivity() {
                 var dbManager = DBManager(this, "hamster_db", null, 1)
                 var sqlitedb = dbManager.writableDatabase
 
-                sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('${nameEditTextView.text.toString()}', 3000, '50:00:00')")
+                sqlitedb.execSQL("INSERT INTO basic_info_db VALUES('${nameEditTextView.text.toString()}', 0, '00:00:00')")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg1', 10, 'bg', 'bg', 'bg_bg_10', 'market_bg_10', '', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg2', 1000, 'bg', 'bg', 'bg_bg_1000', 'market_bg_1000', '', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('bg_toystory', 1500, 'bg', 'bg', 'bg_bg_1500', 'market_bg_1500', '', 0, 0, 0)")
