@@ -100,14 +100,14 @@ class SelectAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        categoryIconImageView = requireView().findViewById(R.id.select_categoryIconImageView)
-        iconImageView = requireView().findViewById(R.id.select_iconImageView)
-        nameTextView = requireView().findViewById(R.id.select_nameTextView)
+        categoryIconImageView = requireView().findViewById(R.id.albumSelect_categoryIconImageView)
+        iconImageView = requireView().findViewById(R.id.albumSelect__iconImageView)
+        nameTextView = requireView().findViewById(R.id.albumSelect_nameTextView)
 
-        preButton = requireView().findViewById(R.id.select_prevButton)
-        nextButton = requireView().findViewById(R.id.select_nextButton)
+        preButton = requireView().findViewById(R.id.albumSelect_prevButton)
+        nextButton = requireView().findViewById(R.id.albumSelect_nextButton)
 
-        pictureGridLayout = requireView().findViewById(R.id.select_GridLayout)
+        pictureGridLayout = requireView().findViewById(R.id.albumSelect_GridLayout)
 
         // 대표 목표 리스트 세팅
         setGoalNameList()
