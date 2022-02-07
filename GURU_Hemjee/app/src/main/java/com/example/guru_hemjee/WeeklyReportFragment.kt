@@ -240,11 +240,11 @@ class WeeklyReportFragment : Fragment() {
 
         // 달력 버튼 클릭 이벤트
         moveWeeklyButton.setOnClickListener {
-            // 최신 리포트(지난주 리포트)를 보여주기
+            // 최신 리포트를 보여주기
             weeklyReportListLayout.removeAllViews()
             reportSate = 0
-            if(isBigGoalInitialised && isDetailGoalInitialized)
-                weeklyReport(nowTime)
+            nowViewTime = nowTime
+            weeklyReport(nowTime)
         }
 
         // 이전 버튼 클릭 이벤트
