@@ -122,7 +122,8 @@ class HomeReportFragment : Fragment() {
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
-        while (cursor.moveToNext()) {
+        if(!isBigGoalInitialised){
+            while (cursor.moveToNext()) {
             val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
             val bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
             val str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
@@ -148,7 +149,7 @@ class HomeReportFragment : Fragment() {
                     if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal &&
                         bigGoalArrayList[i]["color"]!!.toBigInteger() == int_color &&
                         bigGoalArrayList[i]["lock_date"] == date1[0]) {
-                            
+
                         bigGoalArrayList[i]["total_lock_time"] =
                                 (bigGoalArrayList[i]["total_lock_time"]?.toInt()
                                         ?.plus(bigint_time.toInt())).toString()
@@ -168,6 +169,7 @@ class HomeReportFragment : Fragment() {
                     )
                 }
             }
+        }
         }
         cursor.close()
         dbManager.close()
@@ -202,6 +204,7 @@ class HomeReportFragment : Fragment() {
                 }
             }
         }
+
 
         for (i in 0 until weekList.size){
             var tempArrayList = MutableList(bigGoalNameList.size, {0.0f})
