@@ -83,13 +83,13 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
-        {
-            // 상단 알림 표시 삭제
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.deleteNotificationChannel("channel_1")
-        }
+//        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+//        {
+//            // 상단 알림 표시 삭제
+//            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.deleteNotificationChannel("channel_1")
+//        }
 
         // 액션바 숨기기
         var actionBar: ActionBar? = supportActionBar
