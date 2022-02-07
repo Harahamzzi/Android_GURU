@@ -248,8 +248,8 @@ class SelectAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 대표 목표 DB 열기
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+        // 대표 목표 리포트 DB 열기
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT big_goal_name FROM big_goal_time_report_db", null)
 
         while(cursor.moveToNext())
         {   // 리스트에 대표 목표 이름 추가
@@ -299,8 +299,8 @@ class SelectAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 세부 목표 DB 열기 - 아이콘 값만 가져옴(중복 데이터 제외)
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_db", null)
+        // 세부 목표 리포트 DB 열기 - 아이콘 값만 가져옴(중복 데이터 제외)
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_time_report_db", null)
 
         while(cursor.moveToNext())
         {   // 리스트에 아이콘 값 추가
@@ -352,8 +352,8 @@ class SelectAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 대표 목표 DB 열기
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '$goalName'", null)
+        // 대표 목표 리포트 DB 열기
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '$goalName'", null)
 
         if(cursor.moveToNext())
         {
