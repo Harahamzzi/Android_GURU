@@ -441,14 +441,14 @@ class HomeReportFragment : Fragment() {
             if (tempDate == nowDateArray) { // 오늘 날짜
                 for (i in 0 until nowDateBigGoalList.size) {
 
-                    // 중복값이 있다면 시간만 저장
-                    if (nowDateBigGoalList[i] == str_big_goal) {
+                    // 대표 목표와 색상이 중복된다면
+                    if (nowDateBigGoalList[i] == str_big_goal && nowDateBigGoalColorList[i] == int_color) {
                         nowDateBigGoalTimeList[i] += bigint_lock_time
                         isFlag = true
                         break
                     }
                 }
-                if (!isFlag) { // 중복값이 없다면 대표목표, 시간, 색상 저장
+                if (!isFlag) { // 목표만 중복되거나 중복값이 없다면 대표목표, 시간, 색상 저장
                     nowDateBigGoalList.add(str_big_goal)
                     nowDateBigGoalTimeList.add(bigint_lock_time)
                     nowDateBigGoalColorList.add(int_color)
