@@ -30,14 +30,14 @@ class PhotoDialog(private val context: Context, private val photoPath: String, p
         dialog.setContentView(R.layout.popup_photo_detail)
 
         //사진
-        photoImageView = dialog.findViewById(R.id.photoImageView)
+        photoImageView = dialog.findViewById(R.id.pop_photoImageView)
         //아이콘
-        iconImageView = dialog.findViewById(R.id.photoIconImageView)
+        iconImageView = dialog.findViewById(R.id.pop_photoIconImageView)
         //목표 제목들
-        detailGoalTextView = dialog.findViewById(R.id.photoDetailGoalTextView)
-        bigGoalTextView = dialog.findViewById(R.id.photoBigGoalTextView)
+        detailGoalTextView = dialog.findViewById(R.id.pop_photoDetailGoalTextView)
+        bigGoalTextView = dialog.findViewById(R.id.pop_photoBigGoalTextView)
         //날짜
-        dateTextView = dialog.findViewById(R.id.photoDateTextView)
+        dateTextView = dialog.findViewById(R.id.pop_photoDateTextView)
 
         //사진 적용
         var bitmap = BitmapFactory.decodeFile(photoPath)

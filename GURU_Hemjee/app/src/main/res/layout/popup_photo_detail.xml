@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/photoImageView"
+        android:id="@+id/pop_photoImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -25,7 +25,7 @@
         android:layout_height="85dp">
 
         <ImageView
-            android:id="@+id/photoIconImageView"
+            android:id="@+id/pop_photoIconImageView"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="17dp"
@@ -36,7 +36,7 @@
             app:tint="@color/Black" />
 
         <TextView
-            android:id="@+id/photoDetailGoalTextView"
+            android:id="@+id/pop_photoDetailGoalTextView"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
@@ -47,10 +47,10 @@
             android:textColor="@color/Black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photoIconImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/pop_photoIconImageView" />
 
         <TextView
-            android:id="@+id/photoBigGoalTextView"
+            android:id="@+id/pop_photoBigGoalTextView"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
@@ -60,10 +60,10 @@
             android:textColor="@color/Black"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/photoDetailGoalTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/pop_photoDetailGoalTextView" />
 
         <TextView
-            android:id="@+id/photoDateTextView"
+            android:id="@+id/pop_photoDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
