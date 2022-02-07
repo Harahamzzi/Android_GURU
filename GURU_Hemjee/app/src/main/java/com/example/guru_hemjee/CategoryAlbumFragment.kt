@@ -18,9 +18,6 @@ import java.lang.IndexOutOfBoundsException
 // 카테고리 분류의 앨범 폴더들을 생성 후 보여주는 Fragment 화면
 class CategoryAlbumFragment : Fragment() {
 
-//    // 드롭다운 메뉴
-//    private lateinit var spinner: Spinner
-
     // 사진을 담을 레이아웃
     private lateinit var categoryAlbumLayout: LinearLayout
     // 저장된 사진이 없을 때 보여줄 레이아웃
@@ -29,11 +26,6 @@ class CategoryAlbumFragment : Fragment() {
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,51 +45,6 @@ class CategoryAlbumFragment : Fragment() {
         applyCategoryPhoto()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-//        // spinner 어댑터 설정
-//        spinner.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinnerAlbumList, R.layout.spinner_item)
-//
-//        // spinner 아이템 선택 리스너
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//
-//            }
-//
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-//
-//                when(position){
-//
-//                    // 일간 선택
-//                    0 -> {
-//                        Log.i ("정보태그", "일간 앨범으로 이동했다..")
-//                        transaction.replace(R.id.fragment_main, DailyAlbumFragment())
-//                        transaction.commit()
-//                    }
-//
-//                    // 목표 선택
-//                    1 -> {
-//                        Log.i ("정보태그", "목표 앨범으로 이동했다..")
-//                        transaction.replace(R.id.fragment_main, GoalAlbumFragment())
-//                        transaction.commit()
-//                    }
-//
-//                    // 카테고리 선택
-//                    2 -> {
-//
-//                    }
-//
-//                    // 그 외
-//                    else -> {
-//                        Log.e("오류태그", "그 외..스피너 메뉴 눌림")
-//                    }
-//                }
-//            }
-//        }
-    }
-
     // 카테고리별 앨범 사진 세팅하는 함수
     private fun applyCategoryPhoto() {
 
@@ -115,8 +62,8 @@ class CategoryAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 세부 목표 DB 열기 - icon 가져오기 위함(중복 데이터 제거해서 들고 옴)
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_db", null)
+        // 세부 목표 리포트 DB 열기 - icon 가져오기 위함(중복 데이터 제거해서 들고 옴)
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_time_report_db", null)
 
         // icon 값을 저장할 ArrayList
         var iconList = ArrayList<Int>()

@@ -66,27 +66,29 @@ class GoalAlbumFragment : Fragment() {
         // column 수를 2으로 세팅
         goalAlbumLayout.columnCount = 2
 
-        /** view 동적 생성, 대표 목표 이름과 색상 가져와서 세팅하기 - big_goal_db **/
+        /** view 동적 생성, 대표 목표 이름 가져와서 세팅하기 - big_goal_time_report_db **/
 
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 대표 목표 DB 열기
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+        // 대표 목표 리포트 DB 열기 - 대표 이름만 중복 제외하고 가져옴
+        var cursor: Cursor =sqlitedb.rawQuery("SELECT DISTINCT big_goal_name FROM big_goal_time_report_db", null)
+
+        // 대표 목표 이름을 저장할 ArrayList
+        var tempBigGoalNameList = ArrayList<String>()
 
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
             var view: View = layoutInflater.inflate(R.layout.container_small_album, goalAlbumLayout, false)
 
-            // 아이콘 색상을 대표 목표 색상으로 변경
-            var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
-            icon.setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
-
             // 제목을 대표 목표 이름으로 변경
             var goalName: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
             goalName.text = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
+
+            // 대표 이름 리스트에 이름 추가
+            tempBigGoalNameList.add(cursor.getString(cursor.getColumnIndex("big_goal_name")).toString())
 
             // view에 클릭 리스너 달기
             view.setOnClickListener {
@@ -110,6 +112,33 @@ class GoalAlbumFragment : Fragment() {
 
             // view 추가
             goalAlbumLayout.addView(view)
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        /** 대표 목표 색상 가져와서 세팅하기 - big_goal_time_report_db **/
+
+        // DB 불러오기
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        // 가져온 대표 목표 이름만큼 반복문 돌리기
+        for (index in tempBigGoalNameList.indices)
+        {
+            // 대표 목표 리포트 DB 열기 - 해당 대표 목표의 데이터들만 가져옴
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${tempBigGoalNameList[index]}'", null)
+
+            if (cursor.moveToNext())
+            {
+                // 해당 뷰 가져오기
+                var view: View = goalAlbumLayout.get(index)
+
+                // 해당 뷰의 아이콘 색상을 대표 목표 색상으로 변경
+                var icon: ImageView = view.findViewById(R.id.smallAlbum_iconImageView)
+                icon.setColorFilter(cursor.getInt(cursor.getColumnIndex("color")), PorterDuff.Mode.SRC_IN)
+            }
         }
 
         cursor.close()
