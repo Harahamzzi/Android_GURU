@@ -106,17 +106,17 @@ class WeeklyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_weekly_report, container, false)
 
-        dailyBtn2 = view.findViewById(R.id.dailyBtn2)
-        weeklyBtn2 = view.findViewById(R.id.weeklyBtn2)
-        moveWeeklyButton = view.findViewById(R.id.moveWeeklyButton)
-        weeklyTextview = view.findViewById(R.id.weeklyTextview)
-        weeklyTimeTextview = view.findViewById(R.id.weeklyTimeTextview)
-        prevBtn2 = view.findViewById(R.id.prevBtn2)
-        nextBtn2 = view.findViewById(R.id.nextBtn2)
-        weeklyStackBarChart = view.findViewById(R.id.weeklyStackBarChart)
-        selectBigGoalBtn = view.findViewById(R.id.selectBigGoalBtn)
-        weeklyReportListLayout = view.findViewById(R.id.weeklyReportListLayout)
-        noGoalTimeView2 = view.findViewById(R.id.noGoalTimeView2)
+        dailyBtn2 = view.findViewById(R.id.reportWeekly_dailyButton)
+        weeklyBtn2 = view.findViewById(R.id.reportWeekly_weeklyButton)
+        moveWeeklyButton = view.findViewById(R.id.reportWeekly_moveWeeklyButton)
+        weeklyTextview = view.findViewById(R.id.reportWeekly_weeklyDateTextview)
+        weeklyTimeTextview = view.findViewById(R.id.reportWeekly_weeklyTimeTextview)
+        prevBtn2 = view.findViewById(R.id.reportWeekly_prevButton)
+        nextBtn2 = view.findViewById(R.id.reportWeekly_nextButton)
+        weeklyStackBarChart = view.findViewById(R.id.reportWeekly_weeklyStackBarChart)
+        selectBigGoalBtn = view.findViewById(R.id.reportWeekly_selectBigGoalButton)
+        weeklyReportListLayout = view.findViewById(R.id.reportWeekly_weeklyReportListLayout)
+        noGoalTimeView2 = view.findViewById(R.id.reportWeekly_noGoalTimeView)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
         weeklyReportListLayout.removeAllViews()
