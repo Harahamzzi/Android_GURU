@@ -182,7 +182,7 @@ class BigGoalModifyFragment : Fragment() {
 
         dbManager = DBManager(context, "hamster_db", null, 1)
 
-        // 확인버튼을 눌렀을 경우
+        // 저장버튼을 눌렀을 경우
         modCompleteButton.setOnClickListener {
             var big_goal = modBigGoalEditText.text.toString() // 대표 목표
             var color: Int = integer_color // 색상
@@ -314,6 +314,8 @@ class BigGoalModifyFragment : Fragment() {
 
             transaction.replace(R.id.fragment_main, SetupFragment())
             transaction.commit() // 저장
+
+            Toast.makeText(context, "목표가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
         }
         return view
     }

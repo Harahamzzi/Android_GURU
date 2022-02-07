@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
@@ -37,7 +38,8 @@ class DetailGoalSetupFragment : Fragment() {
     lateinit var bigGoalColorImageView : ImageView // 색상(원형 아이콘)
     lateinit var plusDetailGoalBtn : ImageButton // + 아이콘(세부목표 추가)
     lateinit var editBigGoalBtn : ImageButton // 연필 아이콘(대표목표 수정)
-    lateinit var completeBtn : androidx.appcompat.widget.AppCompatButton // 확인버튼
+    lateinit var completeBtn : AppCompatButton // 확인버튼
+    lateinit var goalDetail_backButton: AppCompatButton // 취소버튼
 
     // 배열
     var iconList = ArrayList<ImageButton>() // 아이콘
@@ -80,6 +82,7 @@ class DetailGoalSetupFragment : Fragment() {
         plusDetailGoalBtn = view.findViewById(R.id.plusDetailGoalBtn)
         editBigGoalBtn = view.findViewById(R.id.editBigGoalBtn)
         completeBtn = view.findViewById(R.id.completeBtn)
+        goalDetail_backButton = view.findViewById(R.id.goalDetail_backButton)
 
         // SetupFragment 또는 BigGoalModifyFragment에서 넘어온 (대표 목표)값 받기
         if (arguments != null)
@@ -305,9 +308,15 @@ class DetailGoalSetupFragment : Fragment() {
             sqlitedb.close()
             dbManager.close()
             if(isValid){
+                goSetUp() // 이전화면으로 돌아가기
                 Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-                goSetUp()
             }
+        }
+
+        // 취소 버튼을 눌렀다면
+        goalDetail_backButton.setOnClickListener {
+            goSetUp() // 이전화면으로 돌아가기
+            Toast.makeText(context, "저장이 취소되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         return view
