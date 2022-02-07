@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.widget.ImageView
 import android.widget.TextView
 
+// 앨범 폴더가 아닌 개별 사진을 클릭했을 때 나오는 Dialog
 class PhotoDialog(private val context: Context, private val photoPath: String, private val icon: Int,
                   private val detailGoalName: String, private val bigGoalName: String, private val date: String, private val color: Int) {
     private val dialog = Dialog(context)
@@ -29,14 +30,14 @@ class PhotoDialog(private val context: Context, private val photoPath: String, p
         dialog.setContentView(R.layout.popup_photo_detail)
 
         //사진
-        photoImageView = dialog.findViewById(R.id.photoImageView)
+        photoImageView = dialog.findViewById(R.id.pop_photoImageView)
         //아이콘
-        iconImageView = dialog.findViewById(R.id.photoIconImageView)
+        iconImageView = dialog.findViewById(R.id.pop_photoIconImageView)
         //목표 제목들
-        detailGoalTextView = dialog.findViewById(R.id.photoDetailGoalTextView)
-        bigGoalTextView = dialog.findViewById(R.id.photoBigGoalTextView)
+        detailGoalTextView = dialog.findViewById(R.id.pop_photoDetailGoalTextView)
+        bigGoalTextView = dialog.findViewById(R.id.pop_photoBigGoalTextView)
         //날짜
-        dateTextView = dialog.findViewById(R.id.photoDateTextView)
+        dateTextView = dialog.findViewById(R.id.pop_photoDateTextView)
 
         //사진 적용
         var bitmap = BitmapFactory.decodeFile(photoPath)

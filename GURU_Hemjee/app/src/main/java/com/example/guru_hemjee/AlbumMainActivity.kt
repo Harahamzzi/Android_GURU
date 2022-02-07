@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.fragment.app.FragmentTransaction
 
+// 홈(MainActivity) -> 나의 성취 앨범
+// 나의 성취 앨범 Fragment 화면들을 보여주는 Activity 화면
+// 스피터를 통해 일간, (대표)목표별, 카테고리별 앨범이 보여진다.
 class AlbumMainActivity : AppCompatActivity() {
 
     // 타이틀 관련

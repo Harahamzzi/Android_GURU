@@ -1,18 +1,11 @@
 package com.example.guru_hemjee
 
 import android.Manifest
-import android.app.PendingIntent.getActivity
 import android.content.Intent
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.net.Uri
-import android.os.Build
 import android.widget.Toast
-
 import android.os.Bundle
-import android.provider.Settings
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +20,12 @@ import com.google.android.material.navigation.NavigationView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+
+// 홈 Fragment, 홈 앨범 Fragment, 홈 리포트 Fragment를 보여주는 Activity 메인 화면
+
+// 스와이프를 통해 홈/홈 앨범/홈 리포트 화면에 접근 가능
+// Navigation Drawer Menu를 통해 각 페이지에 접근 가능
+// -> 목표/시간 설정, 목표 리포트, 나의 성취 앨범, 씨앗 상점, 나의 햄찌 관리, 설정 페이지
 
 // fragment 페이지 수(슬라이드 전환시)
 private const val NUM_PAGES = 3

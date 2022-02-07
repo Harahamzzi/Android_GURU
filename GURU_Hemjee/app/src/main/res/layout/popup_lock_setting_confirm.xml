@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/lockCancelImageButton"
+            android:id="@+id/pop_lockCancelImageButton2"
             android:layout_width="90dp"
             android:layout_height="27dp"
             android:layout_marginStart="36dp"
@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/cancel_button" />
 
         <ImageButton
-            android:id="@+id/settingOkImageButton"
+            android:id="@+id/pop_settingOkImageButton2"
             android:layout_width="90dp"
             android:layout_height="27dp"
             android:layout_marginEnd="36dp"
@@ -39,7 +39,7 @@
             app:srcCompat="@drawable/ok_button" />
 
         <ImageView
-            android:id="@+id/lockSetConfirmGoalColorImageView"
+            android:id="@+id/pop_lockSetConfirmGoalColorImageView2"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_marginStart="17dp"
@@ -49,7 +49,7 @@
             app:srcCompat="@drawable/color_icon" />
 
         <TextView
-            android:id="@+id/goalTitleTextView"
+            android:id="@+id/pop_goalTitleTextView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -65,11 +65,11 @@
             android:textColor="@color/Black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lockSetConfirmGoalColorImageView"
+            app:layout_constraintStart_toEndOf="@+id/pop_lockSetConfirmGoalColorImageView2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView15"
+            android:id="@+id/pop_ImageView15"
             android:layout_width="237dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -80,7 +80,7 @@
             app:srcCompat="@drawable/dot_line_horizontal" />
 
         <ImageView
-            android:id="@+id/imageView16"
+            android:id="@+id/pop_ImageView16"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="17dp"
@@ -90,7 +90,7 @@
             app:srcCompat="@drawable/timer_icon" />
 
         <TextView
-            android:id="@+id/textView24"
+            android:id="@+id/pop_TextView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -99,7 +99,7 @@
             android:text="잠금 시간"
             android:textColor="@color/Black"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView16"
+            app:layout_constraintStart_toEndOf="@+id/pop_ImageView16"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -114,7 +114,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/hourTimeTextView"
+                android:id="@+id/pop_hourTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center"
@@ -127,19 +127,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView25"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:gravity="bottom|center"
                 android:fontFamily="@font/noto_sans"
+                android:gravity="bottom|center"
                 android:text=":"
                 android:textColor="@color/Black"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/minTmeTextView"
+                android:id="@+id/pop_minTmeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center"
@@ -151,19 +150,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView26"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:gravity="bottom|center"
                 android:fontFamily="@font/noto_sans"
+                android:gravity="bottom|center"
                 android:text=":"
                 android:textColor="@color/Black"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/secTimeTextView"
+                android:id="@+id/pop_secTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center"
@@ -177,7 +175,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView17"
+            android:id="@+id/pop_imageView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
@@ -189,7 +187,7 @@
             app:srcCompat="@drawable/ic_outline_app_registration_24" />
 
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/pop_textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -198,11 +196,11 @@
             android:fontFamily="@font/noto_sans"
             android:textColor="@color/Black"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView17"
+            app:layout_constraintStart_toEndOf="@+id/pop_imageView17"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/pop_ImageView17"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="17dp"
@@ -210,7 +208,7 @@
             android:layout_marginEnd="17dp"
             android:layout_marginBottom="10dp"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toTopOf="@+id/lockCancelImageButton"
+            app:layout_constraintBottom_toTopOf="@+id/pop_lockCancelImageButton2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -218,15 +216,15 @@
             app:tint="@color/LightGray" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lockSettingConfirmDetailGoalRecyclerView"
+            android:id="@+id/pop_lockSettingConfirmDetailGoalRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintBottom_toBottomOf="@+id/pop_ImageView17"
+            app:layout_constraintEnd_toEndOf="@+id/pop_ImageView17"
+            app:layout_constraintStart_toStartOf="@+id/pop_ImageView17"
+            app:layout_constraintTop_toTopOf="@+id/pop_ImageView17" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

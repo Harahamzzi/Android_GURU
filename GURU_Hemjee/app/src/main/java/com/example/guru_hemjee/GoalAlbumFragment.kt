@@ -1,6 +1,5 @@
 package com.example.guru_hemjee
 
-import android.widget.Toast
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -17,7 +16,8 @@ import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
 import java.lang.IndexOutOfBoundsException
 
-
+// 나의 성취 앨범(AlbumMainActivity) -> 목표별
+// 대표 목표별 앨범 폴더들을 보여주는 Fragment 화면
 class GoalAlbumFragment : Fragment() {
 
     //DB 관련
@@ -45,8 +45,8 @@ class GoalAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        goalAlbumLayout = requireView().findViewById(R.id.goalAlbum_goalAlbumLayout)
-        blankFrameLayout = requireView().findViewById(R.id.goalAlbum_frameLayout)
+        goalAlbumLayout = requireView().findViewById(R.id.albumGoal_albumGoalGridLayout)
+        blankFrameLayout = requireView().findViewById(R.id.albumGoal_FrameLayout)
 
         // 앨범 생성
         applyBigGoalPhoto()

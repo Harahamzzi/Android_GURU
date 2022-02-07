@@ -13,12 +13,12 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.collections.ArrayList
 
+// MainActivity -> 홈
+// 햄찌, 잠금 시작 등을 할 수 있는 홈 Fragment 화면
 class HomeFragment : Fragment() {
 
     //씨앗 개수
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
         super.onStart()
 
         //씨앗 표시
-        seedPointView = requireView().findViewById(R.id.Home_seedPointView)
+        seedPointView = requireView().findViewById(R.id.home_seedPointTextView)
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
         dbManager.close()
 
         //잠금 버튼 수정
-        goalSelectButton = requireView().findViewById(R.id.goalSelectButton)
+        goalSelectButton = requireView().findViewById(R.id.home_goalSelectButton)
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor= sqlitedb.rawQuery("SELECT * FROM big_goal_db",null)
@@ -133,8 +133,8 @@ class HomeFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
 
-        mainBGFrameLayout = requireView().findViewById(R.id.mainBGFrameLayout)
-        mainClothFrameLayout = requireView().findViewById(R.id.mainClothFrameLayout)
+        mainBGFrameLayout = requireView().findViewById(R.id.home_BGFrameLayout)
+        mainClothFrameLayout = requireView().findViewById(R.id.home_clothFrameLayout)
         FunUpDateHamzzi.upDate(requireContext(), mainBGFrameLayout, mainClothFrameLayout, false, false)
 
         //햄찌 말 처리
@@ -153,7 +153,7 @@ class HomeFragment : Fragment() {
         hamsterTalkList.add("미래에 후회하는 나?\n미래에 뿌듯한 나?")
         hamsterTalkList.add("24시간은 생각보다\n모자르다 햄찌!!")
         val listSize = hamsterTalkList.size
-        hamsterTalkTextView = requireView().findViewById(R.id.mainHamsterTalkTextView)
+        hamsterTalkTextView = requireView().findViewById(R.id.home_hamsterTalkTextView)
         val random = Random()
         var num = random.nextInt(listSize)
         hamsterTalkTextView.text = hamsterTalkList[num]
@@ -169,11 +169,11 @@ class HomeFragment : Fragment() {
 
 
         //잠금 시간 안내
-        goalTime = requireView().findViewById(R.id.goalTime)
+        goalTime = requireView().findViewById(R.id.home_goalTimeTextView)
         goalTime.text = time.split(':')[0]+"시 " + time.split(':')[1]+"분 " +time.split(':')[2]+"초"
 
         //lock 화면 연결
-        startButton = requireView().findViewById(R.id.startButton)
+        startButton = requireView().findViewById(R.id.home_startButton)
         startButton.setOnClickListener {
             if(!isThereBigGoal)   {
                 Toast.makeText(context, "목표를 생성해주세요!", Toast.LENGTH_SHORT).show()

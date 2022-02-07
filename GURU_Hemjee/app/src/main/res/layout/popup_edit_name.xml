@@ -6,7 +6,7 @@
     android:layout_height="260dp">
 
     <ImageButton
-        android:id="@+id/hamsterCancelImageButton"
+        android:id="@+id/pop_hamsterCancelImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginStart="34dp"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/cancel_button" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/pop_TextView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/pop_TextView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
@@ -42,10 +42,10 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_TextView4" />
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/pop_nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -56,10 +56,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_TextView5" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/pop_TextView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
@@ -69,10 +69,10 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_nameTextView" />
 
     <EditText
-        android:id="@+id/editNameEditText"
+        android:id="@+id/pop_editNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -87,10 +87,10 @@
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_TextView6" />
 
     <ImageButton
-        android:id="@+id/nameEditImageButton"
+        android:id="@+id/pop_nameEditImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginEnd="36dp"

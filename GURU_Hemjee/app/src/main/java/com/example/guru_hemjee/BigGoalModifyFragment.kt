@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,13 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import java.lang.Exception
 
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정(Setup) -> DetailGoalSetupFragment에서 연필 아이콘 클릭시
+//      -> BigGoalModigyFragment
+// 현재 존재하는 대표 목표를 수정하는 Fragment 화면
 class BigGoalModifyFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
@@ -81,33 +84,33 @@ class BigGoalModifyFragment : Fragment() {
         var view: View = inflater.inflate(R.layout.fragment_big_goal_modify, container, false)
 
         // 대표 목표
-        modBigGoalEditText = view.findViewById(R.id.modBigGoalEditText)
+        modBigGoalEditText = view.findViewById(R.id.goalBigModify_goalEditText)
 
         // 라디오 그룹
-        modColorRadioGroup1 = view.findViewById(R.id.modColorRadioGroup1)
-        modColorRadioGroup2 = view.findViewById(R.id.modColorRadioGroup2)
+        modColorRadioGroup1 = view.findViewById(R.id.goalBig_ModifyColorRadioGroup1)
+        modColorRadioGroup2 = view.findViewById(R.id.goalBig_ModifyColorRadioGroup2)
 
         // 라디오 버튼
-        modOrangeRadioBtn = view.findViewById(R.id.modOrangeRadioBtn)
-        modYellowRadioBtn = view.findViewById(R.id.modYellowRadioBtn)
-        modNoteYellowRadioBtn = view.findViewById(R.id.modNoteYellowRadioBtn)
-        modApricotRadioBtn = view.findViewById(R.id.modApricotRadioBtn)
-        modSeedBrownRadioBtn = view.findViewById(R.id.modSeedBrownRadioBtn)
-        modDarkBrownRadioBtn = view.findViewById(R.id.modDarkBrownRadioBtn)
-        modLightGreenRadioBtn = view.findViewById(R.id.modLightGreenRadioBtn)
-        modGreenRadioBtn = view.findViewById(R.id.modGreenRadioBtn)
-        modLightBlueRadioBtn = view.findViewById(R.id.modLightBlueRadioBtn)
-        modBlueRadioBtn = view.findViewById(R.id.modBlueRadioBtn)
-        modPurpleRadioBtn = view.findViewById(R.id.modPurpleRadioBtn)
-        modPinkRadioBtn = view.findViewById(R.id.modPinkRadioBtn)
+        modOrangeRadioBtn = view.findViewById(R.id.goalBigModify_orangeRadioButton)
+        modYellowRadioBtn = view.findViewById(R.id.goalBigModify_yellowRadioButton)
+        modNoteYellowRadioBtn = view.findViewById(R.id.goalBigModify_noteYellowRadioButton)
+        modApricotRadioBtn = view.findViewById(R.id.goalBigModify_apricotRadioButton)
+        modSeedBrownRadioBtn = view.findViewById(R.id.goalBigModify_seedBrownRadioButton)
+        modDarkBrownRadioBtn = view.findViewById(R.id.goalBigModify_darkBrownRadioButton)
+        modLightGreenRadioBtn = view.findViewById(R.id.goalBigModify_lightGreenRadioButton)
+        modGreenRadioBtn = view.findViewById(R.id.goalBigModify_greenRadioButton)
+        modLightBlueRadioBtn = view.findViewById(R.id.goalBigModify_lightBlueRadioButton)
+        modBlueRadioBtn = view.findViewById(R.id.goalBigModify_blueRadioButton)
+        modPurpleRadioBtn = view.findViewById(R.id.goalBigModify_purpleRadioButton)
+        modPinkRadioBtn = view.findViewById(R.id.goalBigModify_pinkRadioButton)
 
         // 목표 잠금 시간
-        modTodayLockHourView = view.findViewById(R.id.modTodayLockHourView)
-        modTodayLockMinView = view.findViewById(R.id.modTodayLockMinView)
+        modTodayLockHourView = view.findViewById(R.id.goalBigModify_todayLockHourEditText)
+        modTodayLockMinView = view.findViewById(R.id.bigGoalModify_todayLockMinEditText)
 
         // 삭제, 확인 버튼
-        modDeleteButton = view.findViewById(R.id.modDeleteButton)
-        modCompleteButton = view.findViewById(R.id.modCompleteButton)
+        modDeleteButton = view.findViewById(R.id.bigGoalModify_cancelButton)
+        modCompleteButton = view.findViewById(R.id.bigGoalModify_storeButton)
 
         // DetailGoalSetupFragment에서 넘어온 값(대표 목표) 받기
         if (arguments != null) {
@@ -156,24 +159,24 @@ class BigGoalModifyFragment : Fragment() {
         // 색깔 라디오 버튼 클릭시 이벤트 연결
         modColorRadioGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹1에서 버튼을 눌렀다면
-                R.id.modOrangeRadioBtn,
-                R.id.modYellowRadioBtn,
-                R.id.modNoteYellowRadioBtn,
-                R.id.modApricotRadioBtn,
-                R.id.modSeedBrownRadioBtn,
-                R.id.modDarkBrownRadioBtn -> {
+                R.id.goalBigModify_orangeRadioButton,
+                R.id.goalBigModify_yellowRadioButton,
+                R.id.goalBigModify_noteYellowRadioButton,
+                R.id.goalBigModify_apricotRadioButton,
+                R.id.goalBigModify_seedBrownRadioButton,
+                R.id.goalBigModify_darkBrownRadioButton -> {
                     modColorRadioGroup2.clearCheck() // 라디오 그룹2에서 선택되어 있는 버튼 초기화
                 }
             }
         }
         modColorRadioGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹2에서 버튼을 눌렀다면
-                R.id.modLightGreenRadioBtn,
-                R.id.modGreenRadioBtn,
-                R.id.modLightBlueRadioBtn,
-                R.id.modBlueRadioBtn,
-                R.id.modPurpleRadioBtn,
-                R.id.modPinkRadioBtn -> {
+                R.id.goalBigModify_lightGreenRadioButton,
+                R.id.goalBigModify_greenRadioButton,
+                R.id.goalBigModify_lightBlueRadioButton,
+                R.id.goalBigModify_blueRadioButton,
+                R.id.goalBigModify_purpleRadioButton,
+                R.id.goalBigModify_pinkRadioButton -> {
                     modColorRadioGroup1.clearCheck() // 라디오 그룹1에서 선택되어 있는 버튼 초기화
                 }
             }
@@ -194,20 +197,20 @@ class BigGoalModifyFragment : Fragment() {
                 Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 when (modColorRadioGroup1.checkedRadioButtonId) {
-                    R.id.modOrangeRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Orange)
-                    R.id.modYellowRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Yellow)
-                    R.id.modNoteYellowRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.NoteYellow)
-                    R.id.modApricotRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Apricot)
-                    R.id.modSeedBrownRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.SeedBrown)
-                    R.id.modDarkBrownRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.DarkBrown)
+                    R.id.goalBigModify_orangeRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Orange)
+                    R.id.goalBigModify_yellowRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Yellow)
+                    R.id.goalBigModify_noteYellowRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.NoteYellow)
+                    R.id.goalBigModify_apricotRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Apricot)
+                    R.id.goalBigModify_seedBrownRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.SeedBrown)
+                    R.id.goalBigModify_darkBrownRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.DarkBrown)
                 }
                 when (modColorRadioGroup2.checkedRadioButtonId) {
-                    R.id.modLightGreenRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.LightGreen)
-                    R.id.modGreenRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Green)
-                    R.id.modLightBlueRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.LightBlue)
-                    R.id.modBlueRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Blue)
-                    R.id.modPurpleRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Purple)
-                    R.id.modPinkRadioBtn -> color = ContextCompat.getColor(requireContext(), R.color.Pink)
+                    R.id.goalBigModify_lightGreenRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.LightGreen)
+                    R.id.goalBigModify_greenRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Green)
+                    R.id.goalBigModify_lightBlueRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.LightBlue)
+                    R.id.goalBigModify_blueRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Blue)
+                    R.id.goalBigModify_purpleRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Purple)
+                    R.id.goalBigModify_pinkRadioButton -> color = ContextCompat.getColor(requireContext(), R.color.Pink)
                 }
             }
 
@@ -307,6 +310,9 @@ class BigGoalModifyFragment : Fragment() {
             transaction.replace(R.id.fragment_main, setupFragment)
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             transaction.commit() // 저장
+            requireActivity().supportFragmentManager.popBackStack("Modify", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack("BigGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack("DetailGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
             Toast.makeText(context, "목표가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
         }
@@ -325,6 +331,8 @@ class BigGoalModifyFragment : Fragment() {
         detailGoalSetupFragment.arguments = bundle
         transaction.remove(this)
         transaction.commit() // 저장
-        requireActivity().supportFragmentManager.popBackStack()
+        requireActivity().supportFragmentManager.popBackStack("ModifyGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack("BigGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack("DetailGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }

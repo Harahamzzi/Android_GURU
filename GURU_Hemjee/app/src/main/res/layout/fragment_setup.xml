@@ -23,7 +23,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/goalBig_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -36,20 +36,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
             <ListView
-                android:id="@+id/bigGoalListView"
+                android:id="@+id/goalBig_goalBigListView"
                 android:layout_width="match_parent"
                 android:layout_height="420dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="17dp"
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="33dp"
-                app:layout_constraintBottom_toTopOf="@+id/plusGoalButton"
+                app:layout_constraintBottom_toTopOf="@+id/goalBig_plusGoalButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+                app:layout_constraintTop_toBottomOf="@+id/goalBig_TextView" />
 
             <ImageButton
-                android:id="@+id/plusGoalButton"
+                android:id="@+id/goalBig_plusGoalButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center|bottom"
@@ -60,7 +60,7 @@
                 app:tint="@color/Black" />
 
             <Space
-                android:id="@+id/bottomSpace"
+                android:id="@+id/goalBig_bottomSpace"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"

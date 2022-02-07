@@ -1,13 +1,11 @@
 package com.example.guru_hemjee
+
 import android.widget.Toast
-
-
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -16,13 +14,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
-import androidx.fragment.app.FragmentTransaction
 import androidx.gridlayout.widget.GridLayout
 import java.lang.IndexOutOfBoundsException
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+// 나의 성취 앨범(AlbumMainActivity) -> 일간
+// 해당 날짜의 일간 사진과 총 잠금 시간을 보여주는 Fragment 화면
 class DailyAlbumFragment : Fragment() {
 
     // 화면에 보이는 날짜와 시간
@@ -64,14 +62,14 @@ class DailyAlbumFragment : Fragment() {
         todayDate = LocalDateTime.now()
 
         // 위젯 연결
-        todayTextView = requireView().findViewById(R.id.dailyAlbum_dateTextView)
-        totalTimeTextView = requireView().findViewById(R.id.dailyAlbum_timeTextView)
+        todayTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
+        totalTimeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
 
-        dailyAlbumGridLayout = requireView().findViewById(R.id.dailyAlbum_GridLayout)
-        blankFrameLayout = requireView().findViewById(R.id.dailyAlbum_frameLayout)
+        dailyAlbumGridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
+        blankFrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
 
-        preButton = requireView().findViewById(R.id.dailyAlbum_prevButton)
-        nextButton = requireView().findViewById(R.id.dailyAlbum_nextButton)
+        preButton = requireView().findViewById(R.id.albumDaily_prevButton)
+        nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
 
         // 위젯에 오늘 날짜 입력
         // (현재 날짜를 오늘 날짜로 설정)

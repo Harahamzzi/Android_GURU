@@ -1,4 +1,5 @@
 package com.example.guru_hemjee
+
 import android.widget.Toast
 import android.content.Context
 import android.database.Cursor
@@ -7,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.util.Log
-
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -18,7 +18,9 @@ import android.widget.*
 import androidx.gridlayout.widget.GridLayout
 import androidx.activity.OnBackPressedCallback
 
-
+// 나의 성취 앨범(AlbumMainActivity) -> 목표 or 카테고리 -> 해당 폴더 클릭시 나온다.
+// 또는 홈 앨범(HomeAlbumFragment) -> 목표 or 카테고리 폴더를 클릭시 나온다.
+// 대표 목표 앨범 폴더, 카테고리 앨범 폴더를 클릭했을 때 나오는 전체 사진 Fragment 화면
 class SelectAlbumFragment : Fragment() {
 
     // 위젯
@@ -100,14 +102,14 @@ class SelectAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        categoryIconImageView = requireView().findViewById(R.id.select_categoryIconImageView)
-        iconImageView = requireView().findViewById(R.id.select_iconImageView)
-        nameTextView = requireView().findViewById(R.id.select_nameTextView)
+        categoryIconImageView = requireView().findViewById(R.id.albumSelect_categoryIconImageView)
+        iconImageView = requireView().findViewById(R.id.albumSelect__iconImageView)
+        nameTextView = requireView().findViewById(R.id.albumSelect_nameTextView)
 
-        preButton = requireView().findViewById(R.id.select_prevButton)
-        nextButton = requireView().findViewById(R.id.select_nextButton)
+        preButton = requireView().findViewById(R.id.albumSelect_prevButton)
+        nextButton = requireView().findViewById(R.id.albumSelect_nextButton)
 
-        pictureGridLayout = requireView().findViewById(R.id.select_GridLayout)
+        pictureGridLayout = requireView().findViewById(R.id.albumSelect_GridLayout)
 
         // 대표 목표 리스트 세팅
         setGoalNameList()

@@ -1,6 +1,6 @@
 package com.example.guru_hemjee
-import android.util.Log
 
+import android.util.Log
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.view.marginStart
 import androidx.fragment.app.FragmentTransaction
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -20,11 +19,13 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import java.math.BigInteger
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+// 홈(MainActivity) -> SubMainActivity -> 분석 리포트
+// 일간별 분석 리포트를 보여주는 Fragment 화면
+// 해당 날짜에서의 목표별 총 잠금시간/총 잠금시간 비율로 통계를 보여준다.
 class DailyReportFragment : Fragment() {
 
     // db
@@ -96,16 +97,16 @@ class DailyReportFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_daily_report, container, false)
 
-        dailyBtn = view.findViewById(R.id.dailyBtn)
-        weeklyBtn = view.findViewById(R.id.weeklyBtn)
-        moveTodayButton = view.findViewById(R.id.moveTodayButton)
-        dailyTextview = view.findViewById(R.id.dailyTextview)
-        dailyTimeTextview = view.findViewById(R.id.dailyTimeTextview)
-        prevBtn1 = view.findViewById(R.id.prevBtn1)
-        nextBtn1 = view.findViewById(R.id.nextBtn1)
-        dailyPieChart = view.findViewById(R.id.dailyPieChart)
-        dailyReportListLayout = view.findViewById(R.id.dailyReportListLayout)
-        noGoalTimeView = view.findViewById(R.id.noGoalTimeView)
+        dailyBtn = view.findViewById(R.id.reportDaily_dailyButton)
+        weeklyBtn = view.findViewById(R.id.reportDaily_weeklyButton)
+        moveTodayButton = view.findViewById(R.id.reportDaily_moveTodayButton)
+        dailyTextview = view.findViewById(R.id.reportDaily_dateTextview)
+        dailyTimeTextview = view.findViewById(R.id.reportDaily_totalTimeTextview)
+        prevBtn1 = view.findViewById(R.id.reportDaily_prevButton)
+        nextBtn1 = view.findViewById(R.id.reportDaily_nextButton)
+        dailyPieChart = view.findViewById(R.id.reportDaily_pieChart)
+        dailyReportListLayout = view.findViewById(R.id.reportDaily_reportListLayout)
+        noGoalTimeView = view.findViewById(R.id.reportDaily_noGoalTimeTextView)
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
         dailyReportListLayout.removeAllViews()

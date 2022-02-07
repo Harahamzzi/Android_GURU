@@ -8,7 +8,7 @@
     tools:context=".HomeAlbumFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/homeAlbum_ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="55.6dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,14 +49,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/homeAlbum_frameLayout"
+        android:id="@+id/homeAlbum_FrameLayout"
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:background="@color/LightGray"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/homeAlbum_ConstraintLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,14 +69,14 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/homeAlbum_scrollView"
+        android:id="@+id/homeAlbum_ScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="29dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/homeAlbum_ConstraintLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -160,7 +160,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Space
-                android:id="@+id/space"
+                android:id="@+id/homeAlbum_Space"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +174,7 @@
                 app:columnCount="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/space"
+                app:layout_constraintTop_toBottomOf="@+id/homeAlbum_Space"
                 app:orientation="horizontal">
 
                 <!--                <include-->
@@ -192,7 +192,7 @@
             </androidx.gridlayout.widget.GridLayout>
 
             <Space
-                android:id="@+id/space2"
+                android:id="@+id/homeAlbum_Space2"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,7 +206,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/space2">
+                app:layout_constraintTop_toBottomOf="@+id/homeAlbum_Space2">
 
                 <!--                <include-->
                 <!--                    layout="@layout/container_big_album" />-->

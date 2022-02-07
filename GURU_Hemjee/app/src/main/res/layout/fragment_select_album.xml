@@ -7,7 +7,7 @@
     tools:context=".SelectAlbumFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+        android:id="@+id/albumSelect_ConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="167dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/select_iconImageView"
+            android:id="@+id/albumSelect__iconImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="47dp"
@@ -35,10 +35,10 @@
             android:paddingRight="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/select_iconImageView">
+            app:layout_constraintTop_toBottomOf="@+id/albumSelect__iconImageView">
 
             <ImageButton
-                android:id="@+id/select_prevButton"
+                android:id="@+id/albumSelect_prevButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -46,7 +46,7 @@
                 android:src="@drawable/prev_button" />
 
             <TextView
-                android:id="@+id/select_nameTextView"
+                android:id="@+id/albumSelect_nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -61,7 +61,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/select_categoryIconImageView"
+                android:id="@+id/albumSelect_categoryIconImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
                 app:tint="@color/Black" />
 
             <ImageButton
-                android:id="@+id/select_nextButton"
+                android:id="@+id/albumSelect_nextButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:background="@android:color/transparent"
@@ -86,10 +86,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/albumSelect_ConstraintLayout">
 
         <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/select_GridLayout"
+            android:id="@+id/albumSelect_GridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:columnCount="3"

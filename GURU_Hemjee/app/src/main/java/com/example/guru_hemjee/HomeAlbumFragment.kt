@@ -2,7 +2,6 @@ package com.example.guru_hemjee
 
 import android.content.Intent
 import android.util.Log
-
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -21,7 +20,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+// MainActivity -> 홈 앨범
+// 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 앨범 fragment 화면
 class HomeAlbumFragment : Fragment() {
 
     private lateinit var dateTextView: TextView // 오늘 날짜
@@ -68,10 +68,10 @@ class HomeAlbumFragment : Fragment() {
         dateTextView = requireView().findViewById(R.id.homeAlbum_dateTextView)
         timeTextView = requireView().findViewById(R.id.homeAlbum_timeTextView)
 
-        scrollView = requireView().findViewById(R.id.homeAlbum_scrollView)
+        scrollView = requireView().findViewById(R.id.homeAlbum_ScrollView)
         goalAlbumLayout = requireView().findViewById(R.id.homeAlbum_goalAlbumLayout)
         categoryAlbumLayout = requireView().findViewById(R.id.homeAlbum_categoryLinearLayout)
-        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_frameLayout)
+        blankFrameLayout = requireView().findViewById(R.id.homeAlbum_FrameLayout)
 
         for(i: Int in 1..6) // 1~6까지 반복
         {

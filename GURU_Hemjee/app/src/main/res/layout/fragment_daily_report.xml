@@ -24,7 +24,7 @@
             tools:layout_editor_absoluteY="0dp">
 
             <LinearLayout
-                android:id="@+id/reportButtonLayout"
+                android:id="@+id/reportDaily_reportButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/dailyBtn"
+                    android:id="@+id/reportDaily_dailyButton"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_daily_report_button2"
@@ -49,7 +49,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/weeklyBtn"
+                    android:id="@+id/reportDaily_weeklyButton"
                     android:layout_width="90dp"
                     android:layout_height="32dp"
                     android:background="@drawable/solid_monthly_report_button1"
@@ -63,7 +63,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/moveTodayButton"
+                android:id="@+id/reportDaily_moveTodayButton"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
                 android:layout_marginTop="22dp"
@@ -72,11 +72,11 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_outline_today_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout"
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_reportButtonLayout"
                 app:tint="@color/Black" />
 
             <TextView
-                android:id="@+id/dailyTextview"
+                android:id="@+id/reportDaily_dateTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="151dp"
@@ -86,12 +86,12 @@
                 android:text="1월 15일 토요일"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/moveTodayButton"
+                app:layout_constraintEnd_toStartOf="@+id/reportDaily_moveTodayButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_reportButtonLayout" />
 
             <TextView
-                android:id="@+id/dailyTimeTextview"
+                android:id="@+id/reportDaily_totalTimeTextview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -102,21 +102,21 @@
                 android:fontFamily="@font/noto_sans"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_dateTextview" />
 
             <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/dailyPieChart"
+                android:id="@+id/reportDaily_pieChart"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toStartOf="@+id/nextBtn1"
-                app:layout_constraintStart_toEndOf="@+id/prevBtn1"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextview">
+                app:layout_constraintEnd_toStartOf="@+id/reportDaily_nextButton"
+                app:layout_constraintStart_toEndOf="@+id/reportDaily_prevButton"
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_totalTimeTextview">
 
             </com.github.mikephil.charting.charts.PieChart>
 
             <ImageButton
-                android:id="@+id/prevBtn1"
+                android:id="@+id/reportDaily_prevButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="17dp"
@@ -125,12 +125,12 @@
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/prev_button"
-                app:layout_constraintEnd_toStartOf="@+id/dailyPieChart"
+                app:layout_constraintEnd_toStartOf="@+id/reportDaily_pieChart"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportButtonLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_reportButtonLayout" />
 
             <ImageButton
-                android:id="@+id/nextBtn1"
+                android:id="@+id/reportDaily_nextButton"
                 android:layout_width="11dp"
                 android:layout_height="22dp"
                 android:layout_marginStart="78dp"
@@ -140,11 +140,11 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/next_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/dailyPieChart"
-                app:layout_constraintTop_toBottomOf="@+id/moveTodayButton" />
+                app:layout_constraintStart_toEndOf="@+id/reportDaily_pieChart"
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_moveTodayButton" />
 
             <LinearLayout
-                android:id="@+id/dailyReportListLayout"
+                android:id="@+id/reportDaily_reportListLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -153,15 +153,15 @@
                 android:layout_marginBottom="50dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/bottomSpace"
+                app:layout_constraintBottom_toTopOf="@+id/reportDaily_bottomSpace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyPieChart">
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_pieChart">
 
             </LinearLayout>
 
             <Space
-                android:id="@+id/bottomSpace"
+                android:id="@+id/reportDaily_bottomSpace"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
@@ -170,7 +170,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/noGoalTimeView"
+                android:id="@+id/reportDaily_noGoalTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="103dp"
@@ -181,7 +181,7 @@
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextview" />
+                app:layout_constraintTop_toBottomOf="@+id/reportDaily_totalTimeTextview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 
+// 최종 확인 Dialog를 띄우기 위한 클래스
 class FinalOKDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val picSource: Int?, val talkText: String?) {
     private val dialog = Dialog(context)
 
@@ -25,11 +26,11 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
         dialog.setCancelable(false) // 화면 밖 터치시 팝업창이 닫히지 않게 함
         dialog.setContentView(R.layout.popup_final_ok)
 
-        popTitleTextView = dialog.findViewById(R.id.finalOkTitleTextView)
-        confirmSeedButton = dialog.findViewById(R.id.okButton)
-        confirmButton = dialog.findViewById(R.id.plainOkButton)
-        hamsterTalkTextView = dialog.findViewById(R.id.okPopHamsterTalkTextView)
-        okPopMainImageView = dialog.findViewById(R.id.okPopMainImageView)
+        popTitleTextView = dialog.findViewById(R.id.pop_finalOkTitleTextView)
+        confirmSeedButton = dialog.findViewById(R.id.pop_okButton)
+        confirmButton = dialog.findViewById(R.id.pop_plainOkButton)
+        hamsterTalkTextView = dialog.findViewById(R.id.pop_okPopHamsterTalkTextView)
+        okPopMainImageView = dialog.findViewById(R.id.pop_okPopMainImageView)
 
         if(picSource != null){
             okPopMainImageView.setImageResource(picSource)

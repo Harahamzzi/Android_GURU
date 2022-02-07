@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
+// 나의 햄찌 관리 페이지
+// 햄찌를 관리할 수 있는 Fragment 화면
 class HamsterEditFragment() : Fragment() {
 
     //함께한, 이름 관련
@@ -56,8 +58,8 @@ class HamsterEditFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //이름, 함께한 시간
-        hamsterNameTextView = requireView().findViewById(R.id.hamsterNameTextView)
-        totalSpentTimeTextView = requireView().findViewById(R.id.totalSpentTimeTextView)
+        hamsterNameTextView = requireView().findViewById(R.id.myHamster_hamsterNameTextView)
+        totalSpentTimeTextView = requireView().findViewById(R.id.myHamster_totalSpentTimeTextView)
 
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -72,18 +74,18 @@ class HamsterEditFragment() : Fragment() {
         dbManager.close()
 
         //이름 변경 팝업 연결
-        myHNameEditImageButton = requireView().findViewById(R.id.myHNameEditImageButton)
+        myHNameEditImageButton = requireView().findViewById(R.id.myHamster_nameEditImageButton)
         myHNameEditImageButton.setOnClickListener {
             hNameEditPopUp()
         }
 
         //인벤토리 버튼에 따라 인벤토리 변화
-        myHClothImageButton = requireView().findViewById(R.id.myHClothImageButton)
-        myHFurnitureImageButton = requireView().findViewById(R.id.myHFurnitureImageButton)
-        myHWallpaperImageButton = requireView().findViewById(R.id.myHWallPaperImageButton)
-        myHInventoryBgImageView = requireView().findViewById(R.id.myHInventoryImageView)
+        myHClothImageButton = requireView().findViewById(R.id.myHamster_clothImageButton)
+        myHFurnitureImageButton = requireView().findViewById(R.id.myHamster_furnitureImageButton)
+        myHWallpaperImageButton = requireView().findViewById(R.id.myHamster_wallPaperImageButton)
+        myHInventoryBgImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
 
-        myHItemList = requireView().findViewById(R.id.myHItemList)
+        myHItemList = requireView().findViewById(R.id.myHamster_itemList)
 
         upDateInventory(currentInventory)
 
@@ -126,12 +128,12 @@ class HamsterEditFragment() : Fragment() {
         }
 
         //배경(옷, 가구, 배경)
-        myHBGFrameLayout = requireView().findViewById(R.id.myHBGFrameLayout)
-        myHClothFrameLayout = requireView().findViewById(R.id.myHClothFrameLayout)
+        myHBGFrameLayout = requireView().findViewById(R.id.myHamster_BGFrameLayout)
+        myHClothFrameLayout = requireView().findViewById(R.id.myHamster_clothFrameLayout)
         FunUpDateHamzzi.upDate(requireContext(), myHBGFrameLayout, myHClothFrameLayout, true, false)
 
         //적용 버튼
-        myHamsterApplyImageButton = requireView().findViewById(R.id.myHamsterApplyImageButton)
+        myHamsterApplyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
         myHamsterApplyImageButton.setOnClickListener {
             //사용 중임을 해제할 리스트
             var deSelectItems = ArrayList<String>()

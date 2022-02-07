@@ -7,7 +7,7 @@
     tools:context=".HomeReportFragment">
 
     <ScrollView
-        android:id="@+id/homeReportScrollView"
+        android:id="@+id/homeReport_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="17dp"
@@ -24,7 +24,7 @@
 
             <!-- ***** 일간 ***** -->
             <TextView
-                android:id="@+id/dailyTextView"
+                android:id="@+id/homeReport_dailyTextView"
                 android:layout_width="40dp"
                 android:layout_height="20dp"
                 android:background="@drawable/outline_round_button"
@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/dayTextView"
+                android:id="@+id/homeReport_dayDateTextView"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="7dp"
@@ -55,10 +55,10 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_dailyTextView" />
 
             <TextView
-                android:id="@+id/todayTimeTextView"
+                android:id="@+id/homeReport_todayTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginTop="1dp"
@@ -72,21 +72,21 @@
                 android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dayTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_dayDateTextView" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:id="@+id/totalDailyBarChart"
+                android:id="@+id/homeReport_totalDailyBarChart"
                 android:layout_width="430dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="17dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/todayTimeTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_todayTimeTextView" />
 
             <!-- 일간 목표들 목록.. -->
             <LinearLayout
-                android:id="@+id/dailyGoalListLayout"
+                android:id="@+id/homeReport_dailyGoalListLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -94,10 +94,10 @@
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="67dp"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/weekTextView"
+                app:layout_constraintBottom_toTopOf="@+id/homeReport_weeklyTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/totalDailyBarChart">
+                app:layout_constraintTop_toBottomOf="@id/homeReport_totalDailyBarChart">
 
 
             </LinearLayout>
@@ -105,7 +105,7 @@
 
             <!-- ***** 주간 ***** -->
             <TextView
-                android:id="@+id/weekTextView"
+                android:id="@+id/homeReport_weeklyTextView"
                 android:layout_width="40dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="67dp"
@@ -120,10 +120,10 @@
                 android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailyGoalListLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_dailyGoalListLayout" />
 
             <TextView
-                android:id="@+id/periodDayTextView"
+                android:id="@+id/homeReport_periodDayTextView"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="7dp"
@@ -137,10 +137,10 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weekTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_weeklyTextView" />
 
             <TextView
-                android:id="@+id/weekTimeTextView"
+                android:id="@+id/homeReport_weeklyTimeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="29dp"
                 android:layout_marginTop="1dp"
@@ -154,10 +154,10 @@
                 android:textSize="21sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/periodDayTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_periodDayTextView" />
 
             <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/weekBarChart"
+                android:id="@+id/homeReport_weeklyBarChart"
                 android:layout_width="400dp"
                 android:layout_height="160sp"
                 android:layout_marginStart="17dp"
@@ -166,11 +166,11 @@
                 android:paddingRight="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weekTimeTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/homeReport_weeklyTimeTextView" />
 
             <!-- 주간 목표들 목록.. -->
             <LinearLayout
-                android:id="@+id/weekGoalListLayout"
+                android:id="@+id/homeReport_weeklyGoalListLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -179,7 +179,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/weekBarChart" />
+                app:layout_constraintTop_toBottomOf="@id/homeReport_weeklyBarChart" />
 
 
 <!--            &lt;!&ndash; ***** 월간 ***** &ndash;&gt;-->

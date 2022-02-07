@@ -1,15 +1,13 @@
 package com.example.guru_hemjee
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.*
-import android.os.Binder
 import android.os.IBinder
-import android.provider.Settings
 import androidx.core.app.NotificationCompat
 
+// 잠금을 실행 했을 때의 잠금 서비스를 구동하기 위한 서비스 클래스
 class LockScreenService : Service() {
 
     private val receiver = object: BroadcastReceiver() {

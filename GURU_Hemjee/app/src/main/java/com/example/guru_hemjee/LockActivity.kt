@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timer
 
+// 홈 화면의 시작 버튼(HomeFragment) -> 잠금 화면
+// 잠금을 실행시켜 타이머와 세부 목표 목록이 있는 잠금 화면을 보여주기 위한 fragment 화면
 @Suppress("DEPRECATION")    // 사용하지 말아야 할 메소드 관련 경고 억제
 class LockActivity : AppCompatActivity() {
 
@@ -38,22 +40,24 @@ class LockActivity : AppCompatActivity() {
     private lateinit var bgFrameLayout: FrameLayout
 
     //시간 조절 버튼
-    lateinit var timeMinusImageButton: ImageButton
-    lateinit var timePlusImageButton: ImageButton
+    private lateinit var timeMinusImageButton: ImageButton
+    private lateinit var timePlusImageButton: ImageButton
 
     // 전화 걸기, 메시지 보내기 버튼
-    lateinit var phoneButton: ImageButton
-    lateinit var messageButton: ImageButton
+    private lateinit var phoneButton: ImageButton
+    private lateinit var messageButton: ImageButton
 
     //나가기 버튼
-    lateinit var lockExitImageButton: ImageButton//첫번째
-    lateinit var exitImageButton: ImageButton//두번째
+    private lateinit var lockExitImageButton: ImageButton//첫번째
+    private lateinit var exitImageButton: ImageButton//두번째
     private lateinit var exitTextView: TextView
 
     // 타이머 시간 관련
-    lateinit var lockHourTextView: TextView
-    lateinit var lockMinTextView: TextView
-    lateinit var lockSecTextView: TextView
+    private lateinit var lockHourTextView: TextView
+    private lateinit var lockMinTextView: TextView
+    private lateinit var lockSecTextView: TextView
+
+    private var isTimerCansel = false   // 타이머 종료 플래그 변수
 
     private var totalTime = 0   // 전체 잠금 시간
     private var time = 0        // 현재 남은 잠금 시간
@@ -64,7 +68,7 @@ class LockActivity : AppCompatActivity() {
     private lateinit var bigGoalTotalTime: BigInteger
 
     // progress bar
-    lateinit var progressBar: CircleProgressBar
+    private lateinit var progressBar: CircleProgressBar
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -274,6 +278,14 @@ class LockActivity : AppCompatActivity() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        /** 잠금 타이머 확인 후 특정 경우에서 팝업 띄우기 **/
+        // 현재 타이머가 끝난 상태라면
+        if (isTimerCansel)
+        {
+            // 나갈 수 있는 팝업창 띄우기
+            finalOK("잠금 종료!", "+${rewardSeed}", true, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
+        }
     }
 
     // 하단 소프트키를 숨겨 잠금 화면을 풀스크린으로 뿌리도록 함
@@ -350,6 +362,7 @@ class LockActivity : AppCompatActivity() {
                         //잠금 시간 보상 계산
                         rewardSeed += bigGoalTotalTime.toInt()/60000
                         seedChange(rewardSeed)
+
                         // 나갈 수 있는 팝업창 띄우기
                         finalOK("잠금 종료!", "+${rewardSeed}", true, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
@@ -409,6 +422,9 @@ class LockActivity : AppCompatActivity() {
                         Log.e("오류태그", "${e.printStackTrace()}")
                     }
                 }
+
+                // 타이머 종료 플래그
+                isTimerCansel = true
 
                 timerTask?.cancel()
             }

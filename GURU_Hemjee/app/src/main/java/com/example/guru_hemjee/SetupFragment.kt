@@ -3,21 +3,20 @@ package com.example.guru_hemjee
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 
-
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정
+// 목표/잠금 시간 설정 Fragment 화면
+// 대표 목표를 확인할 수 있다.
+// 버튼을 통해 수정 및 추가하는 화면으로 갈 수 있다.
 class SetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
@@ -51,8 +50,8 @@ class SetupFragment : Fragment() {
         // LayoutInflater를 사용해서 Resource Layout을 View로 변환시켜서 findViewById()를 호출
         var view : View = inflater.inflate(R.layout.fragment_setup, container, false);
 
-        bigGoalListView = view.findViewById(R.id.bigGoalListView) // 리스트뷰의 아이디 할당
-        plusGoalButton = view.findViewById(R.id.plusGoalButton) // +버튼의 아이디 할당
+        bigGoalListView = view.findViewById(R.id.goalBig_goalBigListView) // 리스트뷰의 아이디 할당
+        plusGoalButton = view.findViewById(R.id.goalBig_plusGoalButton) // +버튼의 아이디 할당
 
         // DB
         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -140,7 +139,7 @@ class SetupFragment : Fragment() {
 
                     transaction.replace(R.id.fragment_main, detailGoalSetupFragment) // 해당 레이아웃을 프래그먼트로 변경
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    transaction.addToBackStack(null)
+                    transaction.addToBackStack("DetailGoal")
                     transaction.commit() // 저장
                 }
             }
@@ -169,7 +168,7 @@ class SetupFragment : Fragment() {
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, BigGoalSetupFragment())
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.addToBackStack(null)
+                ?.addToBackStack("BigGoal")
                 ?.commit()
     }
 

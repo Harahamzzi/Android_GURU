@@ -24,14 +24,15 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.round
 
-
+// MainActivity -> 홈 리포트
+// 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 리포트 Fragment 화면
+// 해당 날짜를 기준으로 하나의 일간, 주간 분석 리포트를 보여준다.
 class HomeReportFragment : Fragment() {
 
     // db
@@ -77,16 +78,16 @@ class HomeReportFragment : Fragment() {
         todayDate = LocalDateTime.now()
 
         // 일간
-        dayTextView = requireView().findViewById(R.id.dayTextView)
-        todayTimeTextView = requireView().findViewById(R.id.todayTimeTextView)
-        totalDailyBarChart = requireView().findViewById(R.id.totalDailyBarChart)
-        dailyGoalListLayout = requireView().findViewById(R.id.dailyGoalListLayout)
+        dayTextView = requireView().findViewById(R.id.homeReport_dayDateTextView)
+        todayTimeTextView = requireView().findViewById(R.id.homeReport_todayTimeTextView)
+        totalDailyBarChart = requireView().findViewById(R.id.homeReport_totalDailyBarChart)
+        dailyGoalListLayout = requireView().findViewById(R.id.homeReport_dailyGoalListLayout)
 
         // 주간
-        periodWeekTextView = requireView().findViewById(R.id.periodDayTextView)
-        weekTimeTextView = requireView().findViewById(R.id.weekTimeTextView)
-        weeklyStackBarChart = requireView().findViewById(R.id.weekBarChart)
-        weeklyGoalListLayout = requireView().findViewById(R.id.weekGoalListLayout)
+        periodWeekTextView = requireView().findViewById(R.id.homeReport_periodDayTextView)
+        weekTimeTextView = requireView().findViewById(R.id.homeReport_weeklyTimeTextView)
+        weeklyStackBarChart = requireView().findViewById(R.id.homeReport_weeklyBarChart)
+        weeklyGoalListLayout = requireView().findViewById(R.id.homeReport_weeklyGoalListLayout)
 
 //        // 월간
 //        monthDayTextView = requireView().findViewById(R.id.monthDayTextView)

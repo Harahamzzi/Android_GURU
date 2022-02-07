@@ -2,15 +2,12 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.database.Cursor
 import android.graphics.PorterDuff
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 import java.util.*
 
 class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor: Int, time: String) {
@@ -39,34 +36,34 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
         dialog.setContentView(R.layout.popup_lock_setting_confirm)
 
         //대표 목표 수정하기
-        goalTitleTextView = dialog.findViewById(R.id.goalTitleTextView)
-        goalColorImageView = dialog.findViewById(R.id.lockSetConfirmGoalColorImageView)
+        goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView2)
+        goalColorImageView = dialog.findViewById(R.id.pop_lockSetConfirmGoalColorImageView2)
         goalTitleTextView.text = goalName
         goalColorImageView.setColorFilter(goalColor, PorterDuff.Mode.SRC_IN)
 
 
         //시간 연결
-        hour = dialog.findViewById(R.id.hourTimeTextView)
+        hour = dialog.findViewById(R.id.pop_hourTimeTextView)
         hour.text = timeArray[0]
-        min = dialog.findViewById(R.id.minTmeTextView)
+        min = dialog.findViewById(R.id.pop_minTmeTextView)
         min.text = timeArray[1]
-        sec = dialog.findViewById(R.id.secTimeTextView)
+        sec = dialog.findViewById(R.id.pop_secTimeTextView)
         sec.text = timeArray[2]
 
-        lock = dialog.findViewById<ImageButton>(R.id.settingOkImageButton)
+        lock = dialog.findViewById<ImageButton>(R.id.pop_settingOkImageButton2)
         lock.setOnClickListener {
             onClickListener.onClicked(true)
             dialog.dismiss()
         }
 
-        cancel = dialog.findViewById<ImageButton>(R.id.lockCancelImageButton)
+        cancel = dialog.findViewById<ImageButton>(R.id.pop_lockCancelImageButton2)
         cancel.setOnClickListener {
             onClickListener.onClicked(false)
             dialog.dismiss()
         }
 
         //목표 리스트 연결
-        detailGoalItemRecyclerView = dialog.findViewById(R.id.lockSettingConfirmDetailGoalRecyclerView)
+        detailGoalItemRecyclerView = dialog.findViewById(R.id.pop_lockSettingConfirmDetailGoalRecyclerView)
         if(goalName != "목표를 생성해주세요"){
             val items = ArrayList<DetailGoalItem>()
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
