@@ -36,11 +36,11 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
         dialog.setContentView(R.layout.popup_goal_select)
 
         //팝업 제목
-        dialogTitleTextView = dialog.findViewById<TextView>(R.id.moveDetailGoalTextView)
+        dialogTitleTextView = dialog.findViewById<TextView>(R.id.pop_moveDetailGoalTextView)
         dialogTitleTextView.text = dialogTitle
 
         //리스트 가져오기
-        goalRadioGroup = dialog.findViewById(R.id.setGoalRadioGroup)
+        goalRadioGroup = dialog.findViewById(R.id.pop_setGoalRadioGroup)
 
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -93,7 +93,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
         sqlitedb.close()
         dbManager.close()
 
-        totalGoalCountTextView = dialog.findViewById(R.id.totalGoalCountTextView)
+        totalGoalCountTextView = dialog.findViewById(R.id.pop_totalGoalCountTextView)
         totalGoalCountTextView.text = "총 ${num}개"
 
         //선택 항목 얻어오기
@@ -108,7 +108,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
         }
 
         //선택후 넘기기
-        backImageButton = dialog.findViewById(R.id.popBackImageButton)
+        backImageButton = dialog.findViewById(R.id.pop_backImageButton)
         backImageButton.setOnClickListener {
             onClickListener.onClicked(bigGoalTitle)
             dialog.dismiss()

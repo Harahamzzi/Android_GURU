@@ -26,12 +26,12 @@ class HamsterEditNameDialog(context: Context, name: String?) {
         dialog.setContentView(R.layout.popup_edit_name)
 
         //기존 이름
-        nameTextView = dialog.findViewById(R.id.nameTextView)
+        nameTextView = dialog.findViewById(R.id.pop_nameTextView)
         nameTextView.text = name
 
-        editNameEditText = dialog.findViewById(R.id.editNameEditText)
-        hamsterCancelImageButton = dialog.findViewById(R.id.hamsterCancelImageButton)
-        nameEditImageButton = dialog.findViewById(R.id.nameEditImageButton)
+        editNameEditText = dialog.findViewById(R.id.pop_editNameEditText)
+        hamsterCancelImageButton = dialog.findViewById(R.id.pop_hamsterCancelImageButton)
+        nameEditImageButton = dialog.findViewById(R.id.pop_nameEditImageButton)
 
         hamsterCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null)

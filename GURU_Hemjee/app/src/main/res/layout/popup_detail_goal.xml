@@ -6,7 +6,7 @@
     android:background="@drawable/detail_popup_bg">
 
     <TextView
-        android:id="@+id/detailEditGoalTitleTextView"
+        android:id="@+id/pop_detailEditGoalTitleTextView"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/detailGoalPopBackImageButton"
+        android:id="@+id/pop_detailGoalPopBackImageButton"
         android:layout_width="8dp"
         android:layout_height="16dp"
         android:layout_marginStart="17dp"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detailEditGoalTitleTextView">
+        app:layout_constraintTop_toBottomOf="@+id/pop_detailEditGoalTitleTextView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="37dp"
@@ -51,7 +51,7 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/editDetailGoalNameImageButton"
+                android:id="@+id/pop_editDetailGoalNameImageButton"
                 android:layout_width="37dp"
                 android:layout_height="37dp"
                 android:background="@drawable/detail_goal_button"
@@ -63,7 +63,7 @@
                 app:srcCompat="@drawable/ic_outline_edit_24" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/pop_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
@@ -81,7 +81,7 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/moveDetailGoalNameImageButton"
+                android:id="@+id/pop_moveDetailGoalNameImageButton"
                 android:layout_width="37dp"
                 android:layout_height="37dp"
                 android:background="@drawable/detail_goal_button"
@@ -93,7 +93,7 @@
                 app:srcCompat="@drawable/ic_outline_drive_file_move_24" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/pop_textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
@@ -111,7 +111,7 @@
             android:layout_weight="1">
 
             <ImageButton
-                android:id="@+id/deleteDetailGoalNameImageButton"
+                android:id="@+id/pop_deleteDetailGoalNameImageButton"
                 android:layout_width="37dp"
                 android:layout_height="37dp"
                 android:background="@drawable/detail_goal_button"
@@ -123,7 +123,7 @@
                 app:srcCompat="@drawable/ic_outline_delete_24" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/pop_textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"

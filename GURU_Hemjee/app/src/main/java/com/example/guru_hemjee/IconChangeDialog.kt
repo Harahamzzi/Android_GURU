@@ -43,25 +43,25 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         dialog.show()
         dialog.setContentView(R.layout.popup_icon_list)
 
-        iconGroup1 = dialog.findViewById(R.id.iconGroup1)
-        iconGroup2 = dialog.findViewById(R.id.iconGroup2)
-        iconGroup3 = dialog.findViewById(R.id.iconGroup3)
+        iconGroup1 = dialog.findViewById(R.id.pop_iconGroup1)
+        iconGroup2 = dialog.findViewById(R.id.pop_iconGroup2)
+        iconGroup3 = dialog.findViewById(R.id.pop_iconGroup3)
 
-        icon1RadioButton = dialog.findViewById(R.id.icon1)
-        icon2RadioButton = dialog.findViewById(R.id.icon2)
-        icon3RadioButton = dialog.findViewById(R.id.icon3)
-        icon4RadioButton = dialog.findViewById(R.id.icon4)
-        icon5RadioButton = dialog.findViewById(R.id.icon5)
-        icon6RadioButton = dialog.findViewById(R.id.icon6)
-        icon7RadioButton = dialog.findViewById(R.id.icon7)
-        icon8RadioButton = dialog.findViewById(R.id.icon8)
-        icon9RadioButton = dialog.findViewById(R.id.icon9)
-        icon10RadioButton = dialog.findViewById(R.id.icon10)
-        icon11RadioButton = dialog.findViewById(R.id.icon11)
-        icon12RadioButton = dialog.findViewById(R.id.icon12)
-        icon13RadioButton = dialog.findViewById(R.id.icon13)
-        icon14RadioButton = dialog.findViewById(R.id.icon14)
-        icon15RadioButton = dialog.findViewById(R.id.icon15)
+        icon1RadioButton = dialog.findViewById(R.id.pop_icon1)
+        icon2RadioButton = dialog.findViewById(R.id.pop_icon2)
+        icon3RadioButton = dialog.findViewById(R.id.pop_icon3)
+        icon4RadioButton = dialog.findViewById(R.id.pop_icon4)
+        icon5RadioButton = dialog.findViewById(R.id.pop_icon5)
+        icon6RadioButton = dialog.findViewById(R.id.pop_icon6)
+        icon7RadioButton = dialog.findViewById(R.id.pop_icon7)
+        icon8RadioButton = dialog.findViewById(R.id.pop_icon8)
+        icon9RadioButton = dialog.findViewById(R.id.pop_icon9)
+        icon10RadioButton = dialog.findViewById(R.id.pop_icon10)
+        icon11RadioButton = dialog.findViewById(R.id.pop_icon11)
+        icon12RadioButton = dialog.findViewById(R.id.pop_icon12)
+        icon13RadioButton = dialog.findViewById(R.id.pop_icon13)
+        icon14RadioButton = dialog.findViewById(R.id.pop_icon14)
+        icon15RadioButton = dialog.findViewById(R.id.pop_icon15)
 
         if(R.drawable.ic_outline_menu_book_24==icon){
             icon1RadioButton.isChecked = true
@@ -126,35 +126,35 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
 
         iconGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when(checkedId){
-                R.id.icon1 -> {
+                R.id.pop_icon1 -> {
                     colorGray()
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
                     icon1RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_menu_book_24
                 }
-                R.id.icon2 -> {
+                R.id.pop_icon2 -> {
                     colorGray()
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
                     icon2RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_play_lesson_24
                 }
-                R.id.icon3 -> {
+                R.id.pop_icon3 -> {
                     colorGray()
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
                     icon3RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_school_24
                 }
-                R.id.icon4 -> {
+                R.id.pop_icon4 -> {
                     colorGray()
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
                     icon4RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.dumble_icon
                 }
-                R.id.icon5 -> {
+                R.id.pop_icon5 -> {
                     colorGray()
                     iconGroup3.clearCheck()
                     iconGroup2.clearCheck()
@@ -166,35 +166,35 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         iconGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             colorGray()
             when(checkedId){
-                R.id.icon6 -> {
+                R.id.pop_icon6 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
                     icon6RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_sports_esports_24
                 }
-                R.id.icon7 -> {
+                R.id.pop_icon7 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
                     icon7RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_computer_24
                 }
-                R.id.icon8 -> {
+                R.id.pop_icon8 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
                     icon8RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_piano_24
                 }
-                R.id.icon9 -> {
+                R.id.pop_icon9 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
                     icon9RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_ramen_dining_24
                 }
-                R.id.icon10 -> {
+                R.id.pop_icon10 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup3.clearCheck()
@@ -206,35 +206,35 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         iconGroup3.setOnCheckedChangeListener { radioGroup, checkedId ->
             colorGray()
             when(checkedId){
-                R.id.icon11 -> {
+                R.id.pop_icon11 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
                     icon11RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_business_center_24
                 }
-                R.id.icon12 -> {
+                R.id.pop_icon12 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
                     icon12RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_storefront_24
                 }
-                R.id.icon13 -> {
+                R.id.pop_icon13 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
                     icon13RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_draw_24
                 }
-                R.id.icon14 -> {
+                R.id.pop_icon14 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
                     icon14RadioButton.backgroundTintList = ColorStateList.valueOf(goalColor)
                     icon = R.drawable.ic_outline_savings_24
                 }
-                R.id.icon15 -> {
+                R.id.pop_icon15 -> {
                     colorGray()
                     iconGroup1.clearCheck()
                     iconGroup2.clearCheck()
@@ -244,13 +244,13 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
             }
         }
 
-        cancelImageButton = dialog.findViewById(R.id.iconCancelImageButton)
+        cancelImageButton = dialog.findViewById(R.id.pop_iconCancelImageButton)
         cancelImageButton.setOnClickListener {
             onClickListener.onClick(false, originIcon)
             dialog.dismiss()
         }
 
-        okImageButton = dialog.findViewById(R.id.iconOkImageButton)
+        okImageButton = dialog.findViewById(R.id.pop_iconOkImageButton)
         okImageButton.setOnClickListener {
             onClickListener.onClick(true, icon)
             dialog.dismiss()

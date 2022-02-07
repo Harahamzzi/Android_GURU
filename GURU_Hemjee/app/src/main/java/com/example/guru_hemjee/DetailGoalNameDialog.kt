@@ -27,12 +27,12 @@ class DetailGoalNameDialog(val context: Context, name: String) {
         dialog.setContentView(R.layout.popup_detail_goal_name_edit)
 
         //기존 이름
-        nameTextView = dialog.findViewById(R.id.originDetailGoalNameTextView)
+        nameTextView = dialog.findViewById(R.id.pop_originDetailGoalNameTextView)
         nameTextView.text = name
 
-        editNameEditText = dialog.findViewById(R.id.detailNameEditText)
-        hamsterCancelImageButton = dialog.findViewById(R.id.goalNameEditCancelImageButton)
-        nameEditImageButton = dialog.findViewById(R.id.detailGoalNameOkImageButton)
+        editNameEditText = dialog.findViewById(R.id.pop_detailNameEditText)
+        hamsterCancelImageButton = dialog.findViewById(R.id.pop_goalNameEditCancelImageButton)
+        nameEditImageButton = dialog.findViewById(R.id.pop_detailGoalNameOkImageButton)
 
         hamsterCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, null)

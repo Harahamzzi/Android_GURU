@@ -7,7 +7,7 @@
     android:background="@drawable/detail_goal_move_bg">
 
     <TextView
-        android:id="@+id/moveDetailGoalTextView"
+        android:id="@+id/pop_moveDetailGoalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/popBackImageButton"
+        android:id="@+id/pop_backImageButton"
         android:layout_width="8dp"
         android:layout_height="16dp"
         android:layout_marginStart="17dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/prev_button" />
 
     <TextView
-        android:id="@+id/totalGoalCountTextView"
+        android:id="@+id/pop_totalGoalCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
@@ -41,10 +41,10 @@
         android:text="총 0개"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popBackImageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_backImageButton" />
 
     <RadioGroup
-        android:id="@+id/setGoalRadioGroup"
+        android:id="@+id/pop_setGoalRadioGroup"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="17dp"
@@ -54,6 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalGoalCountTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/pop_totalGoalCountTextView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
