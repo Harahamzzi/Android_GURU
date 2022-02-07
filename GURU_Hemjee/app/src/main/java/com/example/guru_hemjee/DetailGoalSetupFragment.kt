@@ -5,19 +5,13 @@ import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatButton
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -76,13 +70,13 @@ class DetailGoalSetupFragment : Fragment() {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_detail_goal_setup, container, false)
 
-        detailGoalListLayout = view.findViewById(R.id.detailGoalListLayout)
+        detailGoalListLayout = view.findViewById(R.id.goalDetail_detailGoalListLayout)
         // detailGoalSetupLayout = view.findViewById(R.id.detailGoalSetupLayout)
-        bigGoalTextView = view.findViewById(R.id.bigGoalTextView)
-        bigGoalColorImageView = view.findViewById(R.id.bigGoalColorImageView)
-        plusDetailGoalBtn = view.findViewById(R.id.plusDetailGoalBtn)
-        editBigGoalBtn = view.findViewById(R.id.editBigGoalBtn)
-        completeBtn = view.findViewById(R.id.completeBtn)
+        bigGoalTextView = view.findViewById(R.id.goalDetail_bigGoalTextView)
+        bigGoalColorImageView = view.findViewById(R.id.goalDetail_bigGoalColorImageView)
+        plusDetailGoalBtn = view.findViewById(R.id.goalDetail_plusDetailGoalButton)
+        editBigGoalBtn = view.findViewById(R.id.goalDetail_editBigGoalButton)
+        completeBtn = view.findViewById(R.id.goalDetail_storeButton)
         goalDetail_backButton = view.findViewById(R.id.goalDetail_backButton)
 
         // SetupFragment 또는 BigGoalModifyFragment에서 넘어온 (대표 목표)값 받기
