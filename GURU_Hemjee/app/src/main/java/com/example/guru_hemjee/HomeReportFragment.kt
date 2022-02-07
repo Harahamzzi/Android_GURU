@@ -49,7 +49,6 @@ class HomeReportFragment : Fragment() {
     lateinit var weekTimeTextView: TextView // 총 잠금시간
     lateinit var weeklyStackBarChart: BarChart  // 차트
     lateinit var weeklyGoalListLayout: LinearLayout // 대표목표 리스트가 들어갈 레이아웃
-    lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>    // 2차원 배열(대표목표)
     var isBigGoalInitialised = false
 
 //    // 월간
@@ -121,9 +120,9 @@ class HomeReportFragment : Fragment() {
         var cursor: Cursor
         cursor = sqlite.rawQuery("SELECT * FROM big_goal_time_report_db", null)
 
+        lateinit var bigGoalArrayList: ArrayList<MutableMap<String, String>>    // 2차원 배열(대표목표)
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
-        if(!isBigGoalInitialised){
-            while (cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
             val bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
             val str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
@@ -134,12 +133,12 @@ class HomeReportFragment : Fragment() {
             var date1 = str_date.split(" ") // 날짜(0)와 시간(1) 분리
             if (!isBigGoalInitialised) { //처음 입력시 초기화
                 bigGoalArrayList = arrayListOf(
-                        mutableMapOf(
-                                "big_goal_name" to str_big_goal,
-                                "total_lock_time" to bigint_time.toString(),
-                                "lock_date" to date1[0],
-                                "color" to int_color.toString()
-                        )
+                    mutableMapOf(
+                        "big_goal_name" to str_big_goal,
+                        "total_lock_time" to bigint_time.toString(),
+                        "lock_date" to date1[0],
+                        "color" to int_color.toString()
+                    )
                 )
                 isBigGoalInitialised = true
 
@@ -151,8 +150,8 @@ class HomeReportFragment : Fragment() {
                         bigGoalArrayList[i]["lock_date"] == date1[0]) {
 
                         bigGoalArrayList[i]["total_lock_time"] =
-                                (bigGoalArrayList[i]["total_lock_time"]?.toInt()
-                                        ?.plus(bigint_time.toInt())).toString()
+                            (bigGoalArrayList[i]["total_lock_time"]?.toInt()
+                                ?.plus(bigint_time.toInt())).toString()
                         isFlag = true
                         break
                     }
@@ -160,16 +159,15 @@ class HomeReportFragment : Fragment() {
                 }
                 if (!isFlag) {
                     bigGoalArrayList.add(
-                            mutableMapOf(
-                                    "big_goal_name" to str_big_goal,
-                                    "total_lock_time" to bigint_time.toString(),
-                                    "lock_date" to date1[0],
-                                    "color" to int_color.toString()
-                            )
+                        mutableMapOf(
+                            "big_goal_name" to str_big_goal,
+                            "total_lock_time" to bigint_time.toString(),
+                            "lock_date" to date1[0],
+                            "color" to int_color.toString()
+                        )
                     )
                 }
             }
-        }
         }
         cursor.close()
         dbManager.close()
@@ -178,13 +176,13 @@ class HomeReportFragment : Fragment() {
         if(!isBigGoalInitialised){
             Toast.makeText(context, "수행한 기록이 없습니다.", Toast.LENGTH_SHORT).show()
         }
-        weeklyReport(ZonedDateTime.now())
+        weeklyReport(ZonedDateTime.now(), bigGoalArrayList)
 //        // 월간 리포트 함수
 //        createMonthlyReport(nowDate)
     }
 
     // 스택바 차트 세팅 함수
-    fun setWeeklyStackBarChart(weekList: ArrayList<String>) {
+    fun setWeeklyStackBarChart(weekList: ArrayList<String>, bigGoalArrayList: ArrayList<MutableMap<String, String>>) {
         weeklyStackBarChart.invalidate()
 
         val entry = ArrayList<BarEntry>()
@@ -284,7 +282,7 @@ class HomeReportFragment : Fragment() {
     }
 
     // 날짜에 따른 리포트
-    fun weeklyReport(moveTime: ZonedDateTime) { // 지난 주 값
+    fun weeklyReport(moveTime: ZonedDateTime, bigGoalArrayList: ArrayList<MutableMap<String, String>>) { // 지난 주 값
         weeklyGoalListLayout.removeAllViews() // 초기화
 
         var weekList: ArrayList<String> = getWeekDate(moveTime)
@@ -318,7 +316,7 @@ class HomeReportFragment : Fragment() {
             for (i in 0 until bigGoalArrayList.size) {
                 for (j in 0 until weekList.size) {
                     if (bigGoalArrayList[i]["lock_date"] == weekList[j]) { // 같은 잠금 날짜가 1개라도 있다면 차트 띄우기
-                        setWeeklyStackBarChart(weekList)
+                        setWeeklyStackBarChart(weekList, bigGoalArrayList)
                         weeklyStackBarChart.visibility = View.VISIBLE
                         isBarFlag = true
                         break
