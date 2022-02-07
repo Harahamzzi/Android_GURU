@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,39 +18,39 @@ import androidx.fragment.app.FragmentTransaction
 class BigGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
-    lateinit var dbManager: DBManager
-    lateinit var sqlitedb: SQLiteDatabase
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
 
     // 대표 목표
-    lateinit var bigGoalEditText : EditText // 대표 목표 입력할 수 있는 EditText 변수
+    private lateinit var bigGoal_TextView: EditText // 대표 목표 입력할 수 있는 EditText 변수
 
     // 라디오 그룹
-    lateinit var colorRadioGroup1 : RadioGroup // 1행 라디오 그룹 변수
-    lateinit var colorRadioGroup2 : RadioGroup // 2행 라디오 그룹 변수
+    private lateinit var bigGoal_ColorRadioGroup1: RadioGroup // 1행 라디오 그룹 변수
+    private lateinit var bigGoal_ColorRadioGroup2: RadioGroup // 2행 라디오 그룹 변수
 
     // 라디오 버튼
-    lateinit var orangeRadioBtn : RadioButton // 오렌지색 라디오 버튼
-    lateinit var yellowRadioBtn : RadioButton // 노랑색 라디오 버튼
-    lateinit var noteYellowRadioBtn : RadioButton // 노트노랑색 라디오 버튼
-    lateinit var apricotRadioBtn : RadioButton // 살구색 라디오 버튼
-    lateinit var seedBrownRadioBtn : RadioButton // 갈색 라디오 버튼
-    lateinit var darkBrownRadioBtn : RadioButton // 고동색 라디오 버튼
-    lateinit var lightGreenRadioBtn : RadioButton // 연두색 라디오 버튼
-    lateinit var greenRadioBtn : RadioButton // 초록색 라디오 버튼
-    lateinit var lightBlueRadioBtn : RadioButton // 하늘색 라디오 버튼
-    lateinit var blueRadioBtn : RadioButton // 파랑색 라디오 버튼
-    lateinit var purpleRadioBtn : RadioButton // 보라색 라디오 버튼
-    lateinit var pinkRadioBtn : RadioButton // 분홍색 라디오 버튼
+    private lateinit var bigGoal_orangeRadioButton: RadioButton // 오렌지색 라디오 버튼
+    private lateinit var bigGoal_yellowRadioBtn: RadioButton // 노랑색 라디오 버튼
+    private lateinit var bigGoal_noteYellowRadioBtn: RadioButton // 노트노랑색 라디오 버튼
+    private lateinit var bigGoal_apricotRadioBtn: RadioButton // 살구색 라디오 버튼
+    private lateinit var bigGoal_seedBrownRadioBtn: RadioButton // 갈색 라디오 버튼
+    private lateinit var bigGoal_darkBrownRadioBtn: RadioButton // 고동색 라디오 버튼
+    private lateinit var bigGoal_lightGreenRadioBtn: RadioButton // 연두색 라디오 버튼
+    private lateinit var bigGoal_greenRadioBtn: RadioButton // 초록색 라디오 버튼
+    private lateinit var bigGoal_lightBlueRadioBtn: RadioButton // 하늘색 라디오 버튼
+    private lateinit var bigGoal_blueRadioBtn: RadioButton // 파랑색 라디오 버튼
+    private lateinit var bigGoal_purpleRadioBtn: RadioButton // 보라색 라디오 버튼
+    private lateinit var bigGoal_pinkRadioBtn: RadioButton // 분홍색 라디오 버튼
 
     // 목표 잠금 시간
-    lateinit var todayLockHourView : EditText // 시간
-    lateinit var todayLockMinView : EditText // 분
+    private lateinit var bigGoal_todayLockHourEditText: EditText // 시간
+    private lateinit var bigGoal_todayLockMinEditText: EditText // 분
 
     // 삭제, 확인 버튼
-    lateinit var deleteButton : androidx.appcompat.widget.AppCompatButton // 삭제 버튼
-    lateinit var completeButton : androidx.appcompat.widget.AppCompatButton // 확인 버튼
+    private lateinit var bigGoal_cancelButton: AppCompatButton // 취소 버튼
+    private lateinit var bigGoal_storeButton: AppCompatButton // 확인 버튼
 
-    var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
+    private var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -73,40 +74,39 @@ class BigGoalSetupFragment : Fragment() {
         var view: View = inflater.inflate(R.layout.fragment_big_goal_setup, container, false)
 
         // 대표 목표
-        bigGoalEditText = view.findViewById(R.id.bigGoal_TextView)
+        bigGoal_TextView = view.findViewById(R.id.bigGoal_TextView)
 
         // 라디오 그룹
-        colorRadioGroup1 = view.findViewById(R.id.bigGoal_ColorRadioGroup1)
-        colorRadioGroup2 = view.findViewById(R.id.bigGoal_ColorRadioGroup2)
+        bigGoal_ColorRadioGroup1 = view.findViewById(R.id.bigGoal_ColorRadioGroup1)
+        bigGoal_ColorRadioGroup2 = view.findViewById(R.id.bigGoal_ColorRadioGroup2)
 
         // 라디오 버튼
-        orangeRadioBtn = view.findViewById(R.id.bigGoal_orangeRadioButton)
-        yellowRadioBtn = view.findViewById(R.id.bigGoal_yellowRadioButton)
-        noteYellowRadioBtn = view.findViewById(R.id.bigGoal_noteYellowRadioButton)
-        apricotRadioBtn = view.findViewById(R.id.bigGoal_apricotRadioButton)
-        seedBrownRadioBtn = view.findViewById(R.id.bigGoal_seedBrownRadioButton)
-        darkBrownRadioBtn = view.findViewById(R.id.bigGoal_darkBrownRadioButton)
-        lightGreenRadioBtn = view.findViewById(R.id.bigGoal_lightGreenRadioButton)
-        greenRadioBtn = view.findViewById(R.id.bigGoal_greenRadioButton)
-        lightBlueRadioBtn = view.findViewById(R.id.bigGoal_lightBlueRadioButton)
-        blueRadioBtn = view.findViewById(R.id.bigGoal_blueRadioButton)
-        purpleRadioBtn = view.findViewById(R.id.bigGoal_purpleRadioButton)
-        pinkRadioBtn = view.findViewById(R.id.bigGoal_pinkRadioButton)
+        bigGoal_orangeRadioButton = view.findViewById(R.id.bigGoal_orangeRadioButton)
+        bigGoal_yellowRadioBtn = view.findViewById(R.id.bigGoal_yellowRadioButton)
+        bigGoal_noteYellowRadioBtn = view.findViewById(R.id.bigGoal_noteYellowRadioButton)
+        bigGoal_apricotRadioBtn = view.findViewById(R.id.bigGoal_apricotRadioButton)
+        bigGoal_seedBrownRadioBtn = view.findViewById(R.id.bigGoal_seedBrownRadioButton)
+        bigGoal_darkBrownRadioBtn = view.findViewById(R.id.bigGoal_darkBrownRadioButton)
+        bigGoal_lightGreenRadioBtn = view.findViewById(R.id.bigGoal_lightGreenRadioButton)
+        bigGoal_greenRadioBtn = view.findViewById(R.id.bigGoal_greenRadioButton)
+        bigGoal_lightBlueRadioBtn = view.findViewById(R.id.bigGoal_lightBlueRadioButton)
+        bigGoal_blueRadioBtn = view.findViewById(R.id.bigGoal_blueRadioButton)
+        bigGoal_purpleRadioBtn = view.findViewById(R.id.bigGoal_purpleRadioButton)
+        bigGoal_pinkRadioBtn = view.findViewById(R.id.bigGoal_pinkRadioButton)
 
         // 목표 잠금 시간
-        todayLockHourView = view.findViewById(R.id.bigGoal_todayLockHourEditText)
-        todayLockMinView = view.findViewById(R.id.bigGoal_todayLockMinEditText)
+        bigGoal_todayLockHourEditText = view.findViewById(R.id.bigGoal_todayLockHourEditText)
+        bigGoal_todayLockMinEditText = view.findViewById(R.id.bigGoal_todayLockMinEditText)
 
-        // 삭제, 확인 버튼
-        deleteButton = view.findViewById(R.id.bigGoal_cancelButton)
-        completeButton = view.findViewById(R.id.bigGoal_storeButton)
+        // 취소, 확인 버튼
+        bigGoal_cancelButton = view.findViewById(R.id.bigGoal_cancelButton)
+        bigGoal_storeButton = view.findViewById(R.id.bigGoal_storeButton)
 
         // DB
         dbManager = DBManager(context, "hamster_db", null, 1)
 
-        // TODO: 라디오 그룹간의 전환 시 다른 라디오 그룹에 있는 버튼을 2번 눌러야만 선택되는 문제 수정 필요
         // 색깔 라디오 버튼 클릭시 이벤트 연결
-        colorRadioGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
+        bigGoal_ColorRadioGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹1에서 버튼을 눌렀다면
                 R.id.bigGoal_orangeRadioButton,
                 R.id.bigGoal_yellowRadioButton,
@@ -114,12 +114,12 @@ class BigGoalSetupFragment : Fragment() {
                 R.id.bigGoal_apricotRadioButton,
                 R.id.bigGoal_seedBrownRadioButton,
                 R.id.bigGoal_darkBrownRadioButton -> {
-                    colorRadioGroup2.clearCheck() // 라디오 그룹2에서 선택되어 있는 버튼 초기화
+                    bigGoal_ColorRadioGroup2.clearCheck() // 라디오 그룹2에서 선택되어 있는 버튼 초기화
                 }
             }
         }
 
-        colorRadioGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
+        bigGoal_ColorRadioGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹2에서 버튼을 눌렀다면
                 R.id.bigGoal_lightGreenRadioButton,
                 R.id.bigGoal_greenRadioButton,
@@ -127,29 +127,30 @@ class BigGoalSetupFragment : Fragment() {
                 R.id.bigGoal_blueRadioButton,
                 R.id.bigGoal_purpleRadioButton,
                 R.id.bigGoal_pinkRadioButton -> {
-                    colorRadioGroup1.clearCheck() // 라디오 그룹1에서 선택되어 있는 버튼 초기화
+                    bigGoal_ColorRadioGroup1.clearCheck() // 라디오 그룹1에서 선택되어 있는 버튼 초기화
                 }
             }
         }
 
         // 확인 버튼을 눌렀을 경우 대표 목표 DB에 등록
-        completeButton.setOnClickListener {
-            var str_biggoal : String = bigGoalEditText.text.toString() // 대표 목표
-            var integer_color : Int = ContextCompat.getColor(requireContext(), R.color.Orange) // 기본 색상 = 오렌지색
-            var integer_hour : String = todayLockHourView.text.toString() // 잠금 시간
-            var integer_min : String = todayLockMinView.text.toString()// 잠금 분
+        bigGoal_storeButton.setOnClickListener {
+            var str_biggoal: String = bigGoal_TextView.text.toString() // 대표 목표
+            var integer_color: Int = ContextCompat.getColor(requireContext(), R.color.Orange) // 기본 색상 = 오렌지색
+            var integer_hour: String = bigGoal_todayLockHourEditText.text.toString() // 잠금 시간
+            var integer_min: String = bigGoal_todayLockMinEditText.text.toString() // 잠금 분
 
-            if (str_biggoal == "") { // EditText가 비어있다면
+            if (str_biggoal == "") { // 대표목표 입력을 안했다면
                 Toast.makeText(context, "목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
-            else if (integer_hour == "" && integer_min == "") {
+            else if (integer_hour == "" && integer_min == "") { // 시, 분 입력을 안했다면
                 Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else if((integer_hour != "" && integer_hour.toInt() > 23 || (integer_min != "" && integer_min.toInt() > 59))){
+                // 범위 외의 값을 입력헀다면
                 Toast.makeText(context, "올바른 시간을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
-            else {
-                when (colorRadioGroup1.checkedRadioButtonId) {
+            else { // 선택한 색상값 저장
+                when (bigGoal_ColorRadioGroup1.checkedRadioButtonId) {
                     R.id.bigGoal_orangeRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Orange)
                     R.id.bigGoal_yellowRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Yellow)
                     R.id.bigGoal_noteYellowRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.NoteYellow)
@@ -158,7 +159,7 @@ class BigGoalSetupFragment : Fragment() {
                     R.id.bigGoal_darkBrownRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.DarkBrown)
                 }
 
-                when (colorRadioGroup2.checkedRadioButtonId) {
+                when (bigGoal_ColorRadioGroup2.checkedRadioButtonId) {
                     R.id.bigGoal_lightGreenRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightGreen)
                     R.id.bigGoal_greenRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Green)
                     R.id.bigGoal_lightBlueRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightBlue)
@@ -167,7 +168,6 @@ class BigGoalSetupFragment : Fragment() {
                     R.id.bigGoal_pinkRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Pink)
                 }
 
-                // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
                 lateinit var total_time : String
                 if (integer_hour.isNullOrBlank()) { // 시간이 공란인 경우
                     if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) {
@@ -194,29 +194,21 @@ class BigGoalSetupFragment : Fragment() {
                 sqlitedb.execSQL("INSERT OR IGNORE INTO big_goal_db VALUES ('" + str_biggoal + "', '" + integer_color + "', '" + total_time + "');")
                 sqlitedb.close()
 
-                /*val bundle : Bundle = Bundle() // 번들을 통해서 값 전달
-                bundle.putString("bundle_big_goal", str_biggoal) // 번들에 넘길 값(키 값 - 대표 목표) 저장
-                setupfragment.setArguments(bundle) //번들을 setupfragment로 보낼 준비 */
-
-                /*val transaction : FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-                val setupfragment = SetupFragment() // setupfragment 선언
-
-                transaction.replace(R.id.bigGoalListView, setupfragment) // 리스트 뷰에 보내기*/
                 Toast.makeText(context, "목표가 저장되었습니다.", Toast.LENGTH_SHORT).show()
                 goSetUp()
             }
         }
 
         // 취소 버튼을 눌렀을 경우
-        deleteButton.setOnClickListener {
+        bigGoal_cancelButton.setOnClickListener {
             goSetUp()
         }
 
         return view
     }
 
-    // setupfragment로 화면을 전환하는 함수
-    fun goSetUp() {
+    // Setupfragment로 화면을 전환하는 함수
+    private fun goSetUp() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.fragment_main, SetupFragment())

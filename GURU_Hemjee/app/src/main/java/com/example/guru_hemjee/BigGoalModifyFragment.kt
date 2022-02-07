@@ -213,7 +213,6 @@ class BigGoalModifyFragment : Fragment() {
                 }
             }
 
-            // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
             lateinit var total_time: String
             if (str_hour == "" && str_min == "") {
                 Toast.makeText(context, "시간을 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -290,7 +289,6 @@ class BigGoalModifyFragment : Fragment() {
             }
             sqlitedb.close()
             dbManager.close()
-
         }
 
         // 삭제 버튼을 눌렀을 경우
@@ -319,7 +317,7 @@ class BigGoalModifyFragment : Fragment() {
     }
 
     // 세부목표 화면으로 이동
-    fun goDetailGoalSetup(big_goal: String) {
+    private fun goDetailGoalSetup(big_goal: String) {
         Toast.makeText(context, "목표 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
 
         val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
