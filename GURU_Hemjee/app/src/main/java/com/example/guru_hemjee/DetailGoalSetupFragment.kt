@@ -173,9 +173,7 @@ class DetailGoalSetupFragment : Fragment() {
             bundle.putString("bundle_biggoal_2", str_biggoal)
 
             modifyFragment.setArguments(bundle)
-
             transaction.replace(R.id.fragment_main, modifyFragment)
-            transaction.addToBackStack(null)
             transaction.commit()
         }
 
@@ -327,8 +325,8 @@ class DetailGoalSetupFragment : Fragment() {
     fun goSetUp() {
         mainActivity?.supportFragmentManager
                 ?.beginTransaction()
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ?.remove(this)
+                ?.replace(R.id.fragment_main, SetupFragment())
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 ?.commit()
         requireActivity().supportFragmentManager.popBackStack()
     }

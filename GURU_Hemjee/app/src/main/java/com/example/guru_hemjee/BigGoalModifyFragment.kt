@@ -303,12 +303,9 @@ class BigGoalModifyFragment : Fragment() {
 
             val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             val setupFragment = SetupFragment()
-            val bundle = Bundle()
-            bundle.putString("bundle_biggoal", str_big_goal)
 
-            setupFragment.arguments = bundle
-
-            transaction.replace(R.id.fragment_main, SetupFragment())
+            transaction.replace(R.id.fragment_main, setupFragment)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             transaction.commit() // 저장
 
             Toast.makeText(context, "목표가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
