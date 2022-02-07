@@ -128,9 +128,9 @@ class HomeAlbumFragment : Fragment() {
         }
 
         // 위젯에 totalTime 갱신
-        var tempHour = dayTotalLockTime / 1000 / 60 / 60 % 24   // 시간
-        var tempMin = dayTotalLockTime / 1000 / 60 % 60         // 분
-        var tempSec = dayTotalLockTime / 1000 % 60              // 초
+        var tempHour = dayTotalLockTime / 1000 / 60 / 60  // 시간
+        var tempMin = dayTotalLockTime / 1000 / 60 % 60   // 분
+        var tempSec = dayTotalLockTime / 1000 % 60        // 초
 
         timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
@@ -362,9 +362,9 @@ class HomeAlbumFragment : Fragment() {
             }
 
             // 위젯에 totalTime 갱신
-            var tempHour = totalGoalLockTime / 1000 / 60 / 60 % 24   // 시간
-            var tempMin = totalGoalLockTime / 1000 / 60 % 60         // 분
-            var tempSec = totalGoalLockTime / 1000 % 60              // 초
+            var tempHour = totalGoalLockTime / 1000 / 60 / 60   // 시간
+            var tempMin = totalGoalLockTime / 1000 / 60 % 60    // 분
+            var tempSec = totalGoalLockTime / 1000 % 60         // 초
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
             timeTextView.text = "$tempHour : $tempMin : $tempSec"
