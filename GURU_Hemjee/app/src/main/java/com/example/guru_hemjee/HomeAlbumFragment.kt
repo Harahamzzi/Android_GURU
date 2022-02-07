@@ -21,7 +21,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+// MainActivity -> 홈 앨범
+// 홈 화면에서 스와이프를 통해 접근할 수 있는 홈 앨범 fragment 화면
 class HomeAlbumFragment : Fragment() {
 
     private lateinit var dateTextView: TextView // 오늘 날짜

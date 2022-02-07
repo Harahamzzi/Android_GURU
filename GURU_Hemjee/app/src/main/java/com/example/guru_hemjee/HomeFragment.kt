@@ -19,6 +19,8 @@ import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.collections.ArrayList
 
+// MainActivity -> 홈
+// 햄찌, 잠금 시작 등을 할 수 있는 홈 fragment 화면
 class HomeFragment : Fragment() {
 
     //씨앗 개수
