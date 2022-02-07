@@ -152,7 +152,9 @@ class WeeklyReportFragment : Fragment() {
                 var isFlag: Boolean = false // 중복값 확인
                 var i = 0
                 while (i < bigGoalArrayList.size) {
-                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal && bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal &&
+                        bigGoalArrayList[i]["color"]!!.toBigInteger() == int_color &&
+                        bigGoalArrayList[i]["lock_date"] == date1[0]) {
                         bigGoalArrayList[i]["total_lock_time"] =
                             (bigGoalArrayList[i]["total_lock_time"]?.toInt()
                                 ?.plus(bigint_time.toInt())).toString()

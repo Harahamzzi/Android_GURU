@@ -145,7 +145,10 @@ class HomeReportFragment : Fragment() {
             } else {//같은 날 같은 목표를 달성했다면 시간만 추가하고 새로 추가 X
                 var i = 0
                 while (i < bigGoalArrayList.size) {
-                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal && bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                    if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal &&
+                        bigGoalArrayList[i]["color"]!!.toBigInteger() == int_color &&
+                        bigGoalArrayList[i]["lock_date"] == date1[0]) {
+                            
                         bigGoalArrayList[i]["total_lock_time"] =
                                 (bigGoalArrayList[i]["total_lock_time"]?.toInt()
                                         ?.plus(bigint_time.toInt())).toString()
