@@ -139,6 +139,7 @@ class SetupFragment : Fragment() {
                     detailGoalSetupFragment.setArguments(bundle) // 번들을 통해서 다른 프래그먼트에 값을 보낼 준비
 
                     transaction.replace(R.id.fragment_main, detailGoalSetupFragment) // 해당 레이아웃을 프래그먼트로 변경
+                    transaction.addToBackStack(null)
                     transaction.commit() // 저장
                 }
             }
