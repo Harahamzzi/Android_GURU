@@ -23,7 +23,6 @@ class BigGoalModifyFragment : Fragment() {
     // 내부DB 사용을 위한 변수
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
-    lateinit var sqlitedb2: SQLiteDatabase
 
     // 대표 목표
     lateinit var modBigGoalEditText: EditText
@@ -237,7 +236,6 @@ class BigGoalModifyFragment : Fragment() {
                  **/
 
                 sqlitedb = dbManager.writableDatabase
-                sqlitedb2 = dbManager.readableDatabase
                 try {
                     sqlitedb.execSQL("CREATE TABLE IF NOT EXISTS copy_goal_db (big_goal_name text, color INT, big_goal_lock_time text)")
                 } catch (e : Exception) {
@@ -250,12 +248,12 @@ class BigGoalModifyFragment : Fragment() {
                 if (big_goal == str_big_goal) { // 대표목표의 값이 변경되지 않았다면
                     sqlitedb.execSQL("INSERT INTO big_goal_db SELECT * FROM copy_goal_db WHERE big_goal_name = '" + str_big_goal + "';")
                     sqlitedb.execSQL("DROP TABLE copy_goal_db")
-                    sqlitedb2.close()
+                    sqlitedb.close()
                     sqlitedb.close()
                     goDetailGoalSetup(big_goal) // 세부목표 화면으로 이동
                 } else { // 대표목표의 값이 변경되었다면
                     var cursor: Cursor
-                    cursor = sqlitedb2.rawQuery("SELECT * FROM big_goal_db", null)
+                    cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
 
                     var isFlag : Boolean = false
                     while (cursor.moveToNext()) { // 기존에 저장된 값과 같다면
@@ -274,7 +272,6 @@ class BigGoalModifyFragment : Fragment() {
 
                         cursor.close()
                         sqlitedb.execSQL("DROP TABLE copy_goal_db")
-                        sqlitedb2.close()
                         sqlitedb.close()
 
                         sqlitedb = dbManager.writableDatabase
@@ -290,7 +287,6 @@ class BigGoalModifyFragment : Fragment() {
                 }
             }
             sqlitedb.close()
-            sqlitedb2.close()
             dbManager.close()
 
         }
