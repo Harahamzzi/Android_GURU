@@ -7,7 +7,7 @@
     tools:context=".CategoryAlbumFragment" >
 
     <FrameLayout
-        android:id="@+id/categoryAlbum_frameLayout"
+        android:id="@+id/albumCategory_FrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -25,7 +25,7 @@
     </FrameLayout>
 
     <ScrollView
-        android:id="@+id/categoryAlbum_ScrollView"
+        android:id="@+id/albumCategory_ScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,7 @@
 <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <LinearLayout
-                android:id="@+id/categoryAlbum__categoryLinearLayout"
+                android:id="@+id/albumCategory_CategoryLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >

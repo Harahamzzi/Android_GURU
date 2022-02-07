@@ -4,7 +4,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
-import androidx.fragment.app.FragmentTransaction
 import java.lang.IndexOutOfBoundsException
 
 // 나의 성취 앨범(AlbumMainActivity) -> 카테고리별
@@ -48,8 +46,8 @@ class CategoryAlbumFragment : Fragment() {
         super.onStart()
 
         // 위젯 연결
-        categoryAlbumLayout = requireView().findViewById(R.id.categoryAlbum__categoryLinearLayout)
-        blankFrameLayout = requireView().findViewById(R.id.categoryAlbum_frameLayout)
+        categoryAlbumLayout = requireView().findViewById(R.id.albumCategory_CategoryLinearLayout)
+        blankFrameLayout = requireView().findViewById(R.id.albumCategory_FrameLayout)
 
         // 사진 세팅
         applyCategoryPhoto()
