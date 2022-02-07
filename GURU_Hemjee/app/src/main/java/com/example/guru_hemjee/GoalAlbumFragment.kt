@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.widget.Toast
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
+import java.lang.IndexOutOfBoundsException
 
 
 class GoalAlbumFragment : Fragment() {
@@ -24,6 +26,9 @@ class GoalAlbumFragment : Fragment() {
 
     // 대표 목표별 앨범 사진이 들어갈 레이아웃
     private lateinit var goalAlbumLayout: GridLayout
+
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var blankFrameLayout: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +46,7 @@ class GoalAlbumFragment : Fragment() {
 
         // 위젯 연결
         goalAlbumLayout = requireView().findViewById(R.id.goalAlbum_goalAlbumLayout)
+        blankFrameLayout = requireView().findViewById(R.id.goalAlbum_frameLayout)
 
         // 앨범 생성
         applyBigGoalPhoto()
@@ -51,6 +57,12 @@ class GoalAlbumFragment : Fragment() {
 
         // 레이아웃 안의 모든 뷰 제거
         goalAlbumLayout.removeAllViews()
+
+        // 사진들을 보여줄 레이아웃 활성화
+        goalAlbumLayout.visibility = View.VISIBLE
+        // 사진이 없을 때 보여줄 레이아웃 비활성화
+        blankFrameLayout.visibility = View.GONE
+
         // column 수를 2으로 세팅
         goalAlbumLayout.columnCount = 2
 
@@ -194,6 +206,21 @@ class GoalAlbumFragment : Fragment() {
             cursor.close()
             sqlitedb.close()
             dbManager.close()
+        }
+
+        /** 현재 불러올 사진이 없어 빈 화면이라면 메시지 띄우기 **/
+
+        // 불러올 사진이 없을 경우 goalAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
+        try {
+            goalAlbumLayout.get(0)
+        }
+        // Exception이 발생했을 시
+        catch(e: IndexOutOfBoundsException) {
+
+            // 사진들을 보여줄 레이아웃 비활성화
+            goalAlbumLayout.visibility = View.GONE
+            // 사진이 없을 때 보여줄 레이아웃 활성화
+            blankFrameLayout.visibility = View.VISIBLE
         }
     }
 }

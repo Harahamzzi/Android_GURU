@@ -27,6 +27,7 @@
         android:drawableLeft="@drawable/seed_resize"
         android:gravity="center|end"
         android:paddingRight="12dp"
+        android:fontFamily="@font/noto_sans"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="13sp"

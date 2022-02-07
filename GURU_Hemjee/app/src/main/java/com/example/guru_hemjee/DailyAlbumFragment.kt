@@ -15,8 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import androidx.fragment.app.FragmentTransaction
 import androidx.gridlayout.widget.GridLayout
+import java.lang.IndexOutOfBoundsException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +38,10 @@ class DailyAlbumFragment : Fragment() {
     private lateinit var nowDate: LocalDateTime     // 현재 설정된 날짜
 
     // 앨범 사진들이 들어갈 레이아웃
-    private lateinit var albumGridLayout: GridLayout
+    private lateinit var dailyAlbumGridLayout: GridLayout
+
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var blankFrameLayout: FrameLayout
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -62,7 +67,8 @@ class DailyAlbumFragment : Fragment() {
         todayTextView = requireView().findViewById(R.id.dailyAlbum_dateTextView)
         totalTimeTextView = requireView().findViewById(R.id.dailyAlbum_timeTextView)
 
-        albumGridLayout = requireView().findViewById(R.id.dailyAlbum_GridLayout)
+        dailyAlbumGridLayout = requireView().findViewById(R.id.dailyAlbum_GridLayout)
+        blankFrameLayout = requireView().findViewById(R.id.dailyAlbum_frameLayout)
 
         preButton = requireView().findViewById(R.id.dailyAlbum_prevButton)
         nextButton = requireView().findViewById(R.id.dailyAlbum_nextButton)
@@ -157,7 +163,12 @@ class DailyAlbumFragment : Fragment() {
     private fun applyTotalDailyPhoto() {
 
         // 모든 뷰 클리어
-        albumGridLayout.removeAllViews()
+        dailyAlbumGridLayout.removeAllViews()
+
+        // 사진들을 보여줄 레이아웃 활성화
+        dailyAlbumGridLayout.visibility = View.VISIBLE
+        // 사진이 없을 때 보여줄 레이아웃 비활성화
+        blankFrameLayout.visibility = View.GONE
 
         // 해당 날짜 불러오기
         var year: String = todayTextView.text.toString().split("-")[0]
@@ -220,7 +231,7 @@ class DailyAlbumFragment : Fragment() {
                     }
 
                     // 레이아웃에 이미지 뷰 넣기
-                    albumGridLayout.addView(imageView)
+                    dailyAlbumGridLayout.addView(imageView)
 
                 }
                 catch(e: Exception) {
@@ -232,5 +243,20 @@ class DailyAlbumFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        /** 현재 불러올 사진이 없어 빈 화면이라면 메시지 띄우기 **/
+
+        // 불러올 사진이 없을 경우 dailyAlbumGridLayout에 담겨있는 View가 없어 Exception이 발생한다.
+        try {
+            dailyAlbumGridLayout.get(0)
+        }
+        // Exception이 발생했을 시
+        catch(e: IndexOutOfBoundsException) {
+
+            // 사진들을 보여줄 레이아웃 비활성화
+            dailyAlbumGridLayout.visibility = View.GONE
+            // 사진이 없을 때 보여줄 레이아웃 활성화
+            blankFrameLayout.visibility = View.VISIBLE
+        }
     }
 }

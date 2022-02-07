@@ -48,7 +48,28 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/homeAlbum_frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@color/LightGray"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:text="현재 저장된 사진이 없습니다."
+            android:textColor="@color/Black"
+            android:textSize="14dp" />
+    </FrameLayout>
+
     <ScrollView
+        android:id="@+id/homeAlbum_scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="29dp"
@@ -156,17 +177,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/space"
                 app:orientation="horizontal">
 
-<!--                <include-->
-<!--                    app:layout_gravity="center"-->
-<!--                    app:layout_columnWeight="1"-->
-<!--                    app:layout_rowWeight="1"-->
-<!--                    layout="@layout/container_small_album" />-->
+                <!--                <include-->
+                <!--                    app:layout_gravity="center"-->
+                <!--                    app:layout_columnWeight="1"-->
+                <!--                    app:layout_rowWeight="1"-->
+                <!--                    layout="@layout/container_small_album" />-->
 
-<!--                <include-->
-<!--                    app:layout_gravity="center"-->
-<!--                    app:layout_columnWeight="1"-->
-<!--                    app:layout_rowWeight="1"-->
-<!--                    layout="@layout/container_small_album" />-->
+                <!--                <include-->
+                <!--                    app:layout_gravity="center"-->
+                <!--                    app:layout_columnWeight="1"-->
+                <!--                    app:layout_rowWeight="1"-->
+                <!--                    layout="@layout/container_small_album" />-->
 
             </androidx.gridlayout.widget.GridLayout>
 
@@ -187,8 +208,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/space2">
 
-<!--                <include-->
-<!--                    layout="@layout/container_big_album" />-->
+                <!--                <include-->
+                <!--                    layout="@layout/container_big_album" />-->
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
