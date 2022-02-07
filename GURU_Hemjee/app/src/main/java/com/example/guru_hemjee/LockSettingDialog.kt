@@ -3,7 +3,6 @@ package com.example.guru_hemjee
 import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.graphics.PorterDuff
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
@@ -40,23 +39,23 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
         dialog.setContentView(R.layout.popup_lock_setting)
 
         //가져온 대표 목표 제목으로 수정, 대표 목표 색상으로 변경
-        goalColorImageView = dialog.findViewById(R.id.lockSettingGoalColorImageView)
-        goalTitleTextView = dialog.findViewById(R.id.goalTitleTextView)
+        goalColorImageView = dialog.findViewById(R.id.pop_lockSettingGoalColorImageView)
+        goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView)
         goalTitleTextView.text = bigGoalTitle
         goalColorImageView.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
 
         //기본 시간 설정
-        hourEditText = dialog.findViewById<EditText>(R.id.hourTimeEditText)
-        minEditText = dialog.findViewById<EditText>(R.id.minTimeEditText)
-        secEditText = dialog.findViewById<EditText>(R.id.secTimeEditText)
+        hourEditText = dialog.findViewById<EditText>(R.id.pop_hourTimeEditText)
+        minEditText = dialog.findViewById<EditText>(R.id.pop_minTimeEditText)
+        secEditText = dialog.findViewById<EditText>(R.id.pop_secTimeEditText)
         timeHintSet()
 
         //상세 목표 리스트
-        detailGoalRecyclerView = dialog.findViewById(R.id.lockSettingDetailGoalRecyclerView)
+        detailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingDetailGoalRecyclerView)
         upDateGoalList(bigGoalTitle, bigGoalColor)
 
         //대표 목표 수정
-        changeGoalButton = dialog.findViewById(R.id.changeGoalButton)
+        changeGoalButton = dialog.findViewById(R.id.pop_changeGoalButton)
         changeGoalButton.setOnClickListener {
             //대표 목표 수정을 위한 팝업 연결
             val subDialog = GoalSelectDialog(context, bigGoalTitle, "목표 변경", false)
@@ -89,14 +88,14 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
 
 
         //설정 취소 버튼
-        lockCancelImageButton = dialog.findViewById(R.id.lockCancelImageButton)
+        lockCancelImageButton = dialog.findViewById(R.id.pop_lockCancelImageButton)
         lockCancelImageButton.setOnClickListener {
             onClickListener.onClicked(false, "목표를 생성해주세요", context.resources.getColor(R.color.Gray),"")
             dialog.dismiss()
         }
 
         //설정 확인 버튼
-        settingOkImageButton = dialog.findViewById(R.id.settingOkImageButton)
+        settingOkImageButton = dialog.findViewById(R.id.pop_settingOkImageButton)
         settingOkImageButton.setOnClickListener {
             //시간이 올바르게 들어갔는지 확인
 
