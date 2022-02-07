@@ -1,10 +1,8 @@
 package com.example.guru_hemjee
 
 import android.content.Context
-import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import java.util.*
-import java.text.SimpleDateFormat
 
 // 대표 목표 추가 프래그먼트
 class BigGoalSetupFragment : Fragment() {
@@ -76,33 +72,33 @@ class BigGoalSetupFragment : Fragment() {
         var view: View = inflater.inflate(R.layout.fragment_big_goal_setup, container, false)
 
         // 대표 목표
-        bigGoalEditText = view.findViewById(R.id.bigGoalEditText)
+        bigGoalEditText = view.findViewById(R.id.bigGoal_TextView)
 
         // 라디오 그룹
-        colorRadioGroup1 = view.findViewById(R.id.colorRadioGroup1)
-        colorRadioGroup2 = view.findViewById(R.id.colorRadioGroup2)
+        colorRadioGroup1 = view.findViewById(R.id.bigGoal_ColorRadioGroup1)
+        colorRadioGroup2 = view.findViewById(R.id.bigGoal_ColorRadioGroup2)
 
         // 라디오 버튼
-        orangeRadioBtn = view.findViewById(R.id.orangeRadioBtn)
-        yellowRadioBtn = view.findViewById(R.id.yellowRadioBtn)
-        noteYellowRadioBtn = view.findViewById(R.id.noteYellowRadioBtn)
-        apricotRadioBtn = view.findViewById(R.id.apricotRadioBtn)
-        seedBrownRadioBtn = view.findViewById(R.id.seedBrownRadioBtn)
-        darkBrownRadioBtn = view.findViewById(R.id.darkBrownRadioBtn)
-        lightGreenRadioBtn = view.findViewById(R.id.lightGreenRadioBtn)
-        greenRadioBtn = view.findViewById(R.id.greenRadioBtn)
-        lightBlueRadioBtn = view.findViewById(R.id.lightBlueRadioBtn)
-        blueRadioBtn = view.findViewById(R.id.blueRadioBtn)
-        purpleRadioBtn = view.findViewById(R.id.purpleRadioBtn)
-        pinkRadioBtn = view.findViewById(R.id.pinkRadioBtn)
+        orangeRadioBtn = view.findViewById(R.id.bigGoal_OrangeRadioButton)
+        yellowRadioBtn = view.findViewById(R.id.bigGoal_YellowRadioButton)
+        noteYellowRadioBtn = view.findViewById(R.id.bigGoal_NoteYellowRadioButton)
+        apricotRadioBtn = view.findViewById(R.id.bigGoal_ApricotRadioButton)
+        seedBrownRadioBtn = view.findViewById(R.id.bigGoal_SeedBrownRadioButton)
+        darkBrownRadioBtn = view.findViewById(R.id.bigGoal_DarkBrownRadioButton)
+        lightGreenRadioBtn = view.findViewById(R.id.bigGoal_LightGreenRadioButton)
+        greenRadioBtn = view.findViewById(R.id.bigGoal_GreenRadioButton)
+        lightBlueRadioBtn = view.findViewById(R.id.bigGoal_LightBlueRadioButton)
+        blueRadioBtn = view.findViewById(R.id.bigGoal_BlueRadioButton)
+        purpleRadioBtn = view.findViewById(R.id.bigGoal_PurpleRadioButton)
+        pinkRadioBtn = view.findViewById(R.id.bigGoal_PinkRadioButton)
 
         // 목표 잠금 시간
-        todayLockHourView = view.findViewById(R.id.todayLockHourView)
-        todayLockMinView = view.findViewById(R.id.todayLockMinView)
+        todayLockHourView = view.findViewById(R.id.bigGoal_TodayLockHourEditText)
+        todayLockMinView = view.findViewById(R.id.bigGoal_TodayLockMinEditText)
 
         // 삭제, 확인 버튼
-        deleteButton = view.findViewById(R.id.deleteButton)
-        completeButton = view.findViewById(R.id.completeButton)
+        deleteButton = view.findViewById(R.id.bigGoal_CancelButton)
+        completeButton = view.findViewById(R.id.bigGoal_StoreButton)
 
         // DB
         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -111,12 +107,12 @@ class BigGoalSetupFragment : Fragment() {
         // 색깔 라디오 버튼 클릭시 이벤트 연결
         colorRadioGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹1에서 버튼을 눌렀다면
-                R.id.orangeRadioBtn,
-                R.id.yellowRadioBtn,
-                R.id.noteYellowRadioBtn,
-                R.id.apricotRadioBtn,
-                R.id.seedBrownRadioBtn,
-                R.id.darkBrownRadioBtn -> {
+                R.id.bigGoal_OrangeRadioButton,
+                R.id.bigGoal_YellowRadioButton,
+                R.id.bigGoal_NoteYellowRadioButton,
+                R.id.bigGoal_ApricotRadioButton,
+                R.id.bigGoal_SeedBrownRadioButton,
+                R.id.bigGoal_DarkBrownRadioButton -> {
                     colorRadioGroup2.clearCheck() // 라디오 그룹2에서 선택되어 있는 버튼 초기화
                 }
             }
@@ -124,12 +120,12 @@ class BigGoalSetupFragment : Fragment() {
 
         colorRadioGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
             when (checkedId) { // 라디오 그룹2에서 버튼을 눌렀다면
-                R.id.lightGreenRadioBtn,
-                R.id.greenRadioBtn,
-                R.id.lightBlueRadioBtn,
-                R.id.blueRadioBtn,
-                R.id.purpleRadioBtn,
-                R.id.pinkRadioBtn -> {
+                R.id.bigGoal_LightGreenRadioButton,
+                R.id.bigGoal_GreenRadioButton,
+                R.id.bigGoal_LightBlueRadioButton,
+                R.id.bigGoal_BlueRadioButton,
+                R.id.bigGoal_PurpleRadioButton,
+                R.id.bigGoal_PinkRadioButton -> {
                     colorRadioGroup1.clearCheck() // 라디오 그룹1에서 선택되어 있는 버튼 초기화
                 }
             }
@@ -153,21 +149,21 @@ class BigGoalSetupFragment : Fragment() {
             }
             else {
                 when (colorRadioGroup1.checkedRadioButtonId) {
-                    R.id.orangeRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Orange)
-                    R.id.yellowRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Yellow)
-                    R.id.noteYellowRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.NoteYellow)
-                    R.id.apricotRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Apricot)
-                    R.id.seedBrownRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.SeedBrown)
-                    R.id.darkBrownRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.DarkBrown)
+                    R.id.bigGoal_OrangeRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Orange)
+                    R.id.bigGoal_YellowRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Yellow)
+                    R.id.bigGoal_NoteYellowRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.NoteYellow)
+                    R.id.bigGoal_ApricotRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Apricot)
+                    R.id.bigGoal_SeedBrownRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.SeedBrown)
+                    R.id.bigGoal_DarkBrownRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.DarkBrown)
                 }
 
                 when (colorRadioGroup2.checkedRadioButtonId) {
-                    R.id.lightGreenRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightGreen)
-                    R.id.greenRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Green)
-                    R.id.lightBlueRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightBlue)
-                    R.id.blueRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Blue)
-                    R.id.purpleRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Purple)
-                    R.id.pinkRadioBtn -> integer_color = ContextCompat.getColor(requireContext(), R.color.Pink)
+                    R.id.bigGoal_LightGreenRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightGreen)
+                    R.id.bigGoal_GreenRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Green)
+                    R.id.bigGoal_LightBlueRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.LightBlue)
+                    R.id.bigGoal_BlueRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Blue)
+                    R.id.bigGoal_PurpleRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Purple)
+                    R.id.bigGoal_PinkRadioButton -> integer_color = ContextCompat.getColor(requireContext(), R.color.Pink)
                 }
 
                 // TODO : 더 깔끔하게 코드를 바꿀 수 있도록 고민하기
