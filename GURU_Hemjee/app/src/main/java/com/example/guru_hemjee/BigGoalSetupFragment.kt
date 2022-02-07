@@ -12,7 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
-// 대표 목표 추가 프래그먼트
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정(Setup) -> BigGoalSetupFragment
+// 대표 목표 추가 Fragment 화면
 class BigGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

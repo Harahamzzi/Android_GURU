@@ -11,7 +11,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 
 // 나의 햄찌 관리 페이지
-// 햄찌를 관리할 수 있는 fragment 화면
+// 햄찌를 관리할 수 있는 Fragment 화면
 class HamsterEditFragment() : Fragment() {
 
     //함께한, 이름 관련

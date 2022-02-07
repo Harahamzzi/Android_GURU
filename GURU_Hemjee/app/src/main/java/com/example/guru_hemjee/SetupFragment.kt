@@ -17,7 +17,10 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 
-
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정
+// 목표/잠금 시간 설정 Fragment 화면
+// 대표 목표를 확인할 수 있다.
+// 버튼을 통해 추가하는 화면으로 갈 수 있다.
 class SetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

@@ -3,6 +3,7 @@ package com.example.guru_hemjee
 import android.app.Application
 import android.content.Context
 
+// 어디서든 applicationContext를 불러올 수 있게 하는 클래스 및 메소드
 class MyApplication : Application() {
     init {
         instance = this

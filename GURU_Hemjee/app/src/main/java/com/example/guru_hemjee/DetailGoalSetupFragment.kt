@@ -16,7 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
-// 세부 목표를 수정할 수 있는 fragment 페이지
+// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정(Setup) -> DetailGoalSetupFragment
+// 세부 목표를 수정할 수 있는 Fragment 화면
 class DetailGoalSetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수

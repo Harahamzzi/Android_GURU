@@ -9,6 +9,8 @@ import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBar
 
+// 홈(MainActivity)의 Navigation Drawer 메뉴 -> SubMainActivity
+// 홈에서 Navigation Drawer Menu로 접근가능한 Fragment 화면들을 보여주는 Activity 화면
 class SubMainActivity : AppCompatActivity() {
 
     // 타이틀 관련

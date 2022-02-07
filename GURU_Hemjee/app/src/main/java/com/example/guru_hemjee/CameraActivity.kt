@@ -25,6 +25,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
+// 홈 화면의 시작 버튼(HomeFragment) -> 잠금 화면(LockActivity) -> 세부 목표 클릭시 -> 카메라 화면
 // 카메라 어플을 실행시키고 사진을 저장해 목표 달성 인증을 기록하는 Activity 화면
 @Suppress("DEPRECATION")    // 사용하지 말아야 할 메소드 관련 경고 억제
 class CameraActivity : AppCompatActivity() {

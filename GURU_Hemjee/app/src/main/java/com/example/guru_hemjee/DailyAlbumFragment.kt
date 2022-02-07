@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 // 나의 성취 앨범(AlbumMainActivity) -> 일간
-// 해당 날짜의 일간 사진과 총 잠금 시간을 보여주는 fragment 함수
+// 해당 날짜의 일간 사진과 총 잠금 시간을 보여주는 Fragment 화면
 class DailyAlbumFragment : Fragment() {
 
     // 화면에 보이는 날짜와 시간

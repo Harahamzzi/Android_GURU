@@ -30,6 +30,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.round
 
+// 홈(MainActivity) -> 목표 리포트 -> 주간
+// 주간 리포트 Fragment 화면
 class WeeklyReportFragment : Fragment() {
 
     // db
