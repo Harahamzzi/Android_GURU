@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/goalBig_ModifyTextView3"
+                android:id="@+id/goalBigModify_TextView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/goalBig_ModifyGoalEditText"
+                android:id="@+id/goalBigModify_goalEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -50,10 +50,10 @@
                 android:textCursorDrawable="@color/Yellow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyTextView3" />
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_TextView3" />
 
             <TextView
-                android:id="@+id/goalBig_ModifyTextView7"
+                android:id="@+id/goalBigModify_TextView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -63,7 +63,7 @@
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyGoalEditText" />
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_goalEditText" />
 
             <LinearLayout
                 android:id="@+id/goalBig_ModifyRadioLayout"
@@ -75,7 +75,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyTextView7">
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_TextView7">
 
                 <RadioGroup
                     android:id="@+id/goalBig_ModifyColorRadioGroup1"
@@ -85,7 +85,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyOrangeRadioButton"
+                        android:id="@+id/goalBigModify_orangeRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -94,7 +94,7 @@
                         android:buttonTint="@color/Orange" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyYellowRadioButton"
+                        android:id="@+id/goalBigModify_yellowRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -103,7 +103,7 @@
                         android:buttonTint="@color/Yellow" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyNoteYellowRadioButton"
+                        android:id="@+id/goalBigModify_noteYellowRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -112,7 +112,7 @@
                         android:buttonTint="@color/NoteYellow" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyApricotRadioButton"
+                        android:id="@+id/goalBigModify_apricotRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -121,7 +121,7 @@
                         android:buttonTint="@color/Apricot" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifySeedBrownRadioButton"
+                        android:id="@+id/goalBigModify_seedBrownRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -130,7 +130,7 @@
                         android:buttonTint="@color/SeedBrown" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyDarkBrownRadioButton"
+                        android:id="@+id/goalBigModify_darkBrownRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:background="@drawable/selector_color_radio_button"
@@ -145,7 +145,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyLightGreenRadioButton"
+                        android:id="@+id/goalBigModify_lightGreenRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -154,7 +154,7 @@
                         android:buttonTint="@color/LightGreen" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyGreenRadioButton"
+                        android:id="@+id/goalBigModify_greenRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -163,7 +163,7 @@
                         android:buttonTint="@color/Green" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyLightBlueRadioButton"
+                        android:id="@+id/goalBigModify_lightBlueRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -172,7 +172,7 @@
                         android:buttonTint="@color/LightBlue" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyBlueRadioButton"
+                        android:id="@+id/goalBigModify_blueRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -181,7 +181,7 @@
                         android:buttonTint="@color/Blue" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyPurpleRadioButton"
+                        android:id="@+id/goalBigModify_purpleRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:layout_marginRight="33dp"
@@ -190,7 +190,7 @@
                         android:buttonTint="@color/Purple" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
-                        android:id="@+id/goalBig_ModifyPinkRadioButton"
+                        android:id="@+id/goalBigModify_pinkRadioButton"
                         android:layout_width="33dp"
                         android:layout_height="33dp"
                         android:background="@drawable/selector_color_radio_button"
@@ -200,7 +200,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/goalBig_ModifyTextView21"
+                android:id="@+id/goalBigModify_TextView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="17dp"
@@ -213,7 +213,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyRadioLayout" />
 
             <LinearLayout
-                android:id="@+id/goalBig_ModifyLinearLayout9"
+                android:id="@+id/goalBigModify_LinearLayout9"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginTop="16dp"
@@ -221,7 +221,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyTextView21">
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_TextView21">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -242,7 +242,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/goalBig_ModifyLinearLayout8"
+                android:id="@+id/goalBigModify_LinearLayout8"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
@@ -250,10 +250,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyLinearLayout9">
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_LinearLayout9">
 
                 <EditText
-                    android:id="@+id/goalBig_ModifyTodayLockHourEditText"
+                    android:id="@+id/goalBigModify_todayLockHourEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="33dp"
@@ -277,7 +277,7 @@
                     android:textSize="22sp" />
 
                 <EditText
-                    android:id="@+id/bigGoal_ModifyTodayLockMinEditText"
+                    android:id="@+id/bigGoalModify_todayLockMinEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/Yellow"
@@ -299,10 +299,10 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_ModifyLinearLayout8">
+                app:layout_constraintTop_toBottomOf="@+id/goalBigModify_LinearLayout8">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bigGoal_ModifyDeleteButton"
+                    android:id="@+id/bigGoalModify_cancelButton"
                     android:layout_width="90dp"
                     android:layout_height="27dp"
                     android:layout_marginRight="28dp"
@@ -314,7 +314,7 @@
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bigGoal_ModifyCompleteButton"
+                    android:id="@+id/bigGoalModify_storeButton"
                     android:layout_width="90dp"
                     android:layout_height="27dp"
                     android:background="@drawable/solid_rectangle_button"
