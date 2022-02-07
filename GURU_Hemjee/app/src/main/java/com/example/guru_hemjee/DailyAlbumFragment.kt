@@ -142,9 +142,9 @@ class DailyAlbumFragment : Fragment() {
         }
 
         // 위젯에 totalTime 갱신
-        var tempHour = dayTotalLockTime / 1000 / 60 / 60 % 24   // 시간
-        var tempMin = dayTotalLockTime / 1000 / 60 % 60         // 분
-        var tempSec = dayTotalLockTime / 1000 % 60              // 초
+        var tempHour = dayTotalLockTime / 1000 / 60 / 60   // 시간
+        var tempMin = dayTotalLockTime / 1000 / 60 % 60    // 분
+        var tempSec = dayTotalLockTime / 1000 % 60         // 초
 
         totalTimeTextView.text = "$tempHour : $tempMin : $tempSec"
 

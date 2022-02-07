@@ -118,7 +118,7 @@ class GoalAlbumFragment : Fragment() {
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(index)
+            var view: View = goalAlbumLayout.get(index - removeCount)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -184,9 +184,9 @@ class GoalAlbumFragment : Fragment() {
             }
 
             // 위젯에 totalTime 갱신
-            var tempHour = totalGoalLockTime / 1000 / 60 / 60 % 24   // 시간
-            var tempMin = totalGoalLockTime / 1000 / 60 % 60         // 분
-            var tempSec = totalGoalLockTime / 1000 % 60              // 초
+            var tempHour = totalGoalLockTime / 1000 / 60 / 60   // 시간
+            var tempMin = totalGoalLockTime / 1000 / 60 % 60    // 분
+            var tempSec = totalGoalLockTime / 1000 % 60         // 초
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
             timeTextView.text = "$tempHour:$tempMin:$tempSec"

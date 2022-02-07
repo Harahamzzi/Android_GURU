@@ -128,9 +128,9 @@ class HomeAlbumFragment : Fragment() {
         }
 
         // 위젯에 totalTime 갱신
-        var tempHour = dayTotalLockTime / 1000 / 60 / 60 % 24   // 시간
-        var tempMin = dayTotalLockTime / 1000 / 60 % 60         // 분
-        var tempSec = dayTotalLockTime / 1000 % 60              // 초
+        var tempHour = dayTotalLockTime / 1000 / 60 / 60  // 시간
+        var tempMin = dayTotalLockTime / 1000 / 60 % 60   // 분
+        var tempSec = dayTotalLockTime / 1000 % 60        // 초
 
         timeTextView.text = "$tempHour : $tempMin : $tempSec"
 
@@ -255,14 +255,14 @@ class HomeAlbumFragment : Fragment() {
         var removeCount = 0 // 삭제한 뷰의 개수
 
         // 0 ~ totalCountIndex만큼 반복
-        for(index in 0..(totalCountIndex-1))
+        for(index in 0..(totalCountIndex))
         {
             // DB 불러오기
             dbManager = DBManager(requireContext(), "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
             // 해당 뷰 가져오기
-            var view: View = goalAlbumLayout.get(index)
+            var view: View = goalAlbumLayout.get(index - removeCount)
 
             // 대표 목표 이름 가져오기
             var goalNameTextView: TextView = view.findViewById(R.id.smallAlbum_goalNameTextView)
@@ -362,9 +362,9 @@ class HomeAlbumFragment : Fragment() {
             }
 
             // 위젯에 totalTime 갱신
-            var tempHour = totalGoalLockTime / 1000 / 60 / 60 % 24   // 시간
-            var tempMin = totalGoalLockTime / 1000 / 60 % 60         // 분
-            var tempSec = totalGoalLockTime / 1000 % 60              // 초
+            var tempHour = totalGoalLockTime / 1000 / 60 / 60   // 시간
+            var tempMin = totalGoalLockTime / 1000 / 60 % 60    // 분
+            var tempSec = totalGoalLockTime / 1000 % 60         // 초
 
             var timeTextView: TextView = view.findViewById(R.id.smallAlbum_timeTextView)
             timeTextView.text = "$tempHour : $tempMin : $tempSec"
@@ -501,7 +501,7 @@ class HomeAlbumFragment : Fragment() {
         {
             Log.i ("정보태그", "${picNums[index]}")
             // 해당 카테고리에 들어가 있는 사진이 없다면
-            if(picNums[index] == 0)
+            if(picNums[index - removeCount] == 0)
             {
                 // 해당 카테고리 폴더를 삭제한다
                 categoryAlbumLayout.removeViewAt(index - removeCount)

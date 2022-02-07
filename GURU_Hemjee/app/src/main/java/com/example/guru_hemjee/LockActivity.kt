@@ -83,14 +83,14 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
-        {
-            // 상단 알림 표시 삭제
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.deleteNotificationChannel("channel_1")
-        }
-        
+//        // API 29레벨 이하일 때만 상단 알림 표시를 삭제함
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+//        {
+//            // 상단 알림 표시 삭제
+//            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.deleteNotificationChannel("channel_1")
+//        }
+
         // 액션바 숨기기
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
@@ -351,12 +351,63 @@ class LockActivity : AppCompatActivity() {
                         rewardSeed += bigGoalTotalTime.toInt()/60000
                         seedChange(rewardSeed)
                         // 나갈 수 있는 팝업창 띄우기
-                        finalOK("잠금 종료!", "+${rewardSeed}", true, false, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
+                        finalOK("잠금 종료!", "+${rewardSeed}", true, true, "목표 달성이다 햄찌!!\n역시 믿고 있었다고 집사!")
                     }
                     catch (e: WindowManager.BadTokenException) {
                         Log.e("lockExitException", "잠금 종료 팝업창 오류..")
                     }
 
+                    /** 총 함께한 시간 데이터 업데이트 **/
+                    dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+
+                    // 기존의 총 함께한 시간 데이터 가져오기
+                    var dbTempTotalTimeText: String = ""
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+                    if (cursor.moveToNext())
+                        dbTempTotalTimeText = cursor.getString(cursor.getColumnIndex("total_time"))
+
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    try {
+                        // bigInteger 형의 숫자 변수
+                        var bigInteger1000: BigInteger = BigInteger("1000")
+                        var bigInteger60: BigInteger = BigInteger("60")
+
+                        // 밀리초 단위의 시간 구하기
+                        var dbHour: BigInteger = dbTempTotalTimeText.split(":")[0].toBigInteger()
+                        var dbMin: BigInteger = dbTempTotalTimeText.split(":")[1].toBigInteger()
+                        var dbSec: BigInteger = dbTempTotalTimeText.split(":")[2].toBigInteger()
+
+                        // DB 데이터의 총 시간(밀리초 단위)
+                        var dbTotalTime: BigInteger = (dbHour * bigInteger60 * bigInteger60 * bigInteger1000
+                                + dbMin * bigInteger60 * bigInteger1000 + dbSec * bigInteger1000)
+
+                        // 기존의 총 잠금한 시간 + 이번에 총 잠금한 시간
+                        var resultTotalTime: BigInteger = dbTotalTime + bigGoalTotalTime
+
+                        // 해당 데이터를 다시 문자열로 분리하기
+                        var resultHour = resultTotalTime / bigInteger1000 / bigInteger60 / bigInteger60  // 시간
+                        var resultMin = resultTotalTime / bigInteger1000 / bigInteger60 % bigInteger60   // 분
+                        var resultSec = resultTotalTime / bigInteger1000 % bigInteger60                  // 초
+
+                        // 구한 시간 데이터 업데이트
+                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                        sqlitedb = dbManager.writableDatabase
+
+                        sqlitedb.execSQL("UPDATE basic_info_db SET total_time = '${resultHour}:${resultMin}:${resultSec}'")
+
+                        sqlitedb.close()
+                        dbManager.close()
+                    }
+                    catch(e: Exception)
+                    {
+                        Log.e("오류태그", "LockActivity: DB 데이터 업데이트 실패")
+                        Log.e("오류태그", "${e.printStackTrace()}")
+                    }
                 }
 
                 timerTask?.cancel()
@@ -486,7 +537,7 @@ class LockActivity : AppCompatActivity() {
                         // 잠금 종료 팝업과의 중복을 방지하기 위함
                         if(time >= 600)
                         {
-                            finalOK("10분 줄이기", "확인", false, false,false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
+                            finalOK("10분 줄이기", "확인", false, false, "인생은 한방이 아니라\n서서히 망한다 햄찌...")
                             time -= 600     // 잔여 시간 10분 감소
                         }
                         // 현재 잔여 시간이 10분 이하일 경우
@@ -507,7 +558,7 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false,false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
+                        finalOK("구매 불가", "확인", false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -522,7 +573,7 @@ class LockActivity : AppCompatActivity() {
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    finalOK("10분 늘리기", "확인", false, false,false, "좋아! 끝까지 가보는 거다 햄찌!\n해바라기 씨를 위해!")
+                    finalOK("10분 늘리기", "확인", false, false, "좋아! 끝까지 가보는 거다 햄찌!\n해바라기 씨를 위해!")
 
                     time += 600                         // 잔여시간 10분 늘리기
                     progressBar.max = totalTime + 600   // 전체 진행도(max)값 10분만큼 확장
@@ -556,22 +607,74 @@ class LockActivity : AppCompatActivity() {
                         var tempTime: BigInteger = System.currentTimeMillis().toBigInteger()
                         bigGoalTotalTime = tempTime - bigGoallockDate.toBigInteger()
 
-
                         // SimpleDateFormat 이용, 해당 형식으로 날짜 저장
                         var resultDate =
-                            SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate + 32400000))
+                            SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(bigGoallockDate))
 
-                        // 데이터 추가
+                        // 대표 목표 리포트 데이터 추가
                         sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', $bigGoalTotalTime, $bigGoalColor, '$resultDate');")
 
                         sqlitedb.close()
                         dbManager.close()
 
+                        /** 총 함께한 시간 데이터 업데이트 **/
+                        dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                        sqlitedb = dbManager.readableDatabase
+
+                        // 기존의 총 함께한 시간 데이터 가져오기
+                        var dbTempTotalTimeText: String = ""
+                        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+                        if (cursor.moveToNext())
+                            dbTempTotalTimeText = cursor.getString(cursor.getColumnIndex("total_time"))
+
+                        cursor.close()
+                        sqlitedb.close()
+                        dbManager.close()
+
+                        try {
+                            // bigInteger 형의 숫자 변수
+                            var bigInteger1000: BigInteger = BigInteger("1000")
+                            var bigInteger60: BigInteger = BigInteger("60")
+
+                            // 밀리초 단위의 시간 구하기
+                            var dbHour: BigInteger = dbTempTotalTimeText.split(":")[0].toBigInteger()
+                            var dbMin: BigInteger = dbTempTotalTimeText.split(":")[1].toBigInteger()
+                            var dbSec: BigInteger = dbTempTotalTimeText.split(":")[2].toBigInteger()
+
+                            // DB 데이터의 총 시간(밀리초 단위)
+                            var dbTotalTime: BigInteger = (dbHour * bigInteger60 * bigInteger60 * bigInteger1000
+                                    + dbMin * bigInteger60 * bigInteger1000 + dbSec * bigInteger1000)
+
+                            // 기존의 총 잠금한 시간 + 이번에 총 잠금한 시간
+                            var resultTotalTime: BigInteger = dbTotalTime + bigGoalTotalTime
+
+                            // 해당 데이터를 다시 문자열로 분리하기
+                            var resultHour = resultTotalTime / bigInteger1000 / bigInteger60 / bigInteger60  // 시간
+                            var resultMin = resultTotalTime / bigInteger1000 / bigInteger60 % bigInteger60   // 분
+                            var resultSec = resultTotalTime / bigInteger1000 % bigInteger60                  // 초
+
+                            // 구한 시간 데이터 업데이트
+                            dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
+                            sqlitedb = dbManager.writableDatabase
+
+                            sqlitedb.execSQL("UPDATE basic_info_db SET total_time = '${resultHour}:${resultMin}:${resultSec}'")
+
+                            sqlitedb.close()
+                            dbManager.close()
+                        }
+                        catch(e: Exception)
+                        {
+                            Log.e("오류태그", "LockActivity: DB 데이터 업데이트 실패")
+                            Log.e("오류태그", "${e.printStackTrace()}")
+                        }
+
                         //잠금 시간 보상 계산
+                        // 1분당 1 씨앗
                         rewardSeed = bigGoalTotalTime.toInt()/60000
                         seedChange(rewardSeed)
 
-                        finalOK("잠금 종료하기", "${rewardSeed-180}", true, true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
+                        finalOK("잠금 종료하기", "${rewardSeed-180}", true, true, "나보다 나약하다 햄찌..!\n열심히해라 햄찌!")
                     }
                 }
             })
@@ -583,7 +686,7 @@ class LockActivity : AppCompatActivity() {
                 override fun onClicked(isConfirm: Boolean) {
                     if(isConfirm){
                         // 시간 감소를 구매할 수 없다는..뜻의 팝업 띄우기
-                        finalOK("구매 불가", "확인", false, false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
+                        finalOK("구매 불가", "확인", false, false, "씨앗이 없다 햄찌!\n일해라 햄찌!")
                     }
                 }
             })
@@ -591,7 +694,7 @@ class LockActivity : AppCompatActivity() {
     }
 
     // 마지막 확인 팝업 창
-    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isExitBuy: Boolean, isLockFinished: Boolean, talkText: String) {
+    private fun finalOK(title: String, okString: String, isNeedDrawable: Boolean, isLockFinished: Boolean, talkText: String) {
         val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, null, talkText)
         dialog.alertDialog()
 
@@ -602,14 +705,11 @@ class LockActivity : AppCompatActivity() {
                 if (isConfirm && isLockFinished) {
                     // -- 잠금 종료시 필요한 연산 --
 
-                    // 나가기를 구매해서 나가는 경우
-                    if (isExitBuy) {
-                    }
-
-                    /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
+                    // DB 열기
                     dbManager = DBManager(this@LockActivity, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
 
+                    /** 잠금화면에 띄워졌던 세부 목표들 비활성화 설정 **/
                     sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
 
                     sqlitedb.close()
