@@ -3,17 +3,13 @@ package com.example.guru_hemjee
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 
@@ -51,8 +47,8 @@ class SetupFragment : Fragment() {
         // LayoutInflater를 사용해서 Resource Layout을 View로 변환시켜서 findViewById()를 호출
         var view : View = inflater.inflate(R.layout.fragment_setup, container, false);
 
-        bigGoalListView = view.findViewById(R.id.bigGoalListView) // 리스트뷰의 아이디 할당
-        plusGoalButton = view.findViewById(R.id.plusGoalButton) // +버튼의 아이디 할당
+        bigGoalListView = view.findViewById(R.id.goalBig_goalBigListView) // 리스트뷰의 아이디 할당
+        plusGoalButton = view.findViewById(R.id.goalBig_plusGoalButton) // +버튼의 아이디 할당
 
         // DB
         dbManager = DBManager(context, "hamster_db", null, 1)
