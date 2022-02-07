@@ -469,14 +469,15 @@ class HomeAlbumFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 세부 목표 DB 열기 - icon 가져오기 위함(중복 데이터 제거해서 들고 옴)
-        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_db", null)
+        // 세부 목표 리포트 DB 열기 - icon 가져오기 위함(중복 데이터 제거해서 들고 옴)
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT DISTINCT icon FROM detail_goal_time_report_db", null)
 
         // icon 값을 저장할 ArrayList
         var iconList = ArrayList<Int>()
 
         //사진 개수를 저장할 ArrayList
         var picNums = ArrayList<Int>()
+
         while(cursor.moveToNext())
         {
             // view goalAlbumLayout에 부풀리기
@@ -585,7 +586,6 @@ class HomeAlbumFragment : Fragment() {
 
         for(index in picNums.indices)
         {
-            Log.i ("정보태그", "${picNums[index]}")
             // 해당 카테고리에 들어가 있는 사진이 없다면
             if(picNums[index - removeCount] == 0)
             {
