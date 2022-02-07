@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import java.lang.Exception
 
@@ -307,6 +308,9 @@ class BigGoalModifyFragment : Fragment() {
             transaction.replace(R.id.fragment_main, setupFragment)
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             transaction.commit() // 저장
+            requireActivity().supportFragmentManager.popBackStack("Modify", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack("BigGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack("DetailGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
             Toast.makeText(context, "목표가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
         }
@@ -325,6 +329,8 @@ class BigGoalModifyFragment : Fragment() {
         detailGoalSetupFragment.arguments = bundle
         transaction.remove(this)
         transaction.commit() // 저장
-        requireActivity().supportFragmentManager.popBackStack()
+        requireActivity().supportFragmentManager.popBackStack("ModifyGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack("BigGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack("DetailGoal", FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }
