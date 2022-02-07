@@ -282,7 +282,7 @@ class WeeklyReportFragment : Fragment() {
                     if(changedBigGoalTitle=="전체"){
                         selectBigGoalBtn.iconTint = ColorStateList.valueOf(resources.getColor(R.color.Black))
                         toggleState = false
-                        weeklyReport(nowTime)
+                        weeklyReport(nowViewTime)
                     }
                     else {
                         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -296,7 +296,7 @@ class WeeklyReportFragment : Fragment() {
                         dbManager.close()
                         toggleState = true
                         toggleGoal = changedBigGoalTitle
-                        weeklyReport(nowTime)
+                        weeklyReport(nowViewTime)
                     }
                 }
             })
