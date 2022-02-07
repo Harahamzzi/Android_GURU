@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.widget.ImageButton
 import android.widget.TextView
-import kotlinx.android.synthetic.main.popup_detail_goal.*
 
 class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: String) {
     private val dialog = Dialog(context)
@@ -25,11 +24,11 @@ class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: 
         dialog.setContentView(R.layout.popup_detail_goal)
 
         //세부 목표 이름 설정
-        goalNameTextView = dialog.findViewById(R.id.detailEditGoalTitleTextView)
+        goalNameTextView = dialog.findViewById(R.id.pop_detailEditGoalTitleTextView)
         goalNameTextView.text = goalName
 
         //이름 수정
-        editGoalNameImageButton = dialog.findViewById(R.id.editDetailGoalNameImageButton)
+        editGoalNameImageButton = dialog.findViewById(R.id.pop_editDetailGoalNameImageButton)
         editGoalNameImageButton.setOnClickListener {
             val subDialog = DetailGoalNameDialog(context, goalName)
             subDialog.EditName()
@@ -45,7 +44,7 @@ class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: 
         }
 
         //목표 이동
-        moveGoalImageButton = dialog.findViewById(R.id.moveDetailGoalNameImageButton)
+        moveGoalImageButton = dialog.findViewById(R.id.pop_moveDetailGoalNameImageButton)
         moveGoalImageButton.setOnClickListener {
             val subDialog = GoalSelectDialog(context, bigGoalName, "목표 이동", false)
             subDialog.goalSelectPop()
@@ -58,14 +57,14 @@ class DetailGoalEditDialog(val context: Context, goalName: String, bigGoalName: 
         }
 
         //목표 삭제
-        deleteGoalImageButton = dialog.findViewById(R.id.deleteDetailGoalNameImageButton)
+        deleteGoalImageButton = dialog.findViewById(R.id.pop_deleteDetailGoalNameImageButton)
         deleteGoalImageButton.setOnClickListener {
             onClickListener.onClicked(true, goalName, bigGoalName)
             dialog.dismiss()
         }
 
         //돌아가기
-        popBackImageButton = dialog.findViewById(R.id.detailGoalPopBackImageButton)
+        popBackImageButton = dialog.findViewById(R.id.pop_detailGoalPopBackImageButton)
         popBackImageButton.setOnClickListener {
             onClickListener.onClicked(false, goalName, bigGoalName)
             dialog.dismiss()

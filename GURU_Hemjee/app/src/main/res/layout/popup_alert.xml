@@ -7,7 +7,7 @@
     android:background="@drawable/pop_up_bg" >
 
     <TextView
-        android:id="@+id/popTitleTextView"
+        android:id="@+id/pop_titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/alertPopMainImageView"
+        android:id="@+id/pop_alertPopMainImageView"
         android:layout_width="0dp"
         android:layout_height="240dp"
         android:layout_marginStart="17dp"
@@ -31,11 +31,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pop_titleTextView"
         app:srcCompat="@drawable/popup_basic_ham" />
 
     <ImageButton
-        android:id="@+id/cancelImageButton"
+        android:id="@+id/pop_cancelButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginStart="34dp"
@@ -47,7 +47,7 @@
         app:srcCompat="@drawable/cancel_button" />
 
     <TextView
-        android:id="@+id/alertPopHamsterTalkTextView"
+        android:id="@+id/pop_alertPopHamsterTalkTextView"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_marginTop="19dp"
@@ -56,12 +56,12 @@
         android:textColor="@color/Black"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/alertPopMainImageView"
-        app:layout_constraintStart_toStartOf="@+id/alertPopMainImageView"
-        app:layout_constraintTop_toTopOf="@+id/alertPopMainImageView" />
+        app:layout_constraintEnd_toEndOf="@+id/pop_alertPopMainImageView"
+        app:layout_constraintStart_toStartOf="@+id/pop_alertPopMainImageView"
+        app:layout_constraintTop_toTopOf="@+id/pop_alertPopMainImageView" />
 
     <Button
-        android:id="@+id/confrimButton"
+        android:id="@+id/pop_confrimButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginEnd="36dp"
@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/confirmSeedButton"
+        android:id="@+id/pop_confirmSeedButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginEnd="36dp"

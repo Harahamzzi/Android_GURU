@@ -26,11 +26,11 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
         dialog.show()
         dialog.setContentView(R.layout.popup_alert)
 
-        popTitleTextView = dialog.findViewById(R.id.popTitleTextView)
-        cancelImageButton = dialog.findViewById(R.id.cancelImageButton)
-        confirmSeedButton = dialog.findViewById(R.id.confirmSeedButton)
-        confirmButton = dialog.findViewById(R.id.confrimButton)
-        hamsterTalkTextView = dialog.findViewById(R.id.alertPopHamsterTalkTextView)
+        popTitleTextView = dialog.findViewById(R.id.pop_titleTextView)
+        cancelImageButton = dialog.findViewById(R.id.pop_cancelButton)
+        confirmSeedButton = dialog.findViewById(R.id.pop_confirmSeedButton)
+        confirmButton = dialog.findViewById(R.id.pop_confrimButton)
+        hamsterTalkTextView = dialog.findViewById(R.id.pop_alertPopHamsterTalkTextView)
 
         if(talkText != null){
             hamsterTalkTextView.text = talkText
