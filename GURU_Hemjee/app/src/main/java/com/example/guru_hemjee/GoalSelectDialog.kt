@@ -80,7 +80,7 @@ class GoalSelectDialog(context: Context, bigGoalTitle: String, val dialogTitle: 
 
             var radioButton: RadioButton = RadioButton(context)
             radioButton.id = num
-            radioButton.width = 700
+            radioButton.width = 800
             radioButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goal_dot_small, 0, 0, 0)
             radioButton.compoundDrawablePadding = 20
             radioButton.compoundDrawableTintList = ColorStateList.valueOf(color)
