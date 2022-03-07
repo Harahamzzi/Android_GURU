@@ -13,6 +13,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!--상태바의 아이콘, 시계, 알림 등 색상을 검정색으로-->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
     
     <style name="CustomToolBar" parent="@style/Widget.AppCompat.Toolbar">

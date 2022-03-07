@@ -9,8 +9,8 @@
     <Toolbar
         android:id="@+id/sub_toolBar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/BrightYellow"
+        android:layout_height="72dp"
+        android:background="@drawable/solid_main_app_bar"
         app:contentInsetStart="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,9 +18,8 @@
             android:id="@+id/sub_titleButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="13dp"
-            android:layout_marginTop="13dp"
-            android:src="@drawable/ic_outline_west_24" />
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_back_button" />
 
         <TextView
             android:id="@+id/sub_titleTextView"
@@ -29,8 +28,11 @@
             android:layout_gravity="center"
             android:fontFamily="@font/noto_sans"
             android:text="나의 성취 앨범"
+            android:textColor="@color/Black"
             android:textFontWeight="700"
-            android:textSize="16dp" />
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="157dp"
+            tools:layout_editor_absoluteY="28dp" />
     </Toolbar>
 
     <androidx.appcompat.widget.AppCompatSpinner
