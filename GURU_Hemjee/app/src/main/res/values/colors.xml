@@ -26,4 +26,5 @@
     <color name="Pink">#F7C4C3</color>
     <color name="Gray">#C4C4C4</color>
     <color name="LightGray">#F9F9F9</color>
+    <color name="DarkGray">#919191</color>
 </resources>
