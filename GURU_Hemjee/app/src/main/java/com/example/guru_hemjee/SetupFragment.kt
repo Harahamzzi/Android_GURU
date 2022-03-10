@@ -50,8 +50,8 @@ class SetupFragment : Fragment() {
         // LayoutInflater를 사용해서 Resource Layout을 View로 변환시켜서 findViewById()를 호출
         var view : View = inflater.inflate(R.layout.fragment_setup, container, false);
 
-        goalBig_goalBigListView = view.findViewById(R.id.goalBig_goalBigListView) // 리스트뷰의 아이디 할당
-        goalBig_plusGoalButton = view.findViewById(R.id.goalBig_plusGoalButton) // +버튼의 아이디 할당
+        //goalBig_goalBigListView = view.findViewById(R.id.goalBig_goalBigListView) // 리스트뷰의 아이디 할당
+        //goalBig_plusGoalButton = view.findViewById(R.id.goalBig_plusGoalButton) // +버튼의 아이디 할당
 
         // DB
         dbManager = DBManager(context, "hamster_db", null, 1)

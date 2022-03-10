@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGray"
     tools:context=".SetupFragment">
 
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,42 +24,18 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
-            <TextView
-                android:id="@+id/goalBig_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="28dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="대표 목표"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
-
-            <ListView
-                android:id="@+id/goalBig_goalBigListView"
+            <!-- 아코디언 메뉴가 들어갈 곳-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goalBig_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="420dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="17dp"
-                android:layout_marginEnd="17dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="33dp"
-                app:layout_constraintBottom_toTopOf="@+id/goalBig_plusGoalButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/goalBig_TextView" />
-
-            <ImageButton
-                android:id="@+id/goalBig_plusGoalButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center|bottom"
-                android:layout_marginBottom="17dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/plus_circle"
-                app:tint="@color/Black" />
 
             <Space
                 android:id="@+id/goalBig_bottomSpace"
@@ -68,5 +46,27 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <!--대표목표 추가 플로팅 버튼-->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/goalBig_addBigGoalButtton"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/White"
+        android:padding="6dp"
+        android:text="대표 목표 추가"
+        android:textAlignment="textStart"
+        android:textColor="@color/DarkBrown"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:icon="@drawable/plus_circle"
+        app:iconPadding="6dp"
+        app:iconSize="18dp"
+        app:iconTint="@color/DarkBrown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
