@@ -5,213 +5,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeeklyReportFragment" >
+    android:background="@color/LightGray"
+    tools:context=".WeeklyReportFragment">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reportWeekly_dailyButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/report_top_button_off"
+            android:fontFamily="@font/noto_sans"
+            android:text="일간"
+            android:textColor="@color/Black"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reportWeekly_weeklyButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/report_top_button_on"
+            android:fontFamily="@font/noto_sans"
+            android:text="주간"
+            android:textColor="@color/White"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reportWeekly_monthlyButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/report_top_button_off"
+            android:fontFamily="@font/noto_sans"
+            android:text="월간"
+            android:textColor="@color/Black"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="411dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
+            android:layout_weight="1" />
 
-            <LinearLayout
-                android:id="@+id/reportWeekly_reportButtonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <ImageButton
+            android:id="@+id/reportWeekly_calenderImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_outline_event_note_24"
+            android:background="@drawable/ic_outline_event_note_24"/>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/reportWeekly_dailyButton"
-                    android:layout_width="90dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/solid_daily_report_button1"
-                    android:button="@null"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="일간"
-                    android:textAlignment="center"
-                    android:textColor="@color/Black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+    </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/reportWeekly_weeklyButton"
-                    android:layout_width="90dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/solid_monthly_report_button2"
-                    android:button="@null"
-                    android:checked="true"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="주간"
-                    android:textAlignment="center"
-                    android:textColor="@color/Black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reportWeekly_reportRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/reportWeekly_moveWeeklyButton"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="17dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_outline_today_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout"
-                app:tint="@color/Black" />
-
-            <TextView
-                android:id="@+id/reportWeekly_weeklyDateTextview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="151dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="101dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="1월 10일 - 1월 16일"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/reportWeekly_moveWeeklyButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout"
-                tools:fontFamily="@font/noto_sans" />
-
-            <TextView
-                android:id="@+id/reportWeekly_weeklyTimeTextview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="00시간 00분"
-                android:textColor="@color/Black"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyDateTextview" />
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/reportWeekly_weeklyStackBarChart"
-                android:layout_width="300dp"
-                android:layout_height="160dp"
-                android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toStartOf="@+id/reportWeekly_nextButton"
-                app:layout_constraintStart_toEndOf="@+id/reportWeekly_prevButton"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyTimeTextview">
-
-            </com.github.mikephil.charting.charts.BarChart>
-
-            <ImageButton
-                android:id="@+id/reportWeekly_prevButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="189dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/prev_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_reportButtonLayout" />
-
-            <ImageButton
-                android:id="@+id/reportWeekly_nextButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="134dp"
-                android:layout_marginEnd="17dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/next_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_moveWeeklyButton" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reportWeekly_selectBigGoalButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="180dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="17dp"
-                android:background="@drawable/goal_select_background"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="left|center"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="12dp"
-                android:insetBottom="0dp"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="전체"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                app:backgroundTint="@null"
-                app:backgroundTintMode="add"
-                app:icon="@drawable/ic_colorselectionicon"
-                app:iconGravity="start"
-                app:iconSize="16dp"
-                app:iconTint="@color/Black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyStackBarChart"
-                tools:fontFamily="@font/noto_sans" />
-
-            <LinearLayout
-                android:id="@+id/reportWeekly_weeklyReportListLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="17dp"
-                android:layout_marginBottom="50dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/reportWeekly_bottomSpace"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_selectBigGoalButton">
-
-            </LinearLayout>
-
-            <Space
-                android:id="@+id/reportWeekly_bottomSpace"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/reportWeekly_noGoalTimeView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="77dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="수행한 목표가 없습니다."
-                android:textColor="@color/Black"
-                android:textSize="16sp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/reportWeekly_weeklyTimeTextview"
-                tools:fontFamily="@font/noto_sans" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.recyclerview.widget.RecyclerView>
     </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reportWeekly_selectBigGoalButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/report_goal_select"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="left|center"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="알고리즘 마스터하기"
+        android:textColor="@color/DarkBrown"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="add"
+        app:icon="@drawable/ic_colorselectionicon"
+        app:iconGravity="start"
+        app:iconSize="16dp"
+        app:iconTint="@color/Black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:fontFamily="@font/noto_sans" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
