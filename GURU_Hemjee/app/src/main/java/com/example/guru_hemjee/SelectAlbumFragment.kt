@@ -57,9 +57,9 @@ class SelectAlbumFragment : Fragment() {
         callback = object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 
-                // Spinner 보이기
-                var spinner: Spinner = requireActivity().findViewById(R.id.albumMenuSpinner)
-                spinner.visibility = View.VISIBLE
+//                // Spinner 보이기
+//                var spinner: Spinner = requireActivity().findViewById(R.id.albumMenuSpinner)
+//                spinner.visibility = View.VISIBLE
 
                 var transaction = requireActivity().supportFragmentManager.beginTransaction()
 

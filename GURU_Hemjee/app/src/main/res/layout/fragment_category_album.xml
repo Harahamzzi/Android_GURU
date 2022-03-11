@@ -6,51 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".CategoryAlbumFragment" >
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/albumCategory_ConstraintLayout"
+        android:background="@drawable/solid_main_app_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="23dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/albumCategory_iconListLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <FrameLayout
         android:id="@+id/albumCategory_FrameLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:background="@color/LightGray"
         android:visibility="gone"
-        android:background="@color/LightGray">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/albumCategory_ConstraintLayout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="현재 저장된 사진이 없습니다."
             android:fontFamily="@font/noto_sans"
+            android:text="현재 저장된 사진이 없습니다."
             android:textColor="@color/Black"
-            android:textSize="14dp"
-            />
+            android:textSize="14dp" />
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/albumCategory_ScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/albumCategory_pictureRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/albumCategory_ConstraintLayout">
 
-<!--            <androidx.appcompat.widget.AppCompatSpinner-->
-<!--                android:id="@+id/category_albumMenuSpinner"-->
-<!--                android:background="@drawable/spinner_select_background"-->
-<!--                android:layout_width="80dp"-->
-<!--                android:layout_height="23dp"-->
-<!--                android:layout_marginTop="28dp"-->
-<!--                android:layout_marginEnd="17dp"-->
-<!--                android:theme="@style/Spinner"-->
-<!--                android:entries="@array/spinnerAlbumList"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-            <LinearLayout
-                android:id="@+id/albumCategory_CategoryLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-            </LinearLayout>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

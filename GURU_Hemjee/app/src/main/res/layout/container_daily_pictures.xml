@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/container_dailyPictures_dayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans"
+        android:text="25"
+        android:textColor="@color/Black"
+        android:textFontWeight="700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintEnd_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintStart_toStartOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <TextView
+        android:id="@+id/container_dailyPictures_dayOfWeekTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans"
+        android:text="금요일"
+        android:textColor="@color/Black"
+        android:textFontWeight="400"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_dailyPictures_dayTextView" />
+
+    <View
+        android:id="@+id/container_dailyPictures_lineView"
+        android:layout_width="1dp"
+        android:layout_height="170dp"
+        android:background="#E7E7E7"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintStart_toStartOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintTop_toBottomOf="@+id/container_dailyPictures_dayOfWeekTextView" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="198dp"
+        android:background="@drawable/pictures_background"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/container_dailyPictures_GridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="12dp"
+            app:columnCount="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:orientation="horizontal">
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/dailyAlbumView1"-->
+            <!--                android:layout_width="120dp"-->
+            <!--                android:layout_height="120dp"-->
+            <!--                app:layout_columnWeight="1"-->
+            <!--                app:layout_rowWeight="1"-->
+            <!--                android:src="@color/LightGray" />-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/dailyAlbumView2"-->
+            <!--                android:layout_width="120dp"-->
+            <!--                android:layout_height="120dp"-->
+            <!--                app:layout_columnWeight="1"-->
+            <!--                app:layout_rowWeight="1"-->
+            <!--                android:src="@color/Gray" />-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/dailyAlbumView3"-->
+            <!--                android:layout_width="120dp"-->
+            <!--                android:layout_height="120dp"-->
+            <!--                app:layout_columnWeight="1"-->
+            <!--                app:layout_rowWeight="1"-->
+            <!--                android:src="@color/LightGray" />-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/dailyAlbumView4"-->
+            <!--                android:layout_width="120dp"-->
+            <!--                android:layout_height="120dp"-->
+            <!--                app:layout_columnWeight="1"-->
+            <!--                app:layout_rowWeight="1"-->
+            <!--                android:src="@color/Gray" />-->
+
+        </androidx.gridlayout.widget.GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

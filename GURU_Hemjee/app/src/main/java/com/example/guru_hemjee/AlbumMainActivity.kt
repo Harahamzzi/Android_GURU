@@ -17,8 +17,8 @@ class AlbumMainActivity : AppCompatActivity() {
     private lateinit var sub_titleTextView: TextView
     private lateinit var sub_titleButton: ImageView
 
-    // 스피너
-    private lateinit var albumMenuSpinner: Spinner
+//    // 스피너
+//    private lateinit var albumMenuSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,57 +38,57 @@ class AlbumMainActivity : AppCompatActivity() {
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
-        // albumMenuSpinner 연결
-        albumMenuSpinner = findViewById(R.id.albumMenuSpinner)
+//        // albumMenuSpinner 연결
+//        albumMenuSpinner = findViewById(R.id.albumMenuSpinner)
 
-        // albumMenuSpinner 어댑터 설정
-        albumMenuSpinner.adapter = ArrayAdapter.createFromResource(this, R.array.spinnerAlbumList, R.layout.spinner_item)
-
-        // albumMenuSpinner 아이템 선택 리스너
-        albumMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val transaction = supportFragmentManager.beginTransaction()
-
-                when(position){
-
-                    // 일간 선택
-                    0 -> {
-                        Log.i ("정보태그", "일간 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, DailyAlbumFragment())
-                        transaction.commit()
-                    }
-
-                    // 목표 선택
-                    1 -> {
-                        Log.i ("정보태그", "목표 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, GoalAlbumFragment())
-                        transaction.commit()
-                    }
-
-                    // 카테고리 선택
-                    2 -> {
-                        Log.i ("정보태그", "카테고리 앨범으로 이동했다..")
-                        transaction.replace(R.id.fragment_main, CategoryAlbumFragment())
-                        transaction.commit()
-                    }
-
-                    // 그 외
-                    else -> {
-                        Log.e("오류태그", "그 외 스피너 메뉴 눌림")
-                    }
-                }
-            }
-        }
+//        // albumMenuSpinner 어댑터 설정
+//        albumMenuSpinner.adapter = ArrayAdapter.createFromResource(this, R.array.spinnerAlbumList, R.layout.spinner_item)
+//
+//        // albumMenuSpinner 아이템 선택 리스너
+//        albumMenuSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//            }
+//
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                val transaction = supportFragmentManager.beginTransaction()
+//
+//                when(position){
+//
+//                    // 일간 선택
+//                    0 -> {
+//                        Log.i ("정보태그", "일간 앨범으로 이동했다..")
+//                        transaction.replace(R.id.fragment_main, DailyAlbumFragment())
+//                        transaction.commit()
+//                    }
+//
+//                    // 목표 선택
+//                    1 -> {
+//                        Log.i ("정보태그", "목표 앨범으로 이동했다..")
+//                        transaction.replace(R.id.fragment_main, GoalAlbumFragment())
+//                        transaction.commit()
+//                    }
+//
+//                    // 카테고리 선택
+//                    2 -> {
+//                        Log.i ("정보태그", "카테고리 앨범으로 이동했다..")
+//                        transaction.replace(R.id.fragment_main, CategoryAlbumFragment())
+//                        transaction.commit()
+//                    }
+//
+//                    // 그 외
+//                    else -> {
+//                        Log.e("오류태그", "그 외 스피너 메뉴 눌림")
+//                    }
+//                }
+//            }
+//        }
 
         /** 만일 Home 앨범에서 온 경우 **/
 
         if(intent.getBooleanExtra("isHome", false))
         {
-            albumMenuSpinner.visibility = View.GONE
+//            albumMenuSpinner.visibility = View.GONE
 
             // Home - 목표 앨범에서 온 경우
             if(intent.getStringExtra("homeFlag") == "GOAL")

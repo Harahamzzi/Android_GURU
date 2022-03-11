@@ -4,95 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGray"
     tools:context=".SelectAlbumFragment" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/albumSelect_ConstraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="167dp"
+        android:layout_height="40dp"
+        android:id="@+id/albumSelect_ConstraintLayout"
+        android:background="@drawable/solid_main_app_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/albumSelect__iconImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="47dp"
-            android:src="@drawable/ic_colorselectionicon"
-            app:tint="@color/Blue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="17dp"
-            android:paddingRight="17dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="23dp"
+            android:scrollbars="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/albumSelect__iconImageView">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/albumSelect_prevButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/prev_button" />
-
-            <TextView
-                android:id="@+id/albumSelect_nameTextView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/albumSelect_iconListLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:singleLine="true"
-                android:text="목표"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/albumSelect_categoryIconImageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                app:tint="@color/Black" />
-
-            <ImageButton
-                android:id="@+id/albumSelect_nextButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/next_button" />
-
-        </LinearLayout>
-
+                android:orientation="horizontal" />
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
+        android:id="@+id/albumSelect_FrameLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/LightGray"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumSelect_ConstraintLayout">
+        app:layout_constraintTop_toBottomOf="@id/albumSelect_ConstraintLayout">
 
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/albumSelect_GridLayout"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:columnCount="3"
-            app:orientation="horizontal" />
-    </ScrollView>
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:text="현재 저장된 사진이 없습니다."
+            android:textColor="@color/Black"
+            android:textSize="14dp" />
+    </FrameLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/albumSelect_ConstraintLayout">
+
+        <TextView
+            android:id="@+id/albumSelect_goalNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:fontFamily="@font/noto_sans"
+            android:text="알고리즘 공부하기"
+            android:textColor="@color/Black"
+            android:textFontWeight="300"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/albumSelect_ConstraintLayout" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/albumSelect_pictureRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/pictures_background"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/albumSelect_ConstraintLayout">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

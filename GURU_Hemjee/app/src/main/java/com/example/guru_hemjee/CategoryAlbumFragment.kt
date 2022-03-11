@@ -88,9 +88,9 @@ class CategoryAlbumFragment : Fragment() {
 
             // view에 클릭 리스너 달기
             view.setOnClickListener {
-                // Spinner 숨기기
-                var spinner: Spinner = requireActivity().findViewById(R.id.albumMenuSpinner)
-                spinner.visibility = View.GONE
+//                // Spinner 숨기기
+//                var spinner: Spinner = requireActivity().findViewById(R.id.albumMenuSpinner)
+//                spinner.visibility = View.GONE
 
                 // 번들 생성(보낼 값 세팅)
                 var bundle = Bundle()

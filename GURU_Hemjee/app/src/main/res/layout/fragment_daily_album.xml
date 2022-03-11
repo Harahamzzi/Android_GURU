@@ -4,125 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGray"
     tools:context=".DailyAlbumFragment">
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/headToolBar4"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?actionBarSize"-->
-<!--        app:contentInsetStart="0dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?actionBarSize"-->
-<!--            android:background="@color/BrightYellow"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:paddingStart="17dp"-->
-<!--            android:paddingEnd="17dp">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/backImageButton"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:background="@drawable/ic_outline_west_24"-->
-<!--                android:src="@drawable/menu_icon"-->
-<!--                app:srcCompat="@drawable/ic_outline_west_24" />-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:fontFamily="@font/noto_sans"-->
-<!--                android:gravity="center"-->
-<!--                android:text="나의 성취 앨범"-->
-<!--                android:textColor="@color/Black"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--        </LinearLayout>-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="98dp"
+        android:id="@+id/albumDaily_ConstraintLayout"
+        android:background="@drawable/solid_main_app_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--        <androidx.appcompat.widget.AppCompatSpinner-->
-        <!--            android:id="@+id/daily_albumMenuSpinner"-->
-        <!--            android:background="@drawable/spinner_select_background"-->
-        <!--            android:layout_width="80dp"-->
-        <!--            android:layout_height="23dp"-->
-        <!--            android:layout_marginTop="28dp"-->
-        <!--            android:layout_marginEnd="17dp"-->
-        <!--            android:theme="@style/Spinner"-->
-        <!--            android:entries="@array/spinnerAlbumList"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
         <TextView
-            android:id="@+id/albumDaily_DateTextView"
+            android:id="@+id/albumDaily_monthTextView"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/noto_sans"
-            android:lineSpacingExtra="65.38px"
-            android:text="2022.01.20"
+            android:text="3월"
+            android:textFontWeight="700"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:textColor="@color/Black"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/albumDaily_openImageButton"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="17dp"
-            android:paddingRight="17dp"
+            android:layout_marginEnd="22dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/open_button_regular"
+            android:scaleType="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginBottom="26dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/albumDaily_DateTextView">
+            app:layout_constraintTop_toBottomOf="@+id/albumDaily_monthTextView">
 
-            <ImageButton
-                android:id="@+id/albumDaily_prevButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/prev_button" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal" />
 
-            <TextView
-                android:id="@+id/albumDaily_timeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:text="0 : 00 : 00"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textSize="36sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/albumDaily_nextButton"
-                android:layout_width="11dp"
-                android:layout_height="22dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/next_button" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal"
+                android:orientation="horizontal" />
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
@@ -132,7 +76,7 @@
         android:background="@color/LightGray"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/albumDaily_ScrollView">
+        app:layout_constraintTop_toTopOf="@+id/albumDaily_pictureRecyclerView">
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,56 +88,18 @@
             android:textSize="14dp" />
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/albumDaily_ScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/albumDaily_pictureRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/albumDaily_ConstraintLayout">
 
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/albumDaily_GridLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:columnCount="3"
-            app:orientation="horizontal">
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView1"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/LightGray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView2"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/Gray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView3"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/LightGray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView4"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/Gray" />-->
-
-        </androidx.gridlayout.widget.GridLayout>
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

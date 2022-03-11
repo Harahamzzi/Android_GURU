@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/LightGray"
     tools:context=".AlbumMainActivity">
 
     <Toolbar
         android:id="@+id/sub_toolBar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="@drawable/solid_main_app_bar"
+        android:background="@color/Yellow"
         app:contentInsetStart="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,31 +30,27 @@
             android:fontFamily="@font/noto_sans"
             android:text="나의 성취 앨범"
             android:textColor="@color/Black"
-            android:textFontWeight="700"
+            android:textFontWeight="300"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="157dp"
             tools:layout_editor_absoluteY="28dp" />
     </Toolbar>
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/albumMenuSpinner"
-        android:layout_width="80dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/spinner_select_background"
-        android:entries="@array/spinnerAlbumList"
-        android:theme="@style/Spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sub_toolBar" />
-
     <FrameLayout
         android:id="@+id/fragment_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumMenuSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/sub_toolBar" >
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="126dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="21dp"
+            android:layout_gravity="center|bottom"
+            android:clickable="true" />
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
