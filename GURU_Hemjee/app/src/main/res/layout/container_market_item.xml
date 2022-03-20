@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="90dp"
+    android:layout_height="93dp"
     android:orientation="vertical"
-    android:paddingRight="10dp">
+    android:paddingRight="13dp">
 
     <ImageView
         android:id="@+id/marketItemBgImageView"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="0dp"
         android:background="@drawable/available_pop_up_bg"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,6 @@
         android:layout_width="62dp"
         android:layout_height="22dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/seed_point_background"
         android:drawableLeft="@drawable/seed_resize"
         android:fontFamily="@font/noto_sans"
         android:gravity="center|right"

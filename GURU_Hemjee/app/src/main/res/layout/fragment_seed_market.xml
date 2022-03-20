@@ -1,239 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SeedMarketFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="0dp"
-            android:layout_height="500dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <FrameLayout
-                android:id="@+id/market_BGFrameLayout"
-                android:layout_width="376dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="1dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:id="@+id/market_BGFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/market_hamzziImage"
+                android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hamzzi_full_screen"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_bg_1500" />
+        </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/market_ClothFrameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/market_hamzziImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="47dp"
+            android:src="@drawable/hamzzi3" />
 
-            <TextView
-                android:id="@+id/market_SeedTextView"
-                android:layout_width="80dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="7dp"
-                android:background="@drawable/seed_point_background"
-                android:drawableLeft="@drawable/seed_resize"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center|right"
-                android:paddingRight="10dp"
-                android:text="0"
-                android:textColor="@color/Black"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <FrameLayout
+            android:id="@+id/market_clothFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="47dp">
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/market_SeedTextView"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/seed_point_background"
+        android:drawableLeft="@drawable/seed_resize"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="center|right"
+        android:paddingRight="10dp"
+        android:text="0"
+        android:textColor="@color/Black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-            <ImageView
-                android:id="@+id/market_inventoryBacgroundImageView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="335dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="6dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/hamster_inventory_bg"
-                app:layout_constraintBottom_toBottomOf="@+id/market_BGFrameLayout"
-                app:layout_constraintEnd_toEndOf="@id/market_BGFrameLayout"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@id/market_BGFrameLayout"
-                app:layout_constraintTop_toTopOf="@+id/market_BGFrameLayout" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="UnknownId">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/market_inventoryBacgroundImageView"
-                app:layout_constraintEnd_toEndOf="@+id/market_inventoryBacgroundImageView"
-                app:layout_constraintStart_toStartOf="@+id/market_inventoryBacgroundImageView"
-                app:layout_constraintTop_toTopOf="@+id/market_inventoryBacgroundImageView">
+        <ImageButton
+            android:id="@+id/market_refreshImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/color_icon"
+            android:backgroundTint="@color/Yellow"
+            android:padding="5dp"
+            android:src="@drawable/ic_outline_refresh_24" />
 
-                <ImageView
-                    android:id="@+id/market_inventorybgImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/inventory_cloth"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="160dp"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_weight="1">
-
-                    <ImageButton
-                        android:id="@+id/market_ClothImageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#00FFFFFF"
-                        android:src="@drawable/ic_outline_checkroom_24" />
-
-                    <ImageButton
-                        android:id="@+id/market_FurnitureImageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#00FFFFFF"
-                        android:src="@drawable/ic_outline_chair_24" />
-
-                    <ImageButton
-                        android:id="@+id/market_WallPaparImageButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#00FFFFFF"
-                        android:src="@drawable/ic_outline_wallpaper_24" />
-                </LinearLayout>
-
-                <HorizontalScrollView
-                    android:id="@+id/scrollView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-                    app:layout_constraintVertical_weight="3">
-
-                    <LinearLayout
-                        android:id="@+id/market_ItemList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Space
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/market_bottom"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/report_background">
 
             <TextView
-                android:id="@+id/market_textView14"
+                android:id="@+id/market_priceTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="4dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:text="사용 예정 씨앗"
+                android:gravity="center|left"
+                android:text="사용 예정 씨앗 | "
                 android:textColor="@color/Black"
                 android:textSize="12sp" />
 
-            <View
-                android:id="@+id/market_view"
-                android:layout_width="0.8dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/Black" />
-
             <TextView
-                android:id="@+id/market_toBeUsedSeedTextView"
+                android:id="@+id/market_seedPriceTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_height="24dp"
+                android:layout_gravity="center|right"
+                android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/seed_resize"
+                android:drawablePadding="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center|right"
-                android:text="0"
-                android:textColor="@color/Black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:text="9000+"
+                android:textColor="@color/Black" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="7dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/market_buyButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="64dp"
+            android:layout_height="24dp"
+            android:background="@drawable/seed_market_buy_button"
+            android:backgroundTint="@color/DarkBrown"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="구매"
+            android:textColor="@color/White"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:fontFamily="@font/noto_sans" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="218dp"
+        android:background="@color/LightGray"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/White"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/market_allButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="28dp"
+                android:background="@drawable/color_icon"
+                android:backgroundTint="@color/DarkBrown"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:singleLine="true"
+                android:text="ALL"
+                android:textColor="@color/White"
+                android:textSize="8sp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:fontFamily="@font/noto_sans" />
 
             <ImageButton
-                android:id="@+id/market_buyImageButton"
-                android:layout_width="64dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="1dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="3dp"
-                android:background="@drawable/market_buy_button"
-                android:scaleType="fitCenter"
-                android:src="@drawable/market_buy_button" />
+                android:id="@+id/market_clothImageButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="28dp"
+                android:background="@drawable/color_icon"
+                android:backgroundTint="@color/White"
+                android:src="@drawable/ic_outline_checkroom_24"
+                app:tint="@color/Black"
+                tools:src="@drawable/ic_outline_checkroom_24" />
+
+            <ImageButton
+                android:id="@+id/market_furnitureImageButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="28dp"
+                android:background="@drawable/color_icon"
+                android:backgroundTint="@color/White"
+                android:src="@drawable/ic_outline_chair_24"
+                app:tint="@color/Black"
+                tools:src="@drawable/ic_outline_chair_24" />
+
+            <ImageButton
+                android:id="@+id/market_wallPaperImageButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="28dp"
+                android:background="@drawable/color_icon"
+                android:backgroundTint="@color/White"
+                android:src="@drawable/ic_baseline_wallpaper_24"
+                app:tint="@color/Black"
+                tools:src="@drawable/ic_baseline_wallpaper_24" />
+
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="16dp">
+
+            <TableLayout
+                android:id="@+id/market_itemTabelLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
