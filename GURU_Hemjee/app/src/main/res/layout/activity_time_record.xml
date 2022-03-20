@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TimeRecord_Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+
+    app:umanoDragView="@id/TimeRecord_slideLayout"
+    tools:context=".TimeRecordActivity">
+
+    <!--기존 레이아웃-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/TimeRecord_backLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/LightGray">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="103dp"
+            android:layout_height="142dp"
+            android:layout_marginTop="88dp"
+            android:src="@drawable/hamzzi3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TimeRecord_timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="54dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="00 : 00 : 00"
+            android:textColor="@color/Black"
+            android:textFontWeight="400"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <ImageButton
+            android:id="@+id/TimeRecord_changeButton"
+            android:layout_width="88dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/record_time_button_box"
+            android:backgroundTint="@color/Yellow"
+            android:elevation="5dp"
+            android:src="@drawable/ic_pause_black_48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_timeTextView" />
+
+        <ImageButton
+            android:id="@+id/timeRecord_pauseButton"
+            android:layout_width="88dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="84dp"
+            android:background="@drawable/record_time_button_box"
+            android:backgroundTint="@color/White"
+            android:elevation="5dp"
+            android:src="@drawable/ic_stop_black_48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_timeTextView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 하단 슬라이딩 레이아웃 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/TimeRecord_slideLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/solid_big_goal_item_expand_box"
+        android:backgroundTint="@color/White"
+        android:elevation="5dp">
+
+
+        <ImageView
+            android:id="@+id/TimeRecord_imgview1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TimeRecord_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="남은 목표"
+            android:textColor="@color/Black"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_imgview1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/TimeRecord_goalRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_tv1" />
+
+        <TextView
+            android:id="@+id/TimeRecord_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="완료한 목표"
+            android:textColor="@color/Black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_goalRecyclerView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_tv2" />
+
+        <View
+            android:id="@+id/TimeRecord_bottomSpace"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

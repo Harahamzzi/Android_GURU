@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TimeRecordActivity에서 사용할 멈춤, 시작, 종료 버튼 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="90dp" />
+    <solid android:color="@color/Yellow" />
+    <size android:width="88dp" android:height="32dp" />
+</shape>
