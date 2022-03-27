@@ -5,15 +5,19 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.guru_hemjee.databinding.FragmentSeedMarketBinding
 
 //씨앗 상점 페이지
 //아이템 구매 Fragment 화면
 class SeedMarketFragment : Fragment() {
+
+    private var binding: FragmentSeedMarketBinding? = null
 
     //씨앗 관련
     private lateinit var market_SeedTextView: TextView
@@ -54,16 +58,25 @@ class SeedMarketFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding = FragmentSeedMarketBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seed_market, container, false)
+        return binding!!.root
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         //씨앗 관련
-        market_SeedTextView = requireView().findViewById(R.id.market_SeedTextView)
-        market_toBeUsedSeedTextView = requireView().findViewById(R.id.market_toBeUsedSeedTextView)
+        //market_SeedTextView = requireView().findViewById(R.id.market_SeedTextView)
+        binding.marketSeedTextView.text = "hello"
+        //market_toBeUsedSeedTextView = requireView().findViewById(R.id.market_toBeUsedSeedTextView)
 
         //기본 정보 가져오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
@@ -78,88 +91,88 @@ class SeedMarketFragment : Fragment() {
         dbManager.close()
 
         //구매 버튼
-        market_buyImageButton = requireView().findViewById(R.id.market_buyImageButton)
-        market_buyImageButton.setOnClickListener {
-            if(market_toBeUsedSeedTextView.text.toString().toInt() > market_SeedTextView.text.toString().toInt()){
-                val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
-                    false, R.drawable.popup_low_balance, null)
-                dialog.alertDialog()
-
-                dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
-                    override fun onClicked(isConfirm: Boolean) {
-                        //내용 없음
-                    }
-                })
-            } else {
-                receiptPopUp()
-            }
-        }
-
-        //인벤토리 배경 관련
-        market_inventorybgImageView = requireView().findViewById(R.id.market_inventorybgImageView)
-        market_ClothImageButton = requireView().findViewById(R.id.market_ClothImageButton)
-        market_FurnitureImageButton = requireView().findViewById(R.id.market_FurnitureImageButton)
-        market_WallPaparImageButton = requireView().findViewById(R.id.market_WallPaparImageButton)
-
-        //인벤토리 리스트 뷰
-        market_ItemList = requireView().findViewById(R.id.market_ItemList)
-
-        //인벤토리 초기 화면
-        //화면 초기화
-        upDateInventory(currentInventory)
-
-        market_ClothImageButton.setOnClickListener {
-            currentInventory = "clo"
-            upDateInventory("clo")
-            market_inventorybgImageView.setImageResource(R.drawable.inventory_cloth)
-        }
-        market_FurnitureImageButton.setOnClickListener {
-            currentInventory = "furni"
-            upDateInventory("furni")
-            market_inventorybgImageView.setImageResource(R.drawable.inventory_furniture)
-        }
-        market_WallPaparImageButton.setOnClickListener {
-            currentInventory = "bg"
-            upDateInventory("bg")
-            market_inventorybgImageView.setImageResource(R.drawable.inventory_wallpapare)
-        }
-
-        //햄찌 선처리(미리 적용된 것들 처리
-        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
-        sqlitedb = dbManager.readableDatabase
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
-        while(cursor.moveToNext()){
-            preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
-        }
-        cursor.close()
-        var preusingItems = ArrayList<String>()
-        cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
-        while(cursor.moveToNext()){
-            preusingItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
-        }
-        cursor.close()
-        sqlitedb.close()
-
-        sqlitedb = dbManager.writableDatabase
-        for(item in preusingItems){
-            if(!preselectedItems.contains(item))
-                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
-        }
-        for(item in preselectedItems){
-            if(!preusingItems.contains(item))
-                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
-        }
-        sqlitedb.close()
-        dbManager.close()
-
-        //햄찌(배경) 업데이트
-        market_BGFrameLayout = requireView().findViewById(R.id.market_BGFrameLayout)
-        market_ClothFrameLayout = requireView().findViewById(R.id.market_ClothFrameLayout)
-        //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
-        FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout, market_ClothFrameLayout, true, true)
-
-        preusingItems.clear()
-        selectedItems.addAll(preselectedItems)
+       // market_buyImageButton = requireView().findViewById(R.id.market_buyImageButton)
+       // market_buyImageButton.setOnClickListener {
+       //     if(market_toBeUsedSeedTextView.text.toString().toInt() > market_SeedTextView.text.toString().toInt()){
+       //         val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
+       //             false, R.drawable.popup_low_balance, null)
+       //         dialog.alertDialog()
+//
+       //         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+       //             override fun onClicked(isConfirm: Boolean) {
+       //                 //내용 없음
+       //             }
+       //         })
+       //     } else {
+       //         receiptPopUp()
+       //     }
+       // }
+//
+       // //인벤토리 배경 관련
+       // market_inventorybgImageView = requireView().findViewById(R.id.market_inventorybgImageView)
+       // market_ClothImageButton = requireView().findViewById(R.id.market_ClothImageButton)
+       // market_FurnitureImageButton = requireView().findViewById(R.id.market_FurnitureImageButton)
+       // market_WallPaparImageButton = requireView().findViewById(R.id.market_WallPaparImageButton)
+//
+       // //인벤토리 리스트 뷰
+       // market_ItemList = requireView().findViewById(R.id.market_ItemList)
+//
+       // //인벤토리 초기 화면
+       // //화면 초기화
+       // upDateInventory(currentInventory)
+//
+       // market_ClothImageButton.setOnClickListener {
+       //     currentInventory = "clo"
+       //     upDateInventory("clo")
+       //     market_inventorybgImageView.setImageResource(R.drawable.inventory_cloth)
+       // }
+       // market_FurnitureImageButton.setOnClickListener {
+       //     currentInventory = "furni"
+       //     upDateInventory("furni")
+       //     market_inventorybgImageView.setImageResource(R.drawable.inventory_furniture)
+       // }
+       // market_WallPaparImageButton.setOnClickListener {
+       //     currentInventory = "bg"
+       //     upDateInventory("bg")
+       //     market_inventorybgImageView.setImageResource(R.drawable.inventory_wallpapare)
+       // }
+//
+       // //햄찌 선처리(미리 적용된 것들 처리
+       // dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+       // sqlitedb = dbManager.readableDatabase
+       // cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
+       // while(cursor.moveToNext()){
+       //     preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+       // }
+       // cursor.close()
+       // var preusingItems = ArrayList<String>()
+       // cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
+       // while(cursor.moveToNext()){
+       //     preusingItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
+       // }
+       // cursor.close()
+       // sqlitedb.close()
+//
+       // sqlitedb = dbManager.writableDatabase
+       // for(item in preusingItems){
+       //     if(!preselectedItems.contains(item))
+       //         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+       // }
+       // for(item in preselectedItems){
+       //     if(!preusingItems.contains(item))
+       //         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+       // }
+       // sqlitedb.close()
+       // dbManager.close()
+//
+       // //햄찌(배경) 업데이트
+       // market_BGFrameLayout = requireView().findViewById(R.id.market_BGFrameLayout)
+       // market_ClothFrameLayout = requireView().findViewById(R.id.market_ClothFrameLayout)
+       // //햄찌 배경 설정 함수(FunUpDateHamzzi 참고)
+       // FunUpDateHamzzi.upDate(requireContext(), market_BGFrameLayout, market_ClothFrameLayout, true, true)
+//
+       // preusingItems.clear()
+       // selectedItems.addAll(preselectedItems)
     }
 
 
