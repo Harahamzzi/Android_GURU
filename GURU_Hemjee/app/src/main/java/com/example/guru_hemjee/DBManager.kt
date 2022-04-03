@@ -42,15 +42,26 @@ class DBManager(
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
-                "icon INT, big_goal_name text);")
+                "icon INT, big_goal_name text, " +
+                "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT, " +
-                "total_lock_time BIGINT, color INT, lock_date DATE);")
+                "total_lock_time BIGINT, color INT, lock_date DATE, " +
+                "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //세부 목표 기록 DB
         db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text, " +
-                "lock_date DATE, color INT, icon INT, photo_name TEXT, big_goal_name text, is_active INT)")
+                "lock_date DATE, color INT, icon INT, photo_name TEXT, big_goal_name text, is_active INT," +
+                "CONSTRANIT detail_goal_keys FOREIGN KEY (detail_goal_name, big_goal_name) REFERENCES detail_goal_db(detail_goal_name, big_goal_name) ON UPDATE CASCADE)")
+
+        //완료된 대표 목표 DB
+        db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text PRIMARY KEY, color int, " +
+                "big_goal_report_time time, big_goal_created_time time, big_goal_completed_time time)")
+
+        //완료된 세부 목표 DB
+        db!!.execSQL("CREATE TABLE complete_detail_goal_db (detail_goal_name text, icon int, " +
+                "count int, big_goal_name text)")
 
         //기본 정보 DB
         db!!.execSQL("CREATE TABLE basic_info_db (hamster_name TEXT, seed INT, total_time time)")

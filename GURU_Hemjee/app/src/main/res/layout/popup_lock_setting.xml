@@ -6,233 +6,83 @@
     android:layout_height="351dp"
     android:background="@drawable/pop_up_bg">
 
-    <ImageButton
-        android:id="@+id/pop_lockCancelImageButton"
-        android:layout_width="90dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginBottom="27dp"
-        android:background="#FFFFFF"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/cancel_button" />
-
-    <ImageButton
-        android:id="@+id/pop_settingOkImageButton"
-        android:layout_width="90dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="27dp"
-        android:background="@color/White"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ok_button" />
-
-    <ImageView
-        android:id="@+id/pop_lockSettingGoalColorImageView"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/color_icon" />
-
     <TextView
-        android:id="@+id/pop_goalTitleTextView"
-        android:layout_width="0dp"
+        android:id="@+id/pop_lock_titleTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="5dp"
-        android:drawablePadding="10dp"
-        android:ems="8"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="center|left"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="목표 제목"
+        android:layout_marginTop="33dp"
+        android:text="세부 목표 선택"
         android:textColor="@color/Black"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/pop_changeGoalButton"
-        app:layout_constraintStart_toEndOf="@+id/pop_lockSettingGoalColorImageView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pop_changeGoalButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="17dp"
-        android:drawableRight="@drawable/right_open_button"
-        android:drawablePadding="3dp"
-        android:text="목표 변경"
-        android:textSize="12sp"
-        android:fontFamily="@font/noto_sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/pop_ImageView1"
-        android:layout_width="237dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:background="@color/Gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dot_line_horizontal" />
-
-    <ImageView
-        android:id="@+id/pop_ImageView2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="71dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/timer_icon" />
-
-    <TextView
-        android:id="@+id/pop_TextView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="67dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="잠금 시간 수정"
-        android:textColor="@color/Black"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/pop_ImageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/pop_LinearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="99dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/pop_hourTimeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="2"
-            android:gravity="center|top"
-            android:inputType="number"
-            android:textColor="@color/Black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            tools:textSize="10sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/noto_sans"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/Black"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/pop_minTimeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="2"
-            android:gravity="center|top"
-            android:inputType="number"
-            android:textColor="@color/Black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            tools:textSize="10sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:fontFamily="@font/noto_sans"
-            android:gravity="center"
-            android:text=":"
-            android:textColor="@color/Black"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/pop_secTimeEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ems="2"
-            android:gravity="center|top"
-            android:inputType="number"
-            android:textColor="@color/Black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            tools:textSize="10sp" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/pop_ImageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="168dp"
-        android:layout_weight="1"
-        android:background="@drawable/ic_outline_app_registration_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_outline_app_registration_24" />
-
-    <TextView
-        android:id="@+id/pop_TextView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="166dp"
-        android:text="달성 가능한 세부 목표"
-        android:textColor="@color/Black"
-        android:textSize="12sp"
-        android:fontFamily="@font/noto_sans"
-        app:layout_constraintStart_toEndOf="@+id/pop_ImageView3"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/pop_ImageView4"
-        android:layout_width="0dp"
+    <ScrollView
+        android:id="@+id/pop_lock_detailScrollView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="195dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="10dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/pop_lockCancelImageButton"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/pop_cancelButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hamster_inventory_bg"
-        app:tint="@color/LightGray" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_lock_titleTextView">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pop_lockSettingDetailGoalRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@+id/pop_ImageView4"
-        app:layout_constraintEnd_toEndOf="@+id/pop_ImageView4"
-        app:layout_constraintStart_toStartOf="@+id/pop_ImageView4"
-        app:layout_constraintTop_toTopOf="@+id/pop_ImageView4" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pop_lock_cancelButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="95dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/report_top_button_off"
+        android:backgroundTint="@color/Gray"
+        android:fontFamily="@font/noto_sans"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="취소"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pop_lock_deleteButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="95dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/report_top_button_off"
+        android:backgroundTint="@color/Yellow"
+        android:fontFamily="@font/noto_sans"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="기록 시작"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

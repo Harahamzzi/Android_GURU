@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="270dp"
-    android:layout_height="260dp">
+    android:layout_height="175dp">
 
     <ImageButton
         android:id="@+id/pop_hamsterCancelImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginStart="34dp"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="16dp"
         android:background="#FFFFFF"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,48 +34,56 @@
     <TextView
         android:id="@+id/pop_TextView5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="21dp"
         android:fontFamily="@font/noto_sans"
+        android:gravity="center"
         android:text="기존 이름"
         android:textColor="@color/Black"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pop_nameTextView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pop_TextView4" />
 
     <TextView
         android:id="@+id/pop_nameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="25dp"
         android:fontFamily="@font/noto_sans"
+        android:gravity="center"
         android:text="김햄찌"
         android:textColor="@color/Black"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_TextView5" />
+        app:layout_constraintStart_toEndOf="@+id/pop_TextView5"
+        app:layout_constraintTop_toBottomOf="@+id/pop_TextView4" />
 
     <TextView
         android:id="@+id/pop_TextView6"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="9dp"
         android:fontFamily="@font/noto_sans"
+        android:gravity="center"
         android:text="변경 이름"
         android:textColor="@color/Black"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_TextView5" />
 
     <EditText
         android:id="@+id/pop_editNameEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="25dp"
         android:backgroundTint="@color/DarkBrown"
         android:ems="8"
         android:gravity="center"
@@ -86,15 +94,16 @@
         android:textSize="15sp"
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_TextView6" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/pop_TextView6"
+        app:layout_constraintTop_toBottomOf="@+id/pop_nameTextView" />
 
     <ImageButton
         android:id="@+id/pop_nameEditImageButton"
         android:layout_width="90dp"
         android:layout_height="27dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/White"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -43,7 +43,7 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
     //아이콘 변경 팝업
     fun iconPopUp() {
         dialog.show()
-        dialog.setContentView(R.layout.popup_icon_list)
+        dialog.setContentView(R.layout.popup_add_detail_goal)
 
         //라디오 버튼 그룹 연결
         pop_iconGroup1 = dialog.findViewById(R.id.pop_iconGroup1)
