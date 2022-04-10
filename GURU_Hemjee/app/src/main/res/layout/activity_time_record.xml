@@ -5,8 +5,9 @@
     android:id="@+id/TimeRecord_Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
 
+    android:gravity="bottom"
+    app:umanoPanelHeight="38dp"
     app:umanoDragView="@id/TimeRecord_slideLayout"
     tools:context=".TimeRecordActivity">
 
@@ -17,15 +18,51 @@
         android:layout_height="match_parent"
         android:background="@color/LightGray">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TimeRecord_toolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:background="@drawable/solid_main_app_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/TimeRecord_iconImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/ic_colorselectionicon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/TimeRecord_bigGoalNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="118dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="92dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="알고리즘 마스터하기"
+                android:textColor="@color/Black"
+                android:textFontWeight="300"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="103dp"
-            android:layout_height="142dp"
-            android:layout_marginTop="88dp"
+            android:layout_width="198dp"
+            android:layout_height="198dp"
+            android:layout_marginTop="66dp"
             android:src="@drawable/hamzzi3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_toolbarLayout" />
 
         <TextView
             android:id="@+id/TimeRecord_timeTextView"
@@ -42,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <ImageButton
-            android:id="@+id/TimeRecord_changeButton"
+            android:id="@+id/TimeRecord_pauseButton"
             android:layout_width="88dp"
             android:layout_height="32dp"
             android:layout_marginStart="84dp"
@@ -55,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@+id/TimeRecord_timeTextView" />
 
         <ImageButton
-            android:id="@+id/timeRecord_pauseButton"
+            android:id="@+id/TimeRecord_stopButton"
             android:layout_width="88dp"
             android:layout_height="32dp"
             android:layout_marginTop="24dp"
@@ -87,6 +124,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="9dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TimeRecord_imgview1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
 
         <TextView
             android:id="@+id/TimeRecord_tv1"
@@ -144,6 +195,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
