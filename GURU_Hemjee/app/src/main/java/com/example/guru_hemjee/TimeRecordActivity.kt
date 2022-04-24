@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
 import java.lang.Exception
 import java.math.BigInteger
@@ -25,6 +26,10 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 뷰바인딩
     private var binding: ActivityTimeRecordBinding? = null
+
+    // recycler view adapter
+    private lateinit var adapter1: TimeRecordGoalAdapter    // 세부목표 리사이클러 뷰 어댑터
+    private lateinit var adapter2: TimeRecordGoalAdapter    // 완료한 세부목표 리사이클러 뷰 어댑터
 
     //DB 관련
     private lateinit var dbManager: DBManager
@@ -49,6 +54,23 @@ class TimeRecordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTimeRecordBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        /** 리사이클러뷰 어댑터 연결 **/
+
+        // 1. 세부목표 목록 관련 recycler view
+        var linearLayoutManager1 = LinearLayoutManager(this)
+        binding?.TimeRecordGoalRecyclerView?.layoutManager = linearLayoutManager1
+
+        adapter1 = TimeRecordGoalAdapter()
+        binding?.TimeRecordGoalRecyclerView?.adapter = adapter1
+
+        // 2. 완료한 세부목표 관련 recycler view
+        var linearLayoutManager2 = LinearLayoutManager(this)
+        binding?.TimeRecordCompleteRecyclerView?.layoutManager = linearLayoutManager2
+
+        adapter2 = TimeRecordGoalAdapter()
+        binding?.TimeRecordCompleteRecyclerView?.adapter = adapter2
+
 
         /** 대표 목표 관련 정보 가져오기 **/
 
@@ -255,40 +277,61 @@ class TimeRecordActivity: AppCompatActivity() {
             // 위젯 생성 및 적용
             while(cursor.moveToNext())
             {
-                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
-                var view: View = layoutInflater.inflate(R.layout.container_record_detail_goal, Lock_detailGoalLinearLayout, false)
+                // item 객체 생성
+                var item = TimeRecordGoalItem()
 
-                // icon 변경
-                var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
+                // item에 데이터 담기
+                // 1. 아이콘 모양
                 var iconResource: Int = cursor.getInt(cursor.getColumnIndex("icon"))
-                icon.setImageResource(iconResource)
+                item.setIconResID(iconResource)
 
-                // icon의 색을 대표 목표의 색으로 변경
-                icon.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
+                // 2. 아이콘 색상
+                item.setIconColor(bigGoalColor)
 
-                // 세부 목표 이름 변경
-                var textView: TextView = view.findViewById(R.id.detailGoalTextView)
-                textView.width = 500
-                textView.setSingleLine()
-                textView.ellipsize = TextUtils.TruncateAt.END
-                textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
+                // 3. 세부목표 이름
+                var goalName: String = cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString()
+                item.setGoalName(goalName)
 
-                // 버튼에 리스너 달기
-                var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
-                button.setOnClickListener {
-                    // Camera Activity로 이동
-                    var intent = Intent(this, CameraActivity::class.java)
-                    intent.putExtra("detailGoalName", textView.text)    // 세부 목표 이름 보내기
-                    startActivity(intent)
-                }
+                // 4. 최종 반영
+                adapter1.addItem(item)
 
-                // 위젯 추가
-                Lock_detailGoalLinearLayout.addView(view)
+//                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
+//                var view: View = layoutInflater.inflate(R.layout.container_record_detail_goal, Lock_detailGoalLinearLayout, false)
+//
+//                // icon 변경
+//                var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
+//                var iconResource: Int = cursor.getInt(cursor.getColumnIndex("icon"))
+//                icon.setImageResource(iconResource)
+//
+//                // icon의 색을 대표 목표의 색으로 변경
+//                icon.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
+//
+//                // 세부 목표 이름 변경
+//                var textView: TextView = view.findViewById(R.id.detailGoalTextView)
+//                textView.width = 500
+//                textView.setSingleLine()
+//                textView.ellipsize = TextUtils.TruncateAt.END
+//                textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
+//
+//                // 버튼에 리스너 달기
+//                var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
+//                button.setOnClickListener {
+//                    // Camera Activity로 이동
+//                    var intent = Intent(this, CameraActivity::class.java)
+//                    intent.putExtra("detailGoalName", textView.text)    // 세부 목표 이름 보내기
+//                    startActivity(intent)
+//                }
+//
+//                // 위젯 추가
+//                Lock_detailGoalLinearLayout.addView(view)
 
                 // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
                 sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, big_goal_name, is_active)"
-                        + " VALUES ('${textView.text}', $bigGoalColor, $iconResource, '$bigGoalName', 1);")
+                        + " VALUES ('$goalName', $bigGoalColor, $iconResource, '$bigGoalName', 1);")
             }
+
+            // adapter의 값 변경을 알려줌
+            adapter1.notifyDataSetChanged()
 
             // 닫기
             cursor.close()

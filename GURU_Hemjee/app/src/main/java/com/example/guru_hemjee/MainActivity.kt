@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.guru_hemjee.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -31,18 +32,8 @@ private const val NUM_PAGES = 3
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    // Navagation Drawer 관련(햄버거 메뉴를 통한 화면 전환)
-    lateinit var navigationView: NavigationView
-    lateinit var home_drawerLayout: DrawerLayout
-
-    // title 관련 위젯
-    lateinit var titleButton: ImageView
-    lateinit var titleImageView: ImageView
-
-    // viewPager(스와이프를 통한 화면 전환)
-    lateinit var viewPager: ViewPager2
-    // indicator(현재 페이지 표시 목적)
-    lateinit var viewPagerIndicator: DotsIndicator
+    // view binding
+    private var binding: ActivityMainBinding? = null
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
@@ -53,7 +44,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         // 권한을 얻었는지 체크
         checkPermissions()
@@ -83,32 +75,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBar?.hide()
 
         // 네비게이션 드로어 생성
-        home_drawerLayout = findViewById(R.id.home_drawerLayout)
-
-        navigationView = findViewById(R.id.navigationView)
-        navigationView.setNavigationItemSelectedListener(this)
+        binding?.navigationView?.setNavigationItemSelectedListener(this)
 
         // menuButton 리스너 연결
         // (메뉴 버튼 클릭으로 네비게이션 드로어 열기)
-        titleButton = findViewById(R.id.titleButton)
-        titleButton.setOnClickListener {
-            home_drawerLayout.openDrawer(GravityCompat.START)
+        binding?.titleButton?.setOnClickListener {
+            binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
         }
-
-        // titleImageView 연결
-        titleImageView = findViewById(R.id.titleImageView)
 
         // titleText 연결
 //        titleText = findViewById(R.id.titleTextView)
 
-        // ViewPager 연결
-        viewPager = findViewById(R.id.viewPager)
-        viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL   // 방향을 가로로
-
-        // indicator 연결
-        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
-        viewPagerIndicator.setViewPager2(viewPager)
+//        // ViewPager 연결
+//        viewPager = findViewById(R.id.viewPager)
+//        viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
+//        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL   // 방향을 가로로
+//
+//        // indicator 연결
+//        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
+//        viewPagerIndicator.setViewPager2(viewPager)
     }
 
     // 내부 클래스 선언
@@ -154,8 +139,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {
         // 만일 드로어가 열려있는 상태라면 드로어를 닫음
-        if(home_drawerLayout.isDrawerOpen(GravityCompat.START))
-            home_drawerLayout.closeDrawers()
+        if(binding?.homeDrawerLayout?.isDrawerOpen(GravityCompat.START) == true)
+            binding?.homeDrawerLayout?.closeDrawers()
         // 그렇지 않다면 뒤로가기를 눌러 앱을 종료할 수 있도록 함
         else
         {
@@ -195,7 +180,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_album -> {
 
                 // Navigation Drawer 닫기
-                home_drawerLayout.closeDrawers()
+                binding?.homeDrawerLayout?.closeDrawers()
 
                 // AlbumMainActivity로 바로 이동
                 var tempIntent = Intent(this, AlbumMainActivity::class.java)
@@ -221,7 +206,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
 
                 // Navigation Drawer 닫기
-                home_drawerLayout.closeDrawers()
+                binding?.homeDrawerLayout?.closeDrawers()
 
                 // SubMainActivity로 전환
                 startActivity(intent)

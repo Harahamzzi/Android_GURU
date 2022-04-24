@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView13"
+        android:id="@+id/iconImageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="17dp"
@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/dumble_icon" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/goalNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
@@ -26,8 +26,8 @@
         android:textColor="@color/Black"
         android:textFontWeight="400"
         android:textSize="14dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/imageView13" />
+        app:layout_constraintStart_toEndOf="@+id/iconImageView"
+        app:layout_constraintTop_toTopOf="@+id/iconImageView" />
 
     <ImageButton
         android:id="@+id/cameraImageButton"
@@ -39,5 +39,5 @@
         android:elevation="3dp"
         android:src="@drawable/ic_photo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView15" />
+        app:layout_constraintTop_toTopOf="@+id/goalNameTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

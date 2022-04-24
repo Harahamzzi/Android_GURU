@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -58,14 +59,14 @@ class DailyAlbumFragment : Fragment() {
         todayDate = LocalDateTime.now()
 
         // 위젯 연결
-        albumDaily_DateTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
-        albumDaily_timeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
-
-        albumDaily_GridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
-        albumDaily_FrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
-
-        albumDaily_prevButton = requireView().findViewById(R.id.albumDaily_prevButton)
-        albumDaily_nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
+//        albumDaily_DateTextView = requireView().findViewById(R.id.albumDaily_DateTextView)
+//        albumDaily_timeTextView = requireView().findViewById(R.id.albumDaily_timeTextView)
+//
+//        albumDaily_GridLayout = requireView().findViewById(R.id.albumDaily_GridLayout)
+//        albumDaily_FrameLayout = requireView().findViewById(R.id.albumDaily_FrameLayout)
+//
+//        albumDaily_prevButton = requireView().findViewById(R.id.albumDaily_prevButton)
+//        albumDaily_nextButton = requireView().findViewById(R.id.albumDaily_nextButton)
 
         // 위젯에 오늘 날짜 입력
         // (현재 날짜를 오늘 날짜로 설정)
@@ -109,6 +110,7 @@ class DailyAlbumFragment : Fragment() {
     }
 
     // 해당 날짜에서 총 잠금한 시간 불러오고 위젯에 적용시키는 함수
+    @SuppressLint("Range")
     private fun applyTotalDailyLockTime() {
 
         // 해당 날짜 불러오기
@@ -154,6 +156,7 @@ class DailyAlbumFragment : Fragment() {
     }
 
     // 해당 날짜에서 달성한 목표의 사진을 불러와서 보여주는 함수
+    @SuppressLint("Range")
     private fun applyTotalDailyPhoto() {
 
         // 모든 뷰 클리어
