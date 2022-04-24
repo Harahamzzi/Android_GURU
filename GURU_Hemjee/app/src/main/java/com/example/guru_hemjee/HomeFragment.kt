@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.database.Cursor
@@ -54,6 +55,7 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @SuppressLint("Range")
     override fun onStart() {
         super.onStart()
 
@@ -194,21 +196,21 @@ class HomeFragment : Fragment() {
                     // 잠금 서비스 실행
                     LockScreenUtil.active()
 
-                    var intent = Intent(requireActivity(), LockActivity::class.java)
-
-                    // 유저 정보 보내기
-                    intent.putExtra("seed", home_seedPointTextView.text)
-                    intent.putExtra("hamsterName", hamName)
-
-                    // 대표 목표 이름 보내기
-                    intent.putExtra("bigGoalName", home_goalSelectButton.text)
-
-                    // 타이머 시간 데이터 보내기
-                    intent.putExtra("hour", time.split(':')[0])
-                    intent.putExtra("min", time.split(':')[1])
-                    intent.putExtra("sec", time.split(':')[2])
-
-                    startActivity(intent)
+//                    var intent = Intent(requireActivity(), LockActivity::class.java)
+//
+//                    // 유저 정보 보내기
+//                    intent.putExtra("seed", home_seedPointTextView.text)
+//                    intent.putExtra("hamsterName", hamName)
+//
+//                    // 대표 목표 이름 보내기
+//                    intent.putExtra("bigGoalName", home_goalSelectButton.text)
+//
+//                    // 타이머 시간 데이터 보내기
+//                    intent.putExtra("hour", time.split(':')[0])
+//                    intent.putExtra("min", time.split(':')[1])
+//                    intent.putExtra("sec", time.split(':')[2])
+//
+//                    startActivity(intent)
 
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -60,12 +61,12 @@ class BigGoalModifyFragment : Fragment() {
     private var integer_color: Int = 0 // 대표목표 색상
     private lateinit var total_time: String
 
-    private var mainActivity: SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var mainActivity: MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {
@@ -78,6 +79,7 @@ class BigGoalModifyFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("Range")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

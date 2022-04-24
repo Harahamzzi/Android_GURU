@@ -50,12 +50,12 @@ class BigGoalSetupFragment : Fragment() {
     private lateinit var bigGoal_cancelButton: AppCompatButton // 취소 버튼
     private lateinit var bigGoal_storeButton: AppCompatButton // 확인 버튼
 
-    private var mainActivity : SubMainActivity? = null // 메인 액티비티 변수
+    private var mainActivity : MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {

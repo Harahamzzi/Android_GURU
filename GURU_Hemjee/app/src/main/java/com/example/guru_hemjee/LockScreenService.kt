@@ -15,12 +15,12 @@ class LockScreenService : Service() {
             if(intent != null) {
                 when(intent.action) {
                     Intent.ACTION_SCREEN_OFF -> {
-                        val newIntent = Intent(context, LockActivity::class.java)
-                        newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        // 잠금화면이 보이는 중에 앱 서랍에서 안 보이도록 하기 위함
-                        newIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-
-                        startActivity(newIntent)
+//                        val newIntent = Intent(context, LockActivity::class.java)
+//                        newIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                        // 잠금화면이 보이는 중에 앱 서랍에서 안 보이도록 하기 위함
+//                        newIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+//
+//                        startActivity(newIntent)
                     }
                 }
             }

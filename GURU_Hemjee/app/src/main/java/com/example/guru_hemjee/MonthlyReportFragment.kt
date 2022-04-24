@@ -83,12 +83,12 @@ class MonthlyReportFragment : Fragment() {
     private lateinit var toggleGoal: String // 선택한 대표목표
 
     private var totalDetailGoalList = ArrayList<String>()
-    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var mainActivity : MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {

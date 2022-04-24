@@ -87,7 +87,7 @@ class WeeklyReportFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {
@@ -96,7 +96,7 @@ class WeeklyReportFragment : Fragment() {
         mainActivity = null
     }
 
-    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var mainActivity : MainActivity? = null // 메인 액티비티 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

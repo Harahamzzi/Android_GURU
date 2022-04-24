@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -26,12 +27,12 @@ class SetupFragment : Fragment() {
     private lateinit var goalBig_goalBigListView: ListView // fragment_setup.xml파일에 있는 리스트뷰의 아이디를 저장할 변수
     private lateinit var goalBig_plusGoalButton: ImageButton // fragment_setup.xml파일에 있는 +버튼의 아이디를 저장할 변수
 
-    private var mainActivity: SubMainActivity? = null // 메인 액티비티 변수
+    private var mainActivity: MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {
@@ -44,6 +45,7 @@ class SetupFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("Range")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

@@ -72,12 +72,12 @@ class DailyReportFragment : Fragment() {
 
     // 현재 리포트 화면 상태
     private var reportSate: Int = 0 // 오늘
-    private var mainActivity : SubMainActivity? = null // 서브 메인 액티비티 변수
+    private var mainActivity : MainActivity? = null // 메인 액티비티 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mainActivity = context as SubMainActivity
+        mainActivity = context as MainActivity
     }
 
     override fun onDetach() {

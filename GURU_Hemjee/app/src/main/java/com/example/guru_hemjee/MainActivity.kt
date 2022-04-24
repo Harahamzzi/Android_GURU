@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
+    private var isHome = false
 
     //튜토리얼 관련
     private lateinit var dbManager: DBManager
@@ -106,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return when(position) {
                 0 -> HomeFragment()
                 1 -> HomeReportFragment()
-                2 -> HomeAlbumFragment()
+//                2 -> HomeAlbumFragment()
                 else -> HomeFragment()
             }
         }
@@ -141,8 +143,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 만일 드로어가 열려있는 상태라면 드로어를 닫음
         if(binding?.homeDrawerLayout?.isDrawerOpen(GravityCompat.START) == true)
             binding?.homeDrawerLayout?.closeDrawers()
-        // 그렇지 않다면 뒤로가기를 눌러 앱을 종료할 수 있도록 함
-        else
+        // 현재 홈 화면일 경우
+        else if (isHome)
         {
 //            super.onBackPressed()
 
@@ -158,24 +160,149 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 finishAffinity()
             }
         }
+        // 그렇지 않다면 이전 화면으로 돌아가기
+        else
+        {
+            super.onBackPressed()
+
+            // 현재 보여지는 fragment 찾기
+            for(fragment : Fragment in supportFragmentManager.fragments) {
+                // 만일 보이는 fragment를 찾았다면 tag 저장
+                if (fragment.isVisible) {
+                    val tag = fragment.tag
+
+                    // tag 비교/적용
+                    when (tag) {
+                        // tag가 blank일 때의 동작(blank면 홈 화면이다.)
+                        "blank" -> {
+                            // titleImage 보이기
+                            binding?.titleImageView?.visibility = View.VISIBLE
+//                            // titleText 숨기기
+//                            titleText.visibility = View.INVISIBLE
+
+                            // 툴바 좌측 이미지 변경(드로어 열기)
+                            binding?.titleButton?.setImageResource(R.drawable.menu_icon)
+                            // 드로어 열기 리스너로 교체
+                            binding?.titleButton?.setOnClickListener {
+                                binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
+                            }
+
+                            // isHome 플래그 올리기
+                            isHome = true
+                        }
+//                        // 목표 및 잠금 시간 설정 페이지
+//                        "setUp" -> {
+//                            titleText.setText("목표/잠금 시간 설정")
+//                        }
+//                        // 목표 리포트 페이지
+//                        "dailyReport" -> {
+//                            titleText.setText("목표 리포트")
+//                        }
+//                        // 나의 성취 앨범 페이지
+//                        "dailyAlbum" -> {
+//                            titleText.setText("나의 성취 앨범")
+//                        }
+//                        // 씨앗 상점 페이지
+//                        "seedMarket" -> {
+//                            titleText.setText("씨앗 상점")
+//                        }
+//                        // 나의 햄찌 관리 페이지
+//                        "hamsterEdit" -> {
+//                            titleText.setText("나의 햄찌 관리")
+//                        }
+//                        }
+//                        // 설정 탭
+//                        "설정탭 태그" -> {
+//                            titleText.setText("설정")
+//                        }
+                    }
+
+//                    // home을 제외한 화면일 때의 공통 동작
+//                    if(tag != "blank")
+//                    {
+//                        setOtherPagesAction()
+//                    }
+                }
+            }
+        }
+    }
+
+    // 현재 페이지가 Home 페이지 외 다른 페이지일 때의 동작과 디자인을 설정해주는 함수
+    private fun setOtherPagesAction() {
+        // titleImage 숨기기
+        binding?.titleImageView?.visibility = View.INVISIBLE
+//        // titleText 보이기
+//        titleText.visibility = View.VISIBLE
+
+        // 툴바 좌측 이미지 변경(뒤로가기)
+        binding?.titleButton?.setImageResource(R.drawable.ic_outline_west_24)
+        // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
+        backHomeListener(binding!!.titleButton)
+
+
+        // isHome 플래그 내리기
+        isHome = false
+
+        //햄찌 설정 초기화
+    }
+
+    // 툴바 좌측 이미지를 눌렀을 때 홈 화면으로 가기를 처리하는 함수(리스너)
+    private fun backHomeListener(icon: ImageView) {
+        icon.setOnClickListener {
+            val transaction = supportFragmentManager.beginTransaction()
+
+            // title 이미지 보이기
+            binding?.titleImageView?.visibility = View.VISIBLE
+
+//            // 타이틀 텍스트 숨기기
+//            titleText.visibility = View.INVISIBLE
+
+//            // 타이틀 초기화
+//            titleText.setText("")
+
+            // 툴바 좌측 이미지 햄버거로 변경/리스너 변경
+            icon.setImageResource(R.drawable.menu_icon)
+            icon.setOnClickListener {
+                binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
+            }
+
+            // isHome 플래그 올리기
+            isHome = true
+        }
     }
 
     // 햄버거 메뉴를 통한 화면 이동
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        // 화면 이동을 위한 intent(서브 페이지들이 있는 액티비티로 보내기 위함)
-        var intent = Intent(this, SubMainActivity::class.java)
+        // fragment 전환을 위한 transaction 생성
+        val transaction = supportFragmentManager.beginTransaction()
 
         // 각 탭으로 전환
         when(item.itemId) {
 
             R.id.action_goalAndTime -> {
-                intent.putExtra("titleName", "목표/잠금 시간 설정")
-                intent.putExtra("tag", "setUp")
+                // 목표 및 잠금 시간 설정 탭으로 전환
+                transaction.replace(R.id.fragment_main, SetupFragment(), "setUp")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+//                // 타이틀 텍스트 변경
+//                titleText.setText("목표/잠금 시간 설정")
+
+                // Navigation Drawer 닫기
+                binding?.homeDrawerLayout?.closeDrawers()
             }
             R.id.action_report -> {
-                intent.putExtra("titleName", "목표 리포트")
-                intent.putExtra("tag", "dailyReport")
+                // 목표 리포트 탭으로 전환
+                transaction.replace(R.id.fragment_main, DailyReportFragment(), "dailyReport")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+//                // 타이틀 텍스트 변경
+//                titleText.setText("목표 리포트")
+
+                // Navigation Drawer 닫기
+                binding?.homeDrawerLayout?.closeDrawers()
             }
             R.id.action_album -> {
 
@@ -187,16 +314,40 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(tempIntent)
             }
             R.id.action_store -> {
-                intent.putExtra("titleName", "씨앗 상점")
-                intent.putExtra("tag", "seedMarket")
+                // 씨앗 상점 탭으로 전환
+                transaction.replace(R.id.fragment_main, SeedMarketFragment(), "seedMarket")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+//                // 타이틀 텍스트 변경
+//                titleText.setText("씨앗 상점")
+
+                // Navigation Drawer 닫기
+                binding?.homeDrawerLayout?.closeDrawers()
             }
             R.id.action_charManagement -> {
-                intent.putExtra("titleName", "나의 햄찌 관리")
-                intent.putExtra("tag", "hamsterEdit")
+                // 나의 햄찌 관리 탭으로 전환
+                transaction.replace(R.id.fragment_main, HamsterEditFragment(), "hamsterEdit")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+//                // 타이틀 텍스트 변경
+//                titleText.setText("나의 햄찌 관리")
+
+                // Navigation Drawer 닫기
+                binding?.homeDrawerLayout?.closeDrawers()
             }
             R.id.action_preference -> {
-                intent.putExtra("titleName", "설정")
-                intent.putExtra("tag", "preference")
+                // 설정 탭으로 전환
+                transaction.replace(R.id.fragment_main, SettingFragment(), "setting")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+//                // 타이틀 텍스트 변경
+//                titleText.setText("설정")
+
+                // Navigation Drawer 닫기
+                binding?.homeDrawerLayout?.closeDrawers()
             }
         }
 
@@ -205,11 +356,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.action_goalAndTime, R.id.action_report,
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
 
-                // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
-
-                // SubMainActivity로 전환
-                startActivity(intent)
+                setOtherPagesAction()
             }
         }
 
