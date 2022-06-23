@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -69,13 +70,14 @@ class SeedMarketFragment : Fragment() {
         super.onDestroyView()
     }
 
+    @SuppressLint("Range")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         //씨앗 관련
         //market_SeedTextView = requireView().findViewById(R.id.market_SeedTextView)
-        binding.marketSeedTextView.text = "hello"
+        binding?.marketSeedTextView!!.text = "hello"
         //market_toBeUsedSeedTextView = requireView().findViewById(R.id.market_toBeUsedSeedTextView)
 
         //기본 정보 가져오기
@@ -259,6 +261,7 @@ class SeedMarketFragment : Fragment() {
     }
 
     //인밴토리 업데이트
+    @SuppressLint("Range")
     private fun upDateInventory(name: String) {
         //layout 초기화
         market_ItemList.removeAllViews()

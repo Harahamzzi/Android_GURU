@@ -220,7 +220,7 @@ class HomeFragment : Fragment() {
     //잠금 설정
     private fun showLockSettingPopUp() {
         val dialog = LockSettingDialog(requireContext(), bigGoalName, bigGoalColor, time)
-        dialog.lockSetting()
+        //dialog.lockSetting()
 
         dialog.setOnClickedListener(object : LockSettingDialog.ButtonClickListener{
             override fun onClicked(isChanged: Boolean, bigGoalTitle: String, changedBigGoalColor: Int, getTime: String) {

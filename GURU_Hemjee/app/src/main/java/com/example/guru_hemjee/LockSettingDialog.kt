@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
@@ -36,7 +37,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
     private lateinit var pop_lockSettingDetailGoalRecyclerView: RecyclerView
 
     //팝업 표시
-    fun lockSetting(){
+    /*fun lockSetting(){
         dialog.show()
         dialog.setContentView(R.layout.popup_lock_setting)
 
@@ -121,9 +122,10 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
             }
 
         }
-    }
+    }*/
 
     //세부 목표 리스트 표시
+    @SuppressLint("Range")
     private fun upDateGoalList(bigGoalName: String, bigGoalColor: Int){
         //대표 목표가 있을 경우("목표를 생성해주세요"는 대표 목표가 없을 때 받아옴)
         if(bigGoalName != "목표를 생성해주세요"){

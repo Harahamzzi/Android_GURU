@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.database.Cursor
@@ -102,13 +103,14 @@ class WeeklyReportFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("Range")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_weekly_report, container, false)
 
         //위젯 연결
-        reportWeekly_dailyButton = view.findViewById(R.id.reportWeekly_dailyButton)
+        /*reportWeekly_dailyButton = view.findViewById(R.id.reportWeekly_dailyButton)
         reportWeekly_weeklyButton = view.findViewById(R.id.reportWeekly_weeklyButton)
         reportWeekly_moveWeeklyButton = view.findViewById(R.id.reportWeekly_moveWeeklyButton)
         reportWeekly_weeklyDateTextview = view.findViewById(R.id.reportWeekly_weeklyDateTextview)
@@ -118,7 +120,7 @@ class WeeklyReportFragment : Fragment() {
         reportWeekly_weeklyStackBarChart = view.findViewById(R.id.reportWeekly_weeklyStackBarChart)
         reportWeekly_selectBigGoalButton = view.findViewById(R.id.reportWeekly_selectBigGoalButton)
         reportWeekly_weeklyReportListLayout = view.findViewById(R.id.reportWeekly_weeklyReportListLayout)
-        reportWeekly_noGoalTimeView = view.findViewById(R.id.reportWeekly_noGoalTimeView)
+        reportWeekly_noGoalTimeView = view.findViewById(R.id.reportWeekly_noGoalTimeView)*/
 
         // 화면에 접속할 때마다 항상 레이아웃 초기화
         reportWeekly_weeklyReportListLayout.removeAllViews()

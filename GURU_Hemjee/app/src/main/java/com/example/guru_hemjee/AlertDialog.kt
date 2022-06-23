@@ -31,9 +31,9 @@ class AlertDialog(context: Context, title: String, okString: String, isNeedDrawa
         //위젯 연결
         pop_titleTextView = dialog.findViewById(R.id.pop_titleTextView)
         pop_cancelButton = dialog.findViewById(R.id.pop_cancelButton)
-        pop_confirmSeedButton = dialog.findViewById(R.id.pop_confirmSeedButton)
-        pop_confrimButton = dialog.findViewById(R.id.pop_confrimButton)
-        pop_alertPopHamsterTalkTextView = dialog.findViewById(R.id.pop_alertPopHamsterTalkTextView)
+        //pop_confirmSeedButton = dialog.findViewById(R.id.pop_confirmSeedButton)
+        //pop_confrimButton = dialog.findViewById(R.id.pop_confrimButton)
+        //pop_alertPopHamsterTalkTextView = dialog.findViewById(R.id.pop_alertPopHamsterTalkTextView)
 
         //햄찌 말이 있다면 말풍선 보여줌
         if (talkText != null) {

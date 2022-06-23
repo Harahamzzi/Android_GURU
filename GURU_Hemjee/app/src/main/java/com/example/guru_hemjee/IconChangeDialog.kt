@@ -251,14 +251,14 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         }
 
         //취소 버튼
-        cancelImageButton = dialog.findViewById(R.id.pop_iconCancelImageButton)
+        //cancelImageButton = dialog.findViewById(R.id.pop_iconCancelImageButton)
         cancelImageButton.setOnClickListener {
             onClickListener.onClick(false, originIcon)
             dialog.dismiss()
         }
 
         //확인 버튼
-        okImageButton = dialog.findViewById(R.id.pop_iconOkImageButton)
+        //okImageButton = dialog.findViewById(R.id.pop_iconOkImageButton)
         okImageButton.setOnClickListener {
             onClickListener.onClick(true, icon)
             dialog.dismiss()

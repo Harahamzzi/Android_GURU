@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -56,12 +57,13 @@ class HamsterEditFragment() : Fragment() {
         return inflater.inflate(R.layout.fragment_hamster_edit, container, false)
     }
 
+    @SuppressLint("Range")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //이름, 함께한 시간
         myHamster_hamsterNameTextView = requireView().findViewById(R.id.myHamster_hamsterNameTextView)
-        myHamster_totalSpentTimeTextView = requireView().findViewById(R.id.myHamster_totalSpentTimeTextView)
+        //myHamster_totalSpentTimeTextView = requireView().findViewById(R.id.myHamster_totalSpentTimeTextView)
 
         //햄찌 이름과 총 함께한 시간 반영
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
@@ -86,8 +88,8 @@ class HamsterEditFragment() : Fragment() {
         myHamster_clothImageButton = requireView().findViewById(R.id.myHamster_clothImageButton)
         myHamster_furnitureImageButton = requireView().findViewById(R.id.myHamster_furnitureImageButton)
         myHamster_wallPaperImageButton = requireView().findViewById(R.id.myHamster_wallPaperImageButton)
-        myHamster_inventoryImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
-        myHamster_itemList = requireView().findViewById(R.id.myHamster_itemList)
+        //myHamster_inventoryImageView = requireView().findViewById(R.id.myHamster_inventoryImageView)
+        //myHamster_itemList = requireView().findViewById(R.id.myHamster_itemList)
 
         //인벤토리에 아이템 연결
         upDateInventory(currentInventory)
@@ -96,9 +98,9 @@ class HamsterEditFragment() : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
-        while(cursor.moveToNext()){
+        /*while(cursor.moveToNext()){
             preselectedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
-        }
+        }*/
         cursor.close()
         var preusingItems = ArrayList<String>()
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
@@ -135,7 +137,7 @@ class HamsterEditFragment() : Fragment() {
         FunUpDateHamzzi.upDate(requireContext(), myHamster_BGFrameLayout, myHamster_clothFrameLayout, true, false)
 
         //적용 버튼
-        myHamster_applyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
+        //myHamster_applyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
         myHamster_applyImageButton.setOnClickListener {
             //사용 중임을 해제할 리스트
             var deSelectItems = ArrayList<String>()
@@ -206,6 +208,7 @@ class HamsterEditFragment() : Fragment() {
     }
 
     //인밴토리 확인
+    @SuppressLint("Range")
     private fun upDateInventory(name: String) {
         //layout 초기화
         myHamster_itemList.removeAllViews()
