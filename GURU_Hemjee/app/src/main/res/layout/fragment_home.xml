@@ -10,198 +10,105 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_goalTimeTextView">
+        android:layout_height="match_parent" >
 
-        <FrameLayout
-            android:id="@+id/home_BGFrameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/home_seedPointTextView"
+            android:layout_width="80dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/seed_point_background"
+            android:drawableLeft="@drawable/seed_resize"
+            android:gravity="center|end"
+            android:paddingRight="8dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="1000"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            android:lineSpacingExtra="49.03px"
+            android:textFontWeight="500"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/home_hamsterImageView"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="125dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="135dp"
-            android:minHeight="200dp"
+            android:layout_height="177dp"
+            android:layout_marginTop="114dp"
             android:src="@drawable/hamzzi3"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/home_BGFrameLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" />
 
-        <ImageView
-            android:id="@+id/home_speechBubbleImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/speech_ballon"
-            app:layout_constraintBottom_toTopOf="@+id/home_hamsterImageView"
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="330dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="92dp"
+            android:background="@drawable/main_block_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/home_hamsterImageView">
 
-        <TextView
-            android:id="@+id/home_hamsterTalkTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="23dp"
-            android:fontFamily="@font/noto_sans"
-            android:gravity="center"
-            android:text="앗 미안;; ㅎㅎ\n난 F는 상대 안해줘;;ㅎㅎ..."
-            android:textColor="@color/Black"
-            app:layout_constraintBottom_toTopOf="@+id/home_hamsterImageView"
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="김햄찌"
+                android:textColor="@color/Black"
+                android:textFontWeight="600"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:text="와 오늘 함께한 시간"
+                android:textColor="@color/Black"
+                android:textFontWeight="400"
+                android:textSize="12dp" />
+
+            <View
+                android:id="@+id/main_lineView"
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:background="#011616" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="4시간 50분"
+                android:textAlignment="center"
+                android:textColor="@color/Black"
+                android:textFontWeight="600"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/goalViewPager"
+            android:layout_width="330dp"
+            android:layout_height="90dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_marginTop="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/home_speechBubbleImageView" />
-
-        <FrameLayout
-            android:id="@+id/home_clothFrameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="125dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="135dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/home_topImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginTop="100dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/main_white_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/home_bottomImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        android:layout_marginBottom="40dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/main_white_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/main_white_bottom" />
-
-    <TextView
-        android:id="@+id/home_seedPointTextView"
-        android:layout_width="80dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/seed_point_background"
-        android:drawableLeft="@drawable/seed_resize"
-        android:gravity="center|end"
-        android:paddingRight="8dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="1000"
-        android:textColor="@color/black"
-        android:textSize="12dp"
-        android:lineSpacingExtra="49.03px"
-        android:textFontWeight="500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/home_TextView"
-        android:layout_width="58.3dp"
-        android:layout_height="17dp"
-        android:fontFamily="@font/noto_sans"
-        android:lineSpacingExtra="49.03px"
-        android:text="오늘의 목표"
-        android:textColor="@color/Black"
-        android:textFontWeight="400"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/home_goalSelectButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="162dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/goal_select_background"
-        android:ems="7"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="left|center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="12dp"
-        android:insetBottom="0dp"
-        android:lineSpacingExtra="49.03px"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="알고리즘 공부하기"
-        android:textColor="@color/black"
-        android:textFontWeight="700"
-        android:textSize="12dp"
-        app:backgroundTint="@null"
-        app:backgroundTintMode="add"
-        app:icon="@drawable/color_icon"
-        app:iconGravity="start"
-        app:iconSize="12dp"
-        app:iconTint="@color/Orange"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_TextView" />
-
-    <TextView
-        android:id="@+id/home_goalTimeTextView"
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="0시 00분 00초"
-        android:textColor="@color/Black"
-        android:textSize="24dp"
-        android:textFontWeight="700"
-        android:lineSpacingExtra="98.06px"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_goalSelectButton" />
-
-    <Button
-        android:id="@+id/home_startButton"
-        android:layout_width="160dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/Yellow"
-        android:fontFamily="@font/noto_sans"
-        android:lineSpacingExtra="81.72px"
-        android:text="시작"
-        android:textColor="@color/Black"
-        android:textFontWeight="700"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

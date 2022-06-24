@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
 
         <ImageView
             android:id="@+id/titleButton"
@@ -35,153 +35,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/home_seedPointTextView"
-            android:layout_width="80dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/seed_point_background"
-            android:drawableLeft="@drawable/seed_resize"
-            android:gravity="center|end"
-            android:paddingRight="8dp"
-            android:fontFamily="@font/noto_sans"
-            android:text="1000"
-            android:textColor="@color/black"
-            android:textSize="12dp"
-            android:lineSpacingExtra="49.03px"
-            android:textFontWeight="500"
-            app:layout_constraintEnd_toEndOf="parent"
+        <include
+            layout="@layout/fragment_home"
+            android:id="@+id/fragment_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleImageView" />
-
-        <ImageView
-            android:id="@+id/home_hamsterImageView"
-            android:layout_width="0dp"
-            android:layout_height="177dp"
-            android:layout_marginTop="114dp"
-            android:src="@drawable/hamzzi3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="330dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="92dp"
-            android:background="@drawable/main_block_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_hamsterImageView">
-
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="김햄찌"
-                android:textColor="@color/Black"
-                android:textFontWeight="600"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:text="와 오늘 함께한 시간"
-                android:textColor="@color/Black"
-                android:textFontWeight="400"
-                android:textSize="12dp" />
-
-            <View
-                android:id="@+id/main_lineView"
-                android:layout_width="1dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:background="#011616" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="4시간 50분"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textFontWeight="600"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/main_block_background2"
-            android:layout_width="330dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="9dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_colorselectionicon"
-                android:layout_marginTop="19dp"
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
-                android:text="알고리즘 마스터하기"
-                android:textColor="@color/Black"
-                android:textFontWeight="700"
-                android:textSize="18dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:layout_width="160dp"
-                android:layout_height="18dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="45dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView11">
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:src="@drawable/main_start_button_img"
-                android:background="@android:color/transparent"
-                android:layout_width="72dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="41dp"
-                android:layout_marginTop="13dp"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

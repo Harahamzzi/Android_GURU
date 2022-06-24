@@ -24,12 +24,9 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
 // 홈 Fragment, 홈 앨범 Fragment, 홈 리포트 Fragment를 보여주는 Activity 메인 화면
 
-// 스와이프를 통해 홈/홈 앨범/홈 리포트 화면에 접근 가능
+// 하단 슬라이드를 통해 요약본 뷰 확인 가능
 // Navigation Drawer Menu를 통해 각 페이지에 접근 가능
 // -> 목표/시간 설정, 목표 리포트, 나의 성취 앨범, 씨앗 상점, 나의 햄찌 관리, 설정 페이지
-
-// fragment 페이지 수(슬라이드 전환시)
-private const val NUM_PAGES = 3
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -98,22 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        viewPagerIndicator.setViewPager2(viewPager)
     }
 
-    // 내부 클래스 선언
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        // 페이지 수 리턴하는 함수
-        override fun getItemCount(): Int = NUM_PAGES
-
-        override fun createFragment(position: Int): Fragment {
-            // 페이지 포지션에 따라 그에 알맞은 fragment 보이기
-            return when(position) {
-                0 -> HomeFragment()
-                1 -> HomeReportFragment()
-//                2 -> HomeAlbumFragment()
-                else -> HomeFragment()
-            }
-        }
-    }
-
     // 권한 체크를 위한 리스너
     private var permissionListener: PermissionListener = object: PermissionListener {
         // 권한 허가시 실행할 함수
@@ -173,8 +154,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                     // tag 비교/적용
                     when (tag) {
-                        // tag가 blank일 때의 동작(blank면 홈 화면이다.)
-                        "blank" -> {
+                        // tag가 home일 때의 동작
+                        "home" -> {
                             // titleImage 보이기
                             binding?.titleImageView?.visibility = View.VISIBLE
 //                            // titleText 숨기기
@@ -217,11 +198,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                        }
                     }
 
-//                    // home을 제외한 화면일 때의 공통 동작
-//                    if(tag != "blank")
-//                    {
-//                        setOtherPagesAction()
-//                    }
+                    // home을 제외한 화면일 때의 공통 동작
+                    if(tag != "home")
+                    {
+                        setOtherPagesAction()
+                    }
                 }
             }
         }
@@ -265,6 +246,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             icon.setOnClickListener {
                 binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
             }
+
+            // home 화면으로 전환
+            transaction.replace(R.id.fragment_main, HomeFragment(), "home")
+            transaction.addToBackStack(null)
+            transaction.commit()
 
             // isHome 플래그 올리기
             isHome = true
