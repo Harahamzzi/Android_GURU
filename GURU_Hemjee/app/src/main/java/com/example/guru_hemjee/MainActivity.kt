@@ -93,6 +93,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        // indicator 연결
 //        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
 //        viewPagerIndicator.setViewPager2(viewPager)
+
+        // 홈 화면 띄우기
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_main, HomeFragment(), "home")
+        transaction.addToBackStack(null)
+        transaction.commit()
+
+        // isHome 플래그 초기화
+        isHome = true
     }
 
     // 권한 체크를 위한 리스너
