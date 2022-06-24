@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 대표목표 추가 팝업 -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="278dp"
     android:layout_height="340dp"
@@ -14,6 +16,7 @@
         android:text="대표 목표 추가"
         android:textColor="@color/Black"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,52 +35,51 @@
         app:layout_constraintTop_toBottomOf="@+id/pop_moveDetailGoalTextView2" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:id="@+id/pop_biggoal_title_edt"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="left"
         android:hint="목표 제목을 입력해주세요."
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textColor="@color/Black"
         android:textColorHint="@color/DarkGray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/textView14"
+        app:layout_constraintTop_toBottomOf="@id/textView14" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/noto_sans"
         android:text="색상"
         android:textColor="@color/Black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/pop_biggoal_title_edt"
+        app:layout_constraintTop_toBottomOf="@id/pop_biggoal_title_edt" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="53dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/pop_lock_cancelButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textView13">
 
         <RadioGroup
-            android:id="@+id/pop_iconGroup1"
+            android:id="@+id/pop_biggoal_color_rgroup1"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginBottom="11dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_icon1"
+                android:id="@+id/pop_biggoal_color_orange_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -89,7 +91,7 @@
                 android:paddingLeft="5dp" />
 
             <RadioButton
-                android:id="@+id/pop_icon2"
+                android:id="@+id/pop_biggoal_color_yellow_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -100,7 +102,7 @@
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon3"
+                android:id="@+id/pop_biggoal_color_noteyellow_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -111,7 +113,7 @@
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon4"
+                android:id="@+id/pop_biggoal_color_apricot_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -122,7 +124,7 @@
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon5"
+                android:id="@+id/pop_biggoal_color_seedbrown_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -133,7 +135,7 @@
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon13"
+                android:id="@+id/pop_biggoal_color_darkbrown_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -145,14 +147,14 @@
         </RadioGroup>
 
         <RadioGroup
-            android:id="@+id/pop_iconGroup2"
+            android:id="@+id/pop_biggoal_color_rgroup2"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_icon6"
+                android:id="@+id/pop_biggoal_color_lightgreen_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
@@ -163,56 +165,56 @@
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon7"
+                android:id="@+id/pop_biggoal_color_green_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="23dp"
+                android:background="@drawable/color_selector"
                 android:backgroundTint="@color/Green"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon8"
+                android:id="@+id/pop_biggoal_color_lightblue_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="23dp"
+                android:background="@drawable/color_selector"
                 android:backgroundTint="@color/LightBlue"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon9"
+                android:id="@+id/pop_biggoal_color_blue_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="23dp"
+                android:background="@drawable/color_selector"
                 android:backgroundTint="@color/Blue"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon10"
+                android:id="@+id/pop_biggoal_color_purple_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
+                android:layout_marginRight="23dp"
+                android:background="@drawable/color_selector"
                 android:backgroundTint="@color/Purple"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
                 android:button="@null"
                 android:gravity="center" />
 
             <RadioButton
-                android:id="@+id/pop_icon11"
+                android:id="@+id/pop_biggoal_color_pink_rbtn"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/Pink"
                 android:background="@drawable/color_selector"
+                android:backgroundTint="@color/Pink"
                 android:button="@null"
                 android:gravity="center" />
         </RadioGroup>
@@ -220,7 +222,7 @@
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pop_lock_cancelButton"
+        android:id="@+id/pop_biggoal_cancel_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
         android:layout_height="28dp"
@@ -240,11 +242,10 @@
         android:textSize="12dp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pop_lock_deleteButton"
+        android:id="@+id/pop_biggoal_add_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
         android:layout_height="28dp"
@@ -264,7 +265,6 @@
         android:textSize="12dp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
