@@ -82,9 +82,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
         }
 
-        // titleText 연결
-//        titleText = findViewById(R.id.titleTextView)
-
 //        // ViewPager 연결
 //        viewPager = findViewById(R.id.viewPager)
 //        viewPager.adapter = ScreenSlidePagerAdapter(this)    // 어댑터 생성
@@ -180,31 +177,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             // isHome 플래그 올리기
                             isHome = true
                         }
-//                        // 목표 및 잠금 시간 설정 페이지
-//                        "setUp" -> {
-//                            titleText.setText("목표/잠금 시간 설정")
-//                        }
-//                        // 목표 리포트 페이지
-//                        "dailyReport" -> {
-//                            titleText.setText("목표 리포트")
-//                        }
-//                        // 나의 성취 앨범 페이지
-//                        "dailyAlbum" -> {
-//                            titleText.setText("나의 성취 앨범")
-//                        }
-//                        // 씨앗 상점 페이지
-//                        "seedMarket" -> {
-//                            titleText.setText("씨앗 상점")
-//                        }
-//                        // 나의 햄찌 관리 페이지
-//                        "hamsterEdit" -> {
-//                            titleText.setText("나의 햄찌 관리")
-//                        }
-//                        }
-//                        // 설정 탭
-//                        "설정탭 태그" -> {
-//                            titleText.setText("설정")
-//                        }
+                        // 목표 및 잠금 시간 설정 페이지
+                        "setUp" -> {
+                            binding?.titleTextView?.setText("목표/잠금 시간 설정")
+                        }
+                        // 목표 리포트 페이지
+                        "dailyReport" -> {
+                            binding?.titleTextView?.setText("목표 리포트")
+                        }
+                        // 나의 성취 앨범 페이지
+                        "dailyAlbum" -> {
+                            binding?.titleTextView?.setText("나의 성취 앨범")
+                        }
+                        // 씨앗 상점 페이지
+                        "seedMarket" -> {
+                            binding?.titleTextView?.setText("씨앗 상점")
+                        }
+                        // 나의 햄찌 관리 페이지
+                        "hamsterEdit" -> {
+                            binding?.titleTextView?.setText("나의 햄찌 관리")
+                        }
+                        // 설정 탭
+                        "setting" -> {
+                            binding?.titleTextView?.setText("설정")
+                        }
                     }
 
                     // home을 제외한 화면일 때의 공통 동작
@@ -221,8 +217,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setOtherPagesAction() {
         // titleImage 숨기기
         binding?.titleImageView?.visibility = View.INVISIBLE
-//        // titleText 보이기
-//        titleText.visibility = View.VISIBLE
+        // titleText 보이기
+        binding?.titleTextView?.visibility = View.VISIBLE
 
         // 툴바 좌측 이미지 변경(뒤로가기)
         binding?.titleButton?.setImageResource(R.drawable.ic_outline_west_24)
@@ -244,11 +240,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             // title 이미지 보이기
             binding?.titleImageView?.visibility = View.VISIBLE
 
-//            // 타이틀 텍스트 숨기기
-//            titleText.visibility = View.INVISIBLE
+            // 타이틀 텍스트 숨기기
+            binding?.titleTextView?.visibility = View.INVISIBLE
 
-//            // 타이틀 초기화
-//            titleText.setText("")
+            // 타이틀 초기화
+            binding?.titleTextView?.setText("")
 
             // 툴바 좌측 이미지 햄버거로 변경/리스너 변경
             icon.setImageResource(R.drawable.menu_icon)
@@ -281,8 +277,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-//                // 타이틀 텍스트 변경
-//                titleText.setText("목표/잠금 시간 설정")
+                // 타이틀 텍스트 변경
+                binding?.titleTextView?.setText("목표/잠금 시간 설정")
 
                 // Navigation Drawer 닫기
                 binding?.homeDrawerLayout?.closeDrawers()
@@ -293,8 +289,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-//                // 타이틀 텍스트 변경
-//                titleText.setText("목표 리포트")
+                // 타이틀 텍스트 변경
+                binding?.titleTextView?.setText("목표 리포트")
 
                 // Navigation Drawer 닫기
                 binding?.homeDrawerLayout?.closeDrawers()
@@ -314,8 +310,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-//                // 타이틀 텍스트 변경
-//                titleText.setText("씨앗 상점")
+                // 타이틀 텍스트 변경
+                binding?.titleTextView?.setText("씨앗 상점")
 
                 // Navigation Drawer 닫기
                 binding?.homeDrawerLayout?.closeDrawers()
@@ -326,8 +322,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-//                // 타이틀 텍스트 변경
-//                titleText.setText("나의 햄찌 관리")
+                // 타이틀 텍스트 변경
+                binding?.titleTextView?.setText("나의 햄찌 관리")
 
                 // Navigation Drawer 닫기
                 binding?.homeDrawerLayout?.closeDrawers()
@@ -338,8 +334,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-//                // 타이틀 텍스트 변경
-//                titleText.setText("설정")
+                // 타이틀 텍스트 변경
+                binding?.titleTextView?.setText("설정")
 
                 // Navigation Drawer 닫기
                 binding?.homeDrawerLayout?.closeDrawers()
