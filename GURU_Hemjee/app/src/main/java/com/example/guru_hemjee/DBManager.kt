@@ -38,36 +38,36 @@ class DBManager(
 
         //대표 목표 DB: avaiable app 생략)
         db!!.execSQL("CREATE TABLE big_goal_db (big_goal_name text PRIMARY KEY, " +
-                "color INT, big_goal_lock_time time);")
+                "color text, big_goal_lock_time time);")
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
-                "icon INT, big_goal_name text, " +
+                "icon text, big_goal_name text, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT, " +
-                "total_lock_time BIGINT, color INT, lock_date DATE, " +
+                "total_lock_time BIGINT, color text, lock_date DATE, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //세부 목표 기록 DB
         db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text, " +
-                "lock_date DATE, color INT, icon INT, photo_name TEXT, big_goal_name text, is_active INT," +
-                "CONSTRANIT detail_goal_keys FOREIGN KEY (detail_goal_name, big_goal_name) REFERENCES detail_goal_db(detail_goal_name, big_goal_name) ON UPDATE CASCADE)")
+                "lock_date DATE, color text, icon text, photo_name text, big_goal_name text, is_active INT," +
+                "CONSTRAINT detail_goal_keys FOREIGN KEY (detail_goal_name, big_goal_name) REFERENCES detail_goal_db(detail_goal_name, big_goal_name) ON UPDATE CASCADE);")
 
         //완료된 대표 목표 DB
-        db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text PRIMARY KEY, color int, " +
+        db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text PRIMARY KEY, color text, " +
                 "big_goal_report_time time, big_goal_created_time time, big_goal_completed_time time)")
 
         //완료된 세부 목표 DB
-        db!!.execSQL("CREATE TABLE complete_detail_goal_db (detail_goal_name text, icon int, " +
+        db!!.execSQL("CREATE TABLE complete_detail_goal_db (detail_goal_name text, icon text, " +
                 "count int, big_goal_name text)")
 
         //기본 정보 DB
-        db!!.execSQL("CREATE TABLE basic_info_db (hamster_name TEXT, seed INT, total_time time)")
+        db!!.execSQL("CREATE TABLE basic_info_db (hamster_name text, seed INT, total_time time)")
 
         //씨앗 상점 아이템 DB
-        db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name TEXT PRIMARY KEY, price int, " +
+        db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name text PRIMARY KEY, price int, " +
                 "type text, category text, bg_pic text, market_pic text, hamster_pic text, is_bought INT, is_using INT, is_applied INT)")
     }
 
