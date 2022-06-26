@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/LightGray"
-    tools:context=".DailyReportFragment">
+    tools:context=".Home.Report.DailyReportFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/LightGray"
-    tools:context=".WeeklyReportFragment">
+    tools:context=".Home.Report.WeeklyReportFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

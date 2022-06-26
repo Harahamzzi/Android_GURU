@@ -9,7 +9,7 @@
     android:gravity="bottom"
     app:umanoPanelHeight="38dp"
     app:umanoDragView="@id/TimeRecord_slideLayout"
-    tools:context=".TimeRecordActivity">
+    tools:context=".Home.TimeRecord.TimeRecordActivity">
 
     <!--기존 레이아웃-->
     <androidx.constraintlayout.widget.ConstraintLayout

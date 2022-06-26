@@ -8,6 +8,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.Home.Goal.DetailGoalItem
+import com.example.guru_hemjee.Home.Goal.DetailGoalListAdapter
 import java.util.*
 
 //잠금 확인 팝업

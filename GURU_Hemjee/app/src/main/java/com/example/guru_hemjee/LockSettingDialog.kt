@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
-import android.graphics.PorterDuff
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.Home.Goal.DetailGoalItem
+import com.example.guru_hemjee.Home.Goal.DetailGoalListAdapter
 
 //잠금 설정 팝업
 class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: Int, time: String) {

@@ -6,48 +6,39 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!--swipe menu를 숨기기 위해서 framelayout으로 설정-->
+    <View
+        android:id="@+id/detailGoalItem_lineView"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="#F2F2F2"
+        app:layout_constraintBottom_toBottomOf="@+id/detailGoalItem_bottomSpace"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
+    <Space
+        android:id="@+id/detailGoalItem_bottomSpace"
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="1dp" />
 
-        <ImageView
-            android:id="@+id/detailGoalItem_deleteBigGoalButton"
-            android:layout_width="41dp"
-            android:layout_height="56dp"
-            android:layout_gravity="left"
-            android:background="@drawable/solid_big_goal_item_left_swipe_box"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_outline_delete_24"
-            app:tint="@color/White" />
-
-        <ImageView
-            android:id="@+id/detailGoalItem_modifyBigGoalButton"
-            android:layout_width="41dp"
-            android:layout_height="56dp"
-            android:layout_gravity="right"
-            android:background="@drawable/solid_big_goal_item_right_swipe_box"
-            android:scaleType="center"
-            app:srcCompat="@drawable/ic_edit_black_24dp_1"
-            app:tint="@color/White" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/detailGoalItem_detailGoalLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="56dp"
             android:background="@drawable/solid_goal_item_default_box">
 
-            <ImageView
-                android:id="@+id/detailGoalItem_icon"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_computer_black_36dp"
-                app:tint="@color/Orange" />
+        <ImageView
+            android:id="@+id/detailGoalItem_icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="11dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_computer_black_36dp"
+            app:tint="@color/Orange" />
 
             <TextView
                 android:id="@+id/detailGoalItem_detailGoalTextView"
@@ -63,24 +54,6 @@
                 app:layout_constraintStart_toEndOf="@+id/detailGoalItem_icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </FrameLayout>
-
-    <View
-        android:id="@+id/detailGoalItem_lineView"
-        android:layout_width="294dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/Gray"
-        app:layout_constraintBottom_toBottomOf="@+id/detailGoalItem_bottomSpace"
-        app:layout_constraintTop_toTopOf="@+id/detailGoalItem_detailGoalLayout" />
-
-    <Space
-        android:id="@+id/detailGoalItem_bottomSpace"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
