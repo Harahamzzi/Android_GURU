@@ -31,7 +31,9 @@ import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     // view binding
-    private var binding: ActivityMainBinding? = null
+    private var mBinding: ActivityMainBinding? = null
+    // 매번 null 체크를 하지 않아도 되도록 함
+    private val binding get() = mBinding!!
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
@@ -43,8 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // 권한을 얻었는지 체크
         checkPermissions()
@@ -74,12 +76,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         actionBar?.hide()
 
         // 네비게이션 드로어 생성
-        binding?.navigationView?.setNavigationItemSelectedListener(this)
+        binding.navigationView.setNavigationItemSelectedListener(this)
 
         // menuButton 리스너 연결
         // (메뉴 버튼 클릭으로 네비게이션 드로어 열기)
-        binding?.titleButton?.setOnClickListener {
-            binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
+        binding.titleButton.setOnClickListener {
+            binding.homeDrawerLayout.openDrawer(GravityCompat.START)
         }
 
 //        // ViewPager 연결
@@ -99,6 +101,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // isHome 플래그 초기화
         isHome = true
+    }
+
+    override fun onDestroy() {
+        // binding class 인스턴트 참조 정리
+        mBinding = null
+
+        super.onDestroy()
     }
 
     // 권한 체크를 위한 리스너
@@ -128,8 +137,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // (핸드폰)뒤로가기를 눌렀을 때의 동작 함수
     override fun onBackPressed() {
         // 만일 드로어가 열려있는 상태라면 드로어를 닫음
-        if(binding?.homeDrawerLayout?.isDrawerOpen(GravityCompat.START) == true)
-            binding?.homeDrawerLayout?.closeDrawers()
+        if(binding.homeDrawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.homeDrawerLayout.closeDrawers()
         // 현재 홈 화면일 경우
         else if (isHome)
         {
@@ -163,15 +172,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         // tag가 home일 때의 동작
                         "home" -> {
                             // titleImage 보이기
-                            binding?.titleImageView?.visibility = View.VISIBLE
-//                            // titleText 숨기기
-//                            titleText.visibility = View.INVISIBLE
+                            binding.titleImageView.visibility = View.VISIBLE
+                            // titleText 숨기기
+                            binding.titleTextView.visibility = View.INVISIBLE
 
                             // 툴바 좌측 이미지 변경(드로어 열기)
-                            binding?.titleButton?.setImageResource(R.drawable.menu_icon)
+                            binding.titleButton.setImageResource(R.drawable.menu_icon)
                             // 드로어 열기 리스너로 교체
-                            binding?.titleButton?.setOnClickListener {
-                                binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
+                            binding.titleButton.setOnClickListener {
+                                binding.homeDrawerLayout.openDrawer(GravityCompat.START)
                             }
 
                             // isHome 플래그 올리기
@@ -179,27 +188,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         }
                         // 목표 및 잠금 시간 설정 페이지
                         "setUp" -> {
-                            binding?.titleTextView?.setText("목표/잠금 시간 설정")
+                            binding.titleTextView.setText("목표/잠금 시간 설정")
                         }
                         // 목표 리포트 페이지
                         "dailyReport" -> {
-                            binding?.titleTextView?.setText("목표 리포트")
+                            binding.titleTextView.setText("목표 리포트")
                         }
                         // 나의 성취 앨범 페이지
                         "dailyAlbum" -> {
-                            binding?.titleTextView?.setText("나의 성취 앨범")
+                            binding.titleTextView.setText("나의 성취 앨범")
                         }
                         // 씨앗 상점 페이지
                         "seedMarket" -> {
-                            binding?.titleTextView?.setText("씨앗 상점")
+                            binding.titleTextView.setText("씨앗 상점")
                         }
                         // 나의 햄찌 관리 페이지
                         "hamsterEdit" -> {
-                            binding?.titleTextView?.setText("나의 햄찌 관리")
+                            binding.titleTextView.setText("나의 햄찌 관리")
                         }
                         // 설정 탭
                         "setting" -> {
-                            binding?.titleTextView?.setText("설정")
+                            binding.titleTextView.setText("설정")
                         }
                     }
 
@@ -216,14 +225,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     // 현재 페이지가 Home 페이지 외 다른 페이지일 때의 동작과 디자인을 설정해주는 함수
     private fun setOtherPagesAction() {
         // titleImage 숨기기
-        binding?.titleImageView?.visibility = View.INVISIBLE
+        binding.titleImageView.visibility = View.INVISIBLE
         // titleText 보이기
-        binding?.titleTextView?.visibility = View.VISIBLE
+        binding.titleTextView.visibility = View.VISIBLE
 
         // 툴바 좌측 이미지 변경(뒤로가기)
-        binding?.titleButton?.setImageResource(R.drawable.ic_outline_west_24)
+        binding.titleButton.setImageResource(R.drawable.ic_outline_west_24)
         // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
-        backHomeListener(binding!!.titleButton)
+        backHomeListener(binding.titleButton)
 
 
         // isHome 플래그 내리기
@@ -238,18 +247,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val transaction = supportFragmentManager.beginTransaction()
 
             // title 이미지 보이기
-            binding?.titleImageView?.visibility = View.VISIBLE
+            binding.titleImageView.visibility = View.VISIBLE
 
             // 타이틀 텍스트 숨기기
-            binding?.titleTextView?.visibility = View.INVISIBLE
+            binding.titleTextView.visibility = View.INVISIBLE
 
             // 타이틀 초기화
-            binding?.titleTextView?.setText("")
+            binding.titleTextView.setText("")
 
             // 툴바 좌측 이미지 햄버거로 변경/리스너 변경
             icon.setImageResource(R.drawable.menu_icon)
             icon.setOnClickListener {
-                binding?.homeDrawerLayout?.openDrawer(GravityCompat.START)
+                binding.homeDrawerLayout.openDrawer(GravityCompat.START)
             }
 
             // home 화면으로 전환
@@ -278,10 +287,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding?.titleTextView?.setText("목표/잠금 시간 설정")
+                binding.titleTextView.setText("목표/잠금 시간 설정")
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
             }
             R.id.action_report -> {
                 // 목표 리포트 탭으로 전환
@@ -290,15 +299,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding?.titleTextView?.setText("목표 리포트")
+                binding.titleTextView.setText("목표 리포트")
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
             }
             R.id.action_album -> {
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
 
                 // AlbumMainActivity로 바로 이동
                 var tempIntent = Intent(this, AlbumMainActivity::class.java)
@@ -311,10 +320,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding?.titleTextView?.setText("씨앗 상점")
+                binding.titleTextView.setText("씨앗 상점")
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
             }
             R.id.action_charManagement -> {
                 // 나의 햄찌 관리 탭으로 전환
@@ -323,10 +332,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding?.titleTextView?.setText("나의 햄찌 관리")
+                binding.titleTextView.setText("나의 햄찌 관리")
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
             }
             R.id.action_preference -> {
                 // 설정 탭으로 전환
@@ -335,10 +344,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding?.titleTextView?.setText("설정")
+                binding.titleTextView.setText("설정")
 
                 // Navigation Drawer 닫기
-                binding?.homeDrawerLayout?.closeDrawers()
+                binding.homeDrawerLayout.closeDrawers()
             }
         }
 

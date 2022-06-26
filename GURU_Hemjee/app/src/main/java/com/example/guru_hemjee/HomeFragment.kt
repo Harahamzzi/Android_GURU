@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.guru_hemjee.databinding.FragmentHomeBinding
 import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.collections.ArrayList
@@ -21,6 +22,11 @@ import kotlin.collections.ArrayList
 // MainActivity -> 홈
 // 햄찌, 잠금 시작 등을 할 수 있는 홈 Fragment 화면
 class HomeFragment : Fragment() {
+
+    // 뷰 바인딩 변수
+    private var mBinding: FragmentHomeBinding? = null
+    // 매번 null 체크를 하지 않아도 되도록 함
+    private val binding get() = mBinding!!
 
 //    //씨앗 개수
 //    private lateinit var home_seedPointTextView: TextView
@@ -48,17 +54,26 @@ class HomeFragment : Fragment() {
 //    private lateinit var dbManager: DBManager
 //    private lateinit var sqlitedb: SQLiteDatabase
 //    private lateinit var hamName: String
-//
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-//                              savedInstanceState: Bundle?): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_home, container, false)
-//    }
-//
-//    @SuppressLint("Range")
-//    override fun onStart() {
-//        super.onStart()
-//
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        // binding class 인스턴트 참조 정리
+        mBinding = null
+
+        super.onDestroyView()
+    }
+
+    @SuppressLint("Range")
+    override fun onStart() {
+        super.onStart()
+
+
+
 //        //씨앗 표시
 //        home_seedPointTextView = requireView().findViewById(R.id.home_seedPointTextView)
 //        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
@@ -183,7 +198,7 @@ class HomeFragment : Fragment() {
 //        }
 //
 //
-//    }
+    }
 //
 //    //잠금 시작
 //    private fun showSettingConfirmPopUp() {
