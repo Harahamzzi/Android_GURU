@@ -1,5 +1,6 @@
-package com.example.guru_hemjee
+package com.example.guru_hemjee.Home.Home
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
@@ -8,8 +9,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.Home.Goal.DetailGoalItem
-import com.example.guru_hemjee.Home.Goal.DetailGoalListAdapter
+import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.R
 import java.util.*
 
 //잠금 확인 팝업
@@ -36,6 +37,7 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
     private lateinit var pop_lockSettingConfirmDetailGoalRecyclerView: RecyclerView
 
     //팝업 표시
+    @SuppressLint("Range")
     fun myDig(){
         dialog.show()
         dialog.setContentView(R.layout.popup_lock_setting_confirm)
@@ -71,7 +73,7 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
         //세부 목표 리스트 연결
         pop_lockSettingConfirmDetailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingConfirmDetailGoalRecyclerView)
         if(goalName != "목표를 생성해주세요"){
-            val items = ArrayList<DetailGoalItem>()
+            val items = ArrayList<DetailGoalListItem>()
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
             pop_lockSettingConfirmDetailGoalRecyclerView.adapter = detailGoalListAdapter
 
@@ -84,7 +86,7 @@ class LockSettingConfirmDialog(val context: Context, goalName: String, goalColor
                 val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
                 val iconPic = cursor.getInt(cursor.getColumnIndex("icon"))
 
-                items.addAll(listOf(DetailGoalItem(iconPic, goalColor, goalName)))
+                items.addAll(listOf(DetailGoalListItem(iconPic, goalColor, goalName)))
                 detailGoalListAdapter.notifyDataSetChanged()
             }
 

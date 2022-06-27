@@ -1,4 +1,4 @@
-package com.example.guru_hemjee
+package com.example.guru_hemjee.Home.Home
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -6,8 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.Home.Goal.DetailGoalItem
-import com.example.guru_hemjee.Home.Goal.DetailGoalListAdapter
+import com.example.guru_hemjee.DBManager
 
 //잠금 설정 팝업
 class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: Int, time: String) {
@@ -130,7 +129,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
     private fun upDateGoalList(bigGoalName: String, bigGoalColor: Int){
         //대표 목표가 있을 경우("목표를 생성해주세요"는 대표 목표가 없을 때 받아옴)
         if(bigGoalName != "목표를 생성해주세요"){
-            val items = ArrayList<DetailGoalItem>()
+            val items = ArrayList<DetailGoalListItem>()
             val detailGoalListAdapter = DetailGoalListAdapter(context, items)
             pop_lockSettingDetailGoalRecyclerView.adapter = detailGoalListAdapter
 
@@ -143,7 +142,7 @@ class LockSettingDialog(context: Context, bigGoalTitle: String, bigGoalColor: In
                 val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
                 val iconPic = cursor.getInt(cursor.getColumnIndex("icon"))
 
-                items.addAll(listOf(DetailGoalItem(iconPic, bigGoalColor, goalName)))
+                items.addAll(listOf(DetailGoalListItem(iconPic, bigGoalColor, goalName)))
                 detailGoalListAdapter.notifyDataSetChanged()
             }
 
