@@ -38,21 +38,21 @@ class DBManager(
 
         //대표 목표 DB: avaiable app 생략)
         db!!.execSQL("CREATE TABLE big_goal_db (big_goal_name text PRIMARY KEY, " +
-                "color text, big_goal_lock_time time);")
+                "color text, big_goal_create_time time);")
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
-                "icon text, big_goal_name text, " +
+                "icon text, count int, big_goal_name text, color text, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //대표 목표 기록 DB
-        db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name TEXT, " +
-                "total_lock_time BIGINT, color text, lock_date DATE, " +
+        db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name text, " +
+                "total_report_time BIGINT, color text, lock_date DATE, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE);")
 
         //세부 목표 기록 DB
         db!!.execSQL("CREATE TABLE detail_goal_time_report_db (detail_goal_name text, " +
-                "lock_date DATE, color text, icon text, photo_name text, big_goal_name text, is_active INT," +
+                "lock_date DATE, color text, icon text, photo_name text, big_goal_name text, is_active INT, is_complete INT, " +
                 "CONSTRAINT detail_goal_keys FOREIGN KEY (detail_goal_name, big_goal_name) REFERENCES detail_goal_db(detail_goal_name, big_goal_name) ON UPDATE CASCADE);")
 
         //완료된 대표 목표 DB
