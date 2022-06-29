@@ -10,10 +10,10 @@ import com.example.guru_hemjee.R
 import kotlinx.android.synthetic.main.container_main_goal_select.view.*
 
 // 홈 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
-class HomeViewPagerAdapter(goalNameList: ArrayList<String>, colorIconIDList: ArrayList<Int>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
+class HomeViewPagerAdapter(goalNameList: ArrayList<String>, iconColorIDList: ArrayList<Int>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
 
     var goalName = goalNameList         // 대표 목표 이름 리스트
-    var colorIconID = colorIconIDList   // 아이콘 색상값 리스트
+    var iconColorID = iconColorIDList   // 아이콘 색상값 리스트
     var iconID = iconIDList             // 아이콘 값 리스트(분리작업 필요)
 
     override fun onCreateViewHolder(
@@ -28,7 +28,7 @@ class HomeViewPagerAdapter(goalNameList: ArrayList<String>, colorIconIDList: Arr
         // 대표 목표 이름 바인딩
         holder.goalNameTextView.text = goalName[position]
         // 색상값 바인딩
-        holder.colorIconImageView.setColorFilter(colorIconID[position], PorterDuff.Mode.SRC_IN)
+        holder.iconColorImageView.setColorFilter(iconColorID[position], PorterDuff.Mode.SRC_IN)
 
         /** 아이콘 바인딩 **/
         // 1. 아이콘 값 추출(분리)
@@ -43,14 +43,20 @@ class HomeViewPagerAdapter(goalNameList: ArrayList<String>, colorIconIDList: Arr
             // 아이콘 이미지 추가
             holder.iconListLayout.addView(iv)
         }
+
+        // 버튼 클릭 리스너 바인딩
+        holder.startButton.setOnClickListener {
+            // TODO: 세부 목표 선택 팝업 띄우기
+        }
     }
 
     inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder
         (LayoutInflater.from(parent.context).inflate(R.layout.container_main_goal_select, parent, false)) {
 
         val goalNameTextView = itemView.goalNameTextView
-        val colorIconImageView = itemView.colorIconImageView
+        val iconColorImageView = itemView.colorIconImageView
         val iconListLayout = itemView.iconListLayout
+        val startButton = itemView.startButtonImageView
     }
 
     // 해당 포지션의 아이콘 값 리스트를 ArrayList<int>형으로 추출하는 함수
