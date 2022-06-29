@@ -9,8 +9,8 @@ import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
 import kotlinx.android.synthetic.main.container_main_goal_select.view.*
 
-// 메인 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
-class MainViewPagerAdapter(goalNameList: ArrayList<String>, colorIconIDList: ArrayList<Int>, iconIDList: ArrayList<String>): RecyclerView.Adapter<MainViewPagerAdapter.PagerViewHolder>() {
+// 홈 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
+class HomeViewPagerAdapter(goalNameList: ArrayList<String>, colorIconIDList: ArrayList<Int>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
 
     var goalName = goalNameList         // 대표 목표 이름 리스트
     var colorIconID = colorIconIDList   // 아이콘 색상값 리스트
