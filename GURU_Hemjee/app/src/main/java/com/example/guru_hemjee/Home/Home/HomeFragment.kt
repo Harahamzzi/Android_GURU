@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.databinding.FragmentHomeBinding
 import com.google.android.material.button.MaterialButton
 import java.util.*
@@ -27,6 +28,16 @@ class HomeFragment : Fragment() {
     private var mBinding: FragmentHomeBinding? = null
     // 매번 null 체크를 하지 않아도 되도록 함
     private val binding get() = mBinding!!
+
+    // 데이터 값
+    private var bigGoalNameList = ArrayList<String>()   // 대표 목표 이름 목록
+    private var iconColorList = ArrayList<Int>()        // 아이콘 색상 목록
+    private var iconIDList = ArrayList<String>()        // 아이콘 목록
+
+    //db관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+    private lateinit var cursor: Cursor
 
 //    //씨앗 개수
 //    private lateinit var home_seedPointTextView: TextView
@@ -50,9 +61,7 @@ class HomeFragment : Fragment() {
 //    private var hamsterTalkList = ArrayList<String>()
 //    private lateinit var home_hamsterTalkTextView: TextView
 //
-//    //db관련
-//    private lateinit var dbManager: DBManager
-//    private lateinit var sqlitedb: SQLiteDatabase
+
 //    private lateinit var hamName: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +81,16 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        /** 대표 목표 선택 View Pager Adapter 생성 **/
+        // 0. View Pager 관련 설정
+        // 1개의 페이지를 미리 로드해 두도록 설정
+        binding.goalViewPager.offscreenPageLimit = 1
 
+        // 1. 데이터 값 불러오기
+        getViewPagerData()
+
+        // 2. 어댑터 생성
+        binding.goalViewPager.adapter = HomeViewPagerAdapter(bigGoalNameList, iconColorList, iconIDList)
 
 //        //씨앗 표시
 //        home_seedPointTextView = requireView().findViewById(R.id.home_seedPointTextView)
@@ -199,7 +217,65 @@ class HomeFragment : Fragment() {
 //
 //
     }
-//
+
+    // 대표 목표 선택 View Pager를 구성할 데이터 값을 불러오는 함수
+    @SuppressLint("Range")
+    private fun getViewPagerData()
+    {
+        /** 대표 목표 이름 & 아이콘 색상 불러오기 **/
+
+        // 아이콘 색상 이름 -> 실제 색상 아이디값 변환을 위한 temp 변수
+        var tIconColorNameList = ArrayList<String>()
+
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db", null)
+
+        while(cursor.moveToNext())
+        {
+            // 대표 목표 이름 추가
+            bigGoalNameList.add(cursor.getString(cursor.getColumnIndex("big_goal_name")))
+
+            // 아이콘 색상 이름 추가
+            tIconColorNameList.add(cursor.getString(cursor.getColumnIndex("color")))
+        }
+
+        // TODO: 아이콘 색상 이름 -> 실제 색상 리소스값 변환 저장 필요
+
+        cursor.close()
+
+
+        /** 아이콘 목록 불러오기 **/
+
+        // 아이콘 색상 이름 -> 실제 색상 아이디값 변환을 위한 temp 변수
+        var tIconNameList = ArrayList<String>()
+
+        for(i in bigGoalNameList.indices)
+        {
+            // 해당 대표 목표의 세부 목표들 가져오기
+            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalNameList[i]}'", null)
+
+            // 해당 대표 목표의 아이콘 이름들을 전부 담을 문자열 변수
+            var iconNameStr: String = ""
+
+            while(cursor.moveToNext())
+            {
+                // 해당 대표 목표의 아이콘 이름 문자열 갱신(추가)
+                // ',' 문자로 각각의 아이콘 구별하도록 함
+                iconNameStr += cursor.getString(cursor.getColumnIndex("icon")) + ','
+            }
+
+            // 해당 대표 목표의 아이콘들 temp 리스트에 저장
+            tIconNameList.add(iconNameStr)
+        }
+
+        // TODO: 아이콘 이름 -> 실제 아이콘 리소스값 변환 저장 필요
+
+        sqlitedb.close()
+        dbManager.close()
+    }
+
 //    //잠금 시작
 //    private fun showSettingConfirmPopUp() {
 //        val dialog = LockSettingConfirmDialog(requireContext(),bigGoalName,bigGoalColor,time)
@@ -231,7 +307,7 @@ class HomeFragment : Fragment() {
 //            }
 //        })
 //    }
-//
+
 //    //잠금 설정
 //    private fun showLockSettingPopUp() {
 //        val dialog = LockSettingDialog(requireContext(), bigGoalName, bigGoalColor, time)
