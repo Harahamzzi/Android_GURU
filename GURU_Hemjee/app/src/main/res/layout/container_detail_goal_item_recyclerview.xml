@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <View
-        android:id="@+id/detailGoalItem_lineView"
+        android:id="@+id/detailGoalItem_line_view"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:layout_marginStart="11dp"
@@ -24,16 +26,17 @@
         android:layout_height="1dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/detailGoalItem_detailGoalLayout"
+            android:id="@+id/detailGoalItem_detailGoal_CLayout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@drawable/solid_goal_item_default_box">
 
         <ImageView
-            android:id="@+id/detailGoalItem_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:id="@+id/detailGoalItem_icon_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="11dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +44,7 @@
             app:tint="@color/Orange" />
 
             <TextView
-                android:id="@+id/detailGoalItem_detailGoalTextView"
+                android:id="@+id/detailGoalItem_detailGoal_tv"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -51,7 +54,7 @@
                 android:textColor="@color/Black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/detailGoalItem_icon"
+                app:layout_constraintStart_toEndOf="@+id/detailGoalItem_icon_iv"
                 app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,58 +10,55 @@
 
     <!--대표목표-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/goalItem_bigGoalLayout"
+        android:id="@+id/goalItem_bigGoal_CLayout"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="@drawable/solid_goal_item_default_box">
 
         <ImageView
-            android:id="@+id/goalItem_colorImageVIew"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:id="@+id/goalItem_color_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="26dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/color_icon" />
-
-        <TextView
-            android:id="@+id/goalItem_bigGoalTextView"
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/noto_sans"
-            android:singleLine="true"
-            android:text="대표 목표 이름"
-            android:textColor="@color/Black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/goalItem_colorImageVIew"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:srcCompat="@drawable/ic_colorselectionicon" />
 
         <LinearLayout
-            android:id="@+id/goalItem_iconLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="14dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="9dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/goalItem_bigGoalTextView"
-            app:layout_constraintTop_toBottomOf="@+id/goalItem_bigGoalTextView">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toEndOf="@id/goalItem_color_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/goalItem_open_btn"
+            app:layout_constraintBottom_toBottomOf="parent" >
 
-            <ImageView
-                android:id="@+id/goalItem_addDetailGoalButton"
-                android:layout_width="14dp"
+            <!-- 대표목표 -->
+            <TextView
+                android:id="@+id/goalItem_bigGoal_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:singleLine="true"
+                android:text="대표 목표 이름"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- 아이콘 리스트-->
+            <LinearLayout
+                android:id="@+id/goalItem_icon_LLayout"
+                android:layout_width="match_parent"
                 android:layout_height="14dp"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/ic_clarity_plus_circle_line"
-                app:tint="@color/DarkBrown" />
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/goalItem_openButton"
+            android:id="@+id/goalItem_open_btn"
             android:layout_width="16dp"
             android:layout_height="8dp"
             android:layout_marginEnd="16dp"
@@ -74,7 +71,7 @@
 
     <!--하나의 대표목표에 속해있는 세부목표 리스트-->
     <LinearLayout
-        android:id="@+id/goalItem_detailGoalLayout"
+        android:id="@+id/goalItem_detailGoal_LLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/solid_detail_goal_item_box"

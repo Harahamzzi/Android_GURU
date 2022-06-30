@@ -1,5 +1,8 @@
 package com.example.guru_hemjee.Home.Goal
 
-// 잠금 시간 및 목표 설정/확인을 할 때 보이는 세부 목록 리스트에서 사용하는 요소들
-class DetailGoalItem(val picSource: Int, val picColor: Int, val name: String) {
-}
+// 목표 설정화면에서 사용하는 세부목표 데이터 클래스
+data class DetailGoalItem(
+    var detailIcon: String,     // 아이콘
+    var detailTitle: String,    // 세부목표
+    var color: String           // 대표목표 색상
+)

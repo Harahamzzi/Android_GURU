@@ -64,7 +64,7 @@
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
-        android:layout_height="53dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,149 +74,124 @@
         <RadioGroup
             android:id="@+id/pop_biggoal_color_rgroup1"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginBottom="11dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/pop_biggoal_color_orange_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Orange"
-                android:button="@null"
-                android:gravity="center"
-                android:paddingLeft="5dp" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Orange"
+                android:checked="true"/>
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_yellow_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Yellow"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Yellow" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_noteyellow_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/NoteYellow"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/NoteYellow" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_apricot_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Apricot"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Apricot" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_seedbrown_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/SeedBrown"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/SeedBrown" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_darkbrown_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/DarkBrown"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/DarkBrown" />
 
         </RadioGroup>
 
         <RadioGroup
             android:id="@+id/pop_biggoal_color_rgroup2"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_lightgreen_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/LightGreen"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/LightGreen" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_green_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Green"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Green" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_lightblue_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/LightBlue"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/LightBlue" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_blue_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Blue"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Blue" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_purple_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="23dp"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Purple"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:buttonTint="@color/Purple"
+                android:button="@drawable/ic_add_biggoal_radio_btn" />
 
-            <RadioButton
+            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_pink_rbtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                android:background="@drawable/color_selector"
-                android:backgroundTint="@color/Pink"
-                android:button="@null"
-                android:gravity="center" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/selector_add_biggoal_dialog"
+                android:button="@drawable/ic_add_biggoal_radio_btn"
+                android:buttonTint="@color/Pink" />
         </RadioGroup>
 
     </LinearLayout>
