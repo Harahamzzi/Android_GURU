@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ContainerGoalItemRecyclerviewBinding
@@ -42,22 +43,7 @@ class BigGoalItemAdapter(
                 val detailGoalLayout = binding.goalItemDetailGoalLLayout
 
                 // 대표목표 색상값을 color값(int)으로 저장
-                var iconColor: Int = 0
-                when (bigGoalItem.color) {
-                    "Orange" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Orange))
-                    "BrightYellow" -> color.setColorFilter(ContextCompat.getColor(context, R.color.BrightYellow))
-                    "Yellow" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Yellow))
-                    "Apricot" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Apricot))
-                    "DarkBrown" -> color.setColorFilter(ContextCompat.getColor(context, R.color.DarkBrown))
-                    "SeedBrown" -> color.setColorFilter(ContextCompat.getColor(context, R.color.SeedBrown))
-                    "NoteYellow" -> color.setColorFilter(ContextCompat.getColor(context, R.color.NoteYellow))
-                    "LightGreen" -> color.setColorFilter(ContextCompat.getColor(context, R.color.LightGreen))
-                    "Green" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Green))
-                    "LightBlue" -> color.setColorFilter(ContextCompat.getColor(context, R.color.LightBlue))
-                    "Blue" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Blue))
-                    "Purple" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Purple))
-                    "Pink" -> color.setColorFilter(ContextCompat.getColor(context, R.color.Pink))
-                }
+                DBConvert.colorConvert(color, bigGoalItem.color, context)
 
                 try {
                     // 아이콘 리스트
@@ -76,7 +62,7 @@ class BigGoalItemAdapter(
                         if (i == 6) {
                             val moreIcon = ImageView(context)
                             moreIcon.setImageResource(R.drawable.ic_more_goals)
-                            moreIcon.setColorFilter(ContextCompat.getColor(context, iconColor))
+                            DBConvert.colorConvert(moreIcon, bigGoalItem.color, context)
                             val moreIconLayoutParams = LinearLayout.LayoutParams(
                                 48,
                                 48
@@ -90,7 +76,7 @@ class BigGoalItemAdapter(
                         val icon = ImageView(context) // 동적 이미지 객체 생성
                         icon.setImageResource(iconId)
                         icon.layoutParams = iconLayoutParams
-                        icon.setColorFilter(ContextCompat.getColor(context, iconColor))
+                        DBConvert.colorConvert(icon, bigGoalItem.color, context)
 
                         iconsLayout.addView(icon)
                     }

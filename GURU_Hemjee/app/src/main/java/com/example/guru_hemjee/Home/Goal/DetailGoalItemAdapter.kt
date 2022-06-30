@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ContainerDetailGoalItemRecyclerviewBinding
@@ -43,7 +44,7 @@ class DetailGoalItemAdapter(
             }
 
             // 세부목표 아이콘 이미지 및 색상 적용
-            val iconId = context.resources.getIdentifier(detailGoalItem.detailIcon, "drawable", context.packageName)
+            val iconId = DBConvert.iconConvert(detailGoalItem.detailIcon, context)
             detailIcon.setImageResource(iconId)
             detailIcon.setColorFilter(ContextCompat.getColor(context, iconColor))
 

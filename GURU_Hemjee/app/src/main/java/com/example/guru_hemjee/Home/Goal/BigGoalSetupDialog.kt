@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -102,21 +103,23 @@ class BigGoalSetupDialog(context: Context) {
 
                 // 선택한 색상 값 저장
                 when (pop_biggoal_color_rgroup1.checkedRadioButtonId) {
-                    R.id.bigGoal_orangeRadioButton -> str_color = "Orange"
-                    R.id.bigGoal_yellowRadioButton -> str_color = "Yellow"
-                    R.id.bigGoal_noteYellowRadioButton -> str_color = "NoteYellow"
-                    R.id.bigGoal_apricotRadioButton -> str_color = "Apricot"
-                    R.id.bigGoal_seedBrownRadioButton -> str_color = "SeedBrown"
-                    R.id.bigGoal_darkBrownRadioButton -> str_color = "DarkBrown"
+                    R.id.pop_biggoal_color_orange_rbtn -> str_color = "Orange"
+                    R.id.pop_biggoal_color_yellow_rbtn -> str_color = "Yellow"
+                    R.id.pop_biggoal_color_noteyellow_rbtn -> str_color = "NoteYellow"
+                    R.id.pop_biggoal_color_apricot_rbtn -> str_color = "Apricot"
+                    R.id.pop_biggoal_color_seedbrown_rbtn -> str_color = "SeedBrown"
+                    R.id.pop_biggoal_color_darkbrown_rbtn -> str_color = "DarkBrown"
                 }
                 when (pop_biggoal_color_rgroup2.checkedRadioButtonId) {
-                    R.id.bigGoal_lightGreenRadioButton -> str_color = "LightGreen"
-                    R.id.bigGoal_greenRadioButton -> str_color = "Green"
-                    R.id.bigGoal_lightBlueRadioButton -> str_color = "LightBlue"
-                    R.id.bigGoal_blueRadioButton -> str_color = "Blue"
-                    R.id.bigGoal_purpleRadioButton -> str_color = "Purple"
-                    R.id.bigGoal_pinkRadioButton -> str_color = "Pink"
+                    R.id.pop_biggoal_color_lightgreen_rbtn -> str_color = "LightGreen"
+                    R.id.pop_biggoal_color_green_rbtn -> str_color = "Green"
+                    R.id.pop_biggoal_color_lightblue_rbtn -> str_color = "LightBlue"
+                    R.id.pop_biggoal_color_blue_rbtn -> str_color = "Blue"
+                    R.id.pop_biggoal_color_purple_rbtn -> str_color = "Purple"
+                    R.id.pop_biggoal_color_pink_rbtn -> str_color = "Pink"
                 }
+
+                Log.i("색상 값 ", str_color)
 
                 // 입력한 값이 기존 db에 없는 값이라면 db에 값 저장
                 if (!isOverlap) {
