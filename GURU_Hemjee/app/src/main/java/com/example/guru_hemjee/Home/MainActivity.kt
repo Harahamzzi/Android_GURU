@@ -104,6 +104,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // isHome 플래그 초기화
         isHome = true
+
+        // 배경 및 가구 업데이트
+        FunUpDateHamzzi.updateBackground(applicationContext, binding.backgroundLayout, false, false)
     }
 
     override fun onDestroy() {

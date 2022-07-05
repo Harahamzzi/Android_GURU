@@ -1,20 +1,23 @@
 package com.example.guru_hemjee.Home.Home
 
-import android.graphics.PorterDuff
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.MyApplication
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.R
 import kotlinx.android.synthetic.main.container_main_goal_select.view.*
 
 // 홈 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
-class HomeViewPagerAdapter(goalNameList: ArrayList<String>, iconColorIDList: ArrayList<Int>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
+class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, iconColorNameList: ArrayList<String>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
 
-    var goalName = goalNameList         // 대표 목표 이름 리스트
-    var iconColorID = iconColorIDList   // 아이콘 색상값 리스트
-    var iconID = iconIDList             // 아이콘 값 리스트(분리작업 필요)
+    private var context = context               // Context 변수
+
+    private var goalName = goalNameList         // 대표 목표 이름 리스트
+    private var iconColorID = iconColorNameList // 아이콘 색상값 리스트
+    private var iconID = iconIDList             // 아이콘 값 리스트(분리작업 필요)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,25 +31,39 @@ class HomeViewPagerAdapter(goalNameList: ArrayList<String>, iconColorIDList: Arr
         // 대표 목표 이름 바인딩
         holder.goalNameTextView.text = goalName[position]
         // 색상값 바인딩
-        holder.iconColorImageView.setColorFilter(iconColorID[position], PorterDuff.Mode.SRC_IN)
+        DBConvert.colorConvert(holder.iconColorImageView, iconColorID[position], context)
 
         /** 아이콘 바인딩 **/
         // 1. 아이콘 값 추출(분리)
         var iconList: ArrayList<Int> = getIconList(iconID, position)
         // 2. 아이콘 레이아웃에 넣기
-        for (i in iconList.indices)
+        for(i in iconList.indices)
         {
             // 이미지 뷰 생성 및 이미지 설정
-            var iv = ImageView(MyApplication.applicationContext())
+            var iv = ImageView(context)
             iv.setImageResource(iconList[i])
 
             // 아이콘 이미지 추가
             holder.iconListLayout.addView(iv)
+
+            // 현재 네 번째 아이콘을 추가한 상태라면
+            if(i >= 3)
+            {
+                // 생략 이미지 넣고 break
+                var tIv = ImageView(context)
+
+                tIv.setImageResource(R.drawable.ic_sebumenu)      // 이미지 적용
+                DBConvert.colorConvert(tIv, iconColorID[position], context)  // 색상 적용
+
+                break;
+            }
         }
 
         // 버튼 클릭 리스너 바인딩
         holder.startButton.setOnClickListener {
-            // TODO: 세부 목표 선택 팝업 띄우기
+            // 팝업 띄우기
+            val dialog = RecordSettingDialog(context, goalName[position])
+            dialog.showPopup()
         }
     }
 
@@ -69,7 +86,12 @@ class HomeViewPagerAdapter(goalNameList: ArrayList<String>, iconColorIDList: Arr
         // 분할한 아이콘 값을 ArrayList<Int>에 담기
         for(i in iconStringList.indices)
         {
-            result.add(iconStringList[i].toInt())
+            try {
+                result.add(iconStringList[i].toInt())
+            }
+            catch (e: java.lang.NumberFormatException) {
+                Log.e("ERROR", "해당 대표 목표의 아이콘 값이 없습니다.")
+            }
         }
 
         return result
