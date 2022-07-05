@@ -68,15 +68,15 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         pop_icon15 = dialog.findViewById(R.id.pop_icon15)
 
         //라디오 버튼이 미리 설정된 버튼과 같으면 강조 표시
-        if(R.drawable.ic_outline_menu_book_24==icon){
+        if(R.drawable.ic_book_24==icon){
             pop_icon1.isChecked = true
             pop_icon1.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_play_lesson_24==icon){
+        else if(R.drawable.ic_lesson_24==icon){
             pop_icon2.isChecked = true
             pop_icon2.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_school_24==icon){
+        else if(R.drawable.ic_school_24==icon){
             pop_icon3.isChecked = true
             pop_icon3.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
@@ -84,47 +84,47 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
             pop_icon4.isChecked = true
             pop_icon4.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_forest_24==icon){
+        else if(R.drawable.ic_forest_24==icon){
             pop_icon5.isChecked = true
             pop_icon5.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_sports_esports_24==icon){
+        else if(R.drawable.ic_sports_24==icon){
             pop_icon6.isChecked = true
             pop_icon6.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_computer_24==icon){
+        else if(R.drawable.ic_computer_24==icon){
             pop_icon7.isChecked = true
             pop_icon7.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_piano_24==icon){
+        else if(R.drawable.ic_piano_24==icon){
             pop_icon8.isChecked = true
             pop_icon8.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_ramen_dining_24==icon){
+        else if(R.drawable.ic_food_24==icon){
             pop_icon9.isChecked = true
             pop_icon9.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_local_cafe_24==icon){
+        else if(R.drawable.ic_cafe_24==icon){
             pop_icon10.isChecked = true
             pop_icon10.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_business_center_24==icon){
+        else if(R.drawable.ic_business_24==icon){
             pop_icon11.isChecked = true
             pop_icon11.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_storefront_24==icon){
+        else if(R.drawable.ic_store_24==icon){
             pop_icon12.isChecked = true
             pop_icon12.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_draw_24==icon){
+        else if(R.drawable.ic_drawing_24==icon){
             pop_icon13.isChecked = true
             pop_icon13.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_savings_24==icon){
+        else if(R.drawable.ic_savings_24==icon){
             pop_icon14.isChecked = true
             pop_icon14.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_outline_query_stats_24==icon){
+        else if(R.drawable.ic_stock_24==icon){
             pop_icon15.isChecked = true
             pop_icon15.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
@@ -137,21 +137,21 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
                     pop_iconGroup3.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon1.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_menu_book_24
+                    icon = R.drawable.ic_book_24
                 }
                 R.id.pop_icon2 -> {
                     colorGray()
                     pop_iconGroup3.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon2.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_play_lesson_24
+                    icon = R.drawable.ic_lesson_24
                 }
                 R.id.pop_icon3 -> {
                     colorGray()
                     pop_iconGroup3.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon3.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_school_24
+                    icon = R.drawable.ic_school_24
                 }
                 R.id.pop_icon4 -> {
                     colorGray()
@@ -165,7 +165,7 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
                     pop_iconGroup3.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon5.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_forest_24
+                    icon = R.drawable.ic_forest_24
                 }
             }
         }
@@ -177,35 +177,35 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup3.clearCheck()
                     pop_icon6.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_sports_esports_24
+                    icon = R.drawable.ic_sports_24
                 }
                 R.id.pop_icon7 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup3.clearCheck()
                     pop_icon7.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_computer_24
+                    icon = R.drawable.ic_computer_24
                 }
                 R.id.pop_icon8 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup3.clearCheck()
                     pop_icon8.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_piano_24
+                    icon = R.drawable.ic_piano_24
                 }
                 R.id.pop_icon9 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup3.clearCheck()
                     pop_icon9.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_ramen_dining_24
+                    icon = R.drawable.ic_food_24
                 }
                 R.id.pop_icon10 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup3.clearCheck()
                     pop_icon10.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_local_cafe_24
+                    icon = R.drawable.ic_cafe_24
                 }
             }
         }
@@ -217,35 +217,35 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon11.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_business_center_24
+                    icon = R.drawable.ic_business_24
                 }
                 R.id.pop_icon12 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon12.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_storefront_24
+                    icon = R.drawable.ic_store_24
                 }
                 R.id.pop_icon13 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon13.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_draw_24
+                    icon = R.drawable.ic_drawing_24
                 }
                 R.id.pop_icon14 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon14.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_savings_24
+                    icon = R.drawable.ic_savings_24
                 }
                 R.id.pop_icon15 -> {
                     colorGray()
                     pop_iconGroup1.clearCheck()
                     pop_iconGroup2.clearCheck()
                     pop_icon15.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_outline_query_stats_24
+                    icon = R.drawable.ic_stock_24
                 }
             }
         }

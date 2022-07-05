@@ -188,11 +188,11 @@ class DetailGoalSetupFragment : Fragment() {
 
             // 초기값
             detailGoalIconBtn.setImageDrawable(ContextCompat.getDrawable(requireContext(),
-                R.drawable.ic_outline_menu_book_24
+                R.drawable.ic_book_24
             ))
             detailGoalIconBtn.setColorFilter(integer_color, PorterDuff.Mode.SRC_IN)
             detailGoalIconBtn.scaleType = ImageView.ScaleType.FIT_CENTER
-            detailGoalIconBtn.setTag(R.drawable.ic_outline_menu_book_24)
+            detailGoalIconBtn.setTag(R.drawable.ic_book_24)
 
             // 아이콘을 클릭했을 경우
             detailGoalIconBtn.setOnClickListener {

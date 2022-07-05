@@ -135,9 +135,14 @@ class HamsterEditFragment() : Fragment() {
         //배경(옷, 가구, 배경)
         myHamster_BGFrameLayout = requireView().findViewById(R.id.myHamster_BGFrameLayout)
         myHamster_clothFrameLayout = requireView().findViewById(R.id.myHamster_clothFrameLayout)
-        FunUpDateHamzzi.upDate(
+        FunUpDateHamzzi.updateBackground(
             requireContext(),
             myHamster_BGFrameLayout,
+            true,
+            false
+        )
+        FunUpDateHamzzi.updateCloth(
+            requireContext(),
             myHamster_clothFrameLayout,
             true,
             false
@@ -180,12 +185,17 @@ class HamsterEditFragment() : Fragment() {
 
             //인벤토리, 아이템 리스트 업데이트
             upDateInventory(currentInventory)
-            FunUpDateHamzzi.upDate(
-                requireContext(),
-                myHamster_BGFrameLayout,
-                myHamster_clothFrameLayout,
-                true,
-                false
+            FunUpDateHamzzi.updateBackground(
+                    requireContext(),
+                    myHamster_BGFrameLayout,
+                    true,
+                    false
+            )
+            FunUpDateHamzzi.updateCloth(
+                    requireContext(),
+                    myHamster_clothFrameLayout,
+                    true,
+                    false
             )
 
             //적용 완료 팝업 연결
@@ -281,11 +291,18 @@ class HamsterEditFragment() : Fragment() {
 
                     //인벤토리, 화면 업데이트
                     upDateInventory(currentInventory)
-                    FunUpDateHamzzi.upDate(
-                        requireContext(), myHamster_BGFrameLayout,
-                        myHamster_clothFrameLayout, true, true
+                    FunUpDateHamzzi.updateBackground(
+                            requireContext(),
+                            myHamster_BGFrameLayout,
+                            true,
+                            true
                     )
-
+                    FunUpDateHamzzi.updateCloth(
+                            requireContext(),
+                            myHamster_clothFrameLayout,
+                            true,
+                            true
+                    )
                 }
                 //이미 선택중이라면
                 else {
@@ -307,9 +324,17 @@ class HamsterEditFragment() : Fragment() {
                 dbManager2.close()
 
                 deselectItems.clear()
-                FunUpDateHamzzi.upDate(
-                    requireContext(), myHamster_BGFrameLayout,
-                    myHamster_clothFrameLayout, true, true
+                FunUpDateHamzzi.updateBackground(
+                        requireContext(),
+                        myHamster_BGFrameLayout,
+                        true,
+                        true
+                )
+                FunUpDateHamzzi.updateCloth(
+                        requireContext(),
+                        myHamster_clothFrameLayout,
+                        true,
+                        true
                 )
             }
 

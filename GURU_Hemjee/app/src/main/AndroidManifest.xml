@@ -23,7 +23,6 @@
         android:theme="@style/Theme.GURU_Hemjee">
         <activity android:name=".Home.Album.AlbumMainActivity" android:screenOrientation="portrait" />
         <activity android:name=".TutorialActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".SubMainActivity" android:screenOrientation="portrait" />
         <activity android:name=".CameraActivity" android:screenOrientation="portrait" />
         <activity android:name=".Home.MainActivity" android:screenOrientation="portrait" >
             <intent-filter>
@@ -32,11 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LockActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
 
         <service
             android:name=".LockScreenService"

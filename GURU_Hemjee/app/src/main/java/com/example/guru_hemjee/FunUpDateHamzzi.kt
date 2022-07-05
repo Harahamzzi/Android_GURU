@@ -1,5 +1,6 @@
 package com.example.guru_hemjee
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -19,7 +20,10 @@ class FunUpDateHamzzi {
         private lateinit var dbManager: DBManager
         private lateinit var sqlitedb: SQLiteDatabase
 
-        fun upDate(context: Context, bgLayout: FrameLayout, clothLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
+        // 배경 및 가구 업데이트
+        @SuppressLint("Range")
+        fun updateBackground(context: Context, bgLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
+
             //배경 & 가구 설정
             bgLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_db", null, 1)
@@ -37,7 +41,7 @@ class FunUpDateHamzzi {
             while(cursor.moveToNext()){
                 //저장 파일 이름으로 ImageView 설정
                 var bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
-                var id = context.resources!!.getIdentifier(bgPic, "drawable", context?.packageName) //파일 id
+                var id = context.resources!!.getIdentifier(bgPic, "drawable", context.packageName) //파일 id
 
                 var imageView: ImageView = ImageView(context)
                 imageView.setImageResource(id)
@@ -53,11 +57,17 @@ class FunUpDateHamzzi {
             }
             sqlitedb.close()
             dbManager.close()
+        }
+
+        // 옷 및 장신구 업데이트
+        @SuppressLint("Range")
+        fun updateCloth(context: Context, clothLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
 
             //의상 설정
             clothLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
+            var cursor: Cursor
 
             //씨앗 상점이 아니면 적용(저장)된 장식만 보여줌.
             if(isMarket)

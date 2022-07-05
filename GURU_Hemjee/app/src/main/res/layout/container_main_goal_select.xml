@@ -53,11 +53,11 @@
             android:id="@+id/startButtonImageView"
             android:layout_width="72dp"
             android:layout_height="64dp"
-            android:layout_marginStart="41dp"
+            android:layout_marginEnd="18dp"
             android:layout_marginTop="13dp"
             android:background="@android:color/transparent"
             android:src="@drawable/main_start_button_img"
-            app:layout_constraintStart_toEndOf="@+id/goalNameTextView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

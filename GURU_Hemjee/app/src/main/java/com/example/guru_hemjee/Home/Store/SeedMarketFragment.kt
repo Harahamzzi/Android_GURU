@@ -253,9 +253,11 @@ class SeedMarketFragment : Fragment() {
                     market_toBeUsedSeedTextView.text = "0"
                     upDateInventory(currentInventory)
 
-                    FunUpDateHamzzi.upDate(
-                        requireContext(), market_BGFrameLayout,
-                        market_ClothFrameLayout, true, true
+                    FunUpDateHamzzi.updateBackground(
+                        requireContext(), market_BGFrameLayout, true, true
+                    )
+                    FunUpDateHamzzi.updateCloth(
+                            requireContext(), market_ClothFrameLayout, true, true
                     )
                 }
             }
@@ -326,9 +328,11 @@ class SeedMarketFragment : Fragment() {
                     selectedItems.add(itemName)
 
                     upDateInventory(currentInventory)
-                    FunUpDateHamzzi.upDate(
-                        requireContext(), market_BGFrameLayout,
-                        market_ClothFrameLayout, true, true
+                    FunUpDateHamzzi.updateBackground(
+                            requireContext(), market_BGFrameLayout, true, true
+                    )
+                    FunUpDateHamzzi.updateCloth(
+                            requireContext(), market_ClothFrameLayout, true, true
                     )
 
                 }
@@ -353,9 +357,11 @@ class SeedMarketFragment : Fragment() {
 
                 deselectItems.clear()
                 priceReset()
-                FunUpDateHamzzi.upDate(
-                    requireContext(), market_BGFrameLayout,
-                    market_ClothFrameLayout, true, true
+                FunUpDateHamzzi.updateBackground(
+                        requireContext(), market_BGFrameLayout, true, true
+                )
+                FunUpDateHamzzi.updateCloth(
+                        requireContext(), market_ClothFrameLayout, true, true
                 )
             }
             priceArrayList.add(Pair(itemName, price))

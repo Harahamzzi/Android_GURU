@@ -31,15 +31,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/home_hamsterImageView"
-            android:layout_width="0dp"
+        <FrameLayout
+            android:id="@+id/clothFrameLayout"
+            android:layout_width="match_parent"
             android:layout_height="177dp"
             android:layout_marginTop="114dp"
-            android:src="@drawable/hamzzi3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" >
+
+            <ImageView
+                android:id="@+id/home_hamsterImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/hamzzi3"
+                />
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -47,13 +54,14 @@
             android:layout_height="27dp"
             android:layout_marginTop="92dp"
             android:background="@drawable/main_block_background"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_hamsterImageView">
+            app:layout_constraintTop_toBottomOf="@+id/clothFrameLayout">
 
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/hamName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -84,7 +92,7 @@
                 android:background="#011616" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/totalTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -100,7 +108,7 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/goalViewPager"
-            android:layout_width="330dp"
+            android:layout_width="0dp"
             android:layout_height="90dp"
             android:orientation="horizontal"
             android:clipToPadding="false"
