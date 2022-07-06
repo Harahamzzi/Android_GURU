@@ -1,4 +1,4 @@
-package com.example.guru_hemjee
+package com.example.guru_hemjee.Home.TimeRecord
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -17,6 +17,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.FileProvider
+import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.FinalOKDialog
+import com.example.guru_hemjee.R
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -261,7 +264,7 @@ class CameraActivity : AppCompatActivity() {
                 "좋아! 끝까지 가보는거다 햄찌!\n해바라기 씨를 위해!")
         dialog.alertDialog()
 
-        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
                     /** 목표 달성시 수행할 작업 **/
