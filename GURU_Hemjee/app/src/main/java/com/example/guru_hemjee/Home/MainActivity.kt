@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         isHome = true
 
         // 배경 및 가구 업데이트
-        FunUpDateHamzzi.updateBackground(applicationContext, binding.backgroundLayout, false, false)
+        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
     }
 
     override fun onDestroy() {
