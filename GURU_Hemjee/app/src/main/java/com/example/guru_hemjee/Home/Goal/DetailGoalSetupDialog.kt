@@ -9,7 +9,7 @@ import com.example.guru_hemjee.R
 import com.google.android.material.button.MaterialButton
 
 //세부 목표 팝업
-class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
+class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
     private val dialog = Dialog(context)
 
     //확인 취소 버튼
