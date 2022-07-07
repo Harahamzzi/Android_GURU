@@ -1,13 +1,14 @@
-package com.example.guru_hemjee
+package com.example.guru_hemjee.Home.Goal
 
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import com.example.guru_hemjee.R
 import com.google.android.material.button.MaterialButton
 
-//세부 목표 아이콘 변경 팝업
+//세부 목표 팝업
 class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
     private val dialog = Dialog(context)
 
@@ -67,63 +68,63 @@ class IconChangeDialog(val context: Context, val goalColor: Int, val originIcon:
         stockRBtn = dialog.findViewById(R.id.pop_detailgoal_stock_rbtn)
 
         //라디오 버튼이 미리 설정된 버튼과 같으면 강조 표시
-        if(R.drawable.ic_book_24==icon){
+        if(R.drawable.ic_book_24 ==icon){
             bookRBtn.isChecked = true
             bookRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_lesson_24==icon){
+        else if(R.drawable.ic_lesson_24 ==icon){
             lessonRBtn.isChecked = true
             lessonRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_school_24==icon){
+        else if(R.drawable.ic_school_24 ==icon){
             bookRBtn.isChecked = true
             bookRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.dumble_icon==icon){
+        else if(R.drawable.dumble_icon ==icon){
             dumbleRBtn.isChecked = true
             dumbleRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_forest_24==icon){
+        else if(R.drawable.ic_forest_24 ==icon){
             forestRBtn.isChecked = true
             forestRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_sports_24==icon){
+        else if(R.drawable.ic_sports_24 ==icon){
             sportsRBtn.isChecked = true
             sportsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_computer_24==icon){
+        else if(R.drawable.ic_computer_24 ==icon){
             computerRBtn.isChecked = true
             computerRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_piano_24==icon){
+        else if(R.drawable.ic_piano_24 ==icon){
             pianoRBtn.isChecked = true
             pianoRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_food_24==icon){
+        else if(R.drawable.ic_food_24 ==icon){
             foodRBtn.isChecked = true
             foodRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_cafe_24==icon){
+        else if(R.drawable.ic_cafe_24 ==icon){
             cafeRBtn.isChecked = true
             cafeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_business_24==icon){
+        else if(R.drawable.ic_business_24 ==icon){
             businessRBtn.isChecked = true
             businessRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_store_24==icon){
+        else if(R.drawable.ic_store_24 ==icon){
             storeRBtn.isChecked = true
             storeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_drawing_24==icon){
+        else if(R.drawable.ic_drawing_24 ==icon){
             drawingRBtn.isChecked = true
             drawingRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_savings_24==icon){
+        else if(R.drawable.ic_savings_24 ==icon){
             savingsRBtn.isChecked = true
             savingsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
-        else if(R.drawable.ic_stock_24==icon){
+        else if(R.drawable.ic_stock_24 ==icon){
             forestRBtn.isChecked = true
             forestRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
         }
