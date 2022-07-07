@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 대표목표를 롱클릭 했을 경우 나오는 하단 네비게이션 메뉴-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="24dp">
+
+    <!-- 대표목표명 -->
+    <TextView
+        android:id="@+id/container_bigGoal_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="대표목표 제목"
+        android:textColor="@color/Black"
+        android:textSize="16sp"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="center"
+        android:singleLine="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <!-- 수정 -->
+    <LinearLayout
+        android:id="@+id/container_bigGoal_edit_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="24dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_edit_black_24dp_1"
+            app:tint="@color/DarkBrown"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/DarkBrown"
+            android:text="수정"
+            android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- 삭제 -->
+    <LinearLayout
+        android:id="@+id/container_bigGoal_delete_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="24dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_outline_delete_24"
+            app:tint="@color/DarkBrown"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/DarkBrown"
+            android:text="삭제"
+            android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- 세부목표 추가 -->
+    <LinearLayout
+        android:id="@+id/container_bigGoal_add_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="24dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_circle_outline_black_24dp"
+            app:tint="@color/DarkBrown"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/DarkBrown"
+            android:text="세부 목표 추가"
+            android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!-- 목표 완료 -->
+    <LinearLayout
+        android:id="@+id/container_bigGoal_complete_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="24dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_check_circle_black_24dp"
+            app:tint="@color/DarkBrown"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/DarkBrown"
+            android:text="목표 완료"
+            android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

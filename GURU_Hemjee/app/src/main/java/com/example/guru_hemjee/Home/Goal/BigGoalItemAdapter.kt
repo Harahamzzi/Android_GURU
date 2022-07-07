@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.DBConvert
@@ -27,6 +26,17 @@ class BigGoalItemAdapter(
 
     // 세부목표 리스트 변수
     private var inDetailGoalList = ArrayList<DetailGoalItem>()
+
+    // 롱클릭 리스너
+    private lateinit var mItemLongClickListener: OnItemLongClickListener
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(view: View, bigGoalItem: BigGoalItem, pos: Int)
+    }
+
+    fun setOnItemLongClickListener(listener: OnItemLongClickListener) {
+        mItemLongClickListener = listener
+    }
 
     // 커스텀한 리사이클러뷰에 있는 요소들을 연결하기
     inner class BigGoalViewHolder(
@@ -83,8 +93,9 @@ class BigGoalItemAdapter(
 
                     title.text = bigGoalItem.title // 대표목표 텍스트 적용
                     inDetailGoalList = bigGoalItem.detailGoalList!! // 세부목표 리스트 적용
+
                 } catch (e: Exception) {
-                     // 대표목표 색상 적용
+                    // 대표목표 색상 적용
                     title.text = bigGoalItem.title // 대표목표 텍스트 적용
                 }
 
@@ -93,6 +104,15 @@ class BigGoalItemAdapter(
                 bigGoalLayout.setOnClickListener {
                     val show = toggleLayout(!bigGoalItem.isExpanded, openBtn, detailGoalLayout)
                     bigGoalItem.isExpanded = show
+                }
+
+                // 대표목표 박스 롱 클릭 이벤트
+                val pos = adapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    bigGoalLayout.setOnLongClickListener {
+                        mItemLongClickListener?.onItemLongClick(bigGoalLayout, bigGoalItem, pos)
+                        return@setOnLongClickListener true
+                    }
                 }
             }
 
