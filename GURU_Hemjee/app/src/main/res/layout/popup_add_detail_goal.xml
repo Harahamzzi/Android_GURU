@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 세부목표 추가 팝업 -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="278dp"
     android:layout_height="391dp"
-    android:background="@drawable/pop_up_bg">
+    android:background="@drawable/report_background">
 
     <TextView
-        android:id="@+id/pop_moveDetailGoalTextView2"
+        android:id="@+id/pop_detailgoal_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:fontFamily="@font/noto_sans"
-        android:text="아이콘 선택"
+        android:text="세부 목표 추가"
         android:textColor="@color/Black"
         android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,290 +28,253 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/noto_sans"
-        android:text="목표"
+        android:text="세부 목표"
         android:textColor="@color/Black"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_moveDetailGoalTextView2" />
+        app:layout_constraintTop_toBottomOf="@+id/pop_detailgoal_title_tv" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="wrap_content"
+        android:id="@+id/pop_detailgoal_title_edt"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="left"
         android:hint="목표 제목을 입력해주세요."
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textColor="@color/Black"
         android:textColorHint="@color/DarkGray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/noto_sans"
         android:text="아이콘"
         android:textColor="@color/Black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/pop_detailgoal_title_edt"
+        app:layout_constraintTop_toBottomOf="@id/pop_detailgoal_title_edt"/>
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="220dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/pop_lock_cancelButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textView13">
 
         <RadioGroup
-            android:id="@+id/pop_iconGroup1"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginBottom="15dp"
+            android:id="@+id/pop_detailgoal_icon_rgroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_icon1"
+                android:id="@+id/pop_detailgoal_book_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_book_24"
-                android:backgroundTint="@color/Gray"
+                android:backgroundTint="@color/Orange"
                 android:button="@null"
                 android:gravity="center" />
-
             <RadioButton
-                android:id="@+id/pop_icon2"
+                android:id="@+id/pop_detailgoal_lesson_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_lesson_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
-
+                android:gravity="center"/>
             <RadioButton
-                android:id="@+id/pop_icon3"
+                android:id="@+id/pop_detailgoal_school_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_school_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
-
+                android:gravity="center"/>
             <RadioButton
-                android:id="@+id/pop_icon4"
+                android:id="@+id/pop_detailgoal_dumble_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/dumble_icon"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon5"
+                android:id="@+id/pop_detailgoal_forest_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
                 android:background="@drawable/ic_forest_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
         </RadioGroup>
 
         <RadioGroup
-            android:id="@+id/pop_iconGroup2"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginBottom="15dp"
+            android:id="@+id/pop_detailgoal_icon_rgroup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_icon6"
+                android:id="@+id/pop_detailgoal_sports_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_sports_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon7"
+                android:id="@+id/pop_detailgoal_computer_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_computer_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon8"
+                android:id="@+id/pop_detailgoal_piano_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_piano_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon9"
+                android:id="@+id/pop_detailgoal_food_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_food_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon10"
+                android:id="@+id/pop_detailgoal_cafe_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
                 android:background="@drawable/ic_cafe_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
         </RadioGroup>
 
         <RadioGroup
-            android:id="@+id/pop_iconGroup3"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginBottom="5dp"
+            android:id="@+id/pop_detailgoal_icon_rgroup3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_icon11"
+                android:id="@+id/pop_detailgoal_business_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_business_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon12"
+                android:id="@+id/pop_detailgoal_store_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_store_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon13"
+                android:id="@+id/pop_detailgoal_drawing_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_drawing_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon14"
+                android:id="@+id/pop_detailgoal_savings_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
+                android:layout_marginRight="24dp"
                 android:background="@drawable/ic_savings_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <RadioButton
-                android:id="@+id/pop_icon15"
+                android:id="@+id/pop_detailgoal_stock_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginRight="15dp"
-                android:layout_weight="1"
                 android:background="@drawable/ic_stock_24"
                 android:backgroundTint="@color/Gray"
                 android:button="@null"
-                android:gravity="center" />
-
+                android:gravity="center"/>
         </RadioGroup>
 
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pop_lock_cancelButton"
+        android:id="@+id/pop_detailgoal_cancelBtn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
         android:layout_height="28dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="18dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/report_top_button_off"
         android:backgroundTint="@color/Gray"
         android:fontFamily="@font/noto_sans"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
         android:padding="0dp"
         android:text="취소"
         android:textColor="@color/black"
         android:textSize="12dp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pop_lock_deleteButton"
+        android:id="@+id/pop_detailgoal_confirmBtn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
         android:layout_height="28dp"
-        android:layout_marginTop="18dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/report_top_button_off"
         android:backgroundTint="@color/Yellow"
         android:fontFamily="@font/noto_sans"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
         android:padding="0dp"
         android:text="추가"
         android:textColor="@color/black"
         android:textSize="12dp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_alertYellow_contentTextView" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

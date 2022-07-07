@@ -28,7 +28,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/noto_sans"
-        android:text="목표"
+        android:text="대표 목표"
         android:textColor="@color/Black"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
