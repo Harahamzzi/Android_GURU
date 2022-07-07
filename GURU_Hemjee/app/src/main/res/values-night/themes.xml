@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/BrightYellow</item>
         <item name="colorPrimaryVariant">@color/Yellow</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="toolbarStyle">@style/CustomToolBar</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
@@ -14,6 +15,8 @@
         <!-- Customize your theme here. -->
         <!--상태바의 아이콘, 시계, 알림 등 색상을 검정색으로-->
         <item name="android:windowLightStatusBar">true</item>
+        <!-- 바텀시트 다이얼로그 둥글게 -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="CustomToolBar" parent="@style/Widget.AppCompat.Toolbar">
@@ -29,5 +32,12 @@
 
     <style name="NavigationFontStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/noto_sans</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/solid_big_goal_item_expand_box</item>
     </style>
 </resources>
