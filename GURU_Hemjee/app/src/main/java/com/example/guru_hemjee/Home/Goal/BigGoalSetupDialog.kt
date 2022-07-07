@@ -44,28 +44,24 @@ class BigGoalSetupDialog(context: Context) {
         // 라디오 그룹1 클릭 이벤트
         pop_biggoal_color_rgroup1.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.bigGoal_orangeRadioButton,
-                R.id.bigGoal_yellowRadioButton,
-                R.id.bigGoal_noteYellowRadioButton,
-                R.id.bigGoal_apricotRadioButton,
-                R.id.bigGoal_seedBrownRadioButton,
-                R.id.bigGoal_darkBrownRadioButton -> {
-                    pop_biggoal_color_rgroup2.clearCheck() // 그룹2에 클릭된 버튼 초기화
-                }
+                R.id.pop_biggoal_color_orange_rbtn,
+                R.id.pop_biggoal_color_yellow_rbtn,
+                R.id.pop_biggoal_color_noteyellow_rbtn,
+                R.id.pop_biggoal_color_apricot_rbtn,
+                R.id.pop_biggoal_color_seedbrown_rbtn,
+                R.id.pop_biggoal_color_darkbrown_rbtn -> pop_biggoal_color_rgroup2.clearCheck() // 그룹2에 클릭된 버튼 초기화
             }
         }
 
         // 라디오 그룹2 클릭 이벤트
         pop_biggoal_color_rgroup2.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.bigGoal_lightGreenRadioButton,
-                R.id.bigGoal_greenRadioButton,
-                R.id.bigGoal_lightBlueRadioButton,
-                R.id.bigGoal_blueRadioButton,
-                R.id.bigGoal_purpleRadioButton,
-                R.id.bigGoal_pinkRadioButton -> {
-                    pop_biggoal_color_rgroup1.clearCheck() // 그룹1에 클릭된 버튼 초기화
-                }
+                R.id.pop_biggoal_color_lightgreen_rbtn,
+                R.id.pop_biggoal_color_green_rbtn,
+                R.id.pop_biggoal_color_lightblue_rbtn,
+                R.id.pop_biggoal_color_blue_rbtn,
+                R.id.pop_biggoal_color_purple_rbtn,
+                R.id.pop_biggoal_color_pink_rbtn -> pop_biggoal_color_rgroup1.clearCheck() // 그룹1에 클릭된 버튼 초기화
             }
         }
 
@@ -131,6 +127,7 @@ class BigGoalSetupDialog(context: Context) {
 
                     onClickListener.onClicked(true, str_biggoal, str_color)
                     dialog.dismiss()
+                    Toast.makeText(MyApplication.applicationContext(), "목표를 저장했습니다.", Toast.LENGTH_SHORT).show()
                 }
                 else { // 중복 값이라면 toast 메시지 띄우기
                     Toast.makeText(MyApplication.applicationContext(), "이미 같은 목표가 존재합니다.", Toast.LENGTH_SHORT).show()
