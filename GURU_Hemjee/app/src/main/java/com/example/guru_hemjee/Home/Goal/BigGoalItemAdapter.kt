@@ -162,8 +162,8 @@ class BigGoalItemAdapter(
     }
 
     // 아이템을 제거하는 함수
-    fun removeBigGoalItem(position: Int) {
-        bigGoalList.removeAt(position)
+    fun removeBigGoalItem(bigGoalItem: BigGoalItem) {
+        bigGoalList.remove(bigGoalItem)
         notifyDataSetChanged()
     }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.databinding.FragmentSetupBinding
@@ -87,6 +88,7 @@ class SetupFragment : Fragment() {
                             }
                             1 -> { // 삭제
                                 // 삭제 팝업 띄우기
+                                bigGoalDeletePopUp(bigGoalItem)
                             }
                             2 -> { // 세부목표 추가
                                 // 세부목표 추가 팝업 띄우기
@@ -272,8 +274,35 @@ class SetupFragment : Fragment() {
                 // 아무런 작업도 안함
             }
         })
+    }
 
+    // 대표목표 삭제 팝업
+    private fun bigGoalDeletePopUp(bigGoalItem: BigGoalItem) {
+        // 대표목표 삭제 팝업 띄우기
+        val dialog = AlertDialog(requireContext(), "해당 목표를 삭제하시겠습니까?", "해당 목표의 모든 기록이 삭제되며\n" +
+                "복구는 불가능합니다.", "삭제", 0)
 
+        // 팝업 클릭 이벤트 연결
+        dialog.showAlertDialog()
+
+        dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener{
+            override fun onClicked(isConfirm: Boolean) {
+                // 삭제 버튼을 눌렀을 경우 db 및 리사이클러뷰에서 아이템 삭제
+                if (isConfirm) {
+                    bigGoalAdapter.removeBigGoalItem(bigGoalItem)
+
+                    // 대표목표&세부목표 db값 삭제
+                    dbManager = DBManager(context, "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
+                    sqlitedb.execSQL("DELETE FROM detail_goal_db WHERE big_goal_name = '" + bigGoalItem.title + "';")
+                    sqlitedb.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '" + bigGoalItem.title + "';")
+
+                    sqlitedb.close()
+                    dbManager.close()
+                }
+            }
+        })
     }
 
     // 대표 목표&세부목표 데이터 저장
