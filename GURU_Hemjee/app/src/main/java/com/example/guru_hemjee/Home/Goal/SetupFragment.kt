@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,10 +61,86 @@ class SetupFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("Range")
     override fun onStart() {
         super.onStart()
 
+        // 리사이클러뷰 설정
+        dataLoading()
+
+        // 클릭 이벤트 관리
+        initClickEvent()
+    }
+
+    // 클릭 이벤트 관리 함수
+    private fun initClickEvent() {
+        // 대표목표 롱 클릭 이벤트
+        bigGoalAdapter.setOnItemLongClickListener(object: BigGoalItemAdapter.OnItemLongClickListener {
+            override fun onItemLongClick(view: View, bigGoalItem: BigGoalItem, pos: Int) {
+
+                // 바텀 시트 다이얼로그 띄우기
+                val bottomSheet: BigGoalBottomDialogFragment = BigGoalBottomDialogFragment(
+                    {
+                        when (it) {
+                            0 -> { // 수정
+                                // 수정 팝업 띄우기
+                                bigGoalModifyPopUp(bigGoalItem)
+                            }
+                            1 -> { // 삭제
+                                // 삭제 팝업 띄우기
+                            }
+                            2 -> { // 세부목표 추가
+                                // 세부목표 추가 팝업 띄우기
+                            }
+                            3 -> { // 목표 완료
+                                // 목표 완료 팝업 띄우기
+                            }
+                        }
+                    }, bigGoalItem
+                )
+                bottomSheet.show(fragmentManager!!, bottomSheet.tag)
+
+                /* 하단 네비게이션 띄우기
+
+                // 레이아웃 변경
+                // view.setBackgroundResource(R.drawable.solid_goal_item_select_box)
+
+                binding.goalBigBottomNavigation.visibility = View.VISIBLE
+                binding.goalBigBottomNavigation.setOnItemSelectedListener { item ->
+                    when(item.itemId) {
+                        // 수정 버튼
+                        R.id.menu_big_goal_edit -> {
+                            return@setOnItemSelectedListener false
+                        }
+                        // 삭제 버튼
+                        R.id.menu_big_goal_delete -> {
+                            return@setOnItemSelectedListener false
+                        }
+                        // 세부목표 추가 버튼
+                        R.id.menu_big_goal_add -> {
+                            return@setOnItemSelectedListener false
+                        }
+                        // 목표 완료 버튼
+                        R.id.menu_big_goal_complete -> {
+                            return@setOnItemSelectedListener false
+                        }
+                    }
+                    true
+                }
+            }*/
+            }
+        })
+
+        // 대표 목표 추가 버튼을 눌렀다면
+        binding.goalBigAddBigGoalButtton.setOnClickListener {
+
+            // 팝업 띄우기
+            bigGoalAddPopUp()
+        }
+    }
+
+    // 데이터 로드 함수(db값 받아와서 리사이클러뷰를 초기화해주는 함수)
+    @SuppressLint("Range")
+    private fun dataLoading() {
         // DB
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase // 데이터 읽기
@@ -126,6 +201,7 @@ class SetupFragment : Fragment() {
         goalBigRecyclerView = binding.goalBigRecyclerView
 
         // 대표목표 데이터 저장
+        bigGoalList.clear() // 배열 초기화
         bigGoalList = loadBigGoalItems(newGoalList)
 
         // 대표목표 어댑터 연결
@@ -133,88 +209,32 @@ class SetupFragment : Fragment() {
         bigGoalAdapter = BigGoalItemAdapter(bigGoalList)
         goalBigRecyclerView.adapter = bigGoalAdapter
 
-        // 대표목표 롱 클릭 이벤트
-        bigGoalAdapter.setOnItemLongClickListener(object: BigGoalItemAdapter.OnItemLongClickListener {
-            override fun onItemLongClick(view: View, bigGoalItem: BigGoalItem, pos: Int) {
-
-                // 바텀 시트 다이얼로그 띄우기
-                val bottomSheet: BigGoalBottomDialogFragment = BigGoalBottomDialogFragment(
-                    {
-                        when (it) {
-                            0 -> { // 수정
-                                // 수정 팝업 띄우기
-                            }
-                            1 -> { // 삭제
-                                // 삭제 팝업 띄우기
-                            }
-                            2 -> { // 세부목표 추가
-                                // 세부목표 추가 팝업 띄우기
-                            }
-                            3 -> { // 목표 완료
-                                // 목표 완료 팝업 띄우기
-                            }
-                        }
-                    }, bigGoalItem
-                )
-                bottomSheet.show(fragmentManager!!, bottomSheet.tag)
-
-                /* 하단 네비게이션 띄우기
-
-                // 레이아웃 변경
-                // view.setBackgroundResource(R.drawable.solid_goal_item_select_box)
-
-                binding.goalBigBottomNavigation.visibility = View.VISIBLE
-                binding.goalBigBottomNavigation.setOnItemSelectedListener { item ->
-                    when(item.itemId) {
-                        // 수정 버튼
-                        R.id.menu_big_goal_edit -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 삭제 버튼
-                        R.id.menu_big_goal_delete -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 세부목표 추가 버튼
-                        R.id.menu_big_goal_add -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 목표 완료 버튼
-                        R.id.menu_big_goal_complete -> {
-                            return@setOnItemSelectedListener false
-                        }
-                    }
-                    true
-                }
-            }*/
-            }
-        })
-
-        // 대표 목표 추가 버튼을 눌렀다면
-        binding.goalBigAddBigGoalButtton.setOnClickListener {
-
-            // 팝업 띄우기
-            bigGoalAddPopUp()
-        }
-
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+
+        // 클릭 이벤트 함수
+        initClickEvent()
     }
 
     // 대표목표 추가 팝업
     private fun bigGoalAddPopUp() {
         // 대표 목록 추가 팝업 띄우기
-        val dialog = BigGoalSetupDialog(requireContext())
+        val dialog = BigGoalSetupDialog(requireContext(), "", "")
 
         // 팝업 클릭 이벤트 연결
         dialog.bigGoalSetup()
 
-        dialog.setOnClickledListener(object: BigGoalSetupDialog.ButtonClickListener{
+        dialog.setOnClickedListener(object: BigGoalSetupDialog.ButtonClickListener{
             // 추가 버튼을 눌렀을 경우
-            override fun onClicked(isAdd: Boolean, title: String?, color: String?) {
+            override fun onClicked(isAdd: Boolean, code: Int, title: String?, color: String?) {
                 if (isAdd) {
-                    // 리사이클러뷰에 대표목표 값 저장
-                    bigGoalAdapter.addBigGoalItem(BigGoalItem(color!!, title!!, null, false, null))
+                    when (code) {
+                        1 -> { // 새롭게 추가하는 경우
+                            // 리사이클러뷰에 대표목표 값 저장
+                            bigGoalAdapter.addBigGoalItem(BigGoalItem(color!!, title!!, null, false, null))
+                        }
+                    }
                 }
             }
 
@@ -224,6 +244,35 @@ class SetupFragment : Fragment() {
             }
 
         })
+    }
+
+    // 대표목표 수정 팝업
+    private fun bigGoalModifyPopUp(bigGoalItem: BigGoalItem) {
+        // 대표 목표 수정 팝업 띄우기
+        val dialog = BigGoalSetupDialog(requireContext(), bigGoalItem.title, bigGoalItem.color)
+
+        // 팝업 클릭 이벤트 연결
+        dialog.bigGoalSetup()
+
+        dialog.setOnClickedListener(object : BigGoalSetupDialog.ButtonClickListener{
+            // 추가 버튼을 눌렀을 경우
+            override fun onClicked(isAdd: Boolean, code: Int, title: String?, color: String?) {
+                // 리사이클러뷰에 대표목표 값 저장
+                if (isAdd) {
+                    when (code) {
+                        0 -> { // 기존 값을 수정하는 경우
+                            dataLoading()
+                        }
+                    }
+                }
+            }
+
+            // 취소 버튼을 눌렀을 경우
+            override fun onClicked(isAdd: Boolean) {
+                // 아무런 작업도 안함
+            }
+        })
+
 
     }
 
