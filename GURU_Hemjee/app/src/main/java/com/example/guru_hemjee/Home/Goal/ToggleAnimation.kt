@@ -13,11 +13,11 @@ class ToggleAnimation {
 
             // 열려있다면 닫고, 닫혀있다면 열기
             if (isExpanded) {
-                view.animate().setDuration(200).rotation(180f)
+                view.animate().setDuration(100).rotation(180f)
                 return true
             }
             else {
-                view.animate().setDuration(200).rotation(0f)
+                view.animate().setDuration(100).rotation(0f)
                 return false
             }
         }
