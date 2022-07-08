@@ -1,10 +1,9 @@
 package com.example.guru_hemjee
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
+import android.content.res.ColorStateList
 import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 
 // 색상 값, 아이콘 값을 받아서 변환하여주는 클래스
@@ -28,9 +27,7 @@ class DBConvert {
 
     companion object {
 
-        private var newColor: Int = 0
-
-        // 색상 값 적용 함수
+        // 이미지뷰 색상 값 적용 함수
         fun colorConvert(view: ImageView, color: String?, context: Context) {
             when (color) {
                 "Orange" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Orange))
@@ -46,6 +43,26 @@ class DBConvert {
                 "Blue" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Blue))
                 "Purple" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Purple))
                 "Pink" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Pink))
+            }
+        }
+
+        // 라디오버튼 색상 값 적용 함수
+        fun radioColorConvert(rBtn: RadioButton, color: String?, context: Context) {
+            when (color) {
+                "Orange" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Orange))
+                "BrightYellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.BrightYellow))
+                "Yellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Yellow))
+                "Apricot" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Apricot))
+                "DarkBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.DarkBrown))
+                "SeedBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.SeedBrown))
+                "NoteYellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.NoteYellow))
+                "LightGreen" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightGreen))
+                "Green" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Green))
+                "LightBlue" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightBlue))
+                "Blue" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Blue))
+                "Purple" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Purple))
+                "Pink" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Pink))
+                "Gray" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
             }
         }
 
