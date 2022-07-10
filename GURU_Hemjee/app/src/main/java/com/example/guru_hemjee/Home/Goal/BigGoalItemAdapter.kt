@@ -14,12 +14,13 @@ import com.example.guru_hemjee.databinding.ContainerGoalItemRecyclerviewBinding
 
 // 아코디언 메뉴 커스텀 리스트뷰의 어댑터
 // 파라미터 값 : 대표목표 아이템, 세부목표 어댑터에 보내기 위한 세부목표 아이템
-class BigGoalItemAdapter(
-    private val bigGoalList: ArrayList<BigGoalItem>
-): RecyclerView.Adapter<BigGoalItemAdapter.BigGoalViewHolder>() {
+class BigGoalItemAdapter(): RecyclerView.Adapter<BigGoalItemAdapter.BigGoalViewHolder>() {
 
     // context 변수
     val context = MyApplication.applicationContext()
+
+    // 대표목표 리스트
+    private var bigGoalList = ArrayList<BigGoalItem>()
 
     // 세부목표 어댑터 변수
     private lateinit var detailGoalAdapter: DetailGoalItemAdapter
@@ -144,26 +145,63 @@ class BigGoalItemAdapter(
 
     // 뷰홀더에 데이터를 바인딩해줘야 할 때마다 호출되는 함수 => 여러번 호출됨
     override fun onBindViewHolder(holder: BigGoalViewHolder, position: Int) {
+        holder.bind(bigGoalList[position])
 
         // 세부목표 어댑터 연결 및 세부목표 데이터 전송
         holder.binding.goalItemDetailGoalRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         detailGoalAdapter = DetailGoalItemAdapter(inDetailGoalList)
         holder.binding.goalItemDetailGoalRecyclerView.adapter = detailGoalAdapter
-        holder.bind(bigGoalList[position])
     }
 
     // 대표목표 리스트 사이즈 반환
     override fun getItemCount(): Int = bigGoalList.size
 
     // 아이템 더하는 함수
-    fun addBigGoalItem(bigGoal: BigGoalItem) {
-        bigGoalList.add(bigGoal)
-        notifyDataSetChanged()
+    fun addBigGoalItem(bigGoalItem: BigGoalItem) {
+        bigGoalList.add(bigGoalItem)
+        notifyItemChanged(itemCount - 1)
     }
 
     // 아이템을 제거하는 함수
     fun removeBigGoalItem(bigGoalItem: BigGoalItem) {
         bigGoalList.remove(bigGoalItem)
         notifyDataSetChanged()
+    }
+
+    // 아이템의 위치에 따른 대표목표 view를 반환하는 함수
+    fun getItemTitle(index: Int): String {
+        return bigGoalList[index].title
+    }
+
+    // 아이템 수정하는 함수
+    fun setModifyItem(position: Int, title: String, color: String) {
+        bigGoalList[position].title = title
+        bigGoalList[position].color = color
+        notifyItemChanged(position)
+    }
+
+    // dataloading함수에서 쓰이는 아이템 재설정 함수
+    fun setItem(position: Int, iconList: ArrayList<String>, detailList: ArrayList<DetailGoalItem>) {
+        bigGoalList[position].iconArray = iconList
+        bigGoalList[position].detailGoalList = detailList
+        notifyItemChanged(position)
+    }
+
+    // 아이템의 위치에 따른 세부목표 view를 반환하는 함수
+    fun getDetailItemTitle(bigIndex: Int, detailIndex: Int): String {
+        return bigGoalList[bigIndex].detailGoalList!![detailIndex].detailTitle
+    }
+
+    // 세부목표 추가하는 함수
+    fun addDetailGoalItem(bigPos: Int, detailGoalItem: DetailGoalItem) {
+        bigGoalList[bigPos].detailGoalList!!.add(detailGoalItem)
+        notifyItemChanged(bigPos)
+    }
+
+    // 세부목표 수정하는 함수
+    fun setModifyDetailItem(bigPos: Int, detailPos: Int, title: String, icon: String) {
+        bigGoalList[bigPos].detailGoalList!![detailPos].detailTitle = title
+        bigGoalList[bigPos].detailGoalList!![detailPos].detailIcon = icon
+        notifyItemChanged(bigPos)
     }
 }

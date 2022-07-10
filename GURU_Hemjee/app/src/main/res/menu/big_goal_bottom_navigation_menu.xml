@@ -13,12 +13,12 @@
         android:icon="@drawable/ic_outline_delete_24"
         android:title="삭제"/>
     <item
-        android:id="@+id/menu_add"
+        android:id="@+id/menu_big_goal_add"
         android:enabled="true"
         android:icon="@drawable/ic_add_circle_outline_black_24dp"
         android:title="세부 목표 추가"/>
     <item
-        android:id="@+id/menu_complete"
+        android:id="@+id/menu_big_goal_complete"
         android:enabled="true"
         android:icon="@drawable/ic_check_circle_black_24dp"
         android:title="목표 완료"/>

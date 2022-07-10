@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/scrollView4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,11 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="411dp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
+            android:orientation="vertical">
 
             <!-- 아코디언 메뉴가 들어갈 곳-->
             <androidx.recyclerview.widget.RecyclerView
@@ -32,19 +28,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="33dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goalBig_TextView"
                 tools:listitem="@layout/container_goal_item_recyclerview"/>
-
+            <!-- 공백 -->
             <Space
-                android:id="@+id/goalBig_bottomSpace"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="17dp" />
-
+                android:layout_height="80dp" />
         </LinearLayout>
     </ScrollView>
 
@@ -70,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!--대표목표를 꾹 눌렀을 경우 나오는 하단 네비게이션 메뉴-->
+    <!--대표목표를 꾹 눌렀을 경우 나오는 하단 네비게이션 메뉴
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/goalBig_bottomNavigation"
         android:layout_width="match_parent"
@@ -85,9 +73,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/big_goal_bottom_navigation_menu">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 
-    <!--세부목표를 클릭했을 경우 나오는 하단 네비게이션 메뉴-->
+    <!--세부목표를 클릭했을 경우 나오는 하단 네비게이션 메뉴
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/goalDetail_bottomNavigation"
         android:layout_width="match_parent"
@@ -102,5 +90,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/detail_goal_bottom_navigation_menu">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

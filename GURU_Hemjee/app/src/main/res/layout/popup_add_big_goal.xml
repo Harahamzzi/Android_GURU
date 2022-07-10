@@ -73,7 +73,7 @@
 
         <RadioGroup
             android:id="@+id/pop_biggoal_color_rgroup1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
@@ -83,17 +83,16 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_checked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
-                android:buttonTint="@color/Orange"
-                android:checked="true"/>
+                android:buttonTint="@color/Orange" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_yellow_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/Yellow" />
 
@@ -102,7 +101,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/NoteYellow" />
 
@@ -111,7 +110,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/Apricot" />
 
@@ -120,7 +119,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/SeedBrown" />
 
@@ -128,15 +127,14 @@
                 android:id="@+id/pop_biggoal_color_darkbrown_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/DarkBrown" />
-
         </RadioGroup>
 
         <RadioGroup
             android:id="@+id/pop_biggoal_color_rgroup2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -145,7 +143,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/LightGreen" />
 
@@ -154,7 +152,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/Green" />
 
@@ -163,7 +161,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/LightBlue" />
 
@@ -172,7 +170,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/Blue" />
 
@@ -181,7 +179,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:buttonTint="@color/Purple"
                 android:button="@drawable/ic_add_biggoal_radio_btn" />
 
@@ -189,7 +187,7 @@
                 android:id="@+id/pop_biggoal_color_pink_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/selector_add_biggoal_dialog"
+                android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
                 android:buttonTint="@color/Pink" />
         </RadioGroup>
@@ -220,7 +218,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pop_biggoal_add_btn"
+        android:id="@+id/pop_biggoal_confirm_btn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
         android:layout_height="28dp"

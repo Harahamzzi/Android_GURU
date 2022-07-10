@@ -2,33 +2,32 @@ package com.example.guru_hemjee.Home.Goal
 
 import android.app.Dialog
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.*
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
-import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
 import com.google.android.material.button.MaterialButton
 
 // 세부목표 클릭 시 나타나는 세부 목표 팝업
+// code 0 = 추가, code 1 = 수정
 class DetailGoalSetupDialog(
     val context: Context,
-    val title: String,
-    val icon: String,
+    val title: String?,
+    val icon: String?,
     val color: String,
-    val bigGoal: String
+    private val bigGoal: String,
+    val code: Int
 ) {
     private val dialog = Dialog(context)
 
     private lateinit var dbManager: DBManager // 내부 db 사용을 위한 변수
     private lateinit var sqlitedb: SQLiteDatabase
 
-    // 세부목표
-    private lateinit var pop_detailgoal_title_edt: EditText
-    private lateinit var pop_detailgoal_title_tv: TextView // 팝업 제목
+    private lateinit var titleEdt: EditText // 세부목표
+    private lateinit var titleTv: TextView // 팝업 제목
 
     //확인 취소 버튼
     private lateinit var cancelBtn: MaterialButton
@@ -43,7 +42,7 @@ class DetailGoalSetupDialog(
     private lateinit var bookRBtn: RadioButton
     private lateinit var lessonRBtn: RadioButton
     private lateinit var schoolRBtn: RadioButton
-    private lateinit var dumbleRBtn: RadioButton
+    private lateinit var dumbbellRBtn: RadioButton
     private lateinit var forestRBtn: RadioButton
     private lateinit var sportsRBtn: RadioButton
     private lateinit var computerRBtn: RadioButton
@@ -63,7 +62,7 @@ class DetailGoalSetupDialog(
     private val initBigGoal = bigGoal
 
     // 새롭게 변경된 세부목표, 아이콘 값
-    private var newIcon: String = ""
+    private var newIcon: String? = null
 
     //아이콘 변경 팝업
     fun detailGoalSetup() {
@@ -74,8 +73,8 @@ class DetailGoalSetupDialog(
         dialog.setContentView(R.layout.popup_add_detail_goal)
 
         // 위젯 연결
-        pop_detailgoal_title_tv = dialog.findViewById(R.id.pop_detailgoal_title_tv)
-        pop_detailgoal_title_edt = dialog.findViewById(R.id.pop_detailgoal_title_edt)
+        titleTv = dialog.findViewById(R.id.pop_detailgoal_title_tv)
+        titleEdt = dialog.findViewById(R.id.pop_detailgoal_title_edt)
         cancelBtn = dialog.findViewById(R.id.pop_detailgoal_cancelBtn)
         confirmBtn = dialog.findViewById(R.id.pop_detailgoal_confirmBtn)
 
@@ -86,7 +85,7 @@ class DetailGoalSetupDialog(
         bookRBtn = dialog.findViewById(R.id.pop_detailgoal_book_rbtn)
         lessonRBtn = dialog.findViewById(R.id.pop_detailgoal_lesson_rbtn)
         schoolRBtn = dialog.findViewById(R.id.pop_detailgoal_school_rbtn)
-        dumbleRBtn = dialog.findViewById(R.id.pop_detailgoal_dumble_rbtn)
+        dumbbellRBtn = dialog.findViewById(R.id.pop_detailgoal_dumble_rbtn)
         forestRBtn = dialog.findViewById(R.id.pop_detailgoal_forest_rbtn)
         sportsRBtn = dialog.findViewById(R.id.pop_detailgoal_sports_rbtn)
         computerRBtn = dialog.findViewById(R.id.pop_detailgoal_computer_rbtn)
@@ -99,12 +98,15 @@ class DetailGoalSetupDialog(
         savingsRBtn = dialog.findViewById(R.id.pop_detailgoal_savings_rbtn)
         stockRBtn = dialog.findViewById(R.id.pop_detailgoal_stock_rbtn)
 
-        // 기존에 저장된 값이 있는 경우 적용하기
-        if (initTitle.isNotBlank()) { // 세부목표
-            pop_detailgoal_title_tv.text = "세부목표 수정"
-            pop_detailgoal_title_edt.setText(initTitle)
-        }
-        if (initIcon.isNotBlank()) { // 아이콘
+        // 기존에 저장된 값이 없는 경우, 기본값 설정
+        bookRBtn.isChecked = true
+        DBConvert.radioColorConvert(bookRBtn, initColor, context)
+        newIcon = "ic_book_24"
+
+        // 기존에 저장된 값이 있는 경우(값 수정일 경우) 세부목표와 아이콘 적용하기
+        if (code == 1) {
+            titleTv.text = "세부목표 수정"
+            titleEdt.setText(initTitle)
 
             // 기존에 선택되어 있는 bookRBtn 버튼 초기화
             bookRBtn.isChecked = false
@@ -124,8 +126,8 @@ class DetailGoalSetupDialog(
                     DBConvert.radioColorConvert(schoolRBtn, initColor, context)
                 }
                 "dumble_icon" -> {
-                    dumbleRBtn.isChecked = true
-                    DBConvert.radioColorConvert(dumbleRBtn, initColor, context)
+                    dumbbellRBtn.isChecked = true
+                    DBConvert.radioColorConvert(dumbbellRBtn, initColor, context)
                 }
                 "ic_forest_24" -> {
                     forestRBtn.isChecked = true
@@ -174,11 +176,6 @@ class DetailGoalSetupDialog(
             }
         }
 
-        // 기존에 저장되어 있는 아이콘 값이 없다면, bookRBtn으로 값 초기화
-        bookRBtn.isChecked = true
-        DBConvert.radioColorConvert(bookRBtn, initColor, context)
-        newIcon = "ic_book_24"
-
         // 라디오 그룹1 클릭 이벤트
         rGroup1.setOnCheckedChangeListener { group, checkedId ->
             colorGray()
@@ -208,7 +205,7 @@ class DetailGoalSetupDialog(
                     colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    DBConvert.radioColorConvert(dumbleRBtn, initColor, context)
+                    DBConvert.radioColorConvert(dumbbellRBtn, initColor, context)
                     newIcon = "dumble_icon"
                 }
                 R.id.pop_detailgoal_forest_rbtn -> {
@@ -222,7 +219,7 @@ class DetailGoalSetupDialog(
         }
 
         // 라디오 그룹2 클릭 이벤트
-        rGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
+        rGroup2.setOnCheckedChangeListener { group, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_detailgoal_sports_rbtn -> {
@@ -264,7 +261,7 @@ class DetailGoalSetupDialog(
         }
 
         // 라디오 그룹3 클릭 이벤트
-        rGroup3.setOnCheckedChangeListener { radioGroup, checkedId ->
+        rGroup3.setOnCheckedChangeListener { group, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_detailgoal_business_rbtn -> {
@@ -307,76 +304,110 @@ class DetailGoalSetupDialog(
 
         // 취소 버튼 클릭 이벤트
         cancelBtn.setOnClickListener {
-            onClickListener.onClick(false, initTitle, initIcon, initColor, initBigGoal)
+            onClickListener.onClick(false, 2, null, null, null, null, null)
             dialog.dismiss()
         }
 
         // 세부목표 추가&수정 버튼 클릭 이벤트
         confirmBtn.setOnClickListener {
 
-            var str_detailgoal = pop_detailgoal_title_edt.text.toString() // 세부목표 변수
+            var newDetailGoal = titleEdt.text.toString() // 세부목표
             var isOverlap = false // 중복값을 확인하기 위한 변수
 
+            // DB에 중복 세부목표 값이 있는지 확인
+            dbManager = DBManager(context, "hamster_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+            var cursor = sqlitedb.rawQuery("SELECT detail_goal_name FROM detail_goal_db WHERE detail_goal_name = '${newDetailGoal}' AND icon = '${newIcon}'",null)
+            if (cursor.moveToNext()) {
+                isOverlap = true
+            }
+            cursor.close()
+            sqlitedb.close()
+
+            // 중복값이라면
+            if (isOverlap) {
+                Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
+            }
             // 세부목표를 입력 안 했다면
-            if (str_detailgoal.isBlank()) {
+            if (newDetailGoal.isBlank()) {
                 Toast.makeText(context, "세부 목표를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
-            else { // 세부목표를 입력했다면
-                // DB에 중복 세부목표 값이 있는지 확인
-                dbManager = DBManager(context, "hamster_db", null, 1)
-                sqlitedb = dbManager.readableDatabase
-
-                var cursor: Cursor
-                cursor = sqlitedb.rawQuery("SELECT detail_goal_name FROM detail_goal_db WHERE detail_goal_name = '${str_detailgoal}'",null)
-                if (cursor.moveToNext()) {
-                    isOverlap = true
-                }
-                cursor.close()
-                sqlitedb.close()
-
-                // 아이콘만 수정했다면 db값 수정
-                if (initTitle == str_detailgoal && initIcon != newIcon) {
+            // 세부목표를 입력했다면
+            else {
+                if (code == 0) {
                     sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                    sqlitedb.execSQL("INSERT INTO detail_goal_db VALUES ('" + newDetailGoal + "', '" + newIcon + "', '" + "${0}" + "', '" + initBigGoal + "', '" + initColor + "');")
                     sqlitedb.close()
 
-                    onClickListener.onClick(true, initTitle, newIcon, initColor, initBigGoal)
-                    dialog.dismiss()
-                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
-                }
-                // 세부목표만 수정했다면
-                else if (initTitle != str_detailgoal && initIcon == newIcon) {
-                    sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$str_detailgoal' WHERE detail_goal_name = '$initTitle';")
-                    sqlitedb.close()
-
-                    onClickListener.onClick(true, str_detailgoal, initIcon, initColor, initBigGoal)
-                    dialog.dismiss()
-                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
-                }
-                // 세부목표와 아이콘 모두 수정했다면
-                else if (isOverlap && initTitle != str_detailgoal && initIcon != newIcon) {
-                    sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$str_detailgoal' WHERE detail_goal_name = '$initTitle';")
-                    sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
-                    sqlitedb.close()
-
-                    onClickListener.onClick(true, str_detailgoal, newIcon, initColor, initBigGoal)
-                    dialog.dismiss()
-                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
-                }
-                // 입력한 값이 기존 db에 없는 값이라면 db에 값 저장
-                else if (!isOverlap) {
-                    sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("INSERT INTO detail_goal_db VALUES ('" + str_detailgoal + "', '" + newIcon + "', '" + "${0}" + "', '" + initBigGoal + "', '" + initColor + "');")
-                    sqlitedb.close()
-
-                    onClickListener.onClick(true, str_detailgoal, newIcon, initColor, initBigGoal)
+                    onClickListener.onClick(
+                        true,
+                        0,
+                        newDetailGoal,
+                        newIcon,
+                        initColor,
+                        initTitle,
+                        initBigGoal,
+                    )
                     dialog.dismiss()
                     Toast.makeText(context, "목표를 저장했습니다", Toast.LENGTH_SHORT).show()
                 }
-                else { // 중복 값이라면 메시지 띄우기
-                    Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
+                // 세부목표를 수정하는 경우
+                else if (code == 1) {
+                    // 아이콘만 수정했다면
+                    if (initTitle == newDetailGoal && initIcon != newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            initTitle,
+                            newIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    // 세부목표만 수정했다면
+                    else if (initTitle != newDetailGoal && initIcon == newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            newDetailGoal,
+                            initIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    // 세부목표와 아이콘 모두 수정했다면
+                    else if (initTitle != newDetailGoal && initIcon != newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            newDetailGoal,
+                            newIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 dbManager.close()
             }
@@ -384,7 +415,8 @@ class DetailGoalSetupDialog(
     }
 
     interface ButtonClickListener {
-        fun onClick(isChanged: Boolean, title: String, icon: String, color: String, bigGoal: String)
+        fun onClick(isChanged: Boolean, code: Int, title: String?, icon: String?,
+                    color: String?, initTitle: String?, initBigGoal: String?)
     }
 
     private lateinit var onClickListener: ButtonClickListener
@@ -398,7 +430,7 @@ class DetailGoalSetupDialog(
         DBConvert.radioColorConvert(bookRBtn, "Gray", context)
         DBConvert.radioColorConvert(lessonRBtn, "Gray", context)
         DBConvert.radioColorConvert(schoolRBtn, "Gray", context)
-        DBConvert.radioColorConvert(dumbleRBtn, "Gray", context)
+        DBConvert.radioColorConvert(dumbbellRBtn, "Gray", context)
         DBConvert.radioColorConvert(forestRBtn, "Gray", context)
         DBConvert.radioColorConvert(sportsRBtn, "Gray", context)
         DBConvert.radioColorConvert(computerRBtn, "Gray", context)
