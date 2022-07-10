@@ -270,7 +270,7 @@
         android:backgroundTint="@color/Yellow"
         android:fontFamily="@font/noto_sans"
         android:padding="0dp"
-        android:text="추가"
+        android:text="확인"
         android:textColor="@color/black"
         android:textSize="12dp"
         app:backgroundTint="@null"

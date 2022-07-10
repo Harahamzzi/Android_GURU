@@ -7,10 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.widget.EditText
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
@@ -28,8 +25,9 @@ class BigGoalSetupDialog(
     private lateinit var sqlitedb: SQLiteDatabase
 
     private lateinit var pop_biggoal_title_edt: EditText // 대표목표
+    private lateinit var pop_biggoal_title_tv: TextView // 팝업 제목
     private lateinit var pop_biggoal_color_rgroup1: RadioGroup // 색상 라디오그룹1
-    private lateinit var pop_biggoal_color_rgroup2: RadioGroup // 색상 라디오
+    private lateinit var pop_biggoal_color_rgroup2: RadioGroup // 색상 라디오그룹2
     private lateinit var pop_biggoal_cancel_btn: MaterialButton // 취소 버튼
     private lateinit var pop_biggoal_add_btn: MaterialButton // 추가 버튼
 
@@ -45,6 +43,7 @@ class BigGoalSetupDialog(
         dialog.setContentView(R.layout.popup_add_big_goal)
 
         // 위젯 연결
+        pop_biggoal_title_tv = dialog.findViewById(R.id.pop_biggoal_title_tv)
         pop_biggoal_title_edt = dialog.findViewById(R.id.pop_biggoal_title_edt)
         pop_biggoal_color_rgroup1 = dialog.findViewById(R.id.pop_biggoal_color_rgroup1)
         pop_biggoal_color_rgroup2 = dialog.findViewById(R.id.pop_biggoal_color_rgroup2)
@@ -53,58 +52,27 @@ class BigGoalSetupDialog(
 
         // 기존에 저장된 값이 있는 경우 적용하기
         if (initTitle.isNotBlank()) { // 대표목표
+            pop_biggoal_title_tv.text = "대표목표 수정"
             pop_biggoal_title_edt.setText(initTitle)
         }
         if (initColor.isNotBlank()) { // 색상
+
+            // 기존에 선택되어 있는 오랜지색 라디오버튼 초기화
+            pop_biggoal_color_rgroup1.clearCheck()
+
             when (initColor) {
-                "Orange" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_orange_rbtn).isChecked = true
-                }
-                "Yellow" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_yellow_rbtn).isChecked = true
-                }
-                "NoteYellow" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_noteyellow_rbtn).isChecked = true
-                }
-                "Apricot" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_apricot_rbtn).isChecked = true
-                }
-                "SeedBrown" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_seedbrown_rbtn).isChecked = true
-                }
-                "DarkBrown" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_darkbrown_rbtn).isChecked = true
-                }
-                "LightGreen"  -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_lightgreen_rbtn).isChecked = true
-                }
-                "Green" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_green_rbtn).isChecked = true
-                }
-                "LightBlue" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_lightblue_rbtn).isChecked = true
-                }
-                "Blue" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_blue_rbtn).isChecked = true
-                }
-                "Purple" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_purple_rbtn).isChecked = true
-                }
-                "Pink" -> {
-                    pop_biggoal_color_rgroup1.clearCheck()
-                    dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_pink_rbtn).isChecked = true
-                }
+                "Orange" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_orange_rbtn).isChecked = true
+                "Yellow" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_yellow_rbtn).isChecked = true
+                "NoteYellow" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_noteyellow_rbtn).isChecked = true
+                "Apricot" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_apricot_rbtn).isChecked = true
+                "SeedBrown" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_seedbrown_rbtn).isChecked = true
+                "DarkBrown" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_darkbrown_rbtn).isChecked = true
+                "LightGreen"  -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_lightgreen_rbtn).isChecked = true
+                "Green" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_green_rbtn).isChecked = true
+                "LightBlue" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_lightblue_rbtn).isChecked = true
+                "Blue" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_blue_rbtn).isChecked = true
+                "Purple" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_purple_rbtn).isChecked = true
+                "Pink" -> dialog.findViewById<RadioButton>(R.id.pop_biggoal_color_pink_rbtn).isChecked = true
             }
         }
 
@@ -138,7 +106,7 @@ class BigGoalSetupDialog(
             dialog.dismiss()
         }
 
-        // 대표목표 추가 버튼 클릭 이벤트
+        // 대표목표 추가&수정 버튼 클릭 이벤트
         pop_biggoal_add_btn.setOnClickListener{
 
             var str_biggoal = pop_biggoal_title_edt.text.toString() // 대표목표 변수
@@ -146,12 +114,12 @@ class BigGoalSetupDialog(
             var isOverlap = false // 중복값을 확인하기 위한 변수
 
             // 대표 목표를 입력 안 했다면
-            if (str_biggoal == null) {
-                Toast.makeText(MyApplication.applicationContext(), "대표 목표를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (str_biggoal.isBlank()) {
+                Toast.makeText(context, "대표 목표를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
             else { // 대표 목표를 입력했다면
                 // DB에 중복 대표목표 값이 있는지 확인
-                dbManager = DBManager(MyApplication.applicationContext(), "hamster_db", null, 1)
+                dbManager = DBManager(context, "hamster_db", null, 1)
                 sqlitedb = dbManager.readableDatabase
 
                 var cursor: Cursor
@@ -161,7 +129,6 @@ class BigGoalSetupDialog(
                 }
                 cursor.close()
                 sqlitedb.close()
-                dbManager.close()
 
                 // 선택한 색상 값 저장
                 when (pop_biggoal_color_rgroup1.checkedRadioButtonId) {
@@ -182,48 +149,50 @@ class BigGoalSetupDialog(
                 }
 
                 // 색상만 수정됐다면 db 값 수정
-                if (initColor.isNotBlank() && initColor != str_color) {
-                    dbManager = DBManager(MyApplication.applicationContext(), "hamster_db", null, 1)
+                if (initTitle == str_biggoal && initColor != str_color) {
                     sqlitedb = dbManager.writableDatabase
-
-                    sqlitedb.execSQL("UPDATE big_goal_db SET color = '$str_color' WHERE color = '$initColor';")
+                    sqlitedb.execSQL("UPDATE big_goal_db SET color = '$str_color' WHERE big_goal_name = '$initTitle';")
                     sqlitedb.close()
-                    dbManager.close()
 
-                    onClickListener.onClicked(true, 0, str_biggoal, str_color)
+                    onClickListener.onClicked(true, 0, initTitle, str_color)
                     dialog.dismiss()
-                    Toast.makeText(MyApplication.applicationContext(), "목표를 수정했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                 }
-                // 대표목표와 색상 모두 수정됐다면 db값 수정
-                else if (initTitle.isNotBlank() && initTitle != pop_biggoal_title_edt.text.toString()) {
-                    dbManager = DBManager(MyApplication.applicationContext(), "hamster_db", null, 1)
+                // 대표목표만 수정됐다면
+                else if (initTitle != str_biggoal && initColor == str_color) {
                     sqlitedb = dbManager.writableDatabase
-
                     sqlitedb.execSQL("UPDATE big_goal_db SET big_goal_name = '$str_biggoal' WHERE big_goal_name = '$initTitle';")
-                    sqlitedb.execSQL("UPDATE big_goal_db SET color = '$str_color' WHERE color = '$initColor';")
                     sqlitedb.close()
-                    dbManager.close()
+
+                    onClickListener.onClicked(true, 0, str_biggoal, initColor)
+                    dialog.dismiss()
+                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                }
+                // 대표목표와 색상 모두 수정됐다면
+                else if (isOverlap && initTitle != str_biggoal && initColor != str_color) {
+                    sqlitedb = dbManager.writableDatabase
+                    sqlitedb.execSQL("UPDATE big_goal_db SET big_goal_name = '$str_biggoal' WHERE big_goal_name = '$initTitle';")
+                    sqlitedb.execSQL("UPDATE big_goal_db SET color = '$str_color' WHERE big_goal_name = '$initTitle';")
+                    sqlitedb.close()
 
                     onClickListener.onClicked(true, 0, str_biggoal, str_color)
                     dialog.dismiss()
-                    Toast.makeText(MyApplication.applicationContext(), "목표를 수정했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                 }
                 // 입력한 값이 기존 db에 없는 값이라면 db에 값 저장
-                else if (initTitle.isNullOrBlank() && !isOverlap) {
-                    dbManager = DBManager(MyApplication.applicationContext(), "hamster_db", null, 1)
+                else if (!isOverlap) {
                     sqlitedb = dbManager.writableDatabase
-
                     sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('" + str_biggoal + "', '" + str_color + "', '" + "${0}:${0}:${0}" + "');")
                     sqlitedb.close()
-                    dbManager.close()
 
                     onClickListener.onClicked(true, 1, str_biggoal, str_color)
                     dialog.dismiss()
-                    Toast.makeText(MyApplication.applicationContext(), "목표를 저장했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "목표를 저장했습니다", Toast.LENGTH_SHORT).show()
                 }
                 else { // 중복 값이라면 toast 메시지 띄우기
-                    Toast.makeText(MyApplication.applicationContext(), "이미 같은 목표가 존재합니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
                 }
+                dbManager.close()
             }
         }
     }

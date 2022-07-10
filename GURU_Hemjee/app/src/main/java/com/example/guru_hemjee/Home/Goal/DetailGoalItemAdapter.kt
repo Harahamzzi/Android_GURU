@@ -1,6 +1,7 @@
 package com.example.guru_hemjee.Home.Goal
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.example.guru_hemjee.MyApplication
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ContainerDetailGoalItemRecyclerviewBinding
 
+// 아코디언 메뉴의 세부목표 어댑터
 class DetailGoalItemAdapter(
     private val detailGoalList: ArrayList<DetailGoalItem>
 ) : RecyclerView.Adapter<DetailGoalItemAdapter.DetailGoalViewHolder>() {
@@ -16,23 +18,34 @@ class DetailGoalItemAdapter(
     // context 변수
     val context = MyApplication.applicationContext()
 
+    // 클릭 리스너
+    private lateinit var mItemClickListener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View, detailGoalItem: DetailGoalItem, pos: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mItemClickListener = listener
+    }
+
     inner class DetailGoalViewHolder(
-        val binding: ContainerDetailGoalItemRecyclerviewBinding
+        private val binding: ContainerDetailGoalItemRecyclerviewBinding
     ) : RecyclerView.ViewHolder(binding.root){
 
         fun bind (detailGoalItem: DetailGoalItem) {
             val detailIcon = binding.detailGoalItemIconIv
             val detailTitle = binding.detailGoalItemDetailGoalTv
+            val detailLayout = binding.detailGoalItemDetailGoalCLayout
 
             try {
                 // 세부목표 icon 색상 저장
-                var iconColor: Int = 0
+                var iconColor = 0
                 when (detailGoalItem.color) {
                     "Orange" -> R.color.Orange
                     "BrightYellow" -> R.color.BrightYellow
                     "Yellow" -> iconColor = R.color.Yellow
                     "Apricot" -> iconColor = R.color.Apricot
-                    "Orange" -> iconColor = R.color.Orange
                     "DarkBrown" -> iconColor = R.color.DarkBrown
                     "SeedBrown" -> iconColor = R.color.SeedBrown
                     "NoteYellow" -> iconColor = R.color.NoteYellow
@@ -54,6 +67,11 @@ class DetailGoalItemAdapter(
             } catch (e: Exception) {
 
             }
+
+            // 세부목표 레이아웃 클릭 이벤트
+            detailLayout.setOnClickListener {
+                mItemClickListener.onItemClick(detailLayout, detailGoalItem, adapterPosition)
+            }
         }
     }
 
@@ -73,5 +91,4 @@ class DetailGoalItemAdapter(
 
     // 세부목표 리스트 사이즈 반환
     override fun getItemCount(): Int = detailGoalList.size
-
 }

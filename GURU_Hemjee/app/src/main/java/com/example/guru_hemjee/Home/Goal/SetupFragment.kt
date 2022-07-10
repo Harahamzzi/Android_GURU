@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.databinding.FragmentSetupBinding
+import kotlin.collections.ArrayList
 
 // 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정
 // 목표/잠금 시간 설정 Fragment 화면
@@ -32,7 +34,6 @@ class SetupFragment : Fragment() {
 
     private var bigGoalList = ArrayList<BigGoalItem>() // 대표목표 리스트
     private lateinit var bigGoalAdapter: BigGoalItemAdapter // 대표목표 어댑터
-    private lateinit var goalBigRecyclerView: RecyclerView // 아코디언 메뉴 리사이클러뷰
 
     private var mainActivity: MainActivity? = null // 메인 액티비티 변수
 
@@ -92,6 +93,7 @@ class SetupFragment : Fragment() {
                             }
                             2 -> { // 세부목표 추가
                                 // 세부목표 추가 팝업 띄우기
+                                detailGoalAddPopUp(bigGoalItem)
                             }
                             3 -> { // 목표 완료
                                 // 목표 완료 팝업 띄우기
@@ -100,35 +102,6 @@ class SetupFragment : Fragment() {
                     }, bigGoalItem
                 )
                 bottomSheet.show(fragmentManager!!, bottomSheet.tag)
-
-                /* 하단 네비게이션 띄우기
-
-                // 레이아웃 변경
-                // view.setBackgroundResource(R.drawable.solid_goal_item_select_box)
-
-                binding.goalBigBottomNavigation.visibility = View.VISIBLE
-                binding.goalBigBottomNavigation.setOnItemSelectedListener { item ->
-                    when(item.itemId) {
-                        // 수정 버튼
-                        R.id.menu_big_goal_edit -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 삭제 버튼
-                        R.id.menu_big_goal_delete -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 세부목표 추가 버튼
-                        R.id.menu_big_goal_add -> {
-                            return@setOnItemSelectedListener false
-                        }
-                        // 목표 완료 버튼
-                        R.id.menu_big_goal_complete -> {
-                            return@setOnItemSelectedListener false
-                        }
-                    }
-                    true
-                }
-            }*/
             }
         })
 
@@ -175,15 +148,19 @@ class SetupFragment : Fragment() {
             val str_color = cursor.getString(cursor.getColumnIndex("color"))
 
             // 만약, 기존 배열에 저장되어 있는 대표목표와 세부목표db에 있는 대표목표가 겹친다면
-            // 기존에 있던 대표목표 행 삭제
+            // 기존에 있던 행 초기화
             for (i in 0 until newGoalList.size) {
                 if (newGoalList[i]["big_goal_name"] == str_biggoal) {
-                    newGoalList[i].remove("big_goal_name")
+                    newGoalList[i]["big_goal_name"] = ""
+                    newGoalList[i]["detail_goal_name"] = ""
+                    newGoalList[i]["icon"] = ""
+                    newGoalList[i]["color"] = ""
+
                     break
                 }
             }
 
-            // 대표목표, 세부목표, 아이콘, 색상 값 넣기
+            // 리스트에 대표목표 및 세부목표 추가하기
             newGoalList.add(
                 mutableMapOf(
                     "big_goal_name" to str_biggoal,
@@ -195,16 +172,23 @@ class SetupFragment : Fragment() {
         }
         cursor.close()
 
+        // 리스트에 있는 공백 값 제거
+        var size = newGoalList.size - 1
+        for (j in size downTo 0) {
+            if (newGoalList[j]["big_goal_name"] == "") {
+                newGoalList.removeAt(j)
+            }
+        }
+
         // 리스트 출력
-        // Log.d("onstart함수 : 리스트 biggoal", bigGoalList.toString())
-        // Log.d("onstart함수 : 리스트 newgoal", newGoalList.toString())
+        Log.d("dataLoading()함수 : 리스트 newgoal", newGoalList.toString())
 
         // 대표 리사이클러뷰 연결
-        goalBigRecyclerView = binding.goalBigRecyclerView
+        var goalBigRecyclerView: RecyclerView = binding.goalBigRecyclerView
 
         // 대표목표 데이터 저장
         bigGoalList.clear() // 배열 초기화
-        bigGoalList = loadBigGoalItems(newGoalList)
+        bigGoalList = loadGoalItems(newGoalList)
 
         // 대표목표 어댑터 연결
         goalBigRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -228,7 +212,7 @@ class SetupFragment : Fragment() {
         dialog.bigGoalSetup()
 
         dialog.setOnClickedListener(object: BigGoalSetupDialog.ButtonClickListener{
-            // 추가 버튼을 눌렀을 경우
+            // 확인 버튼을 눌렀을 경우
             override fun onClicked(isAdd: Boolean, code: Int, title: String?, color: String?) {
                 if (isAdd) {
                     when (code) {
@@ -305,8 +289,33 @@ class SetupFragment : Fragment() {
         })
     }
 
+    // 세부목표 추가 팝업
+    private fun detailGoalAddPopUp(bigGoalItem: BigGoalItem) {
+        // 세부목표 추가 팝업 띄우기
+        val dialog = DetailGoalSetupDialog(requireContext(), "", "", bigGoalItem.color, bigGoalItem.title)
+
+        // 팝업 클릭 이벤트 연결
+        dialog.detailGoalSetup()
+
+        dialog.setOnClickedListener(object : DetailGoalSetupDialog.ButtonClickListener{
+            override fun onClick(
+                isChanged: Boolean,
+                title: String,
+                icon: String,
+                color: String,
+                bigGoal: String
+            ) {
+                // 확인 버튼을 눌렀을 경우
+                if (isChanged) {
+                    // 리사이클러뷰에 있는 대표목표에 세부목표값 저장
+                    dataLoading()
+                }
+            }
+        })
+    }
+
     // 대표 목표&세부목표 데이터 저장
-    private fun loadBigGoalItems(
+    private fun loadGoalItems(
         newGoalList: ArrayList<MutableMap<String, String>>
     ): ArrayList<BigGoalItem> {
 
@@ -318,52 +327,48 @@ class SetupFragment : Fragment() {
             var newColor = newGoalList[i]["color"].toString() // 색상
             var newTitle = newGoalList[i]["big_goal_name"].toString() // 대표목표
             var iconList = ArrayList<String>() // 아이콘 리스트
+            var tempDetailGoalList = ArrayList<String>() // 초기 세부목표 리스트
             var detailGoalList = ArrayList<DetailGoalItem>() // 세부목표 리스트
-            var isSame = false // 중복값 여부 확인
+            var isDifferent = true // 중복값 여부 확인
 
             // 대표목표 중복값 확인
             for (j in 0 until saveTitleList.size) {
                 if (newGoalList[i]["big_goal_name"] == saveTitleList[j]) {
-                    isSame = true
+                    isDifferent = false
                     break
                 }
             }
 
-            // 대표목표 중복값이 없고, i값 != size값 이라면
-            if (!isSame) {
-                iconList.add(newGoalList[i]["icon"].toString()) // 아이콘 저장
+            // 저장되지 않은 대표목표&세부목표 리스트이라면 배열에 저장하기
+            if (isDifferent) {
                 saveTitleList.add(newGoalList[i]["big_goal_name"].toString()) // 저장된 대표목표 리스트에 대표목표 저장
 
-                for (j in i + 1 until newGoalList.size) {
+                for (j in 0 until newGoalList.size) {
                     // 대표목표가 같다면, 배열에 아이콘 저장
                     if (newGoalList[i]["big_goal_name"] == newGoalList[j]["big_goal_name"]) {
-                        iconList.add(newGoalList[j]["icon"].toString())
+                        if (!newGoalList[j]["detail_goal_name"].isNullOrBlank()) {
+                            // iconList.add(newGoalList[j]["icon"].toString())
+                            // tempDetailGoalList.add(newGoalList[j]["detail_goal_name"].toString())
+                            detailGoalList.add(DetailGoalItem(newGoalList[j]["icon"].toString(), newGoalList[j]["detail_goal_name"].toString(), newColor, newTitle))
+                        }
                     }
                 }
-            }
 
-            // 대표목표가 같고 세부목표가 저장되어 있다면, 세부목표 저장
-            if (!newGoalList[i]["detail_goal_name"].isNullOrBlank()) {
-                detailGoalList.add(DetailGoalItem(newGoalList[i]["icon"].toString(), newGoalList[i]["detail_goal_name"].toString(), newGoalList[i]["color"].toString()))
-                for (k in i + 1 until newGoalList.size) {
-                    if (newGoalList[i]["big_goal_name"] == newGoalList[k]["big_goal_name"]) {
-                        var icon = newGoalList[k]["icon"].toString()
-                        var title = newGoalList[k]["detail_goal_name"].toString()
-                        var color = newGoalList[k]["color"].toString()
-                        detailGoalList.add(DetailGoalItem(icon, title, color))
-                    }
-                }
+                // 세부목표 리스트 저장
+                /*for (j in 0 until tempDetailGoalList.size) {
+                    detailGoalList.add(DetailGoalItem(iconList[j], tempDetailGoalList[j], newColor, newTitle))
+                }*/
             }
 
             // 리스트에 대표목표 추가
-            // Log.d("detailGoal리스트", detailGoalList.toString())
+            Log.d("loadGoalItems() 함수 detailgoal", detailGoalList.toString())
             bigGoalList.add(BigGoalItem(newColor, newTitle, iconList, false, detailGoalList))
             ++i
         }
 
         // 리스트 출력
-        // Log.d("load함수 : 리스트 biggoal", bigGoalList.toString())
-        // Log.d("load함수 : 리스트 newgoal", newGoalList.toString())
+        Log.d("loadGoalItems() 함수 biggoal", bigGoalList.toString())
+        Log.d("loadGoalItems() 함수 newgoal", newGoalList.toString())
 
         return bigGoalList
     }
