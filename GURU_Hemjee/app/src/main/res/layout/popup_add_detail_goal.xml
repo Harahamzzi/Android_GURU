@@ -73,7 +73,7 @@
 
         <RadioGroup
             android:id="@+id/pop_detailgoal_icon_rgroup1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
@@ -128,7 +128,7 @@
 
         <RadioGroup
             android:id="@+id/pop_detailgoal_icon_rgroup2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
@@ -185,7 +185,7 @@
 
         <RadioGroup
             android:id="@+id/pop_detailgoal_icon_rgroup3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -270,7 +270,7 @@
         android:backgroundTint="@color/Yellow"
         android:fontFamily="@font/noto_sans"
         android:padding="0dp"
-        android:text="추가"
+        android:text="확인"
         android:textColor="@color/black"
         android:textSize="12dp"
         app:backgroundTint="@null"

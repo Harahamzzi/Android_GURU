@@ -2,15 +2,32 @@ package com.example.guru_hemjee.Home.Goal
 
 import android.app.Dialog
 import android.content.Context
-import android.content.res.ColorStateList
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.widget.*
+import com.example.guru_hemjee.DBConvert
+import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.google.android.material.button.MaterialButton
 
-//세부 목표 팝업
-class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val originIcon: Int) {
+// 세부목표 클릭 시 나타나는 세부 목표 팝업
+// code 0 = 추가, code 1 = 수정
+class DetailGoalSetupDialog(
+    val context: Context,
+    val title: String?,
+    val icon: String?,
+    val color: String,
+    private val bigGoal: String,
+    val code: Int
+) {
     private val dialog = Dialog(context)
+
+    private lateinit var dbManager: DBManager // 내부 db 사용을 위한 변수
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    private lateinit var titleEdt: EditText // 세부목표
+    private lateinit var titleTv: TextView // 팝업 제목
 
     //확인 취소 버튼
     private lateinit var cancelBtn: MaterialButton
@@ -25,7 +42,7 @@ class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val origin
     private lateinit var bookRBtn: RadioButton
     private lateinit var lessonRBtn: RadioButton
     private lateinit var schoolRBtn: RadioButton
-    private lateinit var dumbleRBtn: RadioButton
+    private lateinit var dumbbellRBtn: RadioButton
     private lateinit var forestRBtn: RadioButton
     private lateinit var sportsRBtn: RadioButton
     private lateinit var computerRBtn: RadioButton
@@ -38,15 +55,29 @@ class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val origin
     private lateinit var savingsRBtn: RadioButton
     private lateinit var stockRBtn: RadioButton
 
-    //icon
-    private var icon: Int = originIcon
+    // 기존에 저장되어 있는 세부목표, 색상, 아이콘, 대표목표 값
+    private val initTitle = title
+    private val initIcon = icon
+    private val initColor = color
+    private val initBigGoal = bigGoal
+
+    // 새롭게 변경된 세부목표, 아이콘 값
+    private var newIcon: String? = null
 
     //아이콘 변경 팝업
-    fun iconPopUp() {
+    fun detailGoalSetup() {
+
+        // 팝업 열기
         dialog.show()
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 모서리 둥글게
         dialog.setContentView(R.layout.popup_add_detail_goal)
 
         // 위젯 연결
+        titleTv = dialog.findViewById(R.id.pop_detailgoal_title_tv)
+        titleEdt = dialog.findViewById(R.id.pop_detailgoal_title_edt)
+        cancelBtn = dialog.findViewById(R.id.pop_detailgoal_cancelBtn)
+        confirmBtn = dialog.findViewById(R.id.pop_detailgoal_confirmBtn)
+
         rGroup1 = dialog.findViewById(R.id.pop_detailgoal_icon_rgroup1)
         rGroup2 = dialog.findViewById(R.id.pop_detailgoal_icon_rgroup2)
         rGroup3 = dialog.findViewById(R.id.pop_detailgoal_icon_rgroup3)
@@ -54,7 +85,7 @@ class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val origin
         bookRBtn = dialog.findViewById(R.id.pop_detailgoal_book_rbtn)
         lessonRBtn = dialog.findViewById(R.id.pop_detailgoal_lesson_rbtn)
         schoolRBtn = dialog.findViewById(R.id.pop_detailgoal_school_rbtn)
-        dumbleRBtn = dialog.findViewById(R.id.pop_detailgoal_dumble_rbtn)
+        dumbbellRBtn = dialog.findViewById(R.id.pop_detailgoal_dumble_rbtn)
         forestRBtn = dialog.findViewById(R.id.pop_detailgoal_forest_rbtn)
         sportsRBtn = dialog.findViewById(R.id.pop_detailgoal_sports_rbtn)
         computerRBtn = dialog.findViewById(R.id.pop_detailgoal_computer_rbtn)
@@ -67,229 +98,349 @@ class DetailGoalSetupDialog(val context: Context, val goalColor: Int, val origin
         savingsRBtn = dialog.findViewById(R.id.pop_detailgoal_savings_rbtn)
         stockRBtn = dialog.findViewById(R.id.pop_detailgoal_stock_rbtn)
 
-        //라디오 버튼이 미리 설정된 버튼과 같으면 강조 표시
-        if(R.drawable.ic_book_24 ==icon){
-            bookRBtn.isChecked = true
-            bookRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_lesson_24 ==icon){
-            lessonRBtn.isChecked = true
-            lessonRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_school_24 ==icon){
-            bookRBtn.isChecked = true
-            bookRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.dumble_icon ==icon){
-            dumbleRBtn.isChecked = true
-            dumbleRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_forest_24 ==icon){
-            forestRBtn.isChecked = true
-            forestRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_sports_24 ==icon){
-            sportsRBtn.isChecked = true
-            sportsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_computer_24 ==icon){
-            computerRBtn.isChecked = true
-            computerRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_piano_24 ==icon){
-            pianoRBtn.isChecked = true
-            pianoRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_food_24 ==icon){
-            foodRBtn.isChecked = true
-            foodRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_cafe_24 ==icon){
-            cafeRBtn.isChecked = true
-            cafeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_business_24 ==icon){
-            businessRBtn.isChecked = true
-            businessRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_store_24 ==icon){
-            storeRBtn.isChecked = true
-            storeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_drawing_24 ==icon){
-            drawingRBtn.isChecked = true
-            drawingRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_savings_24 ==icon){
-            savingsRBtn.isChecked = true
-            savingsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-        }
-        else if(R.drawable.ic_stock_24 ==icon){
-            forestRBtn.isChecked = true
-            forestRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
+        // 기존에 저장된 값이 없는 경우, 기본값 설정
+        bookRBtn.isChecked = true
+        DBConvert.radioColorConvert(bookRBtn, initColor, context)
+        newIcon = "ic_book_24"
+
+        // 기존에 저장된 값이 있는 경우(값 수정일 경우) 세부목표와 아이콘 적용하기
+        if (code == 1) {
+            titleTv.text = "세부목표 수정"
+            titleEdt.setText(initTitle)
+
+            // 기존에 선택되어 있는 bookRBtn 버튼 초기화
+            bookRBtn.isChecked = false
+            DBConvert.radioColorConvert(bookRBtn, "Gray", context)
+
+            when (initIcon) {
+                "ic_book_24" -> {
+                    bookRBtn.isChecked = true
+                    DBConvert.radioColorConvert(bookRBtn, initColor, context) // 색상 적용
+                }
+                "ic_lesson_24" -> {
+                    lessonRBtn.isChecked = true
+                    DBConvert.radioColorConvert(lessonRBtn, initColor, context)
+                }
+                "ic_school_24" -> {
+                    schoolRBtn.isChecked = true
+                    DBConvert.radioColorConvert(schoolRBtn, initColor, context)
+                }
+                "dumble_icon" -> {
+                    dumbbellRBtn.isChecked = true
+                    DBConvert.radioColorConvert(dumbbellRBtn, initColor, context)
+                }
+                "ic_forest_24" -> {
+                    forestRBtn.isChecked = true
+                    DBConvert.radioColorConvert(forestRBtn, initColor, context)
+                }
+                "ic_sports_24" -> {
+                    sportsRBtn.isChecked = true
+                    DBConvert.radioColorConvert(sportsRBtn, initColor, context)
+                }
+                "ic_computer_24" -> {
+                    computerRBtn.isChecked = true
+                    DBConvert.radioColorConvert(computerRBtn, initColor, context)
+                }
+                "ic_piano_24" -> {
+                    pianoRBtn.isChecked = true
+                    DBConvert.radioColorConvert(pianoRBtn, initColor, context)
+                }
+                "ic_food_24" -> {
+                    foodRBtn.isChecked = true
+                    DBConvert.radioColorConvert(foodRBtn, initColor, context)
+                }
+                "ic_cafe_24" -> {
+                    cafeRBtn.isChecked = true
+                    DBConvert.radioColorConvert(cafeRBtn, initColor, context)
+                }
+                "ic_business_24" -> {
+                    businessRBtn.isChecked = true
+                    DBConvert.radioColorConvert(businessRBtn, initColor, context)
+                }
+                "ic_store_24" -> {
+                    storeRBtn.isChecked = true
+                    DBConvert.radioColorConvert(storeRBtn, initColor, context)
+                }
+                "ic_drawing_24" -> {
+                    drawingRBtn.isChecked = true
+                    DBConvert.radioColorConvert(drawingRBtn, initColor, context)
+                }
+                "ic_savings_24" -> {
+                    savingsRBtn.isChecked = true
+                    DBConvert.radioColorConvert(savingsRBtn, initColor, context)
+                }
+                "ic_stock_24" -> {
+                    stockRBtn.isChecked = true
+                    DBConvert.radioColorConvert(stockRBtn, initColor, context)
+                }
+            }
         }
 
-        //그룹에 버튼 연결, 버튼 연결 시 설정
-        rGroup1.setOnCheckedChangeListener { radioGroup, checkedId ->
+        // 라디오 그룹1 클릭 이벤트
+        rGroup1.setOnCheckedChangeListener { group, checkedId ->
+            colorGray()
             when(checkedId){
                 R.id.pop_detailgoal_book_rbtn -> {
                     colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    bookRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_book_24
+                    DBConvert.radioColorConvert(bookRBtn, initColor, context)
+                    newIcon = "ic_book_24"
                 }
                 R.id.pop_detailgoal_lesson_rbtn -> {
+                    colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    lessonRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_lesson_24
+                    DBConvert.radioColorConvert(lessonRBtn, initColor, context)
+                    newIcon = "ic_lesson_24"
                 }
                 R.id.pop_detailgoal_school_rbtn -> {
                     colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    schoolRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_school_24
+                    DBConvert.radioColorConvert(schoolRBtn, initColor, context)
+                    newIcon = "ic_school_24"
                 }
                 R.id.pop_detailgoal_dumble_rbtn -> {
                     colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    dumbleRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.dumble_icon
+                    DBConvert.radioColorConvert(dumbbellRBtn, initColor, context)
+                    newIcon = "dumble_icon"
                 }
                 R.id.pop_detailgoal_forest_rbtn -> {
                     colorGray()
                     rGroup2.clearCheck()
                     rGroup3.clearCheck()
-                    forestRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_forest_24
+                    DBConvert.radioColorConvert(forestRBtn, initColor, context)
+                    newIcon = "ic_forest_24"
                 }
             }
         }
-        rGroup2.setOnCheckedChangeListener { radioGroup, checkedId ->
+
+        // 라디오 그룹2 클릭 이벤트
+        rGroup2.setOnCheckedChangeListener { group, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_detailgoal_sports_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    sportsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_sports_24
+                    DBConvert.radioColorConvert(sportsRBtn, initColor, context)
+                    newIcon = "ic_sports_24"
                 }
                 R.id.pop_detailgoal_computer_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    computerRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_computer_24
+                    DBConvert.radioColorConvert(computerRBtn, initColor, context)
+                    newIcon = "ic_computer_24"
                 }
                 R.id.pop_detailgoal_piano_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    pianoRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_piano_24
+                    DBConvert.radioColorConvert(pianoRBtn, initColor, context)
+                    newIcon = "ic_piano_24"
                 }
                 R.id.pop_detailgoal_food_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    foodRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_food_24
+                    DBConvert.radioColorConvert(foodRBtn, initColor, context)
+                    newIcon = "ic_food_24"
                 }
                 R.id.pop_detailgoal_cafe_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    cafeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_cafe_24
+                    DBConvert.radioColorConvert(cafeRBtn, initColor, context)
+                    newIcon = "ic_cafe_24"
                 }
             }
         }
-        rGroup3.setOnCheckedChangeListener { radioGroup, checkedId ->
+
+        // 라디오 그룹3 클릭 이벤트
+        rGroup3.setOnCheckedChangeListener { group, checkedId ->
             colorGray()
             when(checkedId){
                 R.id.pop_detailgoal_business_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    businessRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_business_24
+                    DBConvert.radioColorConvert(businessRBtn, initColor, context)
+                    newIcon = "ic_business_24"
                 }
                 R.id.pop_detailgoal_store_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    storeRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_store_24
+                    DBConvert.radioColorConvert(storeRBtn, initColor, context)
+                    newIcon = "ic_store_24"
                 }
                 R.id.pop_detailgoal_drawing_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    drawingRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_drawing_24
+                    DBConvert.radioColorConvert(drawingRBtn, initColor, context)
+                    newIcon = "ic_drawing_24"
                 }
                 R.id.pop_detailgoal_savings_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    savingsRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_savings_24
+                    DBConvert.radioColorConvert(savingsRBtn, initColor, context)
+                    newIcon = "ic_savings_24"
                 }
                 R.id.pop_detailgoal_stock_rbtn -> {
                     colorGray()
                     rGroup1.clearCheck()
                     rGroup3.clearCheck()
-                    stockRBtn.backgroundTintList = ColorStateList.valueOf(goalColor)
-                    icon = R.drawable.ic_stock_24
+                    DBConvert.radioColorConvert(stockRBtn, initColor, context)
+                    newIcon = "ic_stock_24"
                 }
             }
         }
 
-        //취소 버튼
+        // 취소 버튼 클릭 이벤트
         cancelBtn.setOnClickListener {
-            onClickListener.onClick(false, originIcon)
+            onClickListener.onClick(false, 2, null, null, null, null, null)
             dialog.dismiss()
         }
 
-        //확인 버튼
+        // 세부목표 추가&수정 버튼 클릭 이벤트
         confirmBtn.setOnClickListener {
-            onClickListener.onClick(true, icon)
-            dialog.dismiss()
-        }
 
+            var newDetailGoal = titleEdt.text.toString() // 세부목표
+            var isOverlap = false // 중복값을 확인하기 위한 변수
+
+            // DB에 중복 세부목표 값이 있는지 확인
+            dbManager = DBManager(context, "hamster_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+            var cursor = sqlitedb.rawQuery("SELECT detail_goal_name FROM detail_goal_db WHERE detail_goal_name = '${newDetailGoal}' AND icon = '${newIcon}'",null)
+            if (cursor.moveToNext()) {
+                isOverlap = true
+            }
+            cursor.close()
+            sqlitedb.close()
+
+            // 중복값이라면
+            if (isOverlap) {
+                Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
+            }
+            // 세부목표를 입력 안 했다면
+            if (newDetailGoal.isBlank()) {
+                Toast.makeText(context, "세부 목표를 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
+            // 세부목표를 입력했다면
+            else {
+                if (code == 0) {
+                    sqlitedb = dbManager.writableDatabase
+                    sqlitedb.execSQL("INSERT INTO detail_goal_db VALUES ('" + newDetailGoal + "', '" + newIcon + "', '" + "${0}" + "', '" + initBigGoal + "', '" + initColor + "');")
+                    sqlitedb.close()
+
+                    onClickListener.onClick(
+                        true,
+                        0,
+                        newDetailGoal,
+                        newIcon,
+                        initColor,
+                        initTitle,
+                        initBigGoal,
+                    )
+                    dialog.dismiss()
+                    Toast.makeText(context, "목표를 저장했습니다", Toast.LENGTH_SHORT).show()
+                }
+                // 세부목표를 수정하는 경우
+                else if (code == 1) {
+                    // 아이콘만 수정했다면
+                    if (initTitle == newDetailGoal && initIcon != newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            initTitle,
+                            newIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    // 세부목표만 수정했다면
+                    else if (initTitle != newDetailGoal && initIcon == newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            newDetailGoal,
+                            initIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    // 세부목표와 아이콘 모두 수정했다면
+                    else if (initTitle != newDetailGoal && initIcon != newIcon) {
+                        sqlitedb = dbManager.writableDatabase
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.close()
+
+                        onClickListener.onClick(
+                            true,
+                            1,
+                            newDetailGoal,
+                            newIcon,
+                            initColor,
+                            initTitle,
+                            initBigGoal
+                        )
+                        dialog.dismiss()
+                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                dbManager.close()
+            }
+        }
     }
 
     interface ButtonClickListener {
-        fun onClick(isChanged: Boolean, changedIcon: Int)
+        fun onClick(isChanged: Boolean, code: Int, title: String?, icon: String?,
+                    color: String?, initTitle: String?, initBigGoal: String?)
     }
 
-    private  lateinit var onClickListener: ButtonClickListener
+    private lateinit var onClickListener: ButtonClickListener
 
     fun setOnClickedListener(listener: ButtonClickListener){
         onClickListener = listener
     }
 
-    //버튼 초기화(회색 처리)
+    // 버튼 초기화 (버튼색을 회색으로 변경)
     private fun colorGray() {
-        bookRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        lessonRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        schoolRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        dumbleRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        forestRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        sportsRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        computerRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        pianoRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        foodRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        cafeRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        businessRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        storeRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        drawingRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        savingsRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
-        stockRBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+        DBConvert.radioColorConvert(bookRBtn, "Gray", context)
+        DBConvert.radioColorConvert(lessonRBtn, "Gray", context)
+        DBConvert.radioColorConvert(schoolRBtn, "Gray", context)
+        DBConvert.radioColorConvert(dumbbellRBtn, "Gray", context)
+        DBConvert.radioColorConvert(forestRBtn, "Gray", context)
+        DBConvert.radioColorConvert(sportsRBtn, "Gray", context)
+        DBConvert.radioColorConvert(computerRBtn, "Gray", context)
+        DBConvert.radioColorConvert(pianoRBtn, "Gray", context)
+        DBConvert.radioColorConvert(foodRBtn, "Gray", context)
+        DBConvert.radioColorConvert(cafeRBtn, "Gray", context)
+        DBConvert.radioColorConvert(businessRBtn, "Gray", context)
+        DBConvert.radioColorConvert(storeRBtn, "Gray", context)
+        DBConvert.radioColorConvert(drawingRBtn, "Gray", context)
+        DBConvert.radioColorConvert(savingsRBtn, "Gray", context)
+        DBConvert.radioColorConvert(stockRBtn, "Gray", context)
     }
-
 }
