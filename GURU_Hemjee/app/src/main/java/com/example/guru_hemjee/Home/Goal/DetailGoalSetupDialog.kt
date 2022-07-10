@@ -392,8 +392,8 @@ class DetailGoalSetupDialog(
                     // 세부목표와 아이콘 모두 수정했다면
                     else if (initTitle != newDetailGoal && initIcon != newIcon) {
                         sqlitedb = dbManager.writableDatabase
-                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
                         sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
+                        sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
                         sqlitedb.close()
 
                         onClickListener.onClick(
