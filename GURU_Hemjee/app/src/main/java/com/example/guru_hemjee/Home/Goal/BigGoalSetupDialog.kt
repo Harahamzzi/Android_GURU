@@ -312,8 +312,8 @@ class BigGoalSetupDialog(
                     // 대표목표와 색상 모두 수정했다면
                     else if (initTitle != newBigGoal && initColor != newColor) {
                         sqlitedb = dbManager.writableDatabase
-                        sqlitedb.execSQL("UPDATE big_goal_db SET big_goal_name = '$newBigGoal' WHERE big_goal_name = '$initTitle';")
                         sqlitedb.execSQL("UPDATE big_goal_db SET color = '$newColor' WHERE big_goal_name = '$initTitle';")
+                        sqlitedb.execSQL("UPDATE big_goal_db SET big_goal_name = '$newBigGoal' WHERE big_goal_name = '$initTitle';")
                         sqlitedb.close()
 
                         onClickListener.onClicked(true, 1, newBigGoal, newColor, initTitle)
