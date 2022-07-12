@@ -2,6 +2,7 @@ package com.example.guru_hemjee.Home
 
 import android.Manifest
 import android.content.Intent
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import android.os.Bundle
@@ -384,8 +385,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
+        // 테이블에 값이 있는지 판단하기 위한 cursor 변수
+        var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db", null)
 
+        // 테이블에 값이 하나라도 있으면 삭제 시행
+        if(cursor.moveToNext())
+        {
+            sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
+        }
+        
         sqlitedb.close()
         dbManager.close()
     }

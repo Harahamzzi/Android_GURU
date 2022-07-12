@@ -36,6 +36,7 @@ class DBManager(
          * 수요일이면 수, 목요일이면 목 이런식으로 나옴.(String형)
          * **/
 
+
         //대표 목표 DB: avaiable app 생략)
         db!!.execSQL("CREATE TABLE big_goal_db (big_goal_name text PRIMARY KEY, " +
                 "color text, big_goal_create_time time);")
@@ -43,8 +44,7 @@ class DBManager(
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
                 "icon text, count int, big_goal_name text, color text, " +
-                "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE," +
-                "FOREIGN KEY (color) REFERENCES big_goal_db(color) ON UPDATE CASCADE);")
+                "FOREIGN KEY (big_goal_name, color) REFERENCES big_goal_db(big_goal_name, color) ON UPDATE CASCADE);")
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name text, " +
@@ -70,6 +70,13 @@ class DBManager(
         //씨앗 상점 아이템 DB
         db!!.execSQL("CREATE TABLE hamster_deco_info_db (item_name text PRIMARY KEY, price int, " +
                 "type text, category text, bg_pic text, market_pic text, hamster_pic text, is_bought INT, is_using INT, is_applied INT)")
+    }
+
+    override fun onConfigure(db: SQLiteDatabase?) {
+        super.onConfigure(db)
+
+        // SQLite 외래키 권한 활성화
+        db!!.setForeignKeyConstraintsEnabled(true)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
