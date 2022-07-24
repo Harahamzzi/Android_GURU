@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <stroke
+                android:width="1dp"
+                android:color="@color/DarkBrown" />
+
+            <solid
+                android:color="@color/DarkBrown" />
+
+            <size
+                android:width="18dp"
+                android:height="18dp" />
+
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/ic_baseline_check">
+    </item>
+</layer-list>

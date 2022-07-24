@@ -7,7 +7,7 @@
     android:background="@drawable/pop_up_bg">
 
     <TextView
-        android:id="@+id/pop_lock_titleTextView"
+        android:id="@+id/pop_record_titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="33dp"
@@ -28,10 +28,10 @@
         android:layout_marginTop="19dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/pop_cancelButton"
+        app:layout_constraintBottom_toTopOf="@+id/pop_record_cancelButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_lock_titleTextView">
+        app:layout_constraintTop_toBottomOf="@+id/pop_record_titleTextView">
 
         <LinearLayout
             android:id="@+id/detailGoalLayout"
@@ -40,7 +40,7 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pop_record_cancelButton"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"
@@ -63,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pop_record_startButton"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="95dp"

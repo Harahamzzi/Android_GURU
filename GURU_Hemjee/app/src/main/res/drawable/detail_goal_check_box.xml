@@ -2,8 +2,10 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/none_check_box"/>
+    <item
+        android:state_selected="false"
+        android:drawable="@drawable/detail_goal_selector_unchecked"/>
     <item
         android:state_selected="true"
-        android:drawable="@drawable/checked_check_box" />
+        android:drawable="@drawable/detail_goal_selector_checked" />
 </selector>

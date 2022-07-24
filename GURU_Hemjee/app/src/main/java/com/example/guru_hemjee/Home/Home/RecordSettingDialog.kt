@@ -3,30 +3,34 @@ package com.example.guru_hemjee.Home.Home
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.Home.TimeRecord.TimeRecordActivity
 import com.example.guru_hemjee.R
 
-// TODO: view binding 확인 필요
 // 기록 시작 버튼 클릭시 뜨는 팝업(세부 목표 선택)
-class RecordSettingDialog(context: Context, bigGoalName: String) {
+class RecordSettingDialog(context: Context, bigGoalName: String, colorName: String) {
 
     private var context = context
     private var dialog = Dialog(context)    // 부모 액티비티의 context가 들어가도록 함
 
-//    //기본 취소, 확인 버튼
-//    private lateinit var pop_lockCancelImageButton: ImageButton
-//    private lateinit var pop_settingOkImageButton: ImageButton
-//
+    // 취소, 기록 시작 버튼
+    private lateinit var pop_recordCancelButton: Button
+    private lateinit var pop_recordStartButton: Button
+
+    // 세부 목표 목록 레이아웃
+    private lateinit var pop_detailGoalLayout: LinearLayout
+
 //    //대표 목표 수정 버튼
 //    private lateinit var pop_lockSettingGoalColorImageView: ImageView
 //    private lateinit var pop_goalTitleTextView: TextView
 //    private lateinit var pop_changeGoalButton: TextView
-//
+
 //    //시간 관련
 //    private lateinit var pop_hourTimeEditText: EditText
 //    private lateinit var pop_minTimeEditText: EditText
@@ -34,19 +38,26 @@ class RecordSettingDialog(context: Context, bigGoalName: String) {
 
     //기본 정보 관련
     private var bigGoalName = bigGoalName
+    private var bigGoalColorName = colorName
 
     //db관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
     private lateinit var cursor: Cursor
 
-//    //달성 가능한 세부 목표 리스트
-//    private lateinit var pop_lockSettingDetailGoalRecyclerView: RecyclerView
-
     // 팝업을 표시할 때 쓰는 함수
     @SuppressLint("Range")
     fun showPopup() {
         dialog.setContentView(R.layout.popup_record_setting)
+
+        /** View 연결 **/
+        pop_recordCancelButton = dialog.findViewById(R.id.pop_record_cancelButton) // 취소 버튼
+        pop_recordStartButton = dialog.findViewById(R.id.pop_record_startButton)   // 시작 버튼
+        pop_detailGoalLayout = dialog.findViewById(R.id.detailGoalLayout)               // 세부 목표 목록 레이아웃
+
+
+        /** 세부 목표 리포트 DB 데이터 올리기 **/
+        // TODO: 해당 대표 목표의 모든 세부 목표들을 detail_goal_time_report_db에 올림
 
         /** 세부 목표 목록 갱신 **/
         dbManager = DBManager(context, "hamster_db", null, 1)
@@ -56,31 +67,52 @@ class RecordSettingDialog(context: Context, bigGoalName: String) {
 
         while(cursor.moveToNext())
         {
+            // 0. 세부 목표 목록 레이아웃에 해당 디자인 부풀리기
+            var view: View = dialog.layoutInflater.inflate(R.layout.container_detail_goal_select, pop_detailGoalLayout, false)
+
             // 1. 아이콘
             var iconID = DBConvert.iconConvert(cursor.getString(cursor.getColumnIndex("icon")), context)    // 아이디 값 convert
 
-            var icon = ImageView(context)   // 아이콘 이미지 뷰(temp)
-            icon.setImageResource(iconID)
-            // TODO: icon view 추가
+            var icon: ImageView = view.findViewById(R.id.iconImageView)
+            icon.setImageResource(iconID)   // 아이콘 이미지 변경
+            DBConvert.colorConvert(icon, bigGoalColorName, context) // 아이콘 색상 적용
 
             // 2. 세부 목표 이름
-            var nameTextView = TextView(context)    // 세부 목표 이름 텍스트 뷰(temp)
-
+            var nameTextView: TextView = view.findViewById(R.id.detailGoalNameTextView)
             nameTextView.text = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
-            // TODO: text size dp 단위로 적용 & font 적용
-//            nameTextView.textSize = 14f
-
-            // TODO: text view 추가
 
             // 3. 버튼
-            var checkButton = ImageButton(context)  // 체크 버튼(temp)
+            var checkButton: ImageButton = view.findViewById(R.id.checkboxButton)
             checkButton.setImageResource(R.drawable.detail_goal_check_box)
+            // TODO: 버튼 누르면 해당 세부 목표&&is_complete==false인 항목의 is_active값 변경시키기 (ex: !is_active)
 
-            // TODO: check button view 추가
+            // 4. view 추가
+            pop_detailGoalLayout.addView(view)
         }
 
-        /** 취소 & 시작 버튼 리스너 **/
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
 
+
+        /** 취소 & 시작 버튼 리스너 **/
+        // 취소 버튼
+        pop_recordCancelButton.setOnClickListener {
+            dialog.dismiss()    // 팝업 창 닫기
+        }
+
+        // 시작 버튼
+        pop_recordStartButton.setOnClickListener {
+            dialog.dismiss()    // 팝업 창 닫기
+
+            // 기록 화면으로 이동할 intent 생성
+            var intent = Intent(context, TimeRecordActivity::class.java)
+
+            // 보낼 데이터 넣기
+            intent.putExtra("bigGoalName", bigGoalName)
+
+            context.startActivity(intent)
+        }
 
 //        //가져온 대표 목표 제목으로 수정, 대표 목표 색상으로 변경
 //        pop_lockSettingGoalColorImageView = dialog.findViewById(R.id.pop_lockSettingGoalColorImageView)

@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/imageView10"
+            android:id="@+id/iconImageView"
             android:layout_width="18dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_computer_black_36dp"
             app:tint="@color/Orange" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/detailGoalNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,26 +27,19 @@
             android:maxWidth="207dp"
             android:maxLines="1"
             android:text="세부 목표 제목"
+            android:textSize="14dp"
             android:textColor="@color/Black" />
 
-        <ImageView
-            android:id="@+id/imageView11"
+        <ImageButton
+            android:id="@+id/checkboxButton"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/detail_goal_selector"
+            android:background="@drawable/detail_goal_check_box"
             app:srcCompat="@drawable/ic_outline_check_10"
             app:tint="@color/White" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/line_horizontal"
-        app:tint="@color/DarkGray" />
 
 </LinearLayout>

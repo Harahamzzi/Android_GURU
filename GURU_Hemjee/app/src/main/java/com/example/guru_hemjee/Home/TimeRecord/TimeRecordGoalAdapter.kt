@@ -1,6 +1,7 @@
 package com.example.guru_hemjee.Home.TimeRecord
 
 import android.graphics.PorterDuff
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +41,16 @@ class TimeRecordGoalAdapter : RecyclerView.Adapter<TimeRecordGoalAdapter.ItemVie
     }
 
     override fun getItemCount(): Int {
-        // RecyclerView의 총 개수 반환
-        return item.size
+
+        try {
+            // RecyclerView의 총 개수 반환
+            return item.size
+        }
+        catch(e: Exception) {
+            Log.e("ERROR", "기록화면 RecyclerView 내의 item 개수 반환 실패(선택된 세부목표가 없음)")
+        }
+
+        return 0
     }
 
     fun addItem(data: TimeRecordGoalItem) {
