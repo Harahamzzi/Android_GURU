@@ -8,116 +8,112 @@
     android:orientation="horizontal"
     tools:context=".Home.Home.HomeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/home_seedPointTextView"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/seed_point_background"
+        android:drawableLeft="@drawable/seed_resize"
+        android:gravity="center|end"
+        android:paddingRight="8dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="1000"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:lineSpacingExtra="49.03px"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/clothFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="177dp"
+        android:layout_marginTop="114dp"
+        android:layout_marginBottom="92dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView">
+
+        <ImageView
+            android:id="@+id/home_hamsterImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/hamzzi3" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="330dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/main_block_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/goalViewPager">
+
 
         <TextView
-            android:id="@+id/home_seedPointTextView"
-            android:layout_width="80dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/seed_point_background"
-            android:drawableLeft="@drawable/seed_resize"
-            android:gravity="center|end"
-            android:paddingRight="8dp"
+            android:id="@+id/hamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
             android:fontFamily="@font/noto_sans"
-            android:text="1000"
-            android:textColor="@color/black"
-            android:textSize="12dp"
-            android:lineSpacingExtra="49.03px"
-            android:textFontWeight="500"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="김햄찌"
+            android:textColor="@color/Black"
+            android:textFontWeight="600"
+            android:textSize="12dp" />
 
-        <FrameLayout
-            android:id="@+id/clothFrameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="177dp"
-            android:layout_marginTop="114dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_seedPointTextView" >
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/noto_sans"
+            android:text="와 오늘 함께한 시간"
+            android:textColor="@color/Black"
+            android:textFontWeight="400"
+            android:textSize="12dp" />
 
-            <ImageView
-                android:id="@+id/home_hamsterImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/hamzzi3"
-                />
-        </FrameLayout>
+        <View
+            android:id="@+id/main_lineView"
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:background="#011616" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="330dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="92dp"
-            android:background="@drawable/main_block_background"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clothFrameLayout">
+        <TextView
+            android:id="@+id/totalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="4시간 50분"
+            android:textAlignment="center"
+            android:textColor="@color/Black"
+            android:textFontWeight="600"
+            android:textSize="12dp" />
+    </LinearLayout>
 
-
-            <TextView
-                android:id="@+id/hamName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="김햄찌"
-                android:textColor="@color/Black"
-                android:textFontWeight="600"
-                android:textSize="12dp" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:text="와 오늘 함께한 시간"
-                android:textColor="@color/Black"
-                android:textFontWeight="400"
-                android:textSize="12dp" />
-
-            <View
-                android:id="@+id/main_lineView"
-                android:layout_width="1dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center"
-                android:background="#011616" />
-
-            <TextView
-                android:id="@+id/totalTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="4시간 50분"
-                android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textFontWeight="600"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/goalViewPager"
-            android:layout_width="0dp"
-            android:layout_height="90dp"
-            android:orientation="horizontal"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:layout_marginTop="9dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/goalViewPager"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_marginBottom="45dp"
+        android:orientation="horizontal"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
