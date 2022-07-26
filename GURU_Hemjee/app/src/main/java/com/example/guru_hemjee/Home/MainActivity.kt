@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.guru_hemjee.*
 import com.example.guru_hemjee.Home.Album.AlbumMainActivity
+import com.example.guru_hemjee.Home.Fame.FameFragment
 import com.example.guru_hemjee.Home.Goal.SetupFragment
 import com.example.guru_hemjee.Home.Home.HomeFragment
 import com.example.guru_hemjee.Home.MyHamsterManage.HamsterEditFragment
@@ -205,6 +206,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         "dailyAlbum" -> {
                             binding.titleTextView.setText("나의 성취 앨범")
                         }
+                        // 명예의 전당 페이지
+                        "fame" -> {
+                            binding.titleTextView.setText("명예의 전당")
+                        }
                         // 씨앗 상점 페이지
                         "seedMarket" -> {
                             binding.titleTextView.setText("씨앗 상점")
@@ -320,6 +325,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 var tempIntent = Intent(this, AlbumMainActivity::class.java)
                 startActivity(tempIntent)
             }
+            R.id.action_fame -> {
+                // 명예의 전당 탭으로 전환
+                transaction.replace(R.id.fragment_main, FameFragment(), "fame")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+                // 타이틀 텍스트 변경
+                binding.titleTextView.setText("명예의 전당")
+
+                // Navigation Drawer 닫기
+                binding.homeDrawerLayout.closeDrawers()
+            }
             R.id.action_store -> {
                 // 씨앗 상점 탭으로 전환
                 transaction.replace(R.id.fragment_main, SeedMarketFragment(), "seedMarket")
@@ -360,7 +377,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // Navigation Drawer를 통해 각 탭으로 전환시 동작(변경사항)
         when(item.itemId) {
-            R.id.action_goalAndTime, R.id.action_report,
+            R.id.action_goalAndTime, R.id.action_report, R.id.action_fame,
             R.id.action_store, R.id.action_charManagement, R.id.action_preference -> {
 
                 setOtherPagesAction()

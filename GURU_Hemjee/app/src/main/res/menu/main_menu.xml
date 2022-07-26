@@ -16,18 +16,23 @@
         android:icon="@drawable/photo_icon"
         android:title="나의 성취 앨범" />
     <item
-        android:id="@+id/action_store"
+        android:id="@+id/action_fame"
         android:orderInCategory="4"
+        android:icon="@drawable/fame_icon"
+        android:title="명예의 전당" />
+    <item
+        android:id="@+id/action_store"
+        android:orderInCategory="5"
         android:icon="@drawable/paid_icon"
         android:title="씨앗 상점" />
     <item
         android:id="@+id/action_charManagement"
-        android:orderInCategory="5"
+        android:orderInCategory="6"
         android:icon="@drawable/pets_icon"
         android:title="나의 햄찌 관리" />
     <item
         android:id="@+id/action_preference"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:icon="@drawable/manage_accounts_icon"
         android:title="설정" />
 </menu>
