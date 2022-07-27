@@ -39,33 +39,31 @@ class DetailGoalItemAdapter(
             val detailLayout = binding.detailGoalItemDetailGoalCLayout
 
             try {
-                if (detailGoalItem != null) {
-                    // 세부목표 icon 색상 저장
-                    var iconColor = 0
-                    when (detailGoalItem.color) {
-                        "Orange" -> R.color.Orange
-                        "BrightYellow" -> R.color.BrightYellow
-                        "Yellow" -> iconColor = R.color.Yellow
-                        "Apricot" -> iconColor = R.color.Apricot
-                        "DarkBrown" -> iconColor = R.color.DarkBrown
-                        "SeedBrown" -> iconColor = R.color.SeedBrown
-                        "NoteYellow" -> iconColor = R.color.NoteYellow
-                        "LightGreen" -> iconColor = R.color.LightGreen
-                        "Green" -> iconColor = R.color.Green
-                        "LightBlue" -> iconColor = R.color.LightBlue
-                        "Blue" -> iconColor = R.color.Blue
-                        "Purple" -> iconColor = R.color.Purple
-                        "Pink" -> iconColor = R.color.Pink
-                    }
-
-                    // 세부목표 아이콘 이미지 및 색상 적용
-                    val iconId = DBConvert.iconConvert(detailGoalItem.detailIcon, context)
-                    detailIcon.setImageResource(iconId)
-                    detailIcon.setColorFilter(ContextCompat.getColor(context, iconColor))
-
-                    // 세부목표 텍스트 적용
-                    detailTitle.text = detailGoalItem.detailTitle
+                // 세부목표 icon 색상 저장
+                var iconColor = 0
+                when (detailGoalItem.color) {
+                    "Orange" -> R.color.Orange
+                    "BrightYellow" -> R.color.BrightYellow
+                    "Yellow" -> iconColor = R.color.Yellow
+                    "Apricot" -> iconColor = R.color.Apricot
+                    "DarkBrown" -> iconColor = R.color.DarkBrown
+                    "SeedBrown" -> iconColor = R.color.SeedBrown
+                    "NoteYellow" -> iconColor = R.color.NoteYellow
+                    "LightGreen" -> iconColor = R.color.LightGreen
+                    "Green" -> iconColor = R.color.Green
+                    "LightBlue" -> iconColor = R.color.LightBlue
+                    "Blue" -> iconColor = R.color.Blue
+                    "Purple" -> iconColor = R.color.Purple
+                    "Pink" -> iconColor = R.color.Pink
                 }
+
+                // 세부목표 아이콘 이미지 및 색상 적용
+                val iconId = DBConvert.iconConvert(detailGoalItem.detailIcon, context)
+                detailIcon.setImageResource(iconId)
+                detailIcon.setColorFilter(ContextCompat.getColor(context, iconColor))
+
+                // 세부목표 텍스트 적용
+                detailTitle.text = detailGoalItem.detailTitle
             } catch (e: Exception) {
 
             }

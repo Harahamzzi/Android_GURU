@@ -1,5 +1,6 @@
 package com.example.guru_hemjee.Home.Goal
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import com.example.guru_hemjee.databinding.ContainerGoalItemRecyclerviewBinding
 
 // 아코디언 메뉴 커스텀 리스트뷰의 어댑터
 // 파라미터 값 : 대표목표 아이템, 세부목표 어댑터에 보내기 위한 세부목표 아이템
-class BigGoalItemAdapter(): RecyclerView.Adapter<BigGoalItemAdapter.BigGoalViewHolder>() {
+class BigGoalItemAdapter: RecyclerView.Adapter<BigGoalItemAdapter.BigGoalViewHolder>() {
 
     // context 변수
     val context = MyApplication.applicationContext()
@@ -163,6 +164,7 @@ class BigGoalItemAdapter(): RecyclerView.Adapter<BigGoalItemAdapter.BigGoalViewH
     }
 
     // 아이템을 제거하는 함수
+    @SuppressLint("NotifyDataSetChanged")
     fun removeBigGoalItem(bigGoalItem: BigGoalItem) {
         bigGoalList.remove(bigGoalItem)
         notifyDataSetChanged()
