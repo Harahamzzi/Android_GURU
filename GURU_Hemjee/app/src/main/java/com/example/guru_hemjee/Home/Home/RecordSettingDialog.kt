@@ -51,7 +51,7 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
     private lateinit var cursor: Cursor
 
     // 팝업을 표시할 때 쓰는 함수
-    @SuppressLint("Range")
+    @SuppressLint("Range", "ResourceAsColor")
     fun showPopup() {
         dialog.setContentView(R.layout.popup_record_setting)
 
@@ -118,7 +118,21 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
 
             // 4. view 추가
             pop_detailGoalLayout.addView(view)
+
+            // 5. 구분선 추가
+            var lineParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 3)   // 파라미터 설정
+            lineParams.setMargins(0, 20, 0, 20)
+
+            var lineView = View(context)
+            lineView.layoutParams = lineParams
+            lineView.alpha = 0.1F
+            lineView.setBackgroundColor(R.color.black)
+
+            pop_detailGoalLayout.addView(lineView)
         }
+
+        // 마지막 구분선 제거
+        pop_detailGoalLayout.removeViewAt(pop_detailGoalLayout.childCount - 1)
 
         cursor.close()
         sqlitedb.close()
