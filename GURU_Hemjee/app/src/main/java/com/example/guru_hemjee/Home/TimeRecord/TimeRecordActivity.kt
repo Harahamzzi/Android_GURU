@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
@@ -15,12 +16,15 @@ import java.lang.Exception
 import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 class TimeRecordActivity: AppCompatActivity() {
 
     // 뷰바인딩
-    private var binding: ActivityTimeRecordBinding? = null
+    private var mBinding: ActivityTimeRecordBinding? = null
+    // 매번 null 체크를 하지 않아도 되도록 함
+    private val binding get() = mBinding!!
 
     // recycler view adapter
     private lateinit var adapter1: TimeRecordGoalAdapter    // 세부목표 리사이클러 뷰 어댑터
@@ -42,29 +46,38 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 목표 관련
     private lateinit var bigGoalName: String    // 대표 목표 이름
-    private var bigGoalColor: Int = 0           // 대표 목표 색상
+    private lateinit var bigGoalColor: String   // 대표 목표 색상
+    private var detailGoalNameList = ArrayList<String>()    // 세부 목표 이름 목록
+    private var detailGoalCheckedList = ArrayList<Int>()    // 세부 목표 활성화 여부가 담긴 리스트(1: true, 0: false)
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTimeRecordBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        mBinding = ActivityTimeRecordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // 세부 목표 리포트 DB 데이터 정리
+        clearDetailGoal()
+
+        /** 세부 목표 관련 데이터 가져오기 **/
+        detailGoalNameList = intent.getStringArrayListExtra("detailGoalNameList") as ArrayList<String>
+        detailGoalCheckedList = intent.getIntegerArrayListExtra("detailGoalCheckedList") as ArrayList<Int>
 
         /** 리사이클러뷰 어댑터 연결 **/
 
         // 1. 세부목표 목록 관련 recycler view
         var linearLayoutManager1 = LinearLayoutManager(this)
-        binding?.TimeRecordGoalRecyclerView?.layoutManager = linearLayoutManager1
+        binding.TimeRecordGoalRecyclerView.layoutManager = linearLayoutManager1
 
-        adapter1 = TimeRecordGoalAdapter()
-        binding?.TimeRecordGoalRecyclerView?.adapter = adapter1
+        adapter1 = TimeRecordGoalAdapter(this@TimeRecordActivity)
+        binding.TimeRecordGoalRecyclerView.adapter = adapter1
 
         // 2. 완료한 세부목표 관련 recycler view
         var linearLayoutManager2 = LinearLayoutManager(this)
-        binding?.TimeRecordCompleteRecyclerView?.layoutManager = linearLayoutManager2
+        binding.TimeRecordCompleteRecyclerView.layoutManager = linearLayoutManager2
 
-        adapter2 = TimeRecordGoalAdapter()
-        binding?.TimeRecordCompleteRecyclerView?.adapter = adapter2
+        adapter2 = TimeRecordGoalAdapter(this@TimeRecordActivity)
+        binding.TimeRecordCompleteRecyclerView.adapter = adapter2
 
 
         /** 대표 목표 관련 정보 가져오기 **/
@@ -83,7 +96,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
 
             if(cursor.moveToNext())
-                bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
+                bigGoalColor = cursor.getString(cursor.getColumnIndex("color")).toString()
 
             cursor.close()
             sqlitedb.close()
@@ -92,9 +105,6 @@ class TimeRecordActivity: AppCompatActivity() {
         catch(e: Exception) {
             Log.e("DBException", "대표 목표 색상 뽑아오기 실패")
         }
-
-        // 세부 목표 동적 생성
-        addDetailGoal()
 
         // 타이머 초기화
         time = 0
@@ -107,13 +117,13 @@ class TimeRecordActivity: AppCompatActivity() {
 
         // 클릭 리스너
         // 일시정지 버튼
-        binding?.TimeRecordPauseButton?.setOnClickListener {
+        binding.TimeRecordPauseButton.setOnClickListener {
 
             // 만일 현재 타이머가 일시정지된 상태였다면
             if (isPause)
             {
                 // 1. 버튼 이미지 변경
-                binding?.TimeRecordPauseButton?.setImageResource(R.drawable.ic_play)
+                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_play)
 
                 // 2. 타이머 재작동
                 countTime()
@@ -121,7 +131,7 @@ class TimeRecordActivity: AppCompatActivity() {
             else
             {
                 // 1. 버튼 이미지 변경
-                binding?.TimeRecordPauseButton?.setImageResource(R.drawable.ic_pause_black_48dp)
+                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_pause_black_48dp)
 
                 // 2. 타이머 멈춤
                 timerTask?.cancel()
@@ -132,7 +142,7 @@ class TimeRecordActivity: AppCompatActivity() {
         }
 
         // 정지(끝내기 버튼)
-        binding?.TimeRecordStopButton?.setOnClickListener {
+        binding.TimeRecordStopButton.setOnClickListener {
 
             // 1. 타이머 종료
             timerTask?.cancel()
@@ -216,6 +226,14 @@ class TimeRecordActivity: AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        // 세부 목표 동적 생성
+        addDetailGoal()
+        addCompleteDetailGoal()
+    }
+
     // 타이머 늘어나게 하고, 변경된 값을 업데이트해서 보여주는 함수
     private fun countTime() {
 
@@ -242,14 +260,14 @@ class TimeRecordActivity: AppCompatActivity() {
         dbManager = DBManager(this, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
-        // 파일명이 적혀있지 않은 세부목표들 삭제
-        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
+        // 파일명이 적혀있지 않고, 현재 활성화 되지 않은 세부목표 삭제
+        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL AND is_active = 0")
 
         sqlitedb.close()
         dbManager.close()
     }
 
-    // 세부 목표 동적 생성
+    // TODO: 세부 목표(남은 목표) 동적 생성
     @SuppressLint("Range")
     private fun addDetailGoal() {
 
@@ -267,8 +285,6 @@ class TimeRecordActivity: AppCompatActivity() {
             // 해당 대표 목표의 세부 목표들 가져오기
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
-            var detailGoalCount: Int = cursor.count // 세부 목표의 개수
-
             // 위젯 생성 및 적용
             while(cursor.moveToNext())
             {
@@ -277,8 +293,8 @@ class TimeRecordActivity: AppCompatActivity() {
 
                 // item에 데이터 담기
                 // 1. 아이콘 모양
-                var iconResource: Int = cursor.getInt(cursor.getColumnIndex("icon"))
-                item.setIconResID(iconResource)
+                var iconName: String = cursor.getString(cursor.getColumnIndex("icon")).toString()
+                item.setIconName(iconName)
 
                 // 2. 아이콘 색상
                 item.setIconColor(bigGoalColor)
@@ -289,6 +305,10 @@ class TimeRecordActivity: AppCompatActivity() {
 
                 // 4. 최종 반영
                 adapter1.addItem(item)
+
+                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
+                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, big_goal_name, is_active)"
+                        + " VALUES ('$goalName', '$bigGoalName', 1);")
 
 //                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
 //                var view: View = layoutInflater.inflate(R.layout.container_record_detail_goal, Lock_detailGoalLinearLayout, false)
@@ -319,10 +339,6 @@ class TimeRecordActivity: AppCompatActivity() {
 //
 //                // 위젯 추가
 //                Lock_detailGoalLinearLayout.addView(view)
-
-                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
-                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, color, icon, big_goal_name, is_active)"
-                        + " VALUES ('$goalName', $bigGoalColor, $iconResource, '$bigGoalName', 1);")
             }
 
             // adapter의 값 변경을 알려줌
@@ -339,5 +355,10 @@ class TimeRecordActivity: AppCompatActivity() {
         catch(e: Exception) {
             Log.e("DBException", "세부 목표 가져오기 실패")
         }
+    }
+
+    // TODO: (완료한 목표) 세부 목표 동적 생성
+    private fun addCompleteDetailGoal() {
+
     }
 }

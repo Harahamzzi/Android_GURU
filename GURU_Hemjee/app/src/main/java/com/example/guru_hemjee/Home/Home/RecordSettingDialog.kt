@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.example.guru_hemjee.DBConvert
@@ -39,6 +40,8 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
     //기본 정보 관련
     private var bigGoalName = bigGoalName
     private var bigGoalColorName = colorName
+    private var detailGoalNameList = ArrayList<String>()
+    private var detailGoalCheckedList = ArrayList<Int>()  // 해당 세부 목표가 체크되었는지 아닌지를 저장함 (1: 체크, 0: 체크X)
 
     //db관련
     private lateinit var dbManager: DBManager
@@ -55,11 +58,8 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
         pop_recordStartButton = dialog.findViewById(R.id.pop_record_startButton)   // 시작 버튼
         pop_detailGoalLayout = dialog.findViewById(R.id.detailGoalLayout)               // 세부 목표 목록 레이아웃
 
-
-        /** 세부 목표 리포트 DB 데이터 올리기 **/
-        // TODO: 해당 대표 목표의 모든 세부 목표들을 detail_goal_time_report_db에 올림
-
-        /** 세부 목표 목록 갱신 **/
+        /** 세부 목표 리스트 View 동적 생성 **/
+        // 세부 목표 리스트 View 동적 생성을 위한 DB 변수
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
@@ -71,7 +71,8 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
             var view: View = dialog.layoutInflater.inflate(R.layout.container_detail_goal_select, pop_detailGoalLayout, false)
 
             // 1. 아이콘
-            var iconID = DBConvert.iconConvert(cursor.getString(cursor.getColumnIndex("icon")), context)    // 아이디 값 convert
+            var iconName = cursor.getString(cursor.getColumnIndex("icon"))
+            var iconID = DBConvert.iconConvert(iconName, context)    // 아이디 값 convert
 
             var icon: ImageView = view.findViewById(R.id.iconImageView)
             icon.setImageResource(iconID)   // 아이콘 이미지 변경
@@ -81,10 +82,37 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
             var nameTextView: TextView = view.findViewById(R.id.detailGoalNameTextView)
             nameTextView.text = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
 
+            // 2-1. 세부 목표 체크 목록 추가(기본값: 0)
+            detailGoalCheckedList.add(0)
+            // 2-2. 세부 목표 이름 목록 추가
+            detailGoalNameList.add(nameTextView.text.toString())
+
             // 3. 버튼
-            var checkButton: ImageButton = view.findViewById(R.id.checkboxButton)
-            checkButton.setImageResource(R.drawable.detail_goal_check_box)
-            // TODO: 버튼 누르면 해당 세부 목표&&is_complete==false인 항목의 is_active값 변경시키기 (ex: !is_active)
+            var checkButton: CheckBox = view.findViewById(R.id.checkboxButton)
+            checkButton.setOnClickListener {
+
+                // 해당 세부 목표의 위치값을 특정하기 위한 변수
+                var index = -1
+
+                for(i in detailGoalNameList.indices)
+                {
+                    if(nameTextView.text == detailGoalNameList[i])
+                    {
+                        index = i
+                        break
+                    }
+                }
+
+                // 해당 세부 목표의 체크값 변경
+                if(checkButton.isChecked)
+                {
+                    detailGoalCheckedList[index] = 1
+                }
+                else if(!checkButton.isChecked)
+                {
+                    detailGoalCheckedList[index] = 0
+                }
+            }
 
             // 4. view 추가
             pop_detailGoalLayout.addView(view)
@@ -98,6 +126,13 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
         /** 취소 & 시작 버튼 리스너 **/
         // 취소 버튼
         pop_recordCancelButton.setOnClickListener {
+
+            // 세부 목표 체크 리스트 값 초기화
+            for(i in detailGoalCheckedList.indices)
+            {
+                detailGoalCheckedList[i] = 0
+            }
+
             dialog.dismiss()    // 팝업 창 닫기
         }
 
@@ -110,6 +145,8 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
 
             // 보낼 데이터 넣기
             intent.putExtra("bigGoalName", bigGoalName)
+            intent.putExtra("detailGoalCheckedList", detailGoalCheckedList)
+            intent.putExtra("detailGoalNameList", detailGoalNameList)
 
             context.startActivity(intent)
         }

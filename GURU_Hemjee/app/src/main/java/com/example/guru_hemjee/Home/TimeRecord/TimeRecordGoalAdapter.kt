@@ -1,5 +1,6 @@
 package com.example.guru_hemjee.Home.TimeRecord
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,13 +9,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.R
 
 // 기록화면의 세부 목표 생성 어댑터
-class TimeRecordGoalAdapter : RecyclerView.Adapter<TimeRecordGoalAdapter.ItemViewHolder>() {
+class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordGoalAdapter.ItemViewHolder>() {
 
     // 어댑터에 들어갈 list
     private lateinit var item: ArrayList<TimeRecordGoalItem>
+
+    private var context = context
 
     inner class ItemViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
 
@@ -22,9 +26,9 @@ class TimeRecordGoalAdapter : RecyclerView.Adapter<TimeRecordGoalAdapter.ItemVie
         private var goalNameTextView: TextView = view!!.findViewById(R.id.goalNameTextView)
 
         fun onBind(item: TimeRecordGoalItem) {
-            iconImageView.setImageResource(item.getIconResID())                     // 아이콘 아이디 연결
-            iconImageView.setColorFilter(item.getIconColor(), PorterDuff.Mode.SRC_IN)   // 아이콘 색상 연결
-            goalNameTextView.setText(item.getGoalName())                            // 세부목표 이름 연결
+            iconImageView.setImageResource(DBConvert.iconConvert(item.getIconName(), context))  // 아이콘 모양 적용
+            DBConvert.colorConvert(iconImageView, item.getIconColor(), context)     // 아이콘 색상 적용
+            goalNameTextView.setText(item.getGoalName())                            // 세부목표 이름 적용
         }
     }
 
