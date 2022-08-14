@@ -2,9 +2,11 @@ package com.example.guru_hemjee.Home.Home
 
 import android.content.Context
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.R
@@ -12,6 +14,8 @@ import kotlinx.android.synthetic.main.container_main_goal_select.view.*
 
 // 홈 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
 class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, iconColorNameList: ArrayList<String>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
+
+    private val TAG = "HomeViewPagerAdapter"    // 로그 출력시 사용할 태그
 
     private var context = context               // Context 변수
 
@@ -34,14 +38,20 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
         DBConvert.colorConvert(holder.iconColorImageView, iconColorID[position], context)
 
         /** 아이콘 바인딩 **/
-        // 1. 아이콘 값 추출(분리)
+        // 1. 선행작업 - 아이콘 값 추출(분리)
         var iconList: ArrayList<Int> = getIconList(iconID, position)
+        // 1-2. 선행작업 - 아이콘 이미지 파라미터 생성
+        val iconLayoutParams = LinearLayout.LayoutParams(50, 50)
+        iconLayoutParams.gravity = Gravity.CENTER
+        iconLayoutParams.marginStart = 18
+
         // 2. 아이콘 레이아웃에 넣기
         for(i in iconList.indices)
         {
             // 이미지 뷰 생성 및 이미지 설정 & 색상 적용
             var iv = ImageView(context)
             iv.setImageResource(iconList[i])
+            iv.layoutParams = iconLayoutParams
             DBConvert.colorConvert(iv, iconColorID[position], context)
 
             // 아이콘 이미지 추가
@@ -54,7 +64,12 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
                 var tIv = ImageView(context)
 
                 tIv.setImageResource(R.drawable.ic_sebumenu)      // 이미지 적용
+                tIv.layoutParams = iconLayoutParams
                 DBConvert.colorConvert(tIv, iconColorID[position], context)  // 색상 적용
+
+                holder.iconListLayout.addView(tIv)
+
+                Log.i(TAG, "생략 아이콘 추가완료!")
 
                 break;
             }
@@ -84,6 +99,8 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
         var iconStringList = mIconList[position].split(',')
         var result = ArrayList<Int>()
 
+        Log.d(TAG, "$iconStringList")
+
         // 분할한 아이콘 값을 ArrayList<Int>에 담기
         for(i in iconStringList.indices)
         {
@@ -91,7 +108,8 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
                 result.add(iconStringList[i].toInt())
             }
             catch (e: java.lang.NumberFormatException) {
-                Log.e("ERROR", "해당 대표 목표의 아이콘 값이 없습니다.")
+                Log.e(TAG, "해당 대표 목표의 아이콘 값이 없습니다.")
+                Log.e(TAG, "${e.printStackTrace()}")
             }
         }
 
