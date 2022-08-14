@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -232,6 +234,9 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
 //            }
 //
 //        }
+
+        // 배경색 투명화
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 팝업 띄우기
         dialog.show()
