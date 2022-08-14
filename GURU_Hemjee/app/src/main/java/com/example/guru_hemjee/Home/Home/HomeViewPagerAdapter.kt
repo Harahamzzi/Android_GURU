@@ -96,15 +96,19 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
     private fun getIconList(mIconList: ArrayList<String>, position: Int): ArrayList<Int> {
 
         // , 단위로 해당 포지션의 아이콘 값 분할
-        var iconStringList = mIconList[position].split(',')
+        var iconStringList: List<String> = mIconList[position].split(',')
         var result = ArrayList<Int>()
 
-        Log.d(TAG, "$iconStringList")
+        Log.d(TAG, "분리작업 전 iconStringList: $iconStringList")
 
         // 분할한 아이콘 값을 ArrayList<Int>에 담기
         for(i in iconStringList.indices)
         {
             try {
+                // 만일 리스트 내에 공백이 포함되어있을 경우 스킵
+                if(iconStringList[i] == "")
+                    continue
+
                 result.add(iconStringList[i].toInt())
             }
             catch (e: java.lang.NumberFormatException) {
