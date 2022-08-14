@@ -5,18 +5,21 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.widget.*
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.google.android.material.button.MaterialButton
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 // 대표목표 추가 버튼 클릭 시 나타나는 팝업
 // code 0 = 추가, code 1 = 수정
 class BigGoalSetupDialog(
     val context: Context,
-    val title: String?,
-    val color: String?,
-    val code: Int
+    val code: Int,
+    val title: String? = null,
+    val color: String? = null
 ) {
     private val dialog = Dialog(context)
 
@@ -254,38 +257,51 @@ class BigGoalSetupDialog(
         // 대표목표 추가&수정 버튼 클릭 이벤트
         confirmBtn.setOnClickListener{
 
-            var newBigGoal = titleEdt.text.toString() // 대표목표
-            var isOverlap = false // 중복값을 확인하기 위한 변수
+            val newBigGoal = titleEdt.text.toString() // 대표목표
+            var isAllOverlap = false // 중복값을 확인하기 위한 변수
+            var isTitleOverlap = false
 
             // 입력한 값이 기존에 저장되어 있는 값과 같은지 확인
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            var cursor = sqlitedb.rawQuery("SELECT big_goal_name FROM big_goal_db WHERE big_goal_name = '${newBigGoal}' AND color = '${newColor}'",null)
+            Log.d("BigGoalSetupDialog", "대표목표 : $newBigGoal 색상 : $newColor")
+            var cursor = sqlitedb.rawQuery("SELECT big_goal_name FROM big_goal_db WHERE big_goal_name = '${newBigGoal}' AND color = '${newColor}';",null)
             if (cursor.moveToNext()) {
-                isOverlap = true
+                isAllOverlap = true
+            }
+            cursor.close()
+
+            cursor = sqlitedb.rawQuery("SELECT big_goal_name FROM big_goal_db WHERE big_goal_name = '${newBigGoal}';",null)
+            if (cursor.moveToNext()) {
+                isTitleOverlap = true
             }
             cursor.close()
             sqlitedb.close()
 
+            Log.d("BigGoalSetupDialog", "중복값 여부 : $isAllOverlap")
             // 중복값이라면
-            if (isOverlap) {
+            if (isAllOverlap) {
                 Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
             }
             // 대표 목표를 입력 안 했다면
-            if (newBigGoal.isBlank()) {
+            else if (newBigGoal.isBlank()) {
                 Toast.makeText(context, "대표 목표를 입력해주세요", Toast.LENGTH_SHORT).show()
             }
             // 대표 목표를 입력했다면
             else {
                 // 대표목표를 추가하는 경우
-                if (code == 0) {
+                if (code == 0 && !isTitleOverlap) {
                     sqlitedb = dbManager.writableDatabase
-                    sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('" + newBigGoal + "', '" + newColor + "', '" + "${0}:${0}:${0}" + "');")
+                    val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E HH:mm:ss"))
+                    sqlitedb.execSQL("INSERT INTO big_goal_db VALUES ('$newBigGoal', '$newColor', '$date');")
                     sqlitedb.close()
 
                     onClickListener.onClicked(true, 0, newBigGoal, newColor, initTitle)
                     dialog.dismiss()
-                    Toast.makeText(context, "목표를 저장했습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "대표 목표를 저장했습니다", Toast.LENGTH_SHORT).show()
+                }
+                else if (code == 0 && isTitleOverlap) {
+                    Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
                 }
                 // 대표목표를 수정하는 경우
                 else if (code == 1) {
@@ -297,7 +313,7 @@ class BigGoalSetupDialog(
 
                         onClickListener.onClicked(true, 1, initTitle, newColor, initTitle)
                         dialog.dismiss()
-                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "대표 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                     }
                     // 대표목표만 수정했다면
                     else if (initTitle != newBigGoal && initColor == newColor) {
@@ -307,7 +323,7 @@ class BigGoalSetupDialog(
 
                         onClickListener.onClicked(true, 1, newBigGoal, initColor, initTitle)
                         dialog.dismiss()
-                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "대표 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                     }
                     // 대표목표와 색상 모두 수정했다면
                     else if (initTitle != newBigGoal && initColor != newColor) {
@@ -318,7 +334,7 @@ class BigGoalSetupDialog(
 
                         onClickListener.onClicked(true, 1, newBigGoal, newColor, initTitle)
                         dialog.dismiss()
-                        Toast.makeText(context, "목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "대표 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                     }
                 }
                 dbManager.close()

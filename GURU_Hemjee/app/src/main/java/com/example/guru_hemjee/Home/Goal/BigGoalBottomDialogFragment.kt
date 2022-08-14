@@ -10,7 +10,7 @@ import com.example.guru_hemjee.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 // 아코디언 메뉴에서 대표목표를 롱클릭하면 띄워지는 바텀 시트 다이얼로그
-class BigGoalBottomDialogFragment(val itemLongClick: (Int) -> Unit, val bigGoalItem: BigGoalItem) : BottomSheetDialogFragment() {
+class BigGoalBottomDialogFragment(val itemLongClick: (Int) -> Unit, private val bigGoalItem: BigGoalItem) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -4,6 +4,5 @@ package com.example.guru_hemjee.Home.Goal
 data class DetailGoalItem(
     var detailTitle: String,    // 세부목표
     var detailIcon: String,     // 아이콘
-    var color: String,          // 대표목표 색상
-    var bigTitle: String        // 대표목표
+    var color: String           // 색상
 )
