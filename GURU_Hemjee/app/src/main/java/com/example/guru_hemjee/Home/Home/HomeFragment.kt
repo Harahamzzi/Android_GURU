@@ -214,7 +214,7 @@ class HomeFragment : Fragment() {
             cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalNameList[i]}'", null)
 
             // 해당 대표 목표의 아이콘 아이디값들을 전부 담을 문자열 변수
-            var iconNameStr: String = ""
+            var iconIDStr: String = ""
             // 임시로 아이콘 아이디값을 담을 변수(단일)
             var tempIconID: String
 
@@ -225,11 +225,11 @@ class HomeFragment : Fragment() {
 
                 // 해당 대표 목표의 아이콘 이름 문자열 갱신(추가)
                 // ',' 문자로 각각의 아이콘 구별하도록 함
-                iconNameStr += tempIconID + ','
+                iconIDStr += tempIconID + ','
             }
 
             // 해당 대표 목표의 아이콘들 temp 리스트에 저장
-            iconIDList.add(iconNameStr)
+            iconIDList.add(iconIDStr)
         }
 
         cursor.close()
