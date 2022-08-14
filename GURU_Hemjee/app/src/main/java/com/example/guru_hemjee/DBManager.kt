@@ -43,7 +43,7 @@ class DBManager(
 
         //세부 목표 DB
         db!!.execSQL("CREATE TABLE detail_goal_db (detail_goal_name text PRIMARY KEY, " +
-                "icon text, count int, big_goal_name text, color text, " +
+                "icon text, count int, big_goal_name text, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE ON DELETE CASCADE);")
 
         //대표 목표 기록 DB
