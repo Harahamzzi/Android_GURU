@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="282dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:orientation="vertical">
@@ -30,14 +30,14 @@
             android:textSize="14dp"
             android:textColor="@color/Black" />
 
-        <ImageButton
+        <CheckBox
             android:id="@+id/checkboxButton"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
+            android:button="@null"
             android:background="@drawable/detail_goal_check_box"
-            app:srcCompat="@drawable/ic_outline_check_10"
             app:tint="@color/White" />
 
     </LinearLayout>
