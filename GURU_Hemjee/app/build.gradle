@@ -41,6 +41,7 @@ allprojects {
         google()
         jcenter()
         maven {url "https://jitpack.io"}
+        mavenCentral()
     }
 }
 
@@ -87,4 +88,7 @@ dependencies {
     // 슬라이딩 페이지를 위함
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
+
+    // bottom sheet dialog를 사용하기 위함
+    implementation 'com.google.android.material:material:1.5.0'
 }

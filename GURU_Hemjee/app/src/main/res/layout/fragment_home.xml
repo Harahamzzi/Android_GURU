@@ -116,4 +116,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+    <ImageButton
+        android:id="@+id/summarySheetStartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/DarkBrown" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

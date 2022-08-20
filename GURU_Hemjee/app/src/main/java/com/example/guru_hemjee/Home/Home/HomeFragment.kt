@@ -29,10 +29,13 @@ class HomeFragment : Fragment() {
     private var iconColorNameList = ArrayList<String>() // 아이콘 색상 이름 목록
     private var iconIDList = ArrayList<String>()        // 아이콘 목록
 
-    //db관련
+    // DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
     private lateinit var cursor: Cursor
+
+    // 팝업 관련
+    private lateinit var bottomDialog:BottomSummaryDialog   // 하단 요약본 페이지
 
 //    //시작 버튼
 //    private lateinit var home_startButton: Button
@@ -91,6 +94,12 @@ class HomeFragment : Fragment() {
 
         // 2. 어댑터 생성
         binding.goalViewPager.adapter = HomeViewPagerAdapter(requireContext(), bigGoalNameList, iconColorNameList, iconIDList)
+
+        /** 하단 요약본 페이지 버튼 설정 **/
+        bottomDialog = BottomSummaryDialog(requireContext())
+        binding.summarySheetStartButton.setOnClickListener {
+            bottomDialog.showPopup()
+        }
 
         /** 홈 화면 정보 갱신 **/
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)

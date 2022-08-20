@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/main_bottom_sheet_background"
+    app:behavior_hideable="true"
+    app:behavior_draggable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    >
+
+    <ImageButton
+        android:id="@+id/arrowDownImageButton"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="8dp"
+        android:rotation="180"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrowDownImageButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/todayDateTextView"
+                android:layout_width="97dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/today_date_background"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="2022.02.28"
+                android:textAlignment="center"
+                android:textColor="@color/White"
+                android:textFontWeight="400"
+                android:textSize="14dp" />
+
+            <!-- 주간 리포트 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/content_block_background">
+
+                <TextView
+                    android:id="@+id/weeklyTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:text="24시간 02분"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textFontWeight="800"
+                    android:textSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/weeklyBarChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weeklyTimeTextView">
+
+                </com.github.mikephil.charting.charts.BarChart>
+
+                <LinearLayout
+                    android:id="@+id/weeklyGoalListLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weeklyBarChart">
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weeklyGoalListLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 일간 리포트 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/content_block_background">
+
+                <TextView
+                    android:id="@+id/dailyTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:text="24시간 02분"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textFontWeight="800"
+                    android:textSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/dailyBarChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextView">
+
+                </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+                <LinearLayout
+                    android:id="@+id/dailyGoalListLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dailyBarChart">
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dailyGoalListLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
