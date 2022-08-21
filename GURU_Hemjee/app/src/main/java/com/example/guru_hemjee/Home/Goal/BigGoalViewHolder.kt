@@ -3,6 +3,7 @@ package com.example.guru_hemjee.Home.Goal
 import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.MyApplication
@@ -33,7 +34,8 @@ class BigGoalViewHolder(val binding: ContainerGoalItemRecyclerviewBinding): Recy
                 // 아이콘이 6개 이상일 경우, ... 아이콘 보이기
                 if (i == 6) {
                     val moreIcon = ImageView(context)
-                    moreIcon.setImageResource(R.drawable.ic_more_goals)
+                    moreIcon.setImageResource(R.drawable.ic_sebumenu)
+                    moreIcon.setColorFilter(ContextCompat.getColor(context, R.color.DarkBrown))
                     DBConvert.colorConvert(moreIcon, bigGoalItem.color, context)
                     val moreIconLayoutParams = LinearLayout.LayoutParams(48, 48)
                     moreIconLayoutParams.setMargins(-8, 0, 0, 0)
