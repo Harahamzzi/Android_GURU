@@ -58,7 +58,7 @@ class DBManager(
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE ON DELETE CASCADE);")
 
         //완료된 대표 목표 DB
-        db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text PRIMARY KEY, color text, " +
+        db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text, color text, " +
                 "big_goal_report_time time, big_goal_created_time time, big_goal_completed_time time)")
 
         //완료된 세부 목표 DB
