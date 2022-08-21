@@ -8,6 +8,16 @@
     android:background="@color/LightGray"
     tools:context=".Home.Goal.SetupFragment">
 
+    <!-- 상단바 -->
+    <ImageView
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView4"
         android:layout_width="match_parent"
@@ -15,7 +25,7 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <LinearLayout
             android:layout_width="match_parent"

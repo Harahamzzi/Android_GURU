@@ -98,6 +98,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
 //        viewPagerIndicator.setViewPager2(viewPager)
 
+        // 배경 및 가구 업데이트
+        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
+
         // 홈 화면 띄우기
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_main, HomeFragment(), "home")
@@ -106,9 +109,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // isHome 플래그 초기화
         isHome = true
-
-        // 배경 및 가구 업데이트
-        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
     }
 
     override fun onDestroy() {
@@ -191,6 +191,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 binding.homeDrawerLayout.openDrawer(GravityCompat.START)
                             }
 
+                            // 배경 및 가구 업데이트
+                            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
+
                             // isHome 플래그 올리기
                             isHome = true
                         }
@@ -246,11 +249,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
         backHomeListener(binding.titleButton)
 
+        // 상단바 색 적용
+        binding.backgroundLayout.removeAllViews()   // backgroundLayout에 있는 배경과 가구를 모두 제거
+        binding.backgroundLayout.setBackgroundResource(R.color.Yellow)
 
         // isHome 플래그 내리기
         isHome = false
-
-        //햄찌 설정 초기화
     }
 
     // 툴바 좌측 이미지를 눌렀을 때 홈 화면으로 가기를 처리하는 함수(리스너)
@@ -272,6 +276,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             icon.setOnClickListener {
                 binding.homeDrawerLayout.openDrawer(GravityCompat.START)
             }
+
+            // 배경 및 가구 업데이트
+            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
 
             // home 화면으로 전환
             transaction.replace(R.id.fragment_main, HomeFragment(), "home")
