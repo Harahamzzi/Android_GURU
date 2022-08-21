@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="30dp"
+    android:layout_marginVertical="9dp">
 
     <ImageView
         android:id="@+id/iconImageView"
@@ -27,7 +28,8 @@
         android:textFontWeight="400"
         android:textSize="14dp"
         app:layout_constraintStart_toEndOf="@+id/iconImageView"
-        app:layout_constraintTop_toTopOf="@+id/iconImageView" />
+        app:layout_constraintTop_toTopOf="@+id/iconImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/iconImageView" />
 
     <ImageButton
         android:id="@+id/cameraImageButton"
@@ -38,6 +40,7 @@
         android:backgroundTint="@color/Yellow"
         android:elevation="3dp"
         android:src="@drawable/ic_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/goalNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/goalNameTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
