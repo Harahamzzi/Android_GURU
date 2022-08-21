@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".LockScreenService"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.SYSTEM_ALERT_WINDOW" />
+<!--        <service-->
+<!--            android:name=".LockScreenService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false"-->
+<!--            android:permission="android.permission.SYSTEM_ALERT_WINDOW" />-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
