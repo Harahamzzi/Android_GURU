@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,8 @@ import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.databinding.FragmentSetupBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 // 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정
@@ -88,7 +91,7 @@ class SetupFragment : Fragment() {
                         0 -> bigGoalModifyPopUp(bigGoalItem) // 수정
                         1 -> bigGoalDeletePopUp(bigGoalItem) // 삭제
                         2 -> detailGoalAddPopUp(bigGoalItem) // 세부목표 추가
-                        3 -> {} // 목표 완료
+                        3 -> completeGoal(bigGoalItem, position) // 목표 완료
                     }
                 }, bigGoalItem
             )
@@ -310,5 +313,76 @@ class SetupFragment : Fragment() {
             }
 
         })
+    }
+
+    // 대표목표 완료 이벤트
+    @SuppressLint("Range", "Recycle")
+    private fun completeGoal(bigGoalItem: BigGoalItem, position: Int) {
+        // 완료된 세부목표 DB에 값 저장
+        dbManager = DBManager(context, "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+        val sqlitedb2: SQLiteDatabase = dbManager.writableDatabase
+
+        /*var tempDetailGoalList = ArrayList<MutableMap<String, String>>() // 세부목표 리스트
+        tempDetailGoalList.add(mutableMapOf(
+            "big_goal_name" to str_biggoal,
+            "detail_goal_name" to str_detailgoal,
+            "icon" to str_icon,
+            "count" to int_count
+        ))*/
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalItem.title}';",null)
+        while (cursor.moveToNext()) {
+            val str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+            val str_detailgoal = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+            val str_icon = cursor.getString(cursor.getColumnIndex("icon"))
+            val int_count = cursor.getInt(cursor.getColumnIndex("count")).toString()
+
+            try { // 값 저장
+                sqlitedb2.execSQL("INSERT INTO complete_detail_goal_db VALUES ('$str_detailgoal', '$str_icon', '$int_count', '$str_biggoal');")
+            } catch (e: Exception) {
+                Log.d("SetupFragemnt", "세부목표 " + e.printStackTrace().toString())
+            }
+        }
+
+        // 완료된 대표목표 DB에 값 저장
+        // 대표목표 정보 가져오기
+        cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${bigGoalItem.title}';", null)
+        val cursor2 = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${bigGoalItem.title}';", null)
+        while (cursor.moveToNext()) {
+            val str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+            val str_color = cursor.getString(cursor.getColumnIndex("color"))
+            val str_big_goal_create_time = cursor.getString(cursor.getColumnIndex("big_goal_create_time"))
+
+            try {
+                var isFlag = false
+                val completeTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E HH:mm:ss"))
+                while (cursor2.moveToNext()) {
+                    val str_total_report_time = cursor2.getInt(cursor2.getColumnIndex("total_report_time"))
+                    // 값 저장
+                    sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '$str_total_report_time', '$str_big_goal_create_time', '$completeTime');")
+                    isFlag = true
+                }
+
+                // report time값이 없다면
+                if (!isFlag) {
+                    sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '${0}', '$str_big_goal_create_time', '$completeTime');")
+                }
+            } catch (e: Exception) {
+                Log.d("SetupFragment", "대표목표 " + e.printStackTrace().toString())
+            }
+        }
+
+        // 대표목표 DB에 값 삭제
+        sqlitedb2.execSQL("DELETE FROM big_goal_db WHERE big_goal_name = '${bigGoalItem.title}';")
+
+        // rv 초기화
+        bigGoalAdapter.removeBigGoalItem(bigGoalItem)
+        Toast.makeText(context, "목표를 완료했습니다", Toast.LENGTH_SHORT).show()
+
+        cursor2.close()
+        cursor.close()
+        sqlitedb2.close()
+        sqlitedb.close()
+        dbManager.close()
     }
 }
