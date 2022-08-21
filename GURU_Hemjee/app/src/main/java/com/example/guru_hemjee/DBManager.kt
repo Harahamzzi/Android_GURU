@@ -48,7 +48,7 @@ class DBManager(
 
         //대표 목표 기록 DB
         db!!.execSQL("CREATE TABLE big_goal_time_report_db (big_goal_name text, " +
-                "total_report_time BIGINT, lock_date DATE, " +
+                "total_report_time time, lock_date DATE, " +
                 "FOREIGN KEY (big_goal_name) REFERENCES big_goal_db(big_goal_name) ON UPDATE CASCADE ON DELETE CASCADE);")
 
         //세부 목표 기록 DB
