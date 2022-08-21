@@ -357,7 +357,7 @@ class SetupFragment : Fragment() {
                 var isFlag = false
                 val completeTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E HH:mm:ss"))
                 while (cursor2.moveToNext()) {
-                    val str_total_report_time = cursor2.getInt(cursor2.getColumnIndex("total_report_time"))
+                    val str_total_report_time = cursor2.getString(cursor2.getColumnIndex("total_report_time"))
                     // 값 저장
                     sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '$str_total_report_time', '$str_big_goal_create_time', '$completeTime');")
                     isFlag = true
@@ -365,7 +365,7 @@ class SetupFragment : Fragment() {
 
                 // report time값이 없다면
                 if (!isFlag) {
-                    sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '${0}', '$str_big_goal_create_time', '$completeTime');")
+                    sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '00:00:00', '$str_big_goal_create_time', '$completeTime');")
                 }
             } catch (e: Exception) {
                 Log.d("SetupFragment", "대표목표 " + e.printStackTrace().toString())

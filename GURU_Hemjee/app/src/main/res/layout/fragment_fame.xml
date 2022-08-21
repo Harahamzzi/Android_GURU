@@ -76,17 +76,16 @@
                         android:id="@+id/fame_long_record_goal_title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="알고리즘 마스터하기"
-                        android:textSize="12sp"
-                        android:maxLines="1"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="7dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/noto_sans"
-                        android:textStyle="bold"
-                        android:textColor="@color/Black"
                         android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginEnd="7dp"/>
+                        android:maxLines="1"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <!-- 대표목표 수행 시간 -->
                     <LinearLayout
@@ -101,14 +100,13 @@
                             android:id="@+id/fame_long_record_goal_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:maxLength="8"
-                            android:gravity="center"
+                            android:layout_marginStart="7dp"
                             android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLength="8"
+                            android:maxLines="1"
                             android:textColor="@color/DarkBrown"
-                            android:layout_marginStart="7dp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -149,7 +147,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_outline_calendar_month_24"
+                            android:src="@drawable/ic_calender_fame_16dp"
                             app:tint="@color/White"
                             android:layout_gravity="center|top"
                             android:layout_marginTop="16dp"/>
@@ -170,17 +168,16 @@
                         android:id="@+id/fame_long_time_goal_title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="알고리즘 마스터하기"
-                        android:textSize="12sp"
-                        android:maxLines="1"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="7dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/noto_sans"
-                        android:textStyle="bold"
-                        android:textColor="@color/Black"
                         android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginEnd="7dp"/>
+                        android:maxLines="1"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <!-- 대표목표 수행 시간 -->
                     <LinearLayout
@@ -195,14 +192,13 @@
                             android:id="@+id/fame_long_time_goal_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:maxLength="8"
-                            android:gravity="center"
+                            android:layout_marginStart="7dp"
                             android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLength="8"
+                            android:maxLines="1"
                             android:textColor="@color/DarkBrown"
-                            android:layout_marginStart="7dp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -243,7 +239,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_outline_calendar_month_24"
+                            android:src="@drawable/timer_icon"
                             app:tint="@color/White"
                             android:layout_gravity="center|top"
                             android:layout_marginTop="16dp"/>
@@ -261,20 +257,19 @@
 
                     <!-- 대표목표 이름 -->
                     <TextView
-                        android:id="@+id/fame_long_more_goal_title_tv"
+                        android:id="@+id/fame_long_count_goal_title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="알고리즘 마스터하기"
-                        android:textSize="12sp"
-                        android:maxLines="1"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="7dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/noto_sans"
-                        android:textStyle="bold"
-                        android:textColor="@color/Black"
                         android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginEnd="7dp"/>
+                        android:maxLines="1"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <!-- 대표목표 수행 시간 -->
                     <LinearLayout
@@ -286,26 +281,25 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/fame_long_more_goal_time_tv"
+                            android:id="@+id/fame_long_count_goal_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:maxLength="8"
-                            android:gravity="center"
+                            android:layout_marginStart="7dp"
                             android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLength="8"
+                            android:maxLines="1"
                             android:textColor="@color/DarkBrown"
-                            android:layout_marginStart="7dp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="장"
-                            android:textSize="12sp"
+                            android:layout_marginEnd="7dp"
                             android:fontFamily="@font/noto_sans"
+                            android:text="개"
                             android:textColor="@color/DarkBrown"
-                            android:layout_marginEnd="7dp"/>
+                            android:textSize="12sp" />
 
                     </LinearLayout>
 
@@ -336,11 +330,11 @@
 
                         <ImageView
                             android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_outline_calendar_month_24"
-                            app:tint="@color/White"
+                            android:layout_height="23dp"
                             android:layout_gravity="center|top"
-                            android:layout_marginTop="16dp"/>
+                            android:layout_marginTop="16dp"
+                            android:src="@drawable/ic_calender_fame_16dp"
+                            app:tint="@color/White" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -358,17 +352,16 @@
                         android:id="@+id/fame_long_album_goal_title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="알고리즘 마스터하기"
-                        android:textSize="12sp"
-                        android:maxLines="1"
+                        android:layout_marginStart="7dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="7dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/noto_sans"
-                        android:textStyle="bold"
-                        android:textColor="@color/Black"
                         android:gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginEnd="7dp"/>
+                        android:maxLines="1"
+                        android:textColor="@color/Black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <!-- 대표목표 수행 시간 -->
                     <LinearLayout
@@ -383,7 +376,6 @@
                             android:id="@+id/fame_long_album_goal_time_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1"
                             android:textSize="12sp"
                             android:maxLines="1"
                             android:maxLength="8"
@@ -419,8 +411,7 @@
             android:layout_marginStart="16dp"
             android:nestedScrollingEnabled="false"
             android:scrollbars="none"
-            tools:listitem="@layout/container_fame_item_rv"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+            tools:listitem="@layout/container_fame_item_rv"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
