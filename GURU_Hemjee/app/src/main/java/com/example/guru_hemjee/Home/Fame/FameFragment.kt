@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentFameBinding
 import java.text.SimpleDateFormat
 
@@ -25,11 +26,10 @@ class FameFragment : Fragment() {
     private var mBinding: FragmentFameBinding? = null // binding변수
     private val binding get() = mBinding!!
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         // binding class 인스턴트 참조 정리
         mBinding = null
-
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -182,12 +182,12 @@ class FameFragment : Fragment() {
                     val completedDate = completedDateArray2[0].substring(2) + "." + completedDateArray2[1] + "." + completedDateArray2[2]
                     val totalDate = "$createDate - $completedDate"
 
-                    fameGoalList.add(FameItem(tempColor, tempTitle, totalTime, totalDate, originTimePeriod.toString())) // 정보 추가
+                    fameGoalList.add(FameItem(tempColor, tempTitle, totalTime, totalDate, calculateDate.toString(), tempCreatedTime)) // 정보 추가
                 }
             }
         } catch (e: Exception) {
             Log.d("FameFragment", "명예의 전당 상단 부분 오류 " + e.printStackTrace())
-            Toast.makeText(requireContext(), "명예의 전당을 불러올 수 없습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "명예의 전당 화면을 불러올 수 없습니다", Toast.LENGTH_SHORT).show()
         }
 
         // 명예의 전당 리스트 띄우기
@@ -197,8 +197,17 @@ class FameFragment : Fragment() {
         binding.fameGoalRv.adapter = fameListAdapter
 
         // 대표목표 아이템 클릭 이벤트
+        // 화면 이동
         fameListAdapter.onFameItemClickListener = { position ->
-
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_main, FameDetailFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("fameItem", fameGoalList[position])
+                    }
+                })
+                .addToBackStack(null)
+                .commit()
         }
 
         cursor2.close()

@@ -3,7 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="16dp"
@@ -22,8 +22,8 @@
         <!-- 대표목표 색상 -->
         <ImageView
             android:id="@+id/container_fame_goal_color_iv"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_colorselectionicon"
             app:tint="@color/Pink"/>
@@ -41,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/noto_sans"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:gravity="center"
             android:textColor="@color/Black"
             android:textSize="12sp"
