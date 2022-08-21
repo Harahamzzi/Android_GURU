@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
@@ -26,15 +25,16 @@ class TimeRecordActivity: AppCompatActivity() {
     // 매번 null 체크를 하지 않아도 되도록 함
     private val binding get() = mBinding!!
 
+    // Log 태그
+    private var TAG = "TimeRecordActivity"
+
     // recycler view adapter
-    private lateinit var adapter1: TimeRecordGoalAdapter    // 세부목표 리사이클러 뷰 어댑터
-    private lateinit var adapter2: TimeRecordGoalAdapter    // 완료한 세부목표 리사이클러 뷰 어댑터
+    private lateinit var remainGoalAdapter: TimeRecordGoalAdapter    // 남은 세부목표 리사이클러 뷰 어댑터
+    private lateinit var completeGoalAdapter: TimeRecordGoalAdapter  // 완료한 세부목표 리사이클러 뷰 어댑터
 
     //DB 관련
     private lateinit var dbManager: DBManager
-    private lateinit var dbManager2: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
-    private lateinit var sqlitedb2: SQLiteDatabase
 
     // 시간 기록 타이머 관련
     private var timerTask: Timer? = null
@@ -49,6 +49,7 @@ class TimeRecordActivity: AppCompatActivity() {
     private lateinit var bigGoalColor: String   // 대표 목표 색상
     private var detailGoalNameList = ArrayList<String>()    // 세부 목표 이름 목록
     private var detailGoalCheckedList = ArrayList<Int>()    // 세부 목표 활성화 여부가 담긴 리스트(1: true, 0: false)
+    private var detailGoalCheckedNameList = ArrayList<String>() // 활성화된 세부 목표 이름 목록
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,29 +57,21 @@ class TimeRecordActivity: AppCompatActivity() {
         mBinding = ActivityTimeRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 세부 목표 리포트 DB 데이터 정리
-        clearDetailGoal()
-
-        /** 세부 목표 관련 데이터 가져오기 **/
-        detailGoalNameList = intent.getStringArrayListExtra("detailGoalNameList") as ArrayList<String>
-        detailGoalCheckedList = intent.getIntegerArrayListExtra("detailGoalCheckedList") as ArrayList<Int>
-
         /** 리사이클러뷰 어댑터 연결 **/
 
         // 1. 세부목표 목록 관련 recycler view
         var linearLayoutManager1 = LinearLayoutManager(this)
         binding.TimeRecordGoalRecyclerView.layoutManager = linearLayoutManager1
 
-        adapter1 = TimeRecordGoalAdapter(this@TimeRecordActivity)
-        binding.TimeRecordGoalRecyclerView.adapter = adapter1
+        remainGoalAdapter = TimeRecordGoalAdapter(this@TimeRecordActivity)
+        binding.TimeRecordGoalRecyclerView.adapter = remainGoalAdapter
 
         // 2. 완료한 세부목표 관련 recycler view
         var linearLayoutManager2 = LinearLayoutManager(this)
         binding.TimeRecordCompleteRecyclerView.layoutManager = linearLayoutManager2
 
-        adapter2 = TimeRecordGoalAdapter(this@TimeRecordActivity)
-        binding.TimeRecordCompleteRecyclerView.adapter = adapter2
-
+        completeGoalAdapter = TimeRecordGoalAdapter(this@TimeRecordActivity)
+        binding.TimeRecordCompleteRecyclerView.adapter = completeGoalAdapter
 
         /** 대표 목표 관련 정보 가져오기 **/
 
@@ -95,7 +88,7 @@ class TimeRecordActivity: AppCompatActivity() {
             cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
 
 
-            if(cursor.moveToNext())
+            if (cursor.moveToNext())
                 bigGoalColor = cursor.getString(cursor.getColumnIndex("color")).toString()
 
             cursor.close()
@@ -103,7 +96,8 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager.close()
         }
         catch(e: Exception) {
-            Log.e("DBException", "대표 목표 색상 뽑아오기 실패")
+            Log.e(TAG, "대표 목표 색상 뽑아오기 실패")
+            Log.e(TAG, e.stackTraceToString())
         }
 
         // 타이머 초기화
@@ -158,13 +152,14 @@ class TimeRecordActivity: AppCompatActivity() {
 
                 // 데이터 추가
                 sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', " +
-                        "$time, $bigGoalColor, '$resultDate');")
+                        "$time, '$resultDate');")
 
                 sqlitedb.close()
                 dbManager.close()
             }
             catch (e: WindowManager.BadTokenException) {
-                Log.e("recordExitException", "기록 종료 오류..")
+                Log.e(TAG, "기록 종료 오류..")
+                Log.e(TAG, e.stackTraceToString())
             }
 
             /** 총 함께한 시간 데이터 업데이트 **/
@@ -215,8 +210,8 @@ class TimeRecordActivity: AppCompatActivity() {
             }
             catch(e: Exception)
             {
-                Log.e("오류태그", "TimeRecordActivity: DB 데이터 업데이트 실패")
-                Log.e("오류태그", "${e.printStackTrace()}")
+                Log.e(TAG, "DB 데이터 업데이트 실패")
+                Log.e(TAG, e.stackTraceToString())
             }
 
             // TODO: 3. 팝업 표시(?)
@@ -224,14 +219,21 @@ class TimeRecordActivity: AppCompatActivity() {
             // 4. 타이머 초기화
             time = 0
         }
+
+        /** 세부 목표 관련 정보 처리 **/
+
+        // 세부 목표 리포트 DB 데이터 정리
+        clearDetailGoal()
+
+        // 세부 목표 기록 DB 데이터 생성
+        insertDetailGoalData()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
 
         // 세부 목표 동적 생성
-        addDetailGoal()
-        addCompleteDetailGoal()
+        addDetailGoalView()
     }
 
     // 타이머 늘어나게 하고, 변경된 값을 업데이트해서 보여주는 함수
@@ -248,7 +250,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
             // 위젯 값 변경
             runOnUiThread {
-                binding?.TimeRecordTimeTextView?.text = "$hour : $min : $sec"
+                binding.TimeRecordTimeTextView.text = "$hour : $min : $sec"
             }
 
             time++  // 시간 증가
@@ -267,9 +269,38 @@ class TimeRecordActivity: AppCompatActivity() {
         dbManager.close()
     }
 
-    // TODO: 세부 목표(남은 목표) 동적 생성
+    // 세부 목표 기록 DB 데이터를 생성하는 함수(초기 1회 수행)
+    private fun insertDetailGoalData() {
+
+        // 세부 목표 관련 데이터 가져오기
+        detailGoalNameList = intent.getStringArrayListExtra("detailGoalNameList") as ArrayList<String>
+        detailGoalCheckedList = intent.getIntegerArrayListExtra("detailGoalCheckedList") as ArrayList<Int>
+
+        for (i in detailGoalNameList.indices)
+        {
+            // 체크된 세부목표라면
+            if (detailGoalCheckedList[i] == 1)
+            {
+                // DB 데이터 쓰기 열기(세부 목표 리포트)
+                dbManager = DBManager(this, "hamster_db", null, 1)
+                sqlitedb = dbManager.writableDatabase
+
+                // 세부 목표 리포트 데이터 생성(세부 목표 이름) - is_active: 활성화 표시
+                sqlitedb.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, big_goal_name, is_active)"
+                        + " VALUES ('${detailGoalNameList[i]}', '$bigGoalName', 1);")
+
+                // 활성화된 세부 목표 이름 목록에 해당 세부 목표 추가
+                detailGoalCheckedNameList.add(detailGoalNameList[i])
+
+                sqlitedb.close()
+                dbManager.close()
+            }
+        }
+    }
+
+    // 세부 목표(남은 목표) 동적 생성
     @SuppressLint("Range")
-    private fun addDetailGoal() {
+    private fun addDetailGoalView() {
 
         var cursor: Cursor
 
@@ -278,37 +309,50 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
-            // DB 데이터 쓰기 열기(세부 목표 리포트)
-            dbManager2 = DBManager(this, "hamster_db", null, 1)
-            sqlitedb2 = dbManager2.writableDatabase
-
-            // 해당 대표 목표의 세부 목표들 가져오기
-            cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalName}'", null)
-
             // 위젯 생성 및 적용
-            while(cursor.moveToNext())
+            for (i in detailGoalCheckedNameList.indices)
             {
-                // item 객체 생성
-                var item = TimeRecordGoalItem()
+                // 해당 세부 목표(현재 활성화 된 것) 가져오기
+                cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '${detailGoalCheckedNameList[i]}'", null)
 
-                // item에 데이터 담기
-                // 1. 아이콘 모양
-                var iconName: String = cursor.getString(cursor.getColumnIndex("icon")).toString()
-                item.setIconName(iconName)
+                if (cursor.moveToNext())
+                {
+                    // item 객체 생성
+                    var item = TimeRecordGoalItem()
 
-                // 2. 아이콘 색상
-                item.setIconColor(bigGoalColor)
+                    // item에 데이터 담기
+                    // 1. 아이콘 모양
+                    var iconName: String = cursor.getString(cursor.getColumnIndex("icon")).toString()
+                    item.setIconName(iconName)
 
-                // 3. 세부목표 이름
-                var goalName: String = cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString()
-                item.setGoalName(goalName)
+                    // 2. 아이콘 색상
+                    item.setIconColor(bigGoalColor)
 
-                // 4. 최종 반영
-                adapter1.addItem(item)
+                    // 3. 세부목표 이름
+                    var goalName: String = cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString()
+                    item.setGoalName(goalName)
 
-                // 세부 목표 리포트 데이터 추가(세부 목표 이름) - is_active: 활성화 표시
-                sqlitedb2.execSQL("INSERT INTO detail_goal_time_report_db (detail_goal_name, big_goal_name, is_active)"
-                        + " VALUES ('$goalName', '$bigGoalName', 1);")
+                    // 4. 최종 반영
+
+                    // 해당 세부 목표(현재 활성화 된 것) 가져오기
+                    var tempCursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE is_active = 1 AND detail_goal_name = '${detailGoalCheckedNameList[i]}'", null)
+
+                    if (tempCursor.moveToNext())
+                    {
+                        // 현재 완료된 목표라면
+                        if (tempCursor.getInt(tempCursor.getColumnIndex("is_complete")) == 1)
+                        {
+                            // 완료된 목표 레이아웃 어댑터에 아이템 추가
+                            completeGoalAdapter.addItem(item)
+                        }
+                        else
+                        {
+                            // 남은 목표 레이아웃 어댑터에 아이템 추가
+                            remainGoalAdapter.addItem(item)
+                        }
+                    }
+
+                    tempCursor.close()
 
 //                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
 //                var view: View = layoutInflater.inflate(R.layout.container_record_detail_goal, Lock_detailGoalLinearLayout, false)
@@ -339,26 +383,21 @@ class TimeRecordActivity: AppCompatActivity() {
 //
 //                // 위젯 추가
 //                Lock_detailGoalLinearLayout.addView(view)
+                }
+
+                cursor.close()
             }
 
             // adapter의 값 변경을 알려줌
-            adapter1.notifyDataSetChanged()
+            remainGoalAdapter.notifyDataSetChanged()
 
             // 닫기
-            cursor.close()
             sqlitedb.close()
             dbManager.close()
-
-            sqlitedb2.close()
-            dbManager2.close()
         }
         catch(e: Exception) {
-            Log.e("DBException", "세부 목표 가져오기 실패")
+            Log.e(TAG, "세부 목표 가져오기 실패")
+            Log.e(TAG, e.stackTraceToString())
         }
-    }
-
-    // TODO: (완료한 목표) 세부 목표 동적 생성
-    private fun addCompleteDetailGoal() {
-
     }
 }
