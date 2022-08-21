@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.TimeConvert
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
 import java.lang.Exception
@@ -117,7 +118,7 @@ class TimeRecordActivity: AppCompatActivity() {
             if (isPause)
             {
                 // 1. 버튼 이미지 변경
-                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_play)
+                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_pause_black_48dp)
 
                 // 2. 타이머 재작동
                 countTime()
@@ -125,7 +126,7 @@ class TimeRecordActivity: AppCompatActivity() {
             else
             {
                 // 1. 버튼 이미지 변경
-                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_pause_black_48dp)
+                binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_play)
 
                 // 2. 타이머 멈춤
                 timerTask?.cancel()
@@ -150,9 +151,12 @@ class TimeRecordActivity: AppCompatActivity() {
                 // SimpleDateFormat 이용, 해당 형식으로 기록한 날짜 저장
                 var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(recordDate))
 
+                // 밀리초 -> hh:mm:ss 형태로 변환
+                var resultTime = TimeConvert.msToTimeConvert(time)
+
                 // 데이터 추가
                 sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', " +
-                        "$time, '$resultDate');")
+                        "$resultTime, '$resultDate');")
 
                 sqlitedb.close()
                 dbManager.close()
@@ -178,32 +182,21 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager.close()
 
             try {
-                // bigInteger 형의 숫자 변수
-                var bigInteger1000: BigInteger = BigInteger("1000")
-                var bigInteger60: BigInteger = BigInteger("60")
 
-                // 밀리초 단위의 시간 구하기
-                var dbHour: BigInteger = dbTempTotalTimeText.split(":")[0].toBigInteger()
-                var dbMin: BigInteger = dbTempTotalTimeText.split(":")[1].toBigInteger()
-                var dbSec: BigInteger = dbTempTotalTimeText.split(":")[2].toBigInteger()
-
-                // DB 데이터의 총 시간(밀리초 단위)
-                var dbTotalTime: BigInteger = (dbHour * bigInteger60 * bigInteger60 * bigInteger1000
-                        + dbMin * bigInteger60 * bigInteger1000 + dbSec * bigInteger1000)
+                // DB 데이터(총 시간)의 밀리초 단위 시간 구하기
+                var dbTotalMsTime = TimeConvert.timeToMsConvert(dbTempTotalTimeText)
 
                 // 기존의 총 기록한 시간 + 이번에 총 기록한 시간
-                var resultTotalTime: BigInteger = dbTotalTime + time.toBigInteger()
+                var resultTotalMsTime = dbTotalMsTime + time
 
                 // 해당 데이터를 다시 문자열로 분리하기
-                var resultHour = resultTotalTime / bigInteger1000 / bigInteger60 / bigInteger60  // 시간
-                var resultMin = resultTotalTime / bigInteger1000 / bigInteger60 % bigInteger60   // 분
-                var resultSec = resultTotalTime / bigInteger1000 % bigInteger60                  // 초
+                var resultTotalStrTime = TimeConvert.msToTimeConvert(resultTotalMsTime)
 
                 // 구한 시간 데이터 업데이트
                 dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
                 sqlitedb = dbManager.writableDatabase
 
-                sqlitedb.execSQL("UPDATE basic_info_db SET total_time = '${resultHour}:${resultMin}:${resultSec}'")
+                sqlitedb.execSQL("UPDATE basic_info_db SET total_time = '$resultTotalStrTime'")
 
                 sqlitedb.close()
                 dbManager.close()
@@ -214,7 +207,7 @@ class TimeRecordActivity: AppCompatActivity() {
                 Log.e(TAG, e.stackTraceToString())
             }
 
-            // TODO: 3. 팝업 표시(?)
+            // TODO: 3. 팝업 표시 후 홈 화면으로 돌아가기
 
             // 4. 타이머 초기화
             time = 0
@@ -236,24 +229,30 @@ class TimeRecordActivity: AppCompatActivity() {
         addDetailGoalView()
     }
 
+    override fun onBackPressed() {
+        // (폰) 뒤로가기 버튼이 작동하지 않도록 함
+    }
+
     // 타이머 늘어나게 하고, 변경된 값을 업데이트해서 보여주는 함수
     private fun countTime() {
 
-        // 초기 시간값
-        var time: Int = 0
-
-        // 0.01초마다 변수를 증가시킴
+        // 0.001초마다 변수를 증가시킴
         timerTask = timer(period = 1000) {
-            val hour = (time/3600) % 24 // 1시간
-            val min = (time/60) % 60   // 1분
-            val sec = time % 60   // 1초
+
+            // 자릿수(hh:mm:ss)를 맞추기 위해 TimeConvert 활용
+            // 밀리초(time) -> hh:mm:ss 형태의 문자열 변환
+            var timeStr: String = TimeConvert.msToTimeConvert(time)
+
+            var hour = timeStr.split(':')[0]
+            var min = timeStr.split(':')[1]
+            var sec = timeStr.split(':')[2]
 
             // 위젯 값 변경
             runOnUiThread {
                 binding.TimeRecordTimeTextView.text = "$hour : $min : $sec"
             }
 
-            time++  // 시간 증가
+            time += 1000  // 시간 증가
         }
     }
 

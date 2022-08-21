@@ -200,21 +200,21 @@ class BigGoalSetupFragment : Fragment() {
                         Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                     } else {
                         total_time =
-                            FunTimeConvert.timeConvert(null, integer_min.toInt().toString(), null)
+                            TimeConvert.timeStrConvert(null, integer_min.toInt().toString(), null)
                     }
                 } else if (integer_min.isNullOrBlank()) { // 분이 공란인 경우
                     if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) {
                         Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                     } else {
                         total_time =
-                            FunTimeConvert.timeConvert(integer_hour.toInt().toString(), null, null)
+                            TimeConvert.timeStrConvert(integer_hour.toInt().toString(), null, null)
                     }
                 } else if (integer_hour.toInt() < 0 || integer_hour.toInt() > 24) { // 시간 범위
                     Toast.makeText(context, "시간을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else if (integer_min.toInt() < 0 || integer_min.toInt() >= 60) { // 분 범위
                     Toast.makeText(context, "분을 다시 입력해주세요.", Toast.LENGTH_SHORT).show()
                 } else {
-                    total_time = FunTimeConvert.timeConvert(
+                    total_time = TimeConvert.timeStrConvert(
                         integer_hour.toInt().toString(),
                         integer_min.toInt().toString(),
                         null
