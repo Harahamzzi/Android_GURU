@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/White">
+    android:background="@drawable/navigation_drawer_background">
 
     <TextView
         android:id="@+id/helloTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:text="햄찌 주인님, 안녕하세요."
         android:textColor="@color/Black"
         android:textSize="15sp"

@@ -71,6 +71,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@drawable/navigation_drawer_background"
         app:itemTextAppearance="@style/NavigationFontStyle"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/main_menu" />
