@@ -59,11 +59,12 @@ class DBManager(
 
         //완료된 대표 목표 DB
         db!!.execSQL("CREATE TABLE complete_big_goal_db (big_goal_name text, color text, " +
-                "big_goal_report_time time, big_goal_created_time time, big_goal_completed_time time)")
+                "big_goal_report_time time, big_goal_created_time time PRIMARY KEY, big_goal_completed_time time)")
 
         //완료된 세부 목표 DB
         db!!.execSQL("CREATE TABLE complete_detail_goal_db (detail_goal_name text, icon text, " +
-                "count int, big_goal_name text)")
+                "count int, big_goal_name text, big_goal_created_time time," +
+                "FOREIGN KEY (big_goal_created_time) REFERENCES complete_big_goal_db(big_goal_created_time) ON DELETE CASCADE);")
 
         //기본 정보 DB
         db!!.execSQL("CREATE TABLE basic_info_db (hamster_name text, seed INT, total_time time)")
