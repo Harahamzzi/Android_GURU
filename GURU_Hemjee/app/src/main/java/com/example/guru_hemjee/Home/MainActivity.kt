@@ -414,4 +414,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sqlitedb.close()
         dbManager.close()
     }
+
+    // 상단의 툴바의 색상을 바꾸는 함수(팝업용)
+    fun hideTopToolbar(isHide: Boolean) {
+        if (isHide) {
+            binding.mainToolbarCLayout.setBackgroundResource(R.color.BlackTransparent)
+        } else {
+            binding.mainToolbarCLayout.setBackgroundResource(R.color.Transparent)
+        }
+    }
 }

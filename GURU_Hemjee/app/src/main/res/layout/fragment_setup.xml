@@ -44,7 +44,7 @@
                 android:scrollbars="none"
                 tools:listitem="@layout/container_goal_item_recyclerview"/>
             <!-- 공백 -->
-            <Space
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="80dp" />
         </LinearLayout>
@@ -71,6 +71,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- 목표 완료 팝업이 띄워질 곳 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/goalBig_top_CLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BlackTransparent"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!--대표목표를 꾹 눌렀을 경우 나오는 하단 네비게이션 메뉴
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -105,4 +119,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/detail_goal_bottom_navigation_menu">
     </com.google.android.material.bottomnavigation.BottomNavigationView>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

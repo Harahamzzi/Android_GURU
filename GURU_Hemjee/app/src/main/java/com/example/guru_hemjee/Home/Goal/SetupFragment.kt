@@ -5,18 +5,23 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
+import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentSetupBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
@@ -318,10 +323,10 @@ class SetupFragment : Fragment() {
     // 대표목표 완료 이벤트
     @SuppressLint("Range", "Recycle")
     private fun completeGoal(bigGoalItem: BigGoalItem, position: Int) {
-        // 완료된 세부목표 DB에 값 저장
         dbManager = DBManager(context, "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         val sqlitedb2: SQLiteDatabase = dbManager.writableDatabase
+        var cursor2: Cursor
 
         /*var tempDetailGoalList = ArrayList<MutableMap<String, String>>() // 세부목표 리스트
         tempDetailGoalList.add(mutableMapOf(
@@ -330,28 +335,19 @@ class SetupFragment : Fragment() {
             "icon" to str_icon,
             "count" to int_count
         ))*/
-        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalItem.title}';",null)
-        while (cursor.moveToNext()) {
-            val str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name"))
-            val str_detailgoal = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
-            val str_icon = cursor.getString(cursor.getColumnIndex("icon"))
-            val int_count = cursor.getInt(cursor.getColumnIndex("count")).toString()
 
-            try { // 값 저장
-                sqlitedb2.execSQL("INSERT INTO complete_detail_goal_db VALUES ('$str_detailgoal', '$str_icon', '$int_count', '$str_biggoal');")
-            } catch (e: Exception) {
-                Log.d("SetupFragemnt", "세부목표 " + e.printStackTrace().toString())
-            }
-        }
+        // 팝업창에 띄울 정보
+        val oneItem = ArrayList<String>()
 
         // 완료된 대표목표 DB에 값 저장
         // 대표목표 정보 가져오기
         cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${bigGoalItem.title}';", null)
-        val cursor2 = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${bigGoalItem.title}';", null)
+        cursor2 = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE big_goal_name = '${bigGoalItem.title}';", null)
+        var str_big_goal_create_time = ""
         while (cursor.moveToNext()) {
             val str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name"))
             val str_color = cursor.getString(cursor.getColumnIndex("color"))
-            val str_big_goal_create_time = cursor.getString(cursor.getColumnIndex("big_goal_create_time"))
+            str_big_goal_create_time  = cursor.getString(cursor.getColumnIndex("big_goal_create_time"))
 
             try {
                 var isFlag = false
@@ -360,15 +356,46 @@ class SetupFragment : Fragment() {
                     val str_total_report_time = cursor2.getString(cursor2.getColumnIndex("total_report_time"))
                     // 값 저장
                     sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '$str_total_report_time', '$str_big_goal_create_time', '$completeTime');")
+
+                    oneItem.add(str_biggoal)
+                    oneItem.add(str_total_report_time)
+                    oneItem.add(str_big_goal_create_time)
+                    oneItem.add(completeTime)
+
+                    Log.d("oneItem", oneItem.toString())
+
                     isFlag = true
                 }
 
                 // report time값이 없다면
                 if (!isFlag) {
                     sqlitedb2.execSQL("INSERT INTO complete_big_goal_db VALUES ('$str_biggoal', '$str_color', '00:00:00', '$str_big_goal_create_time', '$completeTime');")
+
+                    oneItem.add(str_biggoal)
+                    oneItem.add("00:00:00")
+                    oneItem.add(str_big_goal_create_time)
+                    oneItem.add(completeTime)
+
+                    Log.d("oneItem", oneItem.toString())
+
                 }
             } catch (e: Exception) {
                 Log.d("SetupFragment", "대표목표 " + e.printStackTrace().toString())
+            }
+        }
+
+        // 대표목표 생성 날짜 구하기 및 완료된 세부목표 DB에 값 저장
+        cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE big_goal_name = '${bigGoalItem.title}';",null)
+        while (cursor.moveToNext()) {
+            val str_biggoal = cursor.getString(cursor.getColumnIndex("big_goal_name"))
+            val str_detailgoal = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
+            val str_icon = cursor.getString(cursor.getColumnIndex("icon"))
+            val int_count = cursor.getInt(cursor.getColumnIndex("count")).toString()
+
+            try { // 값 저장
+                sqlitedb2.execSQL("INSERT INTO complete_detail_goal_db VALUES ('$str_detailgoal', '$str_icon', '$int_count', '$str_biggoal', '$str_big_goal_create_time');")
+            } catch (e: Exception) {
+                Log.d("SetupFragemnt", "세부목표 " + e.printStackTrace().toString())
             }
         }
 
@@ -377,12 +404,71 @@ class SetupFragment : Fragment() {
 
         // rv 초기화
         bigGoalAdapter.removeBigGoalItem(bigGoalItem)
-        Toast.makeText(context, "목표를 완료했습니다", Toast.LENGTH_SHORT).show()
+
+        // 팝업 띄우기
+        var showPopup = HamsterCompletedPopup()
+        showPopup.showCompletedPopup(oneItem)
 
         cursor2.close()
         cursor.close()
         sqlitedb2.close()
         sqlitedb.close()
         dbManager.close()
+    }
+
+    // 팝업창 클래스
+    inner class HamsterCompletedPopup {
+        private var mPopup: View = layoutInflater.inflate(R.layout.popup_goal_completed, null)
+        // 대표목표명
+        //시간 정보 (일 시간 분 초)
+        //기간 (기간일수)
+        @SuppressLint("SimpleDateFormat", "SetTextI18n")
+        fun showCompletedPopup(oneItem: ArrayList<String>) {
+            val topLayout = mPopup.findViewById<ConstraintLayout>(R.id.popup_goal_completed_top_CLayout)
+            val title = mPopup.findViewById<TextView>(R.id.popup_goal_completed_title_tv)
+            val time = mPopup.findViewById<TextView>(R.id.popup_goal_completed_time_tv)
+            val period = mPopup.findViewById<TextView>(R.id.popup_goal_completed_period_tv)
+
+            // 제목
+            title.text = oneItem[0]
+
+            // 기간 22.08.14~23.06.06 (235일)
+            val sf = SimpleDateFormat("yyyy-MM-dd-E H:mm:ss")
+            val tempCreatedTime = sf.parse(oneItem[2])
+            val tempCompletedTime = sf.parse(oneItem[3])
+            val calculateDate = (tempCompletedTime.time - tempCreatedTime.time) / (60 * 60 * 24 * 1000)
+
+            val tempCreatedArray = oneItem[2].split(" ")
+            val tempCreatedDate = tempCreatedArray[0].substring(2, 10)
+            val tempCompletedArray = oneItem[3].split(" ")
+            val tempCompletedDate = tempCompletedArray[0].substring(2, 10)
+            val createdDate = tempCreatedDate.replace("-", ".")
+            val completedDate = tempCompletedDate.replace("-", ".")
+            Log.d("temp", tempCreatedDate)
+            Log.d("temp", tempCompletedDate)
+
+            time.text = calculateDate.toString() + "일"
+            period.text = "$createdDate~$completedDate"
+
+            // 팝업창 띄우기
+            binding.goalBigTopCLayout.visibility = View.VISIBLE
+            binding.goalBigAddBigGoalButtton.visibility = View.GONE
+            mainActivity!!.hideTopToolbar(true)
+            binding.goalBigTopCLayout.addView(topLayout)
+
+            // 10초 후 팝업창 숨기기
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.goalBigTopCLayout.visibility = View.GONE
+                binding.goalBigAddBigGoalButtton.visibility = View.VISIBLE
+                mainActivity!!.hideTopToolbar(false)
+            }, 10000)
+
+            // 화면 클릭시 팝업 숨기기
+            binding.goalBigTopCLayout.setOnClickListener {
+                binding.goalBigTopCLayout.visibility = View.GONE
+                binding.goalBigAddBigGoalButtton.visibility = View.VISIBLE
+                mainActivity!!.hideTopToolbar(false)
+            }
+        }
     }
 }
