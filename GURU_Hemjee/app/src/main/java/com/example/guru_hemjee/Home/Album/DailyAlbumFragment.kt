@@ -17,7 +17,6 @@ import android.widget.*
 import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.DBManager
-import com.example.guru_hemjee.PhotoDialog
 import com.example.guru_hemjee.R
 import java.lang.IndexOutOfBoundsException
 import java.time.LocalDateTime
