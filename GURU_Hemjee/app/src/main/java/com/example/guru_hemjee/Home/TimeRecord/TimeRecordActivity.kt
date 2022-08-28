@@ -8,10 +8,12 @@ import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.TimeConvert
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import java.lang.Exception
 import java.math.BigInteger
 import java.text.SimpleDateFormat
@@ -243,7 +245,8 @@ class TimeRecordActivity: AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // (폰) 뒤로가기 버튼이 작동하지 않도록 함
+        // (폰) 뒤로가기 버튼을 누르면 sliding layout이 내려가게 함
+        binding.TimeRecordLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
     }
 
     // 타이머 늘어나게 하고, 변경된 값을 업데이트해서 보여주는 함수
