@@ -1,4 +1,4 @@
-package com.example.guru_hemjee
+package com.example.guru_hemjee.Home.Album
 
 import android.app.Dialog
 import android.content.Context
@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.guru_hemjee.R
 
 // 앨범 폴더가 아닌 개별 사진을 클릭했을 때 나오는 Dialog
 class PhotoDialog(private val context: Context, private val photoPath: String, private val icon: Int,

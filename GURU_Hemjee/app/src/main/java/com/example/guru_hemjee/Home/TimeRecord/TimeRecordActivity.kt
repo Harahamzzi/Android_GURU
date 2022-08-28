@@ -156,7 +156,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
                 // 데이터 추가
                 sqlitedb.execSQL("INSERT INTO big_goal_time_report_db VALUES ('$bigGoalName', " +
-                        "$resultTime, '$resultDate');")
+                        "'$resultTime', '$resultDate');")
 
                 sqlitedb.close()
                 dbManager.close()
@@ -207,9 +207,18 @@ class TimeRecordActivity: AppCompatActivity() {
                 Log.e(TAG, e.stackTraceToString())
             }
 
-            // TODO: 3. 팝업 표시 후 홈 화면으로 돌아가기
+            // 3. is_active == 1인 세부목표들 0으로 변경(활성화->비활성화)
+            dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
+            sqlitedb = dbManager.writableDatabase
 
-            // 4. 타이머 초기화
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_active = 0 WHERE is_active = 1")
+
+            sqlitedb.close()
+            dbManager.close()
+
+            // TODO: 4. 팝업 표시 후 홈 화면으로 돌아가기
+
+            // 5. 타이머 초기화
             time = 0
         }
 
@@ -224,6 +233,10 @@ class TimeRecordActivity: AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        // 세부 목표 어댑터 아이템 초기화
+        remainGoalAdapter.clearAllItem()
+        completeGoalAdapter.clearAllItem()
 
         // 세부 목표 동적 생성
         addDetailGoalView()
