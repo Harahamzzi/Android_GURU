@@ -57,16 +57,6 @@ class FameFragment : Fragment() {
             Log.d("cursor out", cursor.count.toString())
         }
 
-        // 기존 데이터 설정
-        binding.fameLongRecordGoalTitleTv.text = "달성한 목표가 없습니다"
-        binding.fameLongRecordGoalTimeTv.text = "0"
-        binding.fameLongTimeGoalTitleTv.text = "달성한 목표가 없습니다"
-        binding.fameLongTimeGoalTimeTv.text = "0"
-        binding.fameLongCountGoalTitleTv.text = "달성한 목표가 없습니다"
-        binding.fameLongCountGoalTimeTv.text = "0"
-        binding.fameLongAlbumGoalTitleTv.text = "달성한 목표가 없습니다"
-        binding.fameLongAlbumGoalTimeTv.text = "0"
-
         // 명예의 전당 상단 부분 정보 찾기(최장 기록상, 최장기간상, 최다달성상, 최다앨범상)
         var cursor2: Cursor
         cursor2 = sqlitedb.rawQuery("SELECT * FROM complete_detail_goal_db", null)
@@ -100,6 +90,7 @@ class FameFragment : Fragment() {
                     val tempSec = tempArray[2].toInt()
 
                     // 만약 최장 기록된 목표라면 대표목표 시간 저장 및 뷰에 반영
+                    // 최장 기록상
                     var isLong = false
                     if (tempHour > originHour) { // 시간이 많다면
                         isLong = true

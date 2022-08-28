@@ -40,36 +40,13 @@
                     android:layout_marginEnd="8dp">
 
                     <!-- 상 이름 -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="69dp"
+                        android:src="@drawable/ic_medal_record"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp">
-
-                        <ImageView
-                            android:layout_width="77dp"
-                            android:layout_height="69dp"
-                            android:src="@drawable/img_fame_medal"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/timer_icon"
-                            app:tint="@color/White"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="16dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="최장기록상"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/White"
-                            android:textSize="8sp"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="40dp"/>
-                    </FrameLayout>
+                        android:layout_marginTop="12dp"/>
 
                     <!-- 대표목표 이름 -->
                     <TextView
@@ -81,6 +58,7 @@
                         android:layout_marginEnd="7dp"
                         android:ellipsize="end"
                         android:fontFamily="@font/noto_sans"
+                        android:text="달성한 목표가 없습니다"
                         android:gravity="center"
                         android:maxLines="1"
                         android:textColor="@color/Black"
@@ -105,6 +83,7 @@
                             android:gravity="center"
                             android:maxLength="8"
                             android:maxLines="1"
+                            android:text="0"
                             android:textColor="@color/DarkBrown"
                             android:textSize="12sp" />
 
@@ -132,36 +111,13 @@
                     android:layout_marginEnd="8dp">
 
                     <!-- 상 이름 -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="69dp"
+                        android:src="@drawable/ic_medal_time"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp">
-
-                        <ImageView
-                            android:layout_width="77dp"
-                            android:layout_height="69dp"
-                            android:src="@drawable/img_fame_medal"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_calender_fame_16dp"
-                            app:tint="@color/White"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="16dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="최장기간상"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/White"
-                            android:textSize="8sp"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="40dp"/>
-                    </FrameLayout>
+                        android:layout_marginTop="12dp"/>
 
                     <!-- 대표목표 이름 -->
                     <TextView
@@ -172,6 +128,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="7dp"
                         android:ellipsize="end"
+                        android:text="달성한 목표가 없습니다"
                         android:fontFamily="@font/noto_sans"
                         android:gravity="center"
                         android:maxLines="1"
@@ -197,6 +154,7 @@
                             android:gravity="center"
                             android:maxLength="8"
                             android:maxLines="1"
+                            android:text="0"
                             android:textColor="@color/DarkBrown"
                             android:textSize="12sp" />
 
@@ -224,36 +182,13 @@
                     android:layout_marginEnd="8dp">
 
                     <!-- 상 이름 -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="69dp"
+                        android:src="@drawable/ic_medal_count"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp">
-
-                        <ImageView
-                            android:layout_width="77dp"
-                            android:layout_height="69dp"
-                            android:src="@drawable/img_fame_medal"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/timer_icon"
-                            app:tint="@color/White"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="16dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="최다달성상"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/White"
-                            android:textSize="8sp"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="40dp"/>
-                    </FrameLayout>
+                        android:layout_marginTop="12dp"/>
 
                     <!-- 대표목표 이름 -->
                     <TextView
@@ -267,6 +202,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:gravity="center"
                         android:maxLines="1"
+                        android:text="달성한 목표가 없습니다"
                         android:textColor="@color/Black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -289,6 +225,7 @@
                             android:gravity="center"
                             android:maxLength="8"
                             android:maxLines="1"
+                            android:text="0"
                             android:textColor="@color/DarkBrown"
                             android:textSize="12sp" />
 
@@ -297,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="7dp"
                             android:fontFamily="@font/noto_sans"
-                            android:text="개"
+                            android:text="회"
                             android:textColor="@color/DarkBrown"
                             android:textSize="12sp" />
 
@@ -316,36 +253,13 @@
                     android:layout_marginEnd="16dp">
 
                     <!-- 상 이름 -->
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="77dp"
+                        android:layout_height="69dp"
+                        android:src="@drawable/ic_medal_album"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp">
-
-                        <ImageView
-                            android:layout_width="77dp"
-                            android:layout_height="69dp"
-                            android:src="@drawable/img_fame_medal"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="23dp"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="16dp"
-                            android:src="@drawable/ic_calender_fame_16dp"
-                            app:tint="@color/White" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="최다앨범상"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/White"
-                            android:textSize="8sp"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="40dp"/>
-                    </FrameLayout>
+                        android:layout_marginTop="12dp"/>
 
                     <!-- 대표목표 이름 -->
                     <TextView
@@ -359,6 +273,7 @@
                         android:fontFamily="@font/noto_sans"
                         android:gravity="center"
                         android:maxLines="1"
+                        android:text="달성한 목표가 없습니다"
                         android:textColor="@color/Black"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -381,6 +296,7 @@
                             android:maxLength="8"
                             android:gravity="center"
                             android:fontFamily="@font/noto_sans"
+                            android:text="0"
                             android:textColor="@color/DarkBrown"
                             android:layout_marginStart="7dp"/>
 
