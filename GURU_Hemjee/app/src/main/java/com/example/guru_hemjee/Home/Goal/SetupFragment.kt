@@ -456,13 +456,6 @@ class SetupFragment : Fragment() {
             mainActivity!!.hideTopToolbar(true)
             binding.goalBigTopCLayout.addView(topLayout)
 
-            // 10초 후 팝업창 숨기기
-            Handler(Looper.getMainLooper()).postDelayed({
-                binding.goalBigTopCLayout.visibility = View.GONE
-                binding.goalBigAddBigGoalButtton.visibility = View.VISIBLE
-                mainActivity!!.hideTopToolbar(false)
-            }, 10000)
-
             // 화면 클릭시 팝업 숨기기
             binding.goalBigTopCLayout.setOnClickListener {
                 binding.goalBigTopCLayout.visibility = View.GONE

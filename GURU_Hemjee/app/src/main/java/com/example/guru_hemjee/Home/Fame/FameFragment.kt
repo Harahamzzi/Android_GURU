@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentFameBinding
@@ -25,6 +26,9 @@ class FameFragment : Fragment() {
 
     private var mBinding: FragmentFameBinding? = null // binding변수
     private val binding get() = mBinding!!
+
+    private var fameGoalList = ArrayList<FameItem>() // 명예의 전당 리스트
+    private lateinit var fameListAdapter: FameListAdapter // 어댑터
 
     override fun onDestroyView() {
         // binding class 인스턴트 참조 정리
@@ -43,6 +47,9 @@ class FameFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        // 리스트 초기화
+        fameGoalList.clear()
+
         // db open
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -58,9 +65,9 @@ class FameFragment : Fragment() {
         }
 
         // 명예의 전당 상단 부분 정보 찾기(최장 기록상, 최장기간상, 최다달성상, 최다앨범상)
-        var cursor2: Cursor
+        var cursor2: Cursor? = null
+        var cursor3: Cursor? = null
         cursor2 = sqlitedb.rawQuery("SELECT * FROM complete_detail_goal_db", null)
-        var fameGoalList = ArrayList<FameItem>() // 명예의 전당 리스트
         try {
             if (isFlag) {
                 binding.fameTopGoalHsv.visibility = View.VISIBLE
@@ -69,7 +76,7 @@ class FameFragment : Fragment() {
                 var originLongTime: String = "00:00:00" // 최장 기록상(시간)
                 var originTimePeriod: Int = 0   // 최장 기간상(일)
                 var originGoalCount: Int = 0   // 최다 달성상(개)
-                var originAlbumCount: Int = 0  // 최다 앨범상(장)
+                var albumCountList = ArrayList<MutableMap<String, String>>() // 최다 앨범상(장)
 
                 while(cursor.moveToNext()) {
                     val tempTitle = cursor.getString(cursor.getColumnIndex("big_goal_name")) // 대표목표
@@ -105,7 +112,7 @@ class FameFragment : Fragment() {
                     if (isLong) {
                         binding.fameLongRecordGoalTitleTv.text = tempTitle
                         val hour = tempHour.toString()
-                        if (hour.indexOf("0") == 0) {
+                        if (hour.indexOf("0") == 0 && hour.length != 1) {
                             binding.fameLongRecordGoalTimeTv.text = hour.substring(1)
                         }
                         else {
@@ -138,12 +145,20 @@ class FameFragment : Fragment() {
                         }
                     }
 
-                    // TODO 최다 앨범상
+                    // 하나의 대표목표 중 가장 많은 사진을 보유한 목표에게 주는 상
+                    // 최다 앨범상
+                    cursor3 = sqlitedb.rawQuery("SELECT count FROM complete_detail_goal_db WHERE big_goal_name = '$tempTitle' AND big_goal_created_time = '$tempCreatedTime';", null)
+                    while (cursor3.moveToNext()) {
+                        // 횟수 전부 더하기
+                        val int_count = cursor3.getInt(cursor3.getColumnIndex("count"))
 
+                        albumCountList.add(mutableMapOf(
+                            "big_goal_name" to tempTitle,
+                            "count" to int_count.toString(),
+                            "created_time" to tempCreatedTime
+                        ))
+                    }
 
-                    Log.d("famefragment", "시간 : $tempHour")
-                    Log.d("famefragment", "분 : $tempMin")
-                    Log.d("famefragment", "초 : $tempSec")
                     // 리스트에 정보 추가
                     // 시:분:초 -> 초
                     var resultSec = tempHour * 3600
@@ -175,18 +190,60 @@ class FameFragment : Fragment() {
 
                     fameGoalList.add(FameItem(tempColor, tempTitle, totalTime, totalDate, calculateDate.toString(), tempCreatedTime)) // 정보 추가
                 }
+
+                // 최다 앨범상 뷰에 적용하기
+                try {
+                    var originCount = 0
+                    var albumCount = 0
+                    var albumTitle: String? = albumCountList[0]["big_goal_name"]
+                    var albumTime: String? = albumCountList[0]["created_time"]
+
+                    for (j in 0 until albumCountList.size) {
+                        for (i in 0 until albumCountList.size) {
+                            if (albumTitle == albumCountList[j]["big_goal_name"] && albumTime == albumCountList[j]["created_time"]) {
+                                albumCount += albumCountList[j]["count"]?.toInt() ?: 0
+                            }
+                        }
+                        if (albumCount >= originCount) {
+                            albumTitle = albumCountList[j]["big_goal_name"]
+                            albumTime = albumCountList[j]["created_time"]
+                            originCount = albumCount
+                        }
+                    }
+
+                    binding.fameLongAlbumGoalTitleTv.text = albumTitle
+                    binding.fameLongAlbumGoalNumTv.text = albumCount.toString()
+                } catch (e: Exception) {
+                    Log.d("FameFragment", "리스트에 값이 없음 " + e.printStackTrace())
+                }
             }
         } catch (e: Exception) {
             Log.d("FameFragment", "명예의 전당 상단 부분 오류 " + e.printStackTrace())
-            Toast.makeText(requireContext(), "명예의 전당 화면을 불러올 수 없습니다", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "화면을 불러올 수 없습니다", Toast.LENGTH_SHORT).show()
         }
 
         // 명예의 전당 리스트 띄우기
-        val fameListAdapter = FameListAdapter(fameGoalList, requireContext())
+        fameListAdapter = FameListAdapter(requireContext())
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         binding.fameGoalRv.layoutManager = gridLayoutManager
         binding.fameGoalRv.adapter = fameListAdapter
 
+        for (i in 0 until fameGoalList.size) {
+            fameListAdapter.addGoalItem(fameGoalList[i])
+        }
+
+        cursor3?.close()
+        cursor2.close()
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
+
+        // 클릭 이벤트
+        initClickEvent()
+    }
+
+    // 클릭 이벤트 함수
+    fun initClickEvent() {
         // 대표목표 아이템 클릭 이벤트
         // 화면 이동
         fameListAdapter.onFameItemClickListener = { position ->
@@ -201,9 +258,36 @@ class FameFragment : Fragment() {
                 .commit()
         }
 
-        cursor2.close()
-        cursor.close()
-        sqlitedb.close()
-        dbManager.close()
+        // 대표목표 아이템 롱 클릭 이벤트
+        fameListAdapter.onFameItemLongClickListener = { position ->
+            // 삭제 팝업 띄우기
+            val dialog = AlertDialog(requireContext(), "해당 목표를 삭제하시겠습니까?", "해당 목표의 모든 기록이 삭제되며\n" +
+                    "복구는 불가능합니다.", "삭제", 0)
+            dialog.showAlertDialog()
+
+            dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+                override fun onClicked(isConfirm: Boolean) {
+                    // 삭제 버튼을 눌렀을 경우 db 및 리사이클러뷰에서 아이템 삭제
+                    if (isConfirm) {
+                        val title = fameGoalList[position].title
+                        val time = fameGoalList[position].time
+                        val color = fameGoalList[position].color
+                        val totalDate = fameGoalList[position].totalDate
+                        val totalPeriod = fameGoalList[position].totalPeriod
+                        val createdDate = fameGoalList[position].createdDate
+
+                        val sqlitedb2 = dbManager.writableDatabase
+
+                        sqlitedb2.execSQL("DELETE FROM complete_big_goal_db WHERE big_goal_name = '${title}' AND big_goal_created_time = '${createdDate}';")
+                        val fameItem = FameItem(color, title, time, totalDate, totalPeriod, createdDate)
+                        fameListAdapter.removeGoalItem(fameItem, position)
+                        Toast.makeText(requireContext(), "목표를 삭제했습니다", Toast.LENGTH_SHORT).show()
+
+                        sqlitedb2.close()
+                        dbManager.close()
+                    }
+                }
+            })
+        }
     }
 }

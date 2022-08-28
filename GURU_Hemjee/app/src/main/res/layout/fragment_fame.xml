@@ -1,333 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 명예의 전당 화면 -->
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/LightGray"
-    android:scrollbars="none"
     tools:context=".Home.Fame.FameFragment">
 
-    <LinearLayout
+    <!-- 상단바 -->
+    <ImageView
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- 상 목록 -->
-        <HorizontalScrollView
-            android:id="@+id/fame_top_goal_hsv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:scrollbars="none">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <!-- 최장 기록 상-->
-                <LinearLayout
-                    android:id="@+id/fame_long_record_goal_LLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/solid_goal_item_default_box"
-                    android:layout_marginEnd="8dp">
-
-                    <!-- 상 이름 -->
-                    <ImageView
-                        android:layout_width="77dp"
-                        android:layout_height="69dp"
-                        android:src="@drawable/ic_medal_record"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp"/>
-
-                    <!-- 대표목표 이름 -->
-                    <TextView
-                        android:id="@+id/fame_long_record_goal_title_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="7dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/noto_sans"
-                        android:text="달성한 목표가 없습니다"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/Black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <!-- 대표목표 수행 시간 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/fame_long_record_goal_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:gravity="center"
-                            android:maxLength="8"
-                            android:maxLines="1"
-                            android:text="0"
-                            android:textColor="@color/DarkBrown"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="시간"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/DarkBrown"
-                            android:layout_marginEnd="7dp"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- 최장 기간 상-->
-                <LinearLayout
-                    android:id="@+id/fame_long_time_goal_LLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/solid_goal_item_default_box"
-                    android:layout_marginEnd="8dp">
-
-                    <!-- 상 이름 -->
-                    <ImageView
-                        android:layout_width="77dp"
-                        android:layout_height="69dp"
-                        android:src="@drawable/ic_medal_time"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp"/>
-
-                    <!-- 대표목표 이름 -->
-                    <TextView
-                        android:id="@+id/fame_long_time_goal_title_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="7dp"
-                        android:ellipsize="end"
-                        android:text="달성한 목표가 없습니다"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/Black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <!-- 대표목표 수행 시간 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/fame_long_time_goal_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:gravity="center"
-                            android:maxLength="8"
-                            android:maxLines="1"
-                            android:text="0"
-                            android:textColor="@color/DarkBrown"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="일"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/DarkBrown"
-                            android:layout_marginEnd="7dp"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- 최다 달성 상-->
-                <LinearLayout
-                    android:id="@+id/fame_long_more_goal_LLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/solid_goal_item_default_box"
-                    android:layout_marginEnd="8dp">
-
-                    <!-- 상 이름 -->
-                    <ImageView
-                        android:layout_width="77dp"
-                        android:layout_height="69dp"
-                        android:src="@drawable/ic_medal_count"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp"/>
-
-                    <!-- 대표목표 이름 -->
-                    <TextView
-                        android:id="@+id/fame_long_count_goal_title_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="7dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:text="달성한 목표가 없습니다"
-                        android:textColor="@color/Black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <!-- 대표목표 수행 시간 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/fame_long_count_goal_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="7dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:gravity="center"
-                            android:maxLength="8"
-                            android:maxLines="1"
-                            android:text="0"
-                            android:textColor="@color/DarkBrown"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="7dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:text="회"
-                            android:textColor="@color/DarkBrown"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- 최다 앨범 상-->
-                <LinearLayout
-                    android:id="@+id/fame_long_album_goal_LLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/solid_goal_item_default_box"
-                    android:layout_marginEnd="16dp">
-
-                    <!-- 상 이름 -->
-                    <ImageView
-                        android:layout_width="77dp"
-                        android:layout_height="69dp"
-                        android:src="@drawable/ic_medal_album"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginTop="12dp"/>
-
-                    <!-- 대표목표 이름 -->
-                    <TextView
-                        android:id="@+id/fame_long_album_goal_title_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="7dp"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/noto_sans"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:text="달성한 목표가 없습니다"
-                        android:textColor="@color/Black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <!-- 대표목표 수행 시간 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/fame_long_album_goal_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:maxLength="8"
-                            android:gravity="center"
-                            android:fontFamily="@font/noto_sans"
-                            android:text="0"
-                            android:textColor="@color/DarkBrown"
-                            android:layout_marginStart="7dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="장"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/noto_sans"
-                            android:textColor="@color/DarkBrown"
-                            android:layout_marginEnd="7dp"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
-
-        <!-- 명예의 전당 목록 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fame_goal_rv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
-            android:nestedScrollingEnabled="false"
-            android:scrollbars="none"
-            tools:listitem="@layout/container_fame_item_rv"/>
-    </LinearLayout>
+            android:orientation="vertical">
 
-</androidx.core.widget.NestedScrollView>
+            <!-- 상 목록 -->
+            <HorizontalScrollView
+                android:id="@+id/fame_top_goal_hsv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- 최장 기록 상-->
+                    <LinearLayout
+                        android:id="@+id/fame_long_record_goal_LLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/solid_goal_item_default_box"
+                        android:layout_marginEnd="8dp">
+
+                        <!-- 상 이름 -->
+                        <ImageView
+                            android:layout_width="77dp"
+                            android:layout_height="69dp"
+                            android:src="@drawable/ic_medal_record"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="12dp"/>
+
+                        <!-- 대표목표 이름 -->
+                        <TextView
+                            android:id="@+id/fame_long_record_goal_title_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="7dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/noto_sans"
+                            android:text="달성한 목표가 없습니다"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <!-- 대표목표 수행 시간 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="7dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/fame_long_record_goal_time_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:gravity="center"
+                                android:maxLength="8"
+                                android:maxLines="1"
+                                android:text="0"
+                                android:textColor="@color/DarkBrown"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="시간"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/DarkBrown"
+                                android:layout_marginEnd="7dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 최장 기간 상-->
+                    <LinearLayout
+                        android:id="@+id/fame_long_time_goal_LLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/solid_goal_item_default_box"
+                        android:layout_marginEnd="8dp">
+
+                        <!-- 상 이름 -->
+                        <ImageView
+                            android:layout_width="77dp"
+                            android:layout_height="69dp"
+                            android:src="@drawable/ic_medal_time"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="12dp"/>
+
+                        <!-- 대표목표 이름 -->
+                        <TextView
+                            android:id="@+id/fame_long_time_goal_title_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="7dp"
+                            android:ellipsize="end"
+                            android:text="달성한 목표가 없습니다"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <!-- 대표목표 수행 시간 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="7dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/fame_long_time_goal_time_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:gravity="center"
+                                android:maxLength="8"
+                                android:maxLines="1"
+                                android:text="0"
+                                android:textColor="@color/DarkBrown"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="일"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/DarkBrown"
+                                android:layout_marginEnd="7dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 최다 달성 상-->
+                    <LinearLayout
+                        android:id="@+id/fame_long_more_goal_LLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/solid_goal_item_default_box"
+                        android:layout_marginEnd="8dp">
+
+                        <!-- 상 이름 -->
+                        <ImageView
+                            android:layout_width="77dp"
+                            android:layout_height="69dp"
+                            android:src="@drawable/ic_medal_count"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="12dp"/>
+
+                        <!-- 대표목표 이름 -->
+                        <TextView
+                            android:id="@+id/fame_long_count_goal_title_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="7dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="달성한 목표가 없습니다"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <!-- 대표목표 수행 시간 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="7dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/fame_long_count_goal_time_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:gravity="center"
+                                android:maxLength="8"
+                                android:maxLines="1"
+                                android:text="0"
+                                android:textColor="@color/DarkBrown"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="7dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:text="회"
+                                android:textColor="@color/DarkBrown"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 최다 앨범 상-->
+                    <LinearLayout
+                        android:id="@+id/fame_long_album_goal_LLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/solid_goal_item_default_box"
+                        android:layout_marginEnd="16dp">
+
+                        <!-- 상 이름 -->
+                        <ImageView
+                            android:layout_width="77dp"
+                            android:layout_height="69dp"
+                            android:src="@drawable/ic_medal_album"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="12dp"/>
+
+                        <!-- 대표목표 이름 -->
+                        <TextView
+                            android:id="@+id/fame_long_album_goal_title_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="7dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="달성한 목표가 없습니다"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <!-- 대표목표 수행 시간 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="7dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/fame_long_album_goal_num_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:maxLength="8"
+                                android:gravity="center"
+                                android:fontFamily="@font/noto_sans"
+                                android:text="0"
+                                android:textColor="@color/DarkBrown"
+                                android:layout_marginStart="7dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="장"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/DarkBrown"
+                                android:layout_marginEnd="7dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <!-- 명예의 전당 목록 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fame_goal_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="16dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                tools:listitem="@layout/container_fame_item_rv"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

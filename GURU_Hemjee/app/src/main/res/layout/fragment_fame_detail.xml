@@ -1,112 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/LightGray"
-    android:scrollbars="none"
     tools:context=".Home.Fame.FameDetailFragment">
 
-    <LinearLayout
+    <!-- 상단바 -->
+    <ImageView
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/solid_goal_item_default_box">
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp">
-            <!-- 대표목표 색상 -->
-            <ImageView
-                android:id="@+id/container_fame_detail_color_iv"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_colorselectionicon"
-                app:tint="@color/Pink"/>
-            <!-- 대표목표 제목 -->
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/solid_goal_item_default_box">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp">
+                <!-- 대표목표 색상 -->
+                <ImageView
+                    android:id="@+id/container_fame_detail_color_iv"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_colorselectionicon"
+                    app:tint="@color/Pink"/>
+                <!-- 대표목표 제목 -->
+                <TextView
+                    android:id="@+id/container_fame_detail_title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp"
+                    android:text="알고리즘 마스터하기"/>
+            </LinearLayout>
+
+            <!-- 시간 -->
             <TextView
-                android:id="@+id/container_fame_detail_title_tv"
+                android:id="@+id/container_fame_detail_time_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="14dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="2dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="2dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/noto_sans"
-                android:textColor="@color/Black"
-                android:textSize="14sp"
-                android:text="알고리즘 마스터하기"/>
+                android:background="@drawable/solid_goal_item_default_box"
+                android:backgroundTint="@color/LightGray"
+                android:maxLines="1"
+                android:textColor="@color/DarkBrown"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:drawableTint="@color/DarkBrown"
+                app:drawableStartCompat="@drawable/ic_timer"
+                android:drawablePadding="8dp"/>
+
+            <!-- 기간 -->
+            <TextView
+                android:id="@+id/container_fame_detail_date_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="2dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/noto_sans"
+                android:background="@drawable/solid_goal_item_default_box"
+                android:backgroundTint="@color/LightGray"
+                android:maxLines="1"
+                android:textColor="@color/DarkBrown"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:drawableTint="@color/DarkBrown"
+                app:drawableStartCompat="@drawable/ic_calender_fame_16dp"
+                android:drawablePadding="8dp"/>
+
+            <!-- 세부목표 리스트 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/container_fame_detail_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                tools:listitem="@layout/container_fame_detail_item_rv"/>
         </LinearLayout>
 
-        <!-- 시간 -->
-        <TextView
-            android:id="@+id/container_fame_detail_time_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:paddingTop="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:background="@drawable/solid_goal_item_default_box"
-            android:backgroundTint="@color/LightGray"
-            android:maxLines="1"
-            android:textColor="@color/DarkBrown"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:drawableTint="@color/DarkBrown"
-            app:drawableStartCompat="@drawable/ic_timer"
-            android:drawablePadding="8dp"/>
+    </androidx.core.widget.NestedScrollView>
 
-        <!-- 기간 -->
-        <TextView
-            android:id="@+id/container_fame_detail_date_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:paddingTop="2dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="2dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/noto_sans"
-            android:background="@drawable/solid_goal_item_default_box"
-            android:backgroundTint="@color/LightGray"
-            android:maxLines="1"
-            android:textColor="@color/DarkBrown"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:drawableTint="@color/DarkBrown"
-            app:drawableStartCompat="@drawable/ic_calender_fame_16dp"
-            android:drawablePadding="8dp"/>
-
-        <!-- 세부목표 리스트 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/container_fame_detail_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            tools:listitem="@layout/container_fame_detail_item_rv"/>
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
