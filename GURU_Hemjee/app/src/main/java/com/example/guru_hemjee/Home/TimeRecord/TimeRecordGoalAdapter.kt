@@ -41,7 +41,6 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
 
     // Item을 하나하나 binding 시키는 함수
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-
         holder.iconImageView.setImageResource(DBConvert.iconConvert(item.get(position).getIconName(), context))  // 아이콘 모양 적용
         DBConvert.colorConvert(holder.iconImageView, item.get(position).getIconColor(), context)                 // 아이콘 색상 적용
         holder.goalNameTextView.setText(item.get(position).getGoalName())                                        // 세부목표 이름 적용
@@ -50,6 +49,16 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
         holder.startCameraButton.setOnClickListener {
             // Camera Activity로 이동
             var intent = Intent(context, CameraActivity::class.java)
+
+            // TODO: DB 값 확인 필요
+            try {
+                intent.putExtra("detailGoalName", item.get(position).getGoalName())
+            }
+            catch (e: Exception) {
+                Log.e(TAG, "세부 목표 이름 intent 담기 실패")
+                Log.e(TAG, e.stackTraceToString())
+            }
+
             context.startActivity(intent)
         }
     }
@@ -66,6 +75,18 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
         }
 
         return 0
+    }
+
+    fun clearAllItem() {
+        if (itemCount > 0)
+        {
+            for (i in 0 until itemCount)
+            {
+                item.removeAt(0)
+            }
+
+            notifyItemRangeRemoved(0, itemCount)
+        }
     }
 
     fun addItem(data: TimeRecordGoalItem) {
