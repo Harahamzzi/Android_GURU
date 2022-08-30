@@ -2,6 +2,8 @@ package com.example.guru_hemjee
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -26,7 +28,10 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
     //팝업 표시
     fun alertDialog(){
         dialog.show()
+
         dialog.setCancelable(false) // 화면 밖 터치시 팝업창이 닫히지 않게 함
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))  // 배경 색 투명화
+
         dialog.setContentView(R.layout.popup_final_ok)
 
         //위젯 연결

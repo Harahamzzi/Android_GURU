@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.bumptech.glide.Glide
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.FinalOKDialog
 import com.example.guru_hemjee.TimeConvert
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
@@ -54,6 +55,9 @@ class TimeRecordActivity: AppCompatActivity() {
     private var detailGoalNameList = ArrayList<String>()    // 세부 목표 이름 목록
     private var detailGoalCheckedList = ArrayList<Int>()    // 세부 목표 활성화 여부가 담긴 리스트(1: true, 0: false)
     private var detailGoalCheckedNameList = ArrayList<String>() // 활성화된 세부 목표 이름 목록
+
+    // 기록 종료시 보상으로 지급될 씨앗
+    private var rewardPoint: Int = 0
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -222,7 +226,10 @@ class TimeRecordActivity: AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
 
-            // TODO: 4. 팝업 표시 후 홈 화면으로 돌아가기
+            // 4. 팝업 표시 후 홈 화면으로 돌아가기
+            rewardPoint = time / 1000 / 60      // 1분당 1포인트 지급
+
+            finalPopup("기록 종료", "+$rewardPoint", true)
 
             // 5. 타이머 초기화
             time = 0
@@ -418,5 +425,45 @@ class TimeRecordActivity: AppCompatActivity() {
             Log.e(TAG, "세부 목표 가져오기 실패")
             Log.e(TAG, e.stackTraceToString())
         }
+    }
+
+    // 마지막 팝업 창(목표 달성!)
+    private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
+        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi, null)
+        dialog.alertDialog()
+
+        dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
+            @SuppressLint("Range")
+            override fun onClicked(isConfirm: Boolean) {
+                if(isConfirm){
+                    /** 기록 종료시 수행할 작업 **/
+
+                    // 현재 씨앗 개수 가져오기
+                    dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+                    if (cursor.moveToNext())
+                    {
+                        rewardPoint += cursor.getInt(cursor.getColumnIndex("seed"))
+                    }
+
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    // 획득한 씨앗 갱신
+                    dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
+                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = $rewardPoint")
+                    sqlitedb.close()
+                    dbManager.close()
+
+                    // 현재 액티비티 닫기
+                    finish()
+                }
+            }
+        })
     }
 }

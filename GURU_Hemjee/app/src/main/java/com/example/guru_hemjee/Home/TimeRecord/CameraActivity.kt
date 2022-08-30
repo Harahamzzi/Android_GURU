@@ -314,21 +314,36 @@ class CameraActivity : AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOKDialog(this,title, okString, isNeedDrawable, R.drawable.popup_goal,
-                "좋아! 끝까지 가보는거다 햄찌!\n해바라기 씨를 위해!")
+        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi, null)
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
+            @SuppressLint("Range")
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
                     /** 목표 달성시 수행할 작업 **/
+
+                    // 현재 씨앗 개수 가져오기
+                    dbManager = DBManager(this@CameraActivity, "hamster_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+                    var seedPoint = 0
+
+                    if (cursor.moveToNext())
+                    {
+                        seedPoint = cursor.getInt(cursor.getColumnIndex("seed")) + 5
+                    }
+
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
 
                     // 획득한 씨앗 갱신
                     dbManager = DBManager(this@CameraActivity, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
 
-                    var newSeedPoint: Int = 5 + intent.getIntExtra("seedPoint", 0)
-                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = $newSeedPoint")
+                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = $seedPoint")
                     sqlitedb.close()
                     dbManager.close()
 

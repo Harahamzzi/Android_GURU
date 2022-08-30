@@ -50,7 +50,6 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
             // Camera Activity로 이동
             var intent = Intent(context, CameraActivity::class.java)
 
-            // TODO: DB 값 확인 필요
             try {
                 intent.putExtra("detailGoalName", item.get(position).getGoalName())
             }
