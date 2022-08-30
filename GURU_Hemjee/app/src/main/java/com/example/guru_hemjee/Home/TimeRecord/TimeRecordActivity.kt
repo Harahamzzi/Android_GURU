@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.bumptech.glide.Glide
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.TimeConvert
 import com.example.guru_hemjee.R
@@ -59,6 +60,9 @@ class TimeRecordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityTimeRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 햄찌 GIF 이미지 연결
+        Glide.with(this).load(R.raw.hamzzi_rolling).into(binding.hamzziImageView)
 
         /** 리사이클러뷰 어댑터 연결 **/
 

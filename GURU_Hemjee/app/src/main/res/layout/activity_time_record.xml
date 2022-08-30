@@ -57,11 +57,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/hamzziImageView"
             android:layout_width="198dp"
             android:layout_height="198dp"
             android:layout_marginTop="66dp"
-            android:src="@drawable/hamzzi3"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TimeRecord_toolbarLayout" />
@@ -78,7 +79,7 @@
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/hamzziImageView" />
 
         <ImageButton
             android:id="@+id/TimeRecord_pauseButton"
