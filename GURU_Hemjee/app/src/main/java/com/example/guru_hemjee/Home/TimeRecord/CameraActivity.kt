@@ -196,8 +196,10 @@ class CameraActivity : AppCompatActivity() {
     }
 
     // 이미지를 저장하는 메소드
-    @SuppressLint("Range")
     private fun saveImage(img: Bitmap) {
+
+        lateinit var fileName: String
+
         try {
             // 저장할 파일 경로
             var storageDir: File = File(filesDir.toString() + "/picture")
@@ -205,7 +207,7 @@ class CameraActivity : AppCompatActivity() {
             if(!storageDir.exists())
                 storageDir.mkdirs()
 
-            var fileName: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".jpg"
+            fileName = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date()) + ".jpg"
 
             // 해당 파일이 기존에 있었다면 삭제
             var file = File(storageDir, fileName)
@@ -236,11 +238,30 @@ class CameraActivity : AppCompatActivity() {
             }
 
             Log.i (TAG, "사진 저장 성공")
+        }
+        catch(e: Exception)
+        {
+            Log.e(TAG, "사진 저장 실패")
+            e.printStackTrace()
+        }
 
+        // DB 데이터 업데이트
+        updateDetailGoalDB(fileName)
+
+        // 목표 달성 팝업창
+        finalPopup("목표 달성!", "+5", true)
+    }
+
+    // 세부목표 관련 DB 데이터 업데이트
+    @SuppressLint("Range")
+    private fun updateDetailGoalDB(fileName: String) {
+        try {
             // 현재 날짜 가져오기(한국 시간 기준)
             var lockDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(System.currentTimeMillis()))
 
-            // 세부 목표 리포트 DB 가져오기: 날짜 & 파일명 & 완료 체크 업데이트
+
+            /** 세부 목표 리포트 DB 가져오기: 날짜 & 파일명 & 완료 체크 업데이트 **/
+
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
 
@@ -257,7 +278,9 @@ class CameraActivity : AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
 
-            // 세부 목표 DB 가져오기: 완료 횟수 업데이트
+
+            /** 세부 목표 DB 가져오기: 완료 횟수 업데이트 **/
+
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '$goalName'", null)
@@ -281,14 +304,10 @@ class CameraActivity : AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
 
-            // 목표 달성 팝업창
-            finalPopup("목표 달성!", "+5", true)
-
             Log.i(TAG, "DB 데이터 업데이트 완료")
         }
-        catch(e: Exception)
-        {
-            Log.e(TAG, "사진 저장 실패")
+        catch (e: Exception) {
+            Log.e(TAG, "세부목표 DB 데이터 업데이트 실패")
             e.printStackTrace()
         }
     }
