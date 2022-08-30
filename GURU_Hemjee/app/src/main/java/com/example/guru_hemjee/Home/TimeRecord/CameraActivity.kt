@@ -1,20 +1,20 @@
 package com.example.guru_hemjee.Home.TimeRecord
 
-import android.content.ContentValues.TAG
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.ImageButton
-import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.core.content.FileProvider
 import com.example.guru_hemjee.DBManager
@@ -30,14 +30,10 @@ import java.util.*
 
 // 홈 화면의 시작 버튼(HomeFragment) -> 잠금 화면(LockActivity) -> 세부 목표 클릭시 -> 카메라 화면
 // 카메라 어플을 실행시키고 사진을 저장해 목표 달성 인증을 기록하는 Activity 화면
-@Suppress("DEPRECATION")    // 사용하지 말아야 할 메소드 관련 경고 억제
 class CameraActivity : AppCompatActivity() {
 
-    // 촬영한 사진을 띄울 이미지 뷰
-    private lateinit var imagePreview: ImageView
-
-    // 저장 버튼
-    private lateinit var saveImageButton: ImageButton
+    // Log 태그
+    private var TAG = "CameraActivity"
 
     // 카메라 관련..필요한 변수
     private lateinit var currentPhotoPath: String
@@ -48,36 +44,34 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
 
-    // 획득 씨앗 계산 관련
-    private var upSeedPoint: Int = 0
+    private lateinit var goalName: String   // 세부목표 이름
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_camera)
+
+        // 세부목표 이름 가져오기
+        goalName = intent.getStringExtra("detailGoalName")!!
 
         // 액션바 숨기기
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
+        // 상태바 숨기기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
+        {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else
+        {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN )
+        }
+
         // 화면 켜진 상태를 유지
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
-        setContentView(R.layout.activity_camera)
-
-        // 위젯 연결
-        imagePreview = findViewById(R.id.imagePreview)
-        saveImageButton = findViewById(R.id.saveImageButton)
-        saveImageButton.setOnClickListener {
-            saveImage() // 이미지 저장
-        }
-
-        // 해당 세부 목표를 완료해서 얻을 수 있는 씨앗 계산
-        // 우선 전체 시간을 분 단위로 바꿈
-        var tempCount: Int = intent.getIntExtra("totalLockTime", 0) / 60
-
-        // 세부 목표를 하나 해결할 때마다 얻을 수 있는 씨앗 포인트 갱신
-        // 10분당 10포인트 = 1분당 1포인트
-        upSeedPoint = tempCount * 1 / intent.getIntExtra("detailGoalCount", 1)
 
         // 카메라 실행
         captureCamera()
@@ -85,6 +79,7 @@ class CameraActivity : AppCompatActivity() {
 
     // 카메라 기능을 실행하는 메소드
     private fun captureCamera() {
+
         var takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         // 인텐트를 처리할 카메라 액티비티가 있는지 확인
@@ -115,6 +110,7 @@ class CameraActivity : AppCompatActivity() {
             catch(e: IOException)
             {
                 Log.e(TAG, "파일 생성 오류")
+                e.printStackTrace()
             }
 
             // 파일이 정상적으로 생성되었다면 계속 진행
@@ -144,6 +140,7 @@ class CameraActivity : AppCompatActivity() {
             // 사진 촬영 후
             when(requestCode) {
                 REQUEST_TAKE_PHOTO -> {
+
                     if(resultCode == RESULT_OK) {
                         var file = File(currentPhotoPath)
                         var bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
@@ -169,15 +166,24 @@ class CameraActivity : AppCompatActivity() {
                             }
 
                             // Rotate한 bitmap을 ImageView에 저장
-                            imagePreview.setImageBitmap(rotatedBitmap)
+                            saveImage(rotatedBitmap)
                         }
                     }
+                    else if(resultCode == RESULT_CANCELED)
+                    {
+                        finish()    // 취소 버튼을 눌렀을 때 바로 기록화면으로 이동하게 함
+                    }
                 }
+
+               else -> {
+                   finish() // (폰) 뒤로가기를 눌렀을 때 바로 기록화면으로 이동하게 함
+               }
             }
         }
         catch(e: Exception)
         {
             Log.e(TAG, "onActivityResult 오류")
+            e.printStackTrace()
         }
     }
 
@@ -190,7 +196,8 @@ class CameraActivity : AppCompatActivity() {
     }
 
     // 이미지를 저장하는 메소드
-    private fun saveImage() {
+    @SuppressLint("Range")
+    private fun saveImage(img: Bitmap) {
         try {
             // 저장할 파일 경로
             var storageDir: File = File(filesDir.toString() + "/picture")
@@ -209,10 +216,9 @@ class CameraActivity : AppCompatActivity() {
 
             try {
                 output = FileOutputStream(file)
-                var drawable: BitmapDrawable = imagePreview.drawable as BitmapDrawable
-                var bitmap: Bitmap = drawable.bitmap
+
                 // 해상도에 맞추어 Compress
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, output)
+                img.compress(Bitmap.CompressFormat.JPEG, 70, output)
             }
             catch(e: FileNotFoundException)
             {
@@ -231,30 +237,59 @@ class CameraActivity : AppCompatActivity() {
 
             Log.i (TAG, "사진 저장 성공")
 
-            // 선택한 세부 목표 이름 가져오기
-            var goalName = intent.getStringExtra("detailGoalName")
             // 현재 날짜 가져오기(한국 시간 기준)
             var lockDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(System.currentTimeMillis()))
 
-            // 세부 목표 리포트 DB 가져오기
+            // 세부 목표 리포트 DB 가져오기: 날짜 & 파일명 & 완료 체크 업데이트
             dbManager = DBManager(this, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
+
             // 날짜 넣기
             sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET lock_date = '$lockDate' " +
                     "WHERE detail_goal_name = '$goalName' AND is_active = 1")
             // 파일명 넣기
             sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET photo_name = '$fileName' " +
                     "WHERE detail_goal_name = '$goalName' AND is_active = 1")
+            // 완료 체크
+            sqlitedb.execSQL("UPDATE detail_goal_time_report_db SET is_complete = 1 " +
+                    "WHERE detail_goal_name = '$goalName' AND is_active = 1")
+
+            sqlitedb.close()
+            dbManager.close()
+
+            // 세부 목표 DB 가져오기: 완료 횟수 업데이트
+            dbManager = DBManager(this, "hamster_db", null, 1)
+            sqlitedb = dbManager.readableDatabase
+            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE detail_goal_name = '$goalName'", null)
+
+            var count = 0
+
+            if (cursor.moveToNext())
+            {
+                count = cursor.getInt(cursor.getColumnIndex("count")) + 1
+            }
+
+            cursor.close()
+            sqlitedb.close()
+            dbManager.close()
+
+            dbManager = DBManager(this, "hamster_db", null, 1)
+            sqlitedb = dbManager.writableDatabase
+
+            sqlitedb.execSQL("UPDATE detail_goal_db SET count = $count WHERE detail_goal_name = '$goalName'")
 
             sqlitedb.close()
             dbManager.close()
 
             // 목표 달성 팝업창
             finalPopup("목표 달성!", "+5", true)
+
+            Log.i(TAG, "DB 데이터 업데이트 완료")
         }
         catch(e: Exception)
         {
             Log.e(TAG, "사진 저장 실패")
+            e.printStackTrace()
         }
     }
 

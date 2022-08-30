@@ -4,42 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Yellow"
     tools:context=".Home.TimeRecord.CameraActivity">
-
-    <Toolbar
-        android:id="@+id/toolBar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/BrightYellow"
-        app:contentInsetStart="0dp"
-        app:layout_constraintTop_toTopOf="parent">
-    </Toolbar>
-
-    <ImageView
-        android:id="@+id/imagePreview"
-        android:layout_width="match_parent"
-        android:layout_height="520dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
-
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/BrightYellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagePreview">
-
-        <ImageButton
-            android:id="@+id/saveImageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_check"
-            android:background="@android:color/transparent" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
