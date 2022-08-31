@@ -197,9 +197,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             // isHome 플래그 올리기
                             isHome = true
                         }
-                        // 목표 및 잠금 시간 설정 페이지
+                        // 목표 설정 페이지
                         "setUp" -> {
-                            binding.titleTextView.setText("목표/잠금 시간 설정")
+                            binding.titleTextView.setText("목표 설정")
                         }
                         // 목표 리포트 페이지
                         "dailyReport" -> {
@@ -300,13 +300,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when(item.itemId) {
 
             R.id.action_goalAndTime -> {
-                // 목표 및 잠금 시간 설정 탭으로 전환
+                // 목표 설정 탭으로 전환
                 transaction.replace(R.id.fragment_main, SetupFragment(), "setUp")
                 transaction.addToBackStack(null)
                 transaction.commit()
 
                 // 타이틀 텍스트 변경
-                binding.titleTextView.setText("목표/잠금 시간 설정")
+                binding.titleTextView.setText("목표 설정")
 
                 // Navigation Drawer 닫기
                 binding.homeDrawerLayout.closeDrawers()
