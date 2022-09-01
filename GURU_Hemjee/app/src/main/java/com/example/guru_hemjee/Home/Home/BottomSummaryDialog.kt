@@ -102,9 +102,19 @@ class BottomSummaryDialog(context: Context) {
         // 모든 값들 배열에 저장(같은 날짜 내에 중복값 저장X)
         while (cursor.moveToNext()) {
             val str_big_goal = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
-            val bigint_time = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
+            val bigint_time = cursor.getInt(cursor.getColumnIndex("total_report_time")).toBigInteger()
             val str_date = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
-            val int_color = cursor.getInt(cursor.getColumnIndex("color")).toBigInteger()
+
+            // 해당 대표목표의 색상값 뽑아오기
+            var int_color = 0
+            var tempCursor: Cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${str_big_goal}'", null)
+
+            if(tempCursor.moveToNext())
+            {
+                int_color = tempCursor.getInt(tempCursor.getColumnIndex("color"))
+            }
+
+            tempCursor.close()
 
             // 배열에 읽어온 값 저장
             var isFlag: Boolean = false // 중복값 확인
@@ -124,7 +134,7 @@ class BottomSummaryDialog(context: Context) {
                 var i = 0
                 while (i < bigGoalArrayList.size) {
                     if (bigGoalArrayList[i]["big_goal_name"] == str_big_goal &&
-                        bigGoalArrayList[i]["color"]!!.toBigInteger() == int_color &&
+                        bigGoalArrayList[i]["color"]!!.toInt() == int_color &&
                         bigGoalArrayList[i]["lock_date"] == date1[0]) {
 
                         bigGoalArrayList[i]["total_lock_time"] =
@@ -417,8 +427,19 @@ class BottomSummaryDialog(context: Context) {
 
             var temp1: String = cursor.getString(cursor.getColumnIndex("lock_date")).toString()
             var str_big_goal: String = cursor.getString(cursor.getColumnIndex("big_goal_name")).toString()
-            var bigint_lock_time: BigInteger = cursor.getInt(cursor.getColumnIndex("total_lock_time")).toBigInteger()
-            var int_color: Int = cursor.getInt(cursor.getColumnIndex("color"))
+            var bigint_lock_time: BigInteger = cursor.getInt(cursor.getColumnIndex("total_report_time")).toBigInteger()
+
+            // 해당 대표목표의 색상값 뽑아오기
+            var int_color = 0
+            var tempCursor: Cursor = sqlite.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${str_big_goal}'", null)
+
+            if(tempCursor.moveToNext())
+            {
+                int_color = tempCursor.getInt(tempCursor.getColumnIndex("color"))
+            }
+
+            tempCursor.close()
+
 
             // 중복값을 찾기 위한 flag변수 (중복값O: true, 중복값X: false)
             var isFlag: Boolean = false
