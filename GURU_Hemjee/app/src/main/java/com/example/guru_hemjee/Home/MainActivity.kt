@@ -4,10 +4,13 @@ import android.Manifest
 import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.widget.Toast
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -79,6 +82,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 액션바 숨기기
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+
+        // 상태바 숨기기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
+        {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else
+        {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN )
+        }
 
         // 네비게이션 드로어 생성
         binding.navigationView.setNavigationItemSelectedListener(this)

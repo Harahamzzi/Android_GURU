@@ -3,8 +3,10 @@ package com.example.guru_hemjee.Home.TimeRecord
 import android.annotation.SuppressLint
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,6 +66,18 @@ class TimeRecordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityTimeRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 상태바 숨기기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
+        {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else
+        {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN )
+        }
 
         // 햄찌 GIF 이미지 연결
         Glide.with(this).load(R.raw.hamzzi_rolling).into(binding.hamzziImageView)
