@@ -13,39 +13,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
+import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.R
 import java.lang.IndexOutOfBoundsException
 
-//// 나의 성취 앨범(AlbumMainActivity) -> 카테고리별
-//// 카테고리 분류의 앨범 폴더들을 생성 후 보여주는 Fragment 화면
-//class CategoryAlbumFragment : Fragment() {
-//
-//    // 사진을 담을 레이아웃
-//    private lateinit var albumCategory_CategoryLinearLayout: LinearLayout
-//    // 저장된 사진이 없을 때 보여줄 레이아웃
-//    private lateinit var albumCategory_FrameLayout: FrameLayout
-//
-//    //DB 관련
-//    private lateinit var dbManager: DBManager
-//    private lateinit var sqlitedb: SQLiteDatabase
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_category_album, container, false)
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//
+// 나의 성취 앨범(AlbumMainActivity) -> 카테고리별
+// 카테고리 분류의 앨범 폴더들을 생성 후 보여주는 Fragment 화면
+class CategoryAlbumFragment : Fragment() {
+
+    // 사진을 담을 레이아웃
+    private lateinit var albumCategory_CategoryLinearLayout: LinearLayout
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var albumCategory_FrameLayout: FrameLayout
+
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_category_album, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
 //        // 위젯 연결
 //        albumCategory_CategoryLinearLayout = requireView().findViewById(R.id.albumCategory_CategoryLinearLayout)
 //        albumCategory_FrameLayout = requireView().findViewById(R.id.albumCategory_FrameLayout)
 //
 //        // 사진 세팅
 //        applyCategoryPhoto()
-//    }
-//
+    }
+
 //    // 카테고리별 앨범 사진 세팅하는 함수
 //    @SuppressLint("Range")
 //    private fun applyCategoryPhoto() {
@@ -202,4 +204,4 @@ import java.lang.IndexOutOfBoundsException
 //            albumCategory_FrameLayout.visibility = View.VISIBLE
 //        }
 //    }
-//}
+}
