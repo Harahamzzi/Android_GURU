@@ -35,16 +35,19 @@
     <View
         android:id="@+id/container_goalPictures_lineView"
         android:layout_width="1dp"
-        android:layout_height="194dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="-22dp"
         android:background="#E7E7E7"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="@+id/container_goalPictures_iconImageView"
         app:layout_constraintStart_toStartOf="@+id/container_goalPictures_iconImageView"
         app:layout_constraintTop_toBottomOf="@+id/container_goalPictures_iconImageView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="0dp"
-        android:layout_height="198dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"

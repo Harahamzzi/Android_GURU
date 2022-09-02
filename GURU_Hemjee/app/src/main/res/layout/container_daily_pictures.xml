@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="15dp" >
 
     <TextView
         android:id="@+id/container_dailyPictures_dayTextView"
@@ -37,19 +38,22 @@
     <View
         android:id="@+id/container_dailyPictures_lineView"
         android:layout_width="1dp"
-        android:layout_height="170dp"
-        android:background="#E7E7E7"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="-22dp"
+        android:background="#E7E7E7"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
         app:layout_constraintStart_toStartOf="@+id/container_dailyPictures_dayOfWeekTextView"
         app:layout_constraintTop_toBottomOf="@+id/container_dailyPictures_dayOfWeekTextView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="198dp"
-        android:background="@drawable/pictures_background"
+        android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/pictures_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
         app:layout_constraintTop_toTopOf="parent">
