@@ -15,39 +15,41 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
+import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.R
 import java.lang.IndexOutOfBoundsException
 
-//// 나의 성취 앨범(AlbumMainActivity) -> 목표별
-//// 대표 목표별 앨범 폴더들을 보여주는 Fragment 화면
-//class GoalAlbumFragment : Fragment() {
-//
-//    //DB 관련
-//    private lateinit var dbManager: DBManager
-//    private lateinit var sqlitedb: SQLiteDatabase
-//
-//    // 대표 목표별 앨범 사진이 들어갈 레이아웃
-//    private lateinit var albumGoal_albumGoalGridLayout: GridLayout
-//
-//    // 저장된 사진이 없을 때 보여줄 레이아웃
-//    private lateinit var albumGoal_FrameLayout: FrameLayout
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?): View? {
-//        return inflater.inflate(R.layout.fragment_goal_album, container, false)
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//
+// 나의 성취 앨범(AlbumMainActivity) -> 목표별
+// 대표 목표별 앨범 폴더들을 보여주는 Fragment 화면
+class GoalAlbumFragment : Fragment() {
+
+    //DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+
+    // 대표 목표별 앨범 사진이 들어갈 레이아웃
+    private lateinit var albumGoal_albumGoalGridLayout: GridLayout
+
+    // 저장된 사진이 없을 때 보여줄 레이아웃
+    private lateinit var albumGoal_FrameLayout: FrameLayout
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_goal_album, container, false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
 //        // 위젯 연결
 //        albumGoal_albumGoalGridLayout = requireView().findViewById(R.id.albumGoal_albumGoalGridLayout)
 //        albumGoal_FrameLayout = requireView().findViewById(R.id.albumGoal_FrameLayout)
 //
 //        // 앨범 생성
 //        applyBigGoalPhoto()
-//    }
-//
+    }
+
 //    // 대표 목표별 앨범 사진 세팅하는 함수
 //    @SuppressLint("Range")
 //    private fun applyBigGoalPhoto() {
@@ -251,4 +253,4 @@ import java.lang.IndexOutOfBoundsException
 //            albumGoal_FrameLayout.visibility = View.VISIBLE
 //        }
 //    }
-//}
+}
