@@ -6,12 +6,13 @@ import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.R
 
 // 앨범 폴더가 아닌 개별 사진을 클릭했을 때 나오는 Dialog
-class PhotoDialog(private val context: Context, private val photoPath: String, private val icon: Int,
+class PhotoDialog(private val context: Context, private val photoPath: String, private val iconName: String,
                   private val detailGoalName: String, private val bigGoalName: String,
-                  private val date: String, private val color: Int) {
+                  private val date: String, private val colorName: String) {
     private val dialog = Dialog(context)
 
     //사진
@@ -47,8 +48,8 @@ class PhotoDialog(private val context: Context, private val photoPath: String, p
         pop_photoImageView.setImageBitmap(bitmap)
 
         //아이콘 적용
-        pop_photoIconImageView.setImageResource(icon)
-        pop_photoIconImageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        pop_photoIconImageView.setImageResource(DBConvert.iconConvert(iconName, context))
+        DBConvert.colorConvert(pop_photoIconImageView, colorName, context)
 
         //목표 제목 적용
         pop_photoDetailGoalTextView.text = detailGoalName
