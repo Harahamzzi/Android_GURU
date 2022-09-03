@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="329dp"
-    android:layout_height="359dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/popup_background">
 
     <TextView
@@ -23,7 +23,7 @@
     <ScrollView
         android:id="@+id/pop_record_detailScrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="24dp"
