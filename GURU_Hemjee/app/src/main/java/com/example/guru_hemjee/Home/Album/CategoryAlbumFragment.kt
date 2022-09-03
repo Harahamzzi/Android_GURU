@@ -79,7 +79,6 @@ class CategoryAlbumFragment : Fragment() {
             iconNameList.removeFirst()
         }
 
-
         // 사진들을 보여줄 레이아웃 활성화
         binding.pictureListLayout.visibility = View.VISIBLE
         // 사진이 없을 때 보여줄 레이아웃 비활성화
@@ -286,7 +285,7 @@ class CategoryAlbumFragment : Fragment() {
                             dialog.photoPopUp()
                         }
 
-                        // TODO: 이미지 롱클릭 리스너 적용(사진 삭제 팝업 실행)
+                        // 이미지 롱클릭 리스너 적용(사진 삭제 팝업 실행)
                         iv.setOnLongClickListener {
                             // 선택 표시
                             iv.setColorFilter(Color.parseColor("#73000000"), PorterDuff.Mode.SRC_ATOP)
