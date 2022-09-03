@@ -89,6 +89,14 @@ class HomeFragment : Fragment() {
             page.translationX = position * -offsetPx + startX
         }
 
+        // 데이터 초기화
+        for (i in bigGoalNameList.indices)
+        {
+            bigGoalNameList.removeFirst()
+            iconColorNameList.removeFirst()
+            iconIDList.removeFirst()
+        }
+
         // 1. 데이터 값 불러오기
         getViewPagerData()
 
