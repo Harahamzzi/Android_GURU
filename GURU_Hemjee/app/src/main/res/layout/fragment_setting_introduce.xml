@@ -70,33 +70,6 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="최서연" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/noto_sans"
-                android:textFontWeight="300"
-                android:textColor="@color/Black"
-                android:textSize="8dp"
-                android:text="영어써넣는자리" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/noto_sans"
-                android:textFontWeight="400"
-                android:textColor="@color/Black"
-                android:textSize="14dp"
                 android:text="다니엘" />
 
             <TextView
@@ -124,7 +97,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="지니" />
+                android:text="루덴" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +107,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Jinny" />
+                android:text="Luden" />
         </LinearLayout>
 
         <LinearLayout
@@ -162,6 +135,33 @@
                 android:textColor="@color/Black"
                 android:textSize="8dp"
                 android:text="ViVi" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp"
+                android:text="지니" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="300"
+                android:textColor="@color/Black"
+                android:textSize="8dp"
+                android:text="Jinny" />
         </LinearLayout>
 
         <ImageView
@@ -213,7 +213,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="지니" />
+                android:text="비비" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Jinny" />
+                android:text="ViVi" />
         </LinearLayout>
 
         <LinearLayout
@@ -240,7 +240,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="비비" />
+                android:text="지니" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -250,7 +250,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="ViVi" />
+                android:text="Jinny" />
         </LinearLayout>
 
         <ImageView
@@ -322,6 +322,16 @@
             android:layout_marginBottom="16dp"
             android:background="@color/Gray"
             android:src="@drawable/line_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:textFontWeight="300"
+            android:textColor="@color/Black"
+            android:textSize="12dp"
+            android:text="harahamzzi2022@gmail.com" />
 
     </LinearLayout>
 
