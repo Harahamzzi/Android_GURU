@@ -273,8 +273,8 @@ class CategoryAlbumFragment : Fragment() {
 
                     try {
                         var bitmap: Bitmap = BitmapFactory.decodeFile(path)
-                        // 이미지 배율 크기 작업 - 156x155 크기로 재설정함
-                        var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 256, 256, true)
+                        // 이미지 배율 크기 작업 - 266x256 크기로 재설정함
+                        var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 266, 256, true)
 
                         var iv = ImageView(requireContext())
                         iv.setImageBitmap(reScaledBitmap)

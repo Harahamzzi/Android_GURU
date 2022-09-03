@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--앨범에 들어갈 색상 아이콘 라디오 버튼 디자인-->
+<androidx.appcompat.widget.AppCompatRadioButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorIconRadioButton"
+    android:layout_width="24.5dp"
+    android:layout_height="24.5dp"
+    android:layout_marginHorizontal="18dp"
+    android:button="@drawable/ic_add_biggoal_radio_btn"
+    android:background="@drawable/album_color_icon_selector">
+
+</androidx.appcompat.widget.AppCompatRadioButton>
