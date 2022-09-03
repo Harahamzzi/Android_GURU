@@ -55,7 +55,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/goalViewPager">
 
-
         <TextView
             android:id="@+id/hamName"
             android:layout_width="wrap_content"
@@ -101,6 +100,24 @@
             android:textFontWeight="600"
             android:textSize="12dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/emptyTextView"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:layout_marginBottom="45dp"
+        android:visibility="gone"
+        android:background="@drawable/main_block_background2"
+        android:fontFamily="@font/noto_sans"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="현재 생성된 대표목표가 없습니다."
+        android:textColor="@color/Black"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/goalViewPager"

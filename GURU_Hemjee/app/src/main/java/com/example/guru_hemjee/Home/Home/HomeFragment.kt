@@ -100,8 +100,18 @@ class HomeFragment : Fragment() {
         // 1. 데이터 값 불러오기
         getViewPagerData()
 
-        // 2. 어댑터 생성
-        binding.goalViewPager.adapter = HomeViewPagerAdapter(requireContext(), bigGoalNameList, iconColorNameList, iconIDList)
+        // 1-2. 생성된 데이터가 없을 시에는 빈 박스 보이기
+        if (bigGoalNameList.isEmpty())
+        {
+            binding.emptyTextView.visibility = View.VISIBLE
+        }
+        else
+        {
+            binding.emptyTextView.visibility = View.GONE
+
+            // 2. 어댑터 생성
+            binding.goalViewPager.adapter = HomeViewPagerAdapter(requireContext(), bigGoalNameList, iconColorNameList, iconIDList)
+        }
 
         /** 하단 요약본 페이지 버튼 설정 **/
         bottomDialog = BottomSummaryDialog(requireContext())
