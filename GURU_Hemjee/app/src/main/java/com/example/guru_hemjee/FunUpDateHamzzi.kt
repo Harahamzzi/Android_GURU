@@ -54,11 +54,13 @@ class FunUpDateHamzzi {
         }
 
         // 옷 및 장신구 업데이트
-        @SuppressLint("Range")
-        fun updateCloth(context: Context, clothLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
+        @SuppressLint("Range", "Recycle")
+        fun updateCloth(context: Context, clothLayout: FrameLayout, bottomLayout: FrameLayout, isMarket: Boolean) {
 
-            //의상 설정
+            // 의상 초기화
             clothLayout.removeAllViews()
+            bottomLayout.removeAllViews()
+
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
@@ -73,11 +75,20 @@ class FunUpDateHamzzi {
                 // 저장 파일 이름으로 ImageView 설정
                 val bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
                 val id = context.resources!!.getIdentifier(bgPic, "drawable", context.packageName) //파일 id
+                val category = cursor.getString(cursor.getColumnIndex("category")) // 카테고리
+                val itemName = cursor.getString(cursor.getColumnIndex("item_name"))
 
-                val imageView = ImageView(context)
-                imageView.setImageResource(id)
-
-                clothLayout.addView(imageView)
+                // 카테고리가 하의라면
+                if (category == "bottom") {
+                    val imageView = ImageView(context)
+                    imageView.setImageResource(id)
+                    bottomLayout.addView(imageView)
+                }
+                else {
+                    val imageView = ImageView(context)
+                    imageView.setImageResource(id)
+                    clothLayout.addView(imageView)
+                }
             }
             sqlitedb.close()
             dbManager.close()

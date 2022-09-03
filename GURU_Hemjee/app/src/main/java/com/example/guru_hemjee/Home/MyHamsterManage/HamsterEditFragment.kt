@@ -141,12 +141,12 @@ class HamsterEditFragment() : Fragment() {
             true,
             false
         )
-        FunUpDateHamzzi.updateCloth(
+        /*FunUpDateHamzzi.updateCloth(
             requireContext(),
             myHamster_clothFrameLayout,
             true,
             false
-        )
+        )*/
 
         //적용 버튼
         //myHamster_applyImageButton = requireView().findViewById(R.id.myHamster_applyImageButton)
@@ -191,12 +191,12 @@ class HamsterEditFragment() : Fragment() {
                     true,
                     false
             )
-            FunUpDateHamzzi.updateCloth(
+            /*FunUpDateHamzzi.updateCloth(
                     requireContext(),
                     myHamster_clothFrameLayout,
                     true,
                     false
-            )
+            )*/
 
             //적용 완료 팝업 연결
             val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인",
@@ -297,12 +297,12 @@ class HamsterEditFragment() : Fragment() {
                             true,
                             true
                     )
-                    FunUpDateHamzzi.updateCloth(
+                    /*FunUpDateHamzzi.updateCloth(
                             requireContext(),
                             myHamster_clothFrameLayout,
                             true,
                             true
-                    )
+                    )*/
                 }
                 //이미 선택중이라면
                 else {
@@ -330,12 +330,12 @@ class HamsterEditFragment() : Fragment() {
                         true,
                         true
                 )
-                FunUpDateHamzzi.updateCloth(
+                /*FunUpDateHamzzi.updateCloth(
                         requireContext(),
                         myHamster_clothFrameLayout,
                         true,
                         true
-                )
+                )*/
             }
 
             myHamster_itemList.addView(view)

@@ -29,10 +29,7 @@ class StoreViewHolder(val context: Context, val binding: ContainerMarketItemBind
         }
 
         // 해상도에 맞게 아이템 크기 조절
-        val displayMetrics = DisplayMetrics()
-        (context as MainActivity).windowManager.defaultDisplay.getMetrics(displayMetrics)
-
-        var deviceWidth = displayMetrics.widthPixels // 가로
+        var deviceWidth = context.resources.displayMetrics.widthPixels // 가로
         deviceWidth = (deviceWidth - 65) / 4
 
         spaceView.layoutParams.width = deviceWidth

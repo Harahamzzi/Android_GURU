@@ -22,43 +22,7 @@
             android:id="@+id/market_BGFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_bg_10">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_390_darkyellow"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_560_darkyellow"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_730_darkpurple"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_790_blue"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/bg_furni_920_brown"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_1000_green"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_furni_1020_green"
-                android:scaleType="centerCrop"/>
-        </FrameLayout>
+            android:background="@drawable/bg_bg_10"/>
 
         <!-- 햄찌 이미지 -->
         <ImageView
@@ -67,27 +31,17 @@
             android:layout_height="match_parent"
             android:src="@drawable/my_hamzzi"/>
 
+        <!-- 햄찌의 하의를 입힐 영역 -->
+        <FrameLayout
+            android:id="@+id/market_bottomClothFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!-- 햄찌 옷 입힐 영역 -->
         <FrameLayout
             android:id="@+id/market_clothFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/bg_clo_bottom_420_purple"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/bg_clo_upper_560_black"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg_clo_hair_730_blue"/>
-        </FrameLayout>
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
     <!-- 상단바 -->
@@ -302,19 +256,4 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/container_market_item"/>
     </androidx.core.widget.NestedScrollView>
-    <!--<ScrollView
-        android:id="@+id/market_item_sv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="16dp">
-
-        <TableLayout
-            android:id="@+id/market_itemTableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="*"
-            android:orientation="vertical"/>
-    </ScrollView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
