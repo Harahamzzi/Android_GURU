@@ -28,30 +28,24 @@ class FunUpDateHamzzi {
             bgLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            var cursor: Cursor
 
             //씨앗 상점이 아니면 적용(저장)된 장식만 보여줌.
-            if(isMarket)
-                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'" +
+            val cursor: Cursor =
+                if (isMarket)
+                    sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'" +
                         " AND is_using = 1 OR type = 'furni' AND is_using = 1",null)
-            else
-                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'" +
+                else
+                    sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'bg'" +
                         " AND is_applied = 1 OR type = 'furni' AND is_applied = 1",null)
 
-            while(cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 //저장 파일 이름으로 ImageView 설정
-                var bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
-                var id = context.resources!!.getIdentifier(bgPic, "drawable", context.packageName) //파일 id
+                val bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
+                val id = context.resources!!.getIdentifier(bgPic, "drawable", context.packageName) //파일 id
 
-                var imageView: ImageView = ImageView(context)
+                val imageView = ImageView(context)
                 imageView.setImageResource(id)
-
-                //홈화면이 아니면 FIT_XY
-                if(isList)
-                    imageView.scaleType = ImageView.ScaleType.FIT_XY
-                else{
-                    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                }
+                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
                 bgLayout.addView(imageView)
             }
@@ -67,25 +61,20 @@ class FunUpDateHamzzi {
             clothLayout.removeAllViews()
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
-            var cursor: Cursor
 
-            //씨앗 상점이 아니면 적용(저장)된 장식만 보여줌.
-            if(isMarket)
-                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)
-            else
-                cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_applied = 1",null)
-
-            while(cursor.moveToNext()){
-                //저장 파일 이름으로 ImageView 설정
-                var bgPic = ""
-                if(isList)
-                    bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
+            // 씨앗 상점이 아니면 적용(저장)된 장식만 보여줌.
+            val cursor: Cursor =
+                if (isMarket)
+                    sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)
                 else
-                    bgPic = cursor.getString(cursor.getColumnIndex("hamster_pic"))
+                    sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_applied = 1",null)
 
-                var id = context.resources!!.getIdentifier(bgPic, "drawable", context?.packageName) //파일 id
+            while (cursor.moveToNext()) {
+                // 저장 파일 이름으로 ImageView 설정
+                val bgPic = cursor.getString(cursor.getColumnIndex("bg_pic"))
+                val id = context.resources!!.getIdentifier(bgPic, "drawable", context.packageName) //파일 id
 
-                var imageView: ImageView = ImageView(context)
+                val imageView = ImageView(context)
                 imageView.setImageResource(id)
 
                 clothLayout.addView(imageView)

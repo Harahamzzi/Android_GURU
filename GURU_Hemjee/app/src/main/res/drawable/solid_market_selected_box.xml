@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 씨앗 상점의 아이템에 사용되는 배경 박스 (아이템을 선택했을 때) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/White"/>
+    <corners android:radius="8dp"/>
+    <stroke android:color="@color/DarkBrown" android:width="1dp"/>
+</shape>

@@ -1,256 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 씨앗 상점 -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home.Store.SeedMarketFragment">
 
+    <!-- 배경, 햄찌, 옷  -->
     <FrameLayout
-        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toBottomOf="@id/market_category_btn_box_LLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- 배경 영역 -->
         <FrameLayout
             android:id="@+id/market_BGFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_bg_10">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_390_darkyellow"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_560_darkyellow"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_730_darkpurple"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_790_blue"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_furni_920_brown"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_1000_green"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_furni_1020_green"
+                android:scaleType="centerCrop"/>
+        </FrameLayout>
+
+        <!-- 햄찌 이미지 -->
+        <ImageView
+            android:id="@+id/market_hamzziImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_hamzzi"/>
+
+        <!-- 햄찌 옷 입힐 영역 -->
+        <FrameLayout
+            android:id="@+id/market_clothFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_clo_bottom_420_pink"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_clo_upper_560_pink"/>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_bg_1500" />
-        </FrameLayout>
-
-        <ImageView
-            android:id="@+id/market_hamzziImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="47dp"
-            android:src="@drawable/hamzzi3" />
-
-        <FrameLayout
-            android:id="@+id/market_clothFrameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="47dp">
-
+                android:src="@drawable/bg_clo_hair_730_blue"/>
         </FrameLayout>
     </FrameLayout>
 
+    <!-- 상단바 -->
+    <ImageView
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 현재 보유 씨앗 -->
     <TextView
         android:id="@+id/market_SeedTextView"
         android:layout_width="80dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="7dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/seed_point_background"
-        android:drawableLeft="@drawable/seed_resize"
+        android:background="@drawable/report_background"
+        android:elevation="3dp"
         android:fontFamily="@font/noto_sans"
-        android:gravity="center|right"
-        android:paddingRight="10dp"
-        android:text="0"
+        android:gravity="center|end"
+        android:paddingEnd="10dp"
+        android:lines="1"
+        android:ellipsize="end"
         android:textColor="@color/Black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:drawableStartCompat="@drawable/seed_resize"
+        tools:ignore="RtlSymmetry"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-
-    <LinearLayout
+    <!-- 하단 버튼 3개 레이아웃 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="32dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/market_category_box_LLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="UnknownId">
 
+        <!-- 초기화 버튼 -->
         <ImageButton
             android:id="@+id/market_refreshImageButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/color_icon"
+            android:background="@drawable/report_background"
             android:backgroundTint="@color/Yellow"
             android:padding="5dp"
-            android:src="@drawable/ic_outline_refresh_24" />
+            android:elevation="3dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_outline_refresh_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <Space
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
+        <!-- 사용 예정 씨앗 박스 -->
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/report_background">
+            android:layout_height="24dp"
+            android:background="@drawable/report_background"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:elevation="3dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/market_buyButton"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/market_priceTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/noto_sans"
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:text="사용 예정 씨앗 | "
                 android:textColor="@color/Black"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
+            <!-- 사용 예정 씨앗 개수 -->
             <TextView
                 android:id="@+id/market_seedPriceTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_gravity="center|right"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@drawable/seed_resize"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|end"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/noto_sans"
-                android:gravity="center|right"
-                android:text="9000+"
-                android:textColor="@color/Black" />
+                android:gravity="center|end"
+                android:lines="1"
+                android:textColor="@color/Black"
+                app:drawableStartCompat="@drawable/seed_resize" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="7dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <com.google.android.material.button.MaterialButton
+        <!-- 구매 버튼 -->
+        <TextView
             android:id="@+id/market_buyButton"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="64dp"
             android:layout_height="24dp"
-            android:background="@drawable/seed_market_buy_button"
+            android:background="@drawable/report_background"
             android:backgroundTint="@color/DarkBrown"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:maxLines="1"
-            android:singleLine="true"
             android:text="구매"
             android:textColor="@color/White"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            app:backgroundTint="@null"
+            android:elevation="3dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:fontFamily="@font/noto_sans" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- 카테고리 박스 -->
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/market_category_box_LLayout"
         android:layout_width="match_parent"
         android:layout_height="218dp"
         android:background="@color/LightGray"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/White"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp">
+    <!-- 버튼 박스 -->
+    <LinearLayout
+        android:id="@+id/market_category_btn_box_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/White"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="@id/market_category_box_LLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/market_allButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/DarkBrown"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="0dp"
-                android:insetBottom="0dp"
-                android:maxLines="1"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:singleLine="true"
-                android:text="ALL"
-                android:textColor="@color/White"
-                android:textSize="8sp"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:fontFamily="@font/noto_sans" />
+        <!-- 모든 상품 보기 버튼 -->
+        <TextView
+            android:id="@+id/market_allButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/DarkBrown"
+            android:text="ALL"
+            android:textSize="8sp"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"/>
 
-            <ImageButton
-                android:id="@+id/market_clothImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_outline_checkroom_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_outline_checkroom_24" />
+        <!-- 옷 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/market_clothImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_outline_checkroom_24"
+            app:tint="@color/Black"/>
 
-            <ImageButton
-                android:id="@+id/market_furnitureImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_outline_chair_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_outline_chair_24" />
+        <!-- 가구 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/market_furnitureImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_outline_chair_24"
+            app:tint="@color/Black"/>
 
-            <ImageButton
-                android:id="@+id/market_wallPaperImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_baseline_wallpaper_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_baseline_wallpaper_24" />
-
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="16dp">
-
-            <TableLayout
-                android:id="@+id/market_itemTabelLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-
+        <!-- 배경 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/market_wallPaperImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_baseline_wallpaper_24"
+            app:tint="@color/Black"/>
     </LinearLayout>
 
+    <!-- 아이템 목록 -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/market_item_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/market_category_btn_box_LLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/market_item_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/container_market_item"/>
+    </androidx.core.widget.NestedScrollView>
+    <!--<ScrollView
+        android:id="@+id/market_item_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="16dp">
+
+        <TableLayout
+            android:id="@+id/market_itemTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:orientation="vertical"/>
+    </ScrollView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
