@@ -190,7 +190,7 @@ class HomeFragment : Fragment() {
                 sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
         }
 
-        FunUpDateHamzzi.updateCloth(requireContext(), binding.clothFrameLayout, false, false)
+        FunUpDateHamzzi.updateCloth(requireContext(), binding.homeClothFrameLayout, binding.homeBottomClothFrameLayout, false)
 //
 //        //잠금 시간 안내
 //        home_goalTimeTextView = requireView().findViewById(R.id.home_goalTimeTextView)
