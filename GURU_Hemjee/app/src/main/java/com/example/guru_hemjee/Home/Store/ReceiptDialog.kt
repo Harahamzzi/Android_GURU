@@ -1,9 +1,12 @@
 package com.example.guru_hemjee.Home.Store
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +14,7 @@ import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 
 //씨앗 상점의 영수증 팝업
-class ReceiptDialog(private val context: Context, private val originalSeed: String, private val reducedSeed: String, val itemNames: ArrayList<String>) {
+class ReceiptDialog(private val context: Context, private val originalSeed: String, private val reducedSeed: Int, val itemNames: ArrayList<String>) {
     private val dialog = Dialog(context)
 
     //기존 씨앗
@@ -26,8 +29,10 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
     //아이템 리스트
     private lateinit var pop_receiptItemRecyclerView: RecyclerView
 
+    @SuppressLint("NotifyDataSetChanged", "Range")
     fun receiptPop(){
         dialog.show()
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 모서리 둥글게
         dialog.setContentView(R.layout.popup_receipt)
 
         //기존 씨앗
@@ -36,11 +41,11 @@ class ReceiptDialog(private val context: Context, private val originalSeed: Stri
 
         //사용 씨앗
         pop_usedSeedsTextView = dialog.findViewById(R.id.pop_usedSeedsTextView)
-        pop_usedSeedsTextView.text = reducedSeed
+        pop_usedSeedsTextView.text = reducedSeed.toString()
 
         //결과 씨앗
         pop_remnantSeedsTextView = dialog.findViewById(R.id.pop_remnantSeedsTextView)
-        pop_remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed.toInt()).toString()
+        pop_remnantSeedsTextView.text = (originalSeed.toInt() - reducedSeed).toString()
 
         //아이템 리스트
         pop_receiptItemRecyclerView = dialog.findViewById(R.id.pop_receiptItemRecyclerView)

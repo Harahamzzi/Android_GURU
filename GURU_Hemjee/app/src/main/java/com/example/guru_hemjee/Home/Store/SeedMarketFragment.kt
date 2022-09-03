@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteException
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +26,7 @@ class SeedMarketFragment : Fragment() {
     //구매 관련
     private var appliedItems = ArrayList<String>() // 햄스터가 입고 있는 아이템 목록
     private var selectedItems = ArrayList<String>() //선택한 아이템 리스트
+    private var newPrice = 0 // 구매할 가격
 
     //인벤토리 리스트 관련
     private var currentInventory: String = "all"
@@ -77,7 +77,7 @@ class SeedMarketFragment : Fragment() {
         //구매 버튼 클릭 이벤트
         binding.marketBuyButton.setOnClickListener {
             // 사용 예정 씨앗이 보유한 씨앗보다 많다면
-            if (binding.marketSeedPriceTextView.text.toString().toInt() > binding.marketSeedTextView.text.toString().toInt()){
+            if (newPrice > binding.marketSeedTextView.text.toString().toInt()){
                 val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
                     false, R.drawable.popup_low_balance, null)
                 dialog.alertDialog()
@@ -166,7 +166,7 @@ class SeedMarketFragment : Fragment() {
 
         // 현재 햄스터가 입고 있는 아이템 이름 저장
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_applied = 1",null)
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             appliedItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
         }
         cursor.close()
@@ -174,7 +174,7 @@ class SeedMarketFragment : Fragment() {
         // 사용자가 가지고 있는 아이템 이름 저장
         val bringItems = ArrayList<String>()
         cursor = sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE is_using = 1",null)
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             bringItems.add(cursor.getString(cursor.getColumnIndex("item_name")))
         }
         cursor.close()
@@ -221,8 +221,7 @@ class SeedMarketFragment : Fragment() {
         selectedItems.addAll(appliedItems) // 현재 사용자가 입고 있는 아이템 목록 추가
     }
 
-
-    //영수증 팝업
+    // 영수증 팝업
     private fun receiptPopUp() {
         // 사려는 아이템만 영수증 다이얼로그에 넘기기
         val buyItems = ArrayList<String>()
@@ -234,17 +233,15 @@ class SeedMarketFragment : Fragment() {
 
         // 다이얼 로그에서 넘기기
         val dialog = ReceiptDialog(requireContext(), binding.marketSeedTextView.text.toString(),
-            binding.marketSeedPriceTextView.text.toString(), buyItems)
+            newPrice, buyItems)
         dialog.receiptPop()
-
-        // db 오픈
-        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
-        sqlitedb = dbManager.writableDatabase
 
         dialog.setOnClickedListener(object : ReceiptDialog.ButtonClickListener {
             override fun onClicked(isBought: Boolean, seed: Int?) {
                 if (isBought) {
-                    // 여기에 구매 완료시 필요한 연산
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
                     // 구매완료시, bought = 1로 변경 및 아이템 배열에서 삭제
                     for (item in selectedItems) {
                         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_bought = '1' WHERE item_name = '$item'")
@@ -255,12 +252,18 @@ class SeedMarketFragment : Fragment() {
                             }
                         }
                     }
+                    sqlitedb.close()
+                    dbManager.close()
 
                     // 인벤토리 초기화
                     upDateInventory(currentInventory)
 
                     // 씨앗 개수 업데이트
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
                     sqlitedb.execSQL("UPDATE basic_info_db SET seed = '${seed.toString()}' WHERE hamster_name = '${hamsterName}'")
+                    sqlitedb.close()
+                    dbManager.close()
 
                     binding.marketSeedPriceTextView.text = "0"
 
@@ -273,11 +276,14 @@ class SeedMarketFragment : Fragment() {
 
                     dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
                         override fun onClicked(isConfirm: Boolean) {
-                            //내용 없음
+                            // 내용 없음
                         }
                     })
                 } else {
                     // 구매를 취소했다면 화면 초기화
+                    dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+                    sqlitedb = dbManager.writableDatabase
+
                     for (item in selectedItems) {
                         sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
                     }
@@ -286,6 +292,8 @@ class SeedMarketFragment : Fragment() {
                     }
                     selectedItems.clear()
                     selectedItems.addAll(appliedItems)
+                    sqlitedb.close()
+                    dbManager.close()
 
                     binding.marketSeedPriceTextView.text = "0"
                     upDateInventory(currentInventory)
@@ -295,9 +303,6 @@ class SeedMarketFragment : Fragment() {
                 }
             }
         })
-
-        sqlitedb.close()
-        dbManager.close()
     }
 
     //인밴토리 업데이트
@@ -391,15 +396,15 @@ class SeedMarketFragment : Fragment() {
             // 값 찾기
             val itemName = storeItemListAdapter.getItemList(position).itemName
             val itemCategory = storeItemListAdapter.getItemList(position).category
-            val storeItem = storeItemListAdapter.getItemList(position)
 
             // 햄찌가 시착중이지 않은 아이템 목록
             val deselectItems = ArrayList<String>()
 
-            // 선택 중인 아이템을 클릭했다면(햄스터가 시착중인 아이템을 클릭했다면)
+            // 새로운 아이템을 클릭했다면
             if (!selectedItems.contains(itemName)) {
+                Log.d("market", "새로운 아이템 클릭!")
 
-                // 선택 해제된 배경으로 변경
+                // 선택 배경으로 변경
                 storeItemListAdapter.changeItemBG(itemName, true)
 
                 // 같은 카테고리의 아이템이 선택중이면 선택 해제
@@ -411,12 +416,14 @@ class SeedMarketFragment : Fragment() {
                     if (selectedItems.contains(tempName) && tempName != itemName) {
                         selectedItems.remove(tempName) // 기존에 선택중이었던 아이템을 리스트 및 db 값 변경
                         deselectItems.add(tempName)
+                        storeItemListAdapter.changeItemBG(tempName, false)
                     }
                 }
                 cursor2.close()
 
                 selectedItems.add(itemName)
-                upDateInventory(currentInventory)
+                //upDateInventory(currentInventory)
+                Log.d("market :: inventory", "인벤토리 함수 실행")
 
                 FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
                 FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, true, true)
@@ -426,11 +433,11 @@ class SeedMarketFragment : Fragment() {
             else {
                 Log.d("market", "선택 중인 아이템 클릭!")
 
-                // 선택된 배경으로 변경
+                // 선택 해제된 배경으로 변경
                 storeItemListAdapter.changeItemBG(itemName, false)
 
                 // 선택된 아이템 리스트에서 해당 아이템 제거
-                selectedItems.add(itemName)
+                selectedItems.remove(itemName)
                 deselectItems.add(itemName)
             }
             sqlitedb2.close()
@@ -725,7 +732,7 @@ class SeedMarketFragment : Fragment() {
     // 가격 조정 함수
     @SuppressLint("SetTextI18n")
     private fun priceReset() {
-        var newPrice = 0 // 선택한 아이템들을 더한 가격
+        newPrice = 0 // 선택한 아이템들을 더한 가격
 
         // 선택된 아이템의 가격만 추가
         for (item in selectedItems) {
@@ -739,7 +746,7 @@ class SeedMarketFragment : Fragment() {
 
         // 사용 예정 씨앗 개수 변경
         if (newPrice.toString().length > 4) {
-            binding.marketSeedPriceTextView.text = newPrice.toString().substring(0, 4) + "+"
+            binding.marketSeedPriceTextView.text = "9999+"
         }
         else {
             binding.marketSeedPriceTextView.text = newPrice.toString()
