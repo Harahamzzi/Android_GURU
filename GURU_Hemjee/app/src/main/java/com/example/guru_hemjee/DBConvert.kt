@@ -66,6 +66,26 @@ class DBConvert {
             }
         }
 
+        // 라디오버튼 색상 값 적용 함수2
+        fun radioButtonColorConvert(rBtn: RadioButton, color: String?, context: Context) {
+            when (color) {
+                "Orange" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Orange))
+                "BrightYellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.BrightYellow))
+                "Yellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Yellow))
+                "Apricot" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Apricot))
+                "DarkBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.DarkBrown))
+                "SeedBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.SeedBrown))
+                "NoteYellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.NoteYellow))
+                "LightGreen" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightGreen))
+                "Green" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Green))
+                "LightBlue" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightBlue))
+                "Blue" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Blue))
+                "Purple" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Purple))
+                "Pink" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Pink))
+                "Gray" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+            }
+        }
+
         private var iconId: Int = 0
 
         // 아이콘 아이디 값 반환 함수
