@@ -18,10 +18,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="17dp"
-            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.8"
             android:fontFamily="@font/noto_sans"
             android:maxWidth="207dp"
             android:maxLines="1"
+            android:ellipsize="end"
             android:text="세부 목표 제목"
             android:textSize="14dp"
             android:textColor="@color/Black" />
