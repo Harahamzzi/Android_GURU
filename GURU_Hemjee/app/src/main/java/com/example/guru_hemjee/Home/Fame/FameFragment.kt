@@ -287,6 +287,10 @@ class FameFragment : Fragment() {
                         dbManager.close()
                     }
                 }
+
+                override fun onDismiss() {
+
+                }
             })
         }
     }

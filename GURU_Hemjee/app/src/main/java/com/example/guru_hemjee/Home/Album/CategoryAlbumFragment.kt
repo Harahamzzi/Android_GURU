@@ -380,10 +380,8 @@ class CategoryAlbumFragment : Fragment() {
                     image.colorFilter = null
                 }
             }
-        })
 
-        // 종료시 리스너
-        dialog.setOnDismissListener(object : AlertDialog.PopupDismissListener {
+            // 팝업창 종료시 메소드
             override fun onDismiss() {
                 // 해당 이미지의 색상 필터 해제
                 image.colorFilter = null

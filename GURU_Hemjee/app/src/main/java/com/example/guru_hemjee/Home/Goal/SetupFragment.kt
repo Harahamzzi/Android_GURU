@@ -248,6 +248,10 @@ class SetupFragment : Fragment() {
                     dbManager.close()
                 }
             }
+
+            override fun onDismiss() {
+
+            }
         })
     }
 
@@ -317,6 +321,9 @@ class SetupFragment : Fragment() {
                 }
             }
 
+            override fun onDismiss() {
+
+            }
         })
     }
 

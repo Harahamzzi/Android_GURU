@@ -94,29 +94,22 @@ class AlertDialog(context: Context, title: String, content: String, btnName: Str
 
         // 팝업창 dismiss시 이벤트
         dialog.setOnDismissListener {
-            onDismissListener.onDismiss()
+            onClickListener.onDismiss()
         }
     }
 
     // 인자를 넘겨주기 위한 클릭 인터페이스(팝업을 띄우는 화면에서 처리)
     interface ButtonClickListener {
+        // 버튼을 눌렀을 때의 동작(isConfirm == true -> 확인/삭제 버튼)
         fun onClicked(isConfirm: Boolean)
+
+        // 앨범에서 사용하기 위한 dismiss 이벤트 인터페이스
+        fun onDismiss()
     }
 
     private lateinit var onClickListener: ButtonClickListener
 
     fun setOnClickedListener(listener: ButtonClickListener) {
         onClickListener = listener
-    }
-
-    // 앨범에서 사용하기 위한 dismiss 이벤트 인터페이스
-    interface PopupDismissListener {
-        fun onDismiss()
-    }
-
-    private lateinit var onDismissListener: PopupDismissListener
-
-    fun setOnDismissListener(listener: PopupDismissListener) {
-        onDismissListener = listener
     }
 }
