@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.guru_hemjee.*
@@ -69,27 +70,28 @@ class SeedMarketFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
 
-        // 초기화 버튼 클릭 이벤트
-        binding.marketRefreshImageButton.setOnClickListener {
-
-        }
-
         //구매 버튼 클릭 이벤트
         binding.marketBuyButton.setOnClickListener {
             // 사용 예정 씨앗이 보유한 씨앗보다 많다면
-            if (newPrice > binding.marketSeedTextView.text.toString().toInt()){
-                val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
-                    false, R.drawable.popup_low_balance, null)
-                dialog.alertDialog()
-                dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
-                    override fun onClicked(isConfirm: Boolean) {
-                        //내용 없음
-                    }
-                })
-            }
-            // 보유한 씨앗이 많다면
-            else {
-                receiptPopUp() // 영수증 팝업 출력
+            when {
+                newPrice > binding.marketSeedTextView.text.toString().toInt() -> {
+                    val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
+                        false, R.drawable.popup_low_balance, null)
+                    dialog.alertDialog()
+                    dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
+                        override fun onClicked(isConfirm: Boolean) {
+                            //내용 없음
+                        }
+                    })
+                }
+                // 구매하려는 아이템이 없다면
+                newPrice == 0 -> {
+                    Toast.makeText(requireContext(), "아이템을 선택해주세요", Toast.LENGTH_SHORT).show()
+                }
+                // 보유한 씨앗이 많다면
+                else -> {
+                    receiptPopUp() // 영수증 팝업 출력
+                }
             }
         }
 
@@ -219,6 +221,30 @@ class SeedMarketFragment : Fragment() {
 
         bringItems.clear()
         selectedItems.addAll(appliedItems) // 현재 사용자가 입고 있는 아이템 목록 추가
+
+        // 초기화 버튼 클릭 이벤트
+        binding.marketRefreshImageButton.setOnClickListener {
+            dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+            sqlitedb = dbManager.writableDatabase
+
+            for (item in selectedItems) {
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 0 WHERE item_name = '${item}'")
+            }
+            for (item in appliedItems) {
+                sqlitedb.execSQL("UPDATE hamster_deco_info_db SET is_using = 1 WHERE item_name = '${item}'")
+            }
+            selectedItems.clear()
+            selectedItems.addAll(appliedItems)
+            sqlitedb.close()
+            dbManager.close()
+
+            binding.marketSeedPriceTextView.text = "0"
+            binding.marketSeedPriceTextView.setTextColor(Color.BLACK)
+            upDateInventory(currentInventory)
+
+            FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
+            FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+        }
     }
 
     // 영수증 팝업
@@ -266,15 +292,16 @@ class SeedMarketFragment : Fragment() {
                     dbManager.close()
 
                     binding.marketSeedPriceTextView.text = "0"
+                    binding.marketSeedPriceTextView.setTextColor(Color.BLACK)
 
                     binding.marketSeedTextView.text = seed.toString()
 
                     // 구매 확인 완료 팝업 띄우기
-                    val dialog = FinalOKDialog(requireContext(),"구매 확인", "확인",
+                    val popUpDialog = FinalOKDialog(requireContext(),"구매 확인", "확인",
                         false, R.drawable.popup_confirm_buy, null)
-                    dialog.alertDialog()
+                    popUpDialog.alertDialog()
 
-                    dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
+                    popUpDialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
                         override fun onClicked(isConfirm: Boolean) {
                             // 내용 없음
                         }
