@@ -139,10 +139,13 @@ class CategoryAlbumFragment : Fragment() {
         }
         Log.d(TAG, "icon 중복제거 전: $iconNameList")
 
-        // icon 이름 중복 제거
-        iconNameList = iconNameList.distinct() as ArrayList<String>
+        if (!iconNameList.isEmpty())
+        {
+            // icon 이름 중복 제거
+            iconNameList = iconNameList.distinct() as ArrayList<String>
 
-        Log.d(TAG, "icon 중복제거 후: $iconNameList")
+            Log.d(TAG, "icon 중복제거 후: $iconNameList")
+        }
 
         cursor.close()
         sqlitedb.close()

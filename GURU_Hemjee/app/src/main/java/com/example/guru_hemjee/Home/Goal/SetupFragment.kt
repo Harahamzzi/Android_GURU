@@ -21,6 +21,7 @@ import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentSetupBinding
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -232,9 +233,29 @@ class SetupFragment : Fragment() {
         dialog.showAlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+            @SuppressLint("Range")
             override fun onClicked(isConfirm: Boolean) {
                 // 삭제 버튼을 눌렀을 경우 db 및 리사이클러뷰에서 아이템 삭제
                 if (isConfirm) {
+                    // 사진 파일 삭제
+                    dbManager = DBManager(context, "hamster_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE big_goal_name = '${bigGoalItem.title}'", null)
+
+                    while (cursor.moveToNext())
+                    {
+                        var filePath = requireActivity().filesDir.toString() + "/picture/"
+                        filePath += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
+
+                        var file = File(filePath)
+                        file.delete()
+                    }
+
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
+
+
                     // 대표목표&세부목표 값 삭제
                     dbManager = DBManager(context, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
@@ -306,9 +327,29 @@ class SetupFragment : Fragment() {
         dialog.showAlertDialog()
 
         dialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+            @SuppressLint("Range")
             override fun onClicked(isConfirm: Boolean) {
                 // 삭제 버튼을 눌렀을 경우 db 및 리사이클러뷰에서 아이템 삭제
                 if (isConfirm) {
+                    // 사진 파일 삭제
+                    dbManager = DBManager(context, "hamster_db", null, 1)
+                    sqlitedb = dbManager.readableDatabase
+                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE detail_goal_name = '${detailGoalItem.detailTitle}'", null)
+
+                    while (cursor.moveToNext())
+                    {
+                        var filePath = requireActivity().filesDir.toString() + "/picture/"
+                        filePath += cursor.getString(cursor.getColumnIndex("photo_name")).toString()
+
+                        var file = File(filePath)
+                        file.delete()
+                    }
+
+                    cursor.close()
+                    sqlitedb.close()
+                    dbManager.close()
+
+
                     // 세부목표 값 삭제
                     dbManager = DBManager(context, "hamster_db", null, 1)
                     sqlitedb = dbManager.writableDatabase
