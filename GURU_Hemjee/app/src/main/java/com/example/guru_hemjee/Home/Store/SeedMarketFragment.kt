@@ -400,11 +400,11 @@ class SeedMarketFragment : Fragment() {
             // 햄찌가 시착중이지 않은 아이템 목록
             val deselectItems = ArrayList<String>()
 
-            // 선택 중인 아이템을 클릭했다면(햄스터가 시착중인 아이템을 클릭했다면)
+            // 새로운 아이템을 클릭했다면
             if (!selectedItems.contains(itemName)) {
-                Log.d("market", "선택 중인 아이템 클릭!")
+                Log.d("market", "새로운 아이템 클릭!")
 
-                // 선택 해제된 배경으로 변경
+                // 선택 배경으로 변경
                 storeItemListAdapter.changeItemBG(itemName, true)
 
                 // 같은 카테고리의 아이템이 선택중이면 선택 해제
@@ -416,22 +416,24 @@ class SeedMarketFragment : Fragment() {
                     if (selectedItems.contains(tempName) && tempName != itemName) {
                         selectedItems.remove(tempName) // 기존에 선택중이었던 아이템을 리스트 및 db 값 변경
                         deselectItems.add(tempName)
+                        storeItemListAdapter.changeItemBG(tempName, false)
                     }
                 }
                 cursor2.close()
 
                 selectedItems.add(itemName)
-                upDateInventory(currentInventory)
+                //upDateInventory(currentInventory)
+                Log.d("market :: inventory", "인벤토리 함수 실행")
 
                 FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
                 FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, true, true)
 
             }
-            // 선택안 한 아이템을 클릭했다면
+            // 선택 중인 아이템을 클릭했다면(햄스터가 시착중인 아이템을 클릭했다면)
             else {
-                Log.d("market", "새로운 아이템 클릭!")
+                Log.d("market", "선택 중인 아이템 클릭!")
 
-                // 선택된 배경으로 변경
+                // 선택 해제된 배경으로 변경
                 storeItemListAdapter.changeItemBG(itemName, false)
 
                 // 선택된 아이템 리스트에서 해당 아이템 제거

@@ -11,7 +11,6 @@ import com.example.guru_hemjee.databinding.ContainerMarketItemBinding
 // 씨앗 상점
 class StoreViewHolder(val context: Context, val binding: ContainerMarketItemBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind(storeItem: StoreItem) {
-        val layout = binding.containerMarketItemCLayout
         val itemIv = binding.containerMarketItemIv
         val seedTv = binding.containerMarketItemTv
         val spaceView = binding.containerMarketItemView
@@ -22,11 +21,11 @@ class StoreViewHolder(val context: Context, val binding: ContainerMarketItemBind
 
         // 착용 중인 아이템 이라면
         if (storeItem.isSelected) {
-            layout.setBackgroundResource(R.drawable.solid_market_selected_box)
+            itemIv.setBackgroundResource(R.drawable.solid_market_selected_box)
         }
         // 아니라면
         else {
-            layout.setBackgroundResource(R.drawable.solid_market_unselected_box)
+            itemIv.setBackgroundResource(R.drawable.solid_market_unselected_box)
         }
 
         // 해상도에 맞게 아이템 크기 조절

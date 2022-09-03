@@ -43,16 +43,17 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/noto_sans"
         android:gravity="center|end"
-        android:paddingStart="3dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:drawablePadding="4dp"
         android:lines="1"
         android:textColor="@color/Black"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:drawableLeftCompat="@drawable/seed_resize"
+        app:layout_constraintBottom_toBottomOf="@id/container_market_item_view"
+        app:layout_constraintEnd_toEndOf="@id/container_market_item_view"
+        app:layout_constraintStart_toStartOf="@id/container_market_item_view"
+        app:drawableStartCompat="@drawable/seed_resize"
         tools:ignore="RtlSymmetry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
