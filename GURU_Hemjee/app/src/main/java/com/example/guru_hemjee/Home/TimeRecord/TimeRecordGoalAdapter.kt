@@ -45,20 +45,30 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
         DBConvert.colorConvert(holder.iconImageView, item.get(position).getIconColor(), context)                 // 아이콘 색상 적용
         holder.goalNameTextView.setText(item.get(position).getGoalName())                                        // 세부목표 이름 적용
 
-        // 카메라 버튼 클릭 리스너
-        holder.startCameraButton.setOnClickListener {
-            // Camera Activity로 이동
-            var intent = Intent(context, CameraActivity::class.java)
+        // 아직 완료하지 못한 목표라면
+        if (!(item.get(position).getIsComplete()))
+        {
+            // 카메라 버튼 클릭 리스너
+            holder.startCameraButton.setOnClickListener {
+                // Camera Activity로 이동
+                var intent = Intent(context, CameraActivity::class.java)
 
-            try {
-                intent.putExtra("detailGoalName", item.get(position).getGoalName())
-            }
-            catch (e: Exception) {
-                Log.e(TAG, "세부 목표 이름 intent 담기 실패")
-                Log.e(TAG, e.stackTraceToString())
-            }
+                try {
+                    intent.putExtra("detailGoalName", item.get(position).getGoalName())
+                }
+                catch (e: Exception) {
+                    Log.e(TAG, "세부 목표 이름 intent 담기 실패")
+                    Log.e(TAG, e.stackTraceToString())
+                }
 
-            context.startActivity(intent)
+                context.startActivity(intent)
+            }
+        }
+        // 완료했다면
+        else
+        {
+            // 카메라 버튼 없애기
+            holder.startCameraButton.visibility = View.GONE
         }
     }
 
@@ -81,7 +91,7 @@ class TimeRecordGoalAdapter(context: Context) : RecyclerView.Adapter<TimeRecordG
         {
             for (i in 0 until itemCount)
             {
-                item.removeAt(0)
+                item.removeFirst()
             }
 
             notifyItemRangeRemoved(0, itemCount)

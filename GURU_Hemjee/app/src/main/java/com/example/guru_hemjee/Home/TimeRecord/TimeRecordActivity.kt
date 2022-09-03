@@ -85,14 +85,14 @@ class TimeRecordActivity: AppCompatActivity() {
         /** 리사이클러뷰 어댑터 연결 **/
 
         // 1. 세부목표 목록 관련 recycler view
-        var linearLayoutManager1 = LinearLayoutManager(this)
+        var linearLayoutManager1 = LinearLayoutManager(this@TimeRecordActivity)
         binding.TimeRecordGoalRecyclerView.layoutManager = linearLayoutManager1
 
         remainGoalAdapter = TimeRecordGoalAdapter(this@TimeRecordActivity)
         binding.TimeRecordGoalRecyclerView.adapter = remainGoalAdapter
 
         // 2. 완료한 세부목표 관련 recycler view
-        var linearLayoutManager2 = LinearLayoutManager(this)
+        var linearLayoutManager2 = LinearLayoutManager(this@TimeRecordActivity)
         binding.TimeRecordCompleteRecyclerView.layoutManager = linearLayoutManager2
 
         completeGoalAdapter = TimeRecordGoalAdapter(this@TimeRecordActivity)
@@ -369,8 +369,7 @@ class TimeRecordActivity: AppCompatActivity() {
                     item.setIconColor(bigGoalColor)
 
                     // 3. 세부목표 이름
-                    var goalName: String = cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString()
-                    item.setGoalName(goalName)
+                    item.setGoalName(detailGoalCheckedNameList[i])
 
                     // 4. 최종 반영
 
@@ -382,11 +381,17 @@ class TimeRecordActivity: AppCompatActivity() {
                         // 현재 완료된 목표라면
                         if (tempCursor.getInt(tempCursor.getColumnIndex("is_complete")) == 1)
                         {
+                            // 완료 플래그 올리기
+                            item.setIsComplete(true)
+
                             // 완료된 목표 레이아웃 어댑터에 아이템 추가
                             completeGoalAdapter.addItem(item)
                         }
                         else
                         {
+                            // 완료 플래그 내리기
+                            item.setIsComplete(false)
+
                             // 남은 목표 레이아웃 어댑터에 아이템 추가
                             remainGoalAdapter.addItem(item)
                         }
@@ -430,6 +435,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
             // adapter의 값 변경을 알려줌
             remainGoalAdapter.notifyDataSetChanged()
+            completeGoalAdapter.notifyDataSetChanged()
 
             // 닫기
             sqlitedb.close()
