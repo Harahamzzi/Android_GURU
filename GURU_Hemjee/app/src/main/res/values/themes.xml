@@ -40,4 +40,8 @@
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/solid_big_goal_item_expand_box</item>
     </style>
+
+    <style name="EditTextCursorStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorAccent">@color/Black</item>
+    </style>
 </resources>
