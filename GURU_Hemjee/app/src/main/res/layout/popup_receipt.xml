@@ -178,7 +178,7 @@
         android:background="@drawable/hamster_inventory_bg"
         android:orientation="horizontal"
         android:paddingTop="9dp"
-        android:paddingStart="22dp"
+        android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="16dp"
         tools:listitem="@layout/container_market_reciept_list"

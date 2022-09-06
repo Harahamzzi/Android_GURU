@@ -42,7 +42,7 @@ class HamsterEditNameDialog(val context: Context, private val name: String?) {
                 editName.text.toString() == name -> {
                     Toast.makeText(context, "기존 이름과 동일합니다", Toast.LENGTH_SHORT).show()
                 }
-                // 기존 이름이랑 같다면
+                // 기존 이름이랑 다르다면
                 editName.text.isNotBlank() -> {
                     val newName = editName.text.toString()
                     onClickListener.onClicked(true, newName)
