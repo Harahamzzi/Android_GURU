@@ -5,8 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +25,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-// 홈(MainActivity) -> SubMainActivity -> 목표/잠금 시간 설정
-// 목표/잠금 시간 설정 Fragment 화면
-// 대표 목표를 확인할 수 있다.
-// 버튼을 통해 수정 및 추가하는 화면으로 갈 수 있다.
+// 대표목표/세부목표 설정 Fragment 화면
 class SetupFragment : Fragment() {
 
     // 내부DB 사용을 위한 변수
@@ -42,7 +37,6 @@ class SetupFragment : Fragment() {
     private val binding get() = mBinding!!
 
     private lateinit var bigGoalAdapter: BigGoalItemAdapter // 대표목표 어댑터
-    private lateinit var goalBigRecyclerView: RecyclerView // 아코디언 메뉴 리사이클러뷰
     private val bigGoalList: ArrayList<BigGoalItem> = ArrayList() // 목표 리스트
 
     private var mainActivity: MainActivity? = null // 메인 액티비티 변수
@@ -71,13 +65,13 @@ class SetupFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        // 대표 리사이클러뷰 연결
-        goalBigRecyclerView = binding.goalBigRecyclerView
+        // 대표 리스트 초기화
+        bigGoalList.clear()
 
         // 대표목표 어댑터 연결
-        goalBigRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.goalBigRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         bigGoalAdapter = BigGoalItemAdapter(bigGoalList)
-        goalBigRecyclerView.adapter = bigGoalAdapter
+        binding.goalBigRecyclerView.adapter = bigGoalAdapter
 
         // 어댑터에 들어갈 데이터 로딩
         dataLoading()
