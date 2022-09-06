@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.guru_hemjee.*
+import com.example.guru_hemjee.Home.MyHamsterManage.HamsterEditFragment
 import com.example.guru_hemjee.databinding.FragmentSeedMarketBinding
 
 // 씨앗 상점 페이지
@@ -24,18 +25,18 @@ class SeedMarketFragment : Fragment() {
     private var mBinding: FragmentSeedMarketBinding? = null
     private val binding get() = mBinding!!
 
-    //구매 관련
+    // 구매 관련
     private var appliedItems = ArrayList<String>() // 햄스터가 입고 있는 아이템 목록
     private var selectedItems = ArrayList<String>() //선택한 아이템 리스트
     private var newPrice = 0 // 구매할 가격
 
-    //인벤토리 리스트 관련
+    // 인벤토리 리스트 관련
     private var currentInventory: String = "all"
 
     // 사용 예정 가격 arrayList
     private var priceArrayList = ArrayList<Pair<String, Int>>()
 
-    //DB 관련
+    // DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
     private lateinit var cursor: Cursor
@@ -70,7 +71,7 @@ class SeedMarketFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
 
-        //구매 버튼 클릭 이벤트
+        // 구매 버튼 클릭 이벤트
         binding.marketBuyButton.setOnClickListener {
             priceReset()
             // 사용 예정 씨앗이 보유한 씨앗보다 많다면
@@ -304,7 +305,22 @@ class SeedMarketFragment : Fragment() {
 
                     popUpDialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
                         override fun onClicked(isConfirm: Boolean) {
-                            // 내용 없음
+                            // 나의 햄찌 관리 메뉴로 이동하시겠습니까? 팝업 띄우기
+                            val alertDialog = AlertDialog(requireContext(), "", "'나의 햄찌 관리'메뉴로 이동하시겠습니까?", "이동", 1)
+                            alertDialog.showAlertDialog()
+                            alertDialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
+                                override fun onClicked(isConfirm: Boolean) {
+                                    requireActivity().supportFragmentManager
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_main, HamsterEditFragment())
+                                        .addToBackStack(null)
+                                        .commit()
+                                }
+
+                                override fun onDismiss() {
+
+                                }
+                            })
                         }
                     })
                 } else {
@@ -333,7 +349,7 @@ class SeedMarketFragment : Fragment() {
         })
     }
 
-    //인밴토리 업데이트
+    // 인벤토리 업데이트
     @SuppressLint("Range")
     private fun upDateInventory(currentInventoryName: String) {
         // 리스트 초기화
