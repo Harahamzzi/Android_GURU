@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 나의 햄찌 관리 화면 -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home.MyHamsterManage.HamsterEditFragment">
 
+    <!-- 배경, 햄찌, 옷  -->
     <FrameLayout
-        android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toBottomOf="@id/myHamster_category_btn_box_LLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- 배경 영역 -->
         <FrameLayout
             android:id="@+id/myHamster_BGFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_bg_10"/>
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_bg_1500" />
-        </FrameLayout>
-
+        <!-- 햄찌 이미지 -->
         <ImageView
             android:id="@+id/myHamster_hamzziImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="47dp"
-            android:src="@drawable/hamzzi3" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_hamzzi"/>
 
+        <!-- 햄찌의 하의를 입힐 영역 -->
+        <FrameLayout
+            android:id="@+id/myHamster_bottomClothFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!-- 햄찌 옷 입힐 영역 -->
         <FrameLayout
             android:id="@+id/myHamster_clothFrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="47dp">
-
-        </FrameLayout>
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
-
-    <LinearLayout
-        android:id="@+id/myHamster_LinearLayout"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/my_hanster_bar"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="6dp"
+    <!-- 상단바 -->
+    <ImageView
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 햄스터 이름 -->
+    <LinearLayout
+        android:id="@+id/myHamster_LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="3dp"
+        android:background="@drawable/report_background"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
+            android:layout_gravity="center"
             android:fontFamily="@font/noto_sans"
+            android:layout_marginStart="13dp"
             android:text="이름 | "
             android:textColor="@color/Black"
             android:textSize="12sp" />
@@ -78,148 +83,139 @@
             android:id="@+id/myHamster_hamsterNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/noto_sans"
-            android:text="나의작은아기햄"
             android:textColor="@color/Black"
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/myHamster_nameEditImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:background="#FFFFFF"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_outline_edit_24"
-            tools:background="@drawable/ic_outline_edit_24" />
+            app:tint="@color/Black"/>
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/myHamster_buyButton"
-        style="?android:attr/borderlessButtonStyle"
+    <!-- 적용 버튼 -->
+    <TextView
+        android:id="@+id/myHamster_applyButton"
         android:layout_width="64dp"
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/seed_market_buy_button"
+        android:background="@drawable/report_background"
         android:backgroundTint="@color/DarkBrown"
         android:fontFamily="@font/noto_sans"
         android:gravity="center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="구매"
+        android:text="적용"
         android:textColor="@color/White"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:textStyle="bold"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:fontFamily="@font/noto_sans" />
+        android:elevation="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/myHamster_category_box_LLayout"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- 카테고리 박스 -->
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/myHamster_category_box_LLayout"
         android:layout_width="match_parent"
         android:layout_height="218dp"
         android:background="@color/LightGray"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/White"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp">
+    <!-- 버튼 박스 -->
+    <LinearLayout
+        android:id="@+id/myHamster_category_btn_box_LLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/White"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toTopOf="@id/myHamster_category_box_LLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/myHamster_allButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/DarkBrown"
-                android:fontFamily="@font/noto_sans"
-                android:gravity="center"
-                android:insetLeft="0dp"
-                android:insetTop="0dp"
-                android:insetRight="0dp"
-                android:insetBottom="0dp"
-                android:maxLines="1"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                android:singleLine="true"
-                android:text="ALL"
-                android:textColor="@color/White"
-                android:textSize="8sp"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:fontFamily="@font/noto_sans" />
+        <!-- 모든 상품 보기 버튼 -->
+        <TextView
+            android:id="@+id/myHamster_allButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/DarkBrown"
+            android:text="ALL"
+            android:textSize="8sp"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"/>
 
-            <ImageButton
-                android:id="@+id/myHamster_clothImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_outline_checkroom_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_outline_checkroom_24" />
+        <!-- 옷 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/myHamster_clothImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_outline_checkroom_24"
+            app:tint="@color/Black"/>
 
-            <ImageButton
-                android:id="@+id/myHamster_furnitureImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_outline_chair_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_outline_chair_24" />
+        <!-- 가구 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/myHamster_furnitureImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_outline_chair_24"
+            app:tint="@color/Black"/>
 
-            <ImageButton
-                android:id="@+id/myHamster_wallPaperImageButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="28dp"
-                android:background="@drawable/color_icon"
-                android:backgroundTint="@color/White"
-                android:src="@drawable/ic_baseline_wallpaper_24"
-                app:tint="@color/Black"
-                tools:src="@drawable/ic_baseline_wallpaper_24" />
-
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="16dp">
-
-            <TableLayout
-                android:id="@+id/myHamster_itemTabelLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-
+        <!-- 배경 카테고리 버튼 -->
+        <ImageButton
+            android:id="@+id/myHamster_wallPaperImageButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:background="@drawable/report_background"
+            android:backgroundTint="@color/White"
+            android:src="@drawable/ic_baseline_wallpaper_24"
+            app:tint="@color/Black"/>
     </LinearLayout>
+
+    <!-- 아이템 목록 -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/myHamster_item_nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/myHamster_category_btn_box_LLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myHamster_item_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/container_market_item"/>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
