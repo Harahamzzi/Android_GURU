@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.guru_hemjee.*
 import com.example.guru_hemjee.databinding.FragmentSeedMarketBinding
 
-//씨앗 상점 페이지
-//아이템 구매 Fragment 화면
+// 씨앗 상점 페이지
+// 아이템 구매 Fragment 화면
 class SeedMarketFragment : Fragment() {
 
     private var mBinding: FragmentSeedMarketBinding? = null
@@ -72,9 +72,10 @@ class SeedMarketFragment : Fragment() {
 
         //구매 버튼 클릭 이벤트
         binding.marketBuyButton.setOnClickListener {
+            priceReset()
             // 사용 예정 씨앗이 보유한 씨앗보다 많다면
             when {
-                newPrice > binding.marketSeedTextView.text.toString().toInt() -> {
+                 newPrice > binding.marketSeedTextView.text.toString().toInt() -> {
                     val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
                         false, R.drawable.popup_low_balance, null)
                     dialog.alertDialog()
