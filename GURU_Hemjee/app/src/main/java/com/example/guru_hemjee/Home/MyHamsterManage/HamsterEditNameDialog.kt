@@ -2,44 +2,36 @@ package com.example.guru_hemjee.Home.MyHamsterManage
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.example.guru_hemjee.R
 
-// 햄찌의 이름을 수정할 때 보이는 팝업 화면
-class HamsterEditNameDialog(context: Context, name: String?) {
-    private val dialog = Dialog(context)
+// 나의 햄찌 관리화면 중 햄찌 이름 변경 팝업
+class HamsterEditNameDialog(val context: Context, private val name: String?) {
 
-    //기존 이름 textView
-    private lateinit var pop_nameTextView: TextView
-    private var name = name
-
-    //수정 이름 editText
-    private lateinit var pop_editNameEditText: EditText
-
-    //취소, 확인 버튼
-    private lateinit var pop_hamsterCancelImageButton: ImageButton
-    private lateinit var pop_nameEditImageButton: ImageButton
-
-    fun EditName() {
+    fun editName() {
+        val dialog = Dialog(context)
         dialog.show()
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.popup_edit_name)
 
-        //기존 이름
-        pop_nameTextView = dialog.findViewById(R.id.pop_nameTextView)
-        pop_nameTextView.text = name
+        // 기존 이름
+        val defaultName: TextView = dialog.findViewById(R.id.pop_nameTextView)
+        defaultName.text = name
 
-        //수정 이름
-        pop_editNameEditText = dialog.findViewById(R.id.pop_editNameEditText)
+        // 수정할 이름
+        val editName: EditText = dialog.findViewById(R.id.pop_editNameEditText)
 
-        //확인, 취소 버튼
-        pop_hamsterCancelImageButton = dialog.findViewById(R.id.pop_hamsterCancelImageButton)
-        pop_nameEditImageButton = dialog.findViewById(R.id.pop_nameEditImageButton)
+        // 확인, 취소 버튼
+        val cancelBtn: ImageButton = dialog.findViewById(R.id.pop_hamsterCancelImageButton)
+        val confirmBtn: ImageButton = dialog.findViewById(R.id.pop_nameEditImageButton)
 
-        //취소 버튼 리스터 연결
-        pop_hamsterCancelImageButton.setOnClickListener {
-            onClickListener.onClicked(false, null)
+        // 취소 버튼 클릭 이벤트
+        cancelBtn.setOnClickListener {
             dialog.dismiss()
         }
 

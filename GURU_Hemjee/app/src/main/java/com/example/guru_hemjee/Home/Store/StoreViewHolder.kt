@@ -3,12 +3,13 @@ package com.example.guru_hemjee.Home.Store
 import android.content.Context
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ContainerMarketItemBinding
 
-// 씨앗 상점
+// 씨앗 상점 및 나의 햄찌 관리 화면
 class StoreViewHolder(val context: Context, val binding: ContainerMarketItemBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind(storeItem: StoreItem) {
         val itemIv = binding.containerMarketItemIv
@@ -17,7 +18,15 @@ class StoreViewHolder(val context: Context, val binding: ContainerMarketItemBind
 
         // 뷰에 데이터 넣기
         itemIv.setImageResource(storeItem.imgId)
-        seedTv.text = storeItem.price.toString()
+
+        // 씨앗 상점 아이템 이라면 씨앗 개수 넣기
+        if (storeItem.isStore) {
+            seedTv.text = storeItem.price.toString()
+        }
+        // 아니라면 숨기기
+        else {
+            seedTv.visibility = View.INVISIBLE
+        }
 
         // 착용 중인 아이템 이라면
         if (storeItem.isSelected) {

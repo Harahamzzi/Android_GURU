@@ -64,7 +64,7 @@ class FunUpDateHamzzi {
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
 
-            // 씨앗 상점이 아니면 적용(저장)된 장식만 보여줌.
+            // 씨앗 상점 또는 나의 햄찌 관리 화면이 아니면 적용(저장)된 장식만 보여줌.
             val cursor: Cursor =
                 if (isMarket)
                     sqlitedb.rawQuery("SELECT * FROM hamster_deco_info_db WHERE type = 'clo' AND is_using = 1",null)

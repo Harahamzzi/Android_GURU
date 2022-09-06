@@ -416,7 +416,7 @@ class SeedMarketFragment : Fragment() {
            }*/
 
             // 리스트에 아이템 추가 (사용자가 아직 구입하지 않은 아이템 목록)
-            noBoughtItemList.add(StoreItem(itemName, itemCategory, price, id, false))
+            noBoughtItemList.add(StoreItem(itemName, itemCategory, price, id, false, true))
 
             // 가격 및 아이템 이름 정보 추가
             priceArrayList.add(Pair(itemName, price))
@@ -431,7 +431,7 @@ class SeedMarketFragment : Fragment() {
         binding.marketItemRv.adapter = storeItemListAdapter
 
         // 아이템 클릭 이벤트
-        storeItemListAdapter.onStoreItemClickListener = { position ->
+        storeItemListAdapter.onItemClickListener = { position ->
 
             // db
             val dbManager2 = DBManager(requireContext(), "hamster_db", null, 1)
