@@ -11,38 +11,26 @@ import android.widget.Button
 import android.widget.TextView
 
 // 모든 텍스트 팝업
-// code 의미
-// 0 : delete 팝업(빨강색 버튼), 1 : confirm 팝업(노랑색 버튼)
-class AlertDialog(context: Context, title: String, content: String, btnName: String, code: Int) {
-    private val dialog = Dialog(context)
-
-    // context 변수
-    val context = MyApplication.applicationContext()
-
-    // 팝업 제목&내용, 오른쪽 버튼의 글자, 팝업의 종류를 구분하기 위한 코드
-    private var title: String = title
-    private var content: String = content
-    private var btnName: String = btnName
-    private var code: Int = code
-
-    // 팝업의 위젯
-    private lateinit var pop_alert_title_tv: TextView // 팝업 제목
-    private lateinit var pop_alert_content_tv: TextView // 팝업 내용
-    private lateinit var pop_alert_cancel_btn: Button // 취소 버튼
-    private lateinit var pop_alert_various_btn: Button // 삭제&이동&적용 버튼
-
+// code 의미 - 0 : delete 팝업(빨강색 버튼), 1 : confirm 팝업(노랑색 버튼)
+// 팝업 제목&내용, 오른쪽 버튼의 글자, 팝업의 종류를 구분하기 위한 코드
+class AlertDialog(
+    private val context: Context,
+    private var title: String, private var content: String,
+    private var btnName: String, private var code: Int
+) {
     // 팝업 표시
     @SuppressLint("ResourceAsColor")
     fun showAlertDialog() {
+        val dialog = Dialog(context)
         dialog.show()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 모서리 둥글게
         dialog.setContentView(R.layout.popup_alert)
 
         // 위젯 연결
-        pop_alert_title_tv = dialog.findViewById(R.id.pop_alert_title_tv)
-        pop_alert_content_tv = dialog.findViewById(R.id.pop_alert_content_tv)
-        pop_alert_cancel_btn = dialog.findViewById(R.id.pop_alert_cancel_btn)
-        pop_alert_various_btn = dialog.findViewById(R.id.pop_alert_various_btn)
+        val pop_alert_title_tv = dialog.findViewById<TextView>(R.id.pop_alert_title_tv) // 팝업 제목
+        val pop_alert_content_tv = dialog.findViewById<TextView>(R.id.pop_alert_content_tv) // 팝업 내용
+        val pop_alert_cancel_btn = dialog.findViewById<Button>(R.id.pop_alert_cancel_btn) // 취소 버튼
+        val pop_alert_various_btn = dialog.findViewById<Button>(R.id.pop_alert_various_btn) // 삭제&이동&적용 버튼
 
         when (code) {
             // delete 팝업
