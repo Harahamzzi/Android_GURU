@@ -35,13 +35,24 @@ class HamsterEditNameDialog(val context: Context, private val name: String?) {
             dialog.dismiss()
         }
 
-        //확인(이름 변경) 버튼 리스터 연결
-        pop_nameEditImageButton.setOnClickListener {
-            if(pop_editNameEditText.text != null){
-                name = pop_editNameEditText.text.toString()
+        // 확인(이름 변경) 버튼 클릭 이벤트
+        confirmBtn.setOnClickListener {
+            when {
+                // 기존 이름이랑 같다면
+                editName.text.toString() == name -> {
+                    Toast.makeText(context, "기존 이름과 동일합니다", Toast.LENGTH_SHORT).show()
+                }
+                // 기존 이름이랑 같다면
+                editName.text.isNotBlank() -> {
+                    val newName = editName.text.toString()
+                    onClickListener.onClicked(true, newName)
+                    dialog.dismiss()
+                }
+                // 이름을 안 입력했다면
+                else -> {
+                    Toast.makeText(context, "변경할 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
             }
-            onClickListener.onClicked(true, name)
-            dialog.dismiss()
         }
     }
 
