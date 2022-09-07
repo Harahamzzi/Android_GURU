@@ -283,6 +283,11 @@ class HamsterEditFragment: Fragment() {
         binding.myHamsterItemRv.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.myHamsterItemRv.adapter = hamsterItemListAdapter
 
+        // 기존에 선택되어 있는 아이템들 선택 배경으로 설정
+        for (i in 0 until selectedItems.size) {
+            hamsterItemListAdapter.changeItemBG(selectedItems[i], true)
+        }
+
         // 아이템 클릭 이벤트
         hamsterItemListAdapter.onItemClickListener = { position ->
             // db

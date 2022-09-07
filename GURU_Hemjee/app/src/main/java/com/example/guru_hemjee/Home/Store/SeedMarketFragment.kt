@@ -310,11 +310,13 @@ class SeedMarketFragment : Fragment() {
                             alertDialog.showAlertDialog()
                             alertDialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
                                 override fun onClicked(isConfirm: Boolean) {
-                                    requireActivity().supportFragmentManager
-                                        .beginTransaction()
-                                        .replace(R.id.fragment_main, HamsterEditFragment())
-                                        .addToBackStack(null)
-                                        .commit()
+                                    if (isConfirm) {
+                                        requireActivity().supportFragmentManager
+                                            .beginTransaction()
+                                            .replace(R.id.fragment_main, HamsterEditFragment())
+                                            .addToBackStack(null)
+                                            .commit()
+                                    }
                                 }
 
                                 override fun onDismiss() {
@@ -429,6 +431,11 @@ class SeedMarketFragment : Fragment() {
         val storeItemListAdapter = StoreListAdapter(requireContext(), noBoughtItemList)
         binding.marketItemRv.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.marketItemRv.adapter = storeItemListAdapter
+
+        // 기존에 선택되어 있는 아이템들 선택 배경으로 설정
+        for (i in 0 until selectedItems.size) {
+            storeItemListAdapter.changeItemBG(selectedItems[i], true)
+        }
 
         // 아이템 클릭 이벤트
         storeItemListAdapter.onItemClickListener = { position ->
