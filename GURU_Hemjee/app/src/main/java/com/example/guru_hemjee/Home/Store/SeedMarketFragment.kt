@@ -305,7 +305,8 @@ class SeedMarketFragment : Fragment() {
 
                     popUpDialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
                         override fun onClicked(isConfirm: Boolean) {
-                            // 나의 햄찌 관리 메뉴로 이동하시겠습니까? 팝업 띄우기
+                            // 내용 없음
+                            /*// 나의 햄찌 관리 메뉴로 이동하시겠습니까? 팝업 띄우기 => 일단 주석처리,,
                             val alertDialog = AlertDialog(requireContext(), "", "'나의 햄찌 관리'메뉴로 이동하시겠습니까?", "이동", 1)
                             alertDialog.showAlertDialog()
                             alertDialog.setOnClickedListener(object : AlertDialog.ButtonClickListener {
@@ -316,13 +317,21 @@ class SeedMarketFragment : Fragment() {
                                             .replace(R.id.fragment_main, HamsterEditFragment())
                                             .addToBackStack(null)
                                             .commit()
+                                        *//*requireActivity().supportFragmentManager
+                                            .beginTransaction()
+                                            .replace(R.id.fragment_main, HamsterEditFragment().apply {
+                                                arguments = Bundle().apply {
+                                                    putBoolean("isSeedMarket", true)
+                                                }
+                                            })
+                                            .commit()*//*
                                     }
                                 }
 
                                 override fun onDismiss() {
 
                                 }
-                            })
+                            })*/
                         }
                     })
                 } else {

@@ -118,9 +118,6 @@ class HamsterEditFragment: Fragment() {
             })
         }
 
-        // 인벤토리 화면 출력
-        upDateInventory(currentInventory)
-
         // All 버튼 클릭 이벤트
         binding.myHamsterAllButton.setOnClickListener {
             currentInventory = "all"
@@ -223,6 +220,9 @@ class HamsterEditFragment: Fragment() {
 
         bringItems.clear()
         selectedItems.addAll(appliedItems) // 현재 사용자가 입고 있는 아이템 목록 추가
+
+        // 인벤토리 화면 출력
+        upDateInventory(currentInventory)
     }
 
     // 이름 변경 팝업 이벤트
