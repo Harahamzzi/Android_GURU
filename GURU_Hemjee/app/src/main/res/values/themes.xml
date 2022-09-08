@@ -44,4 +44,19 @@
     <style name="EditTextCursorStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorAccent">@color/Black</item>
     </style>
+
+    <!-- 팝업 캘린더 -->
+    <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <!-- 상단 타이틀 색상 -->
+        <item name="colorAccent">@color/Yellow</item>
+
+        <!-- 선택한 날짜 색상 -->
+        <item name="colorControlActivated">@color/Yellow</item>
+        <item name="colorControlHighlight">@color/Yellow</item>
+
+        <!-- 취소/확인 버튼 -->
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+    </style>
 </resources>
