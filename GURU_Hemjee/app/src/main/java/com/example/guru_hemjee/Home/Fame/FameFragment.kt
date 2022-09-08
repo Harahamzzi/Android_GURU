@@ -148,16 +148,18 @@ class FameFragment : Fragment() {
                     // 하나의 대표목표 중 가장 많은 사진을 보유한 목표에게 주는 상
                     // 최다 앨범상
                     cursor3 = sqlitedb.rawQuery("SELECT count FROM complete_detail_goal_db WHERE big_goal_name = '$tempTitle' AND big_goal_created_time = '$tempCreatedTime';", null)
+                    var tempNum = 0
                     while (cursor3.moveToNext()) {
                         // 횟수 전부 더하기
                         val int_count = cursor3.getInt(cursor3.getColumnIndex("count"))
 
-                        albumCountList.add(mutableMapOf(
-                            "big_goal_name" to tempTitle,
-                            "count" to int_count.toString(),
-                            "created_time" to tempCreatedTime
-                        ))
+                        tempNum += int_count
                     }
+                    albumCountList.add(mutableMapOf(
+                        "big_goal_name" to tempTitle,
+                        "count" to tempNum.toString(),
+                        "created_time" to tempCreatedTime
+                    ))
 
                     // 리스트에 정보 추가
                     // 시:분:초 -> 초
@@ -195,24 +197,21 @@ class FameFragment : Fragment() {
                 try {
                     var originCount = 0
                     var albumCount = 0
-                    var albumTitle: String? = albumCountList[0]["big_goal_name"]
-                    var albumTime: String? = albumCountList[0]["created_time"]
+                    var albumTitle: String? = ""
 
-                    for (j in 0 until albumCountList.size) {
-                        for (i in 0 until albumCountList.size) {
-                            if (albumTitle == albumCountList[j]["big_goal_name"] && albumTime == albumCountList[j]["created_time"]) {
-                                albumCount += albumCountList[j]["count"]?.toInt() ?: 0
-                            }
-                        }
+                    Log.d("최다 앨범상 최종 리스트", albumCountList.toString())
+
+                    for (i in 0 until albumCountList.size) {
+                        albumCount = albumCountList[i]["count"]?.toInt() ?: 0
+                        albumTitle = albumCountList[i]["big_goal_name"]
+
                         if (albumCount >= originCount) {
-                            albumTitle = albumCountList[j]["big_goal_name"]
-                            albumTime = albumCountList[j]["created_time"]
                             originCount = albumCount
                         }
                     }
 
                     binding.fameLongAlbumGoalTitleTv.text = albumTitle
-                    binding.fameLongAlbumGoalNumTv.text = albumCount.toString()
+                    binding.fameLongAlbumGoalNumTv.text = originCount.toString()
                 } catch (e: Exception) {
                     Log.d("FameFragment", "리스트에 값이 없음 " + e.printStackTrace())
                 }
