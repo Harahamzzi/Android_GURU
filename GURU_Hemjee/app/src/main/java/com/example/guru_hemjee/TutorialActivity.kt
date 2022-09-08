@@ -15,9 +15,6 @@ class TutorialActivity: AppCompatActivity() {
     private var mBinding: ActivityTutorialBinding? = null
     private val binding get() = mBinding!!
 
-    // 튜토리얼 초기 화면
-    private lateinit var tutorial_startImageView: ImageView
-
     override fun onDestroy() {
         mBinding = null
         super.onDestroy()
