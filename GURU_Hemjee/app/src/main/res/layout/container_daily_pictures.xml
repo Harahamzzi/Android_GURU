@@ -73,38 +73,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:orientation="horizontal">
 
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView1"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/LightGray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView2"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/Gray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView3"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/LightGray" />-->
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/dailyAlbumView4"-->
-            <!--                android:layout_width="120dp"-->
-            <!--                android:layout_height="120dp"-->
-            <!--                app:layout_columnWeight="1"-->
-            <!--                app:layout_rowWeight="1"-->
-            <!--                android:src="@color/Gray" />-->
-
         </androidx.gridlayout.widget.GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--일간 앨범에 들어갈 요일 및 일자 라디오 버튼 디자인-->
+<RadioButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/dayRadioButton"
+    android:layout_width="31dp"
+    android:layout_height="31dp"
+    android:background="@drawable/album_icon_bg_selector"
+    android:button="@null"
+    android:text="25"
+    android:textAlignment="center"
+    android:textColor="@drawable/album_icon_selector"
+    android:textSize="14dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="20dp" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--앨범에 들어갈 아이콘 라디오 버튼 디자인-->
+<!--카테고리 앨범에 들어갈 아이콘 라디오 버튼 디자인-->
 <RadioButton
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/iconRadioButton"

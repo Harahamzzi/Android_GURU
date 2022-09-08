@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.FragmentManager
+import com.example.guru_hemjee.Home.Home.HomeFragment
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityAlbumMainBinding
@@ -59,6 +60,12 @@ class AlbumMainActivity : AppCompatActivity() {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        // 일간 화면 띄우기
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_album_main, DailyAlbumFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
 
         // flag 초기화
         isFABOpen = false
