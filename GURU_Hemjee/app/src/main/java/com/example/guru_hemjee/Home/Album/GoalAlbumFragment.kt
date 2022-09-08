@@ -160,7 +160,7 @@ class GoalAlbumFragment : Fragment() {
                 val viewLocation = IntArray(2)
                 val scrollLocation = IntArray(2)
 
-                binding.pictureListLayout.get(radioBtn.id).getLocationOnScreen(viewLocation)
+                binding.pictureListLayout[radioBtn.id].getLocationOnScreen(viewLocation)
                 binding.scrollView.getLocationOnScreen(scrollLocation)
 
                 // 스크롤 이동값 계산
@@ -222,7 +222,7 @@ class GoalAlbumFragment : Fragment() {
             // 해당 목표가 몇 번째 대표목표인지 뽑아오기
             var goalNum: Int = goalNameList.indexOf(bigGoalName)
             // 해당 뷰 연결
-            var view: View = binding.pictureListLayout.get(goalNum)
+            var view: View = binding.pictureListLayout[goalNum]
 
             /** 해당 카테고리에 사진 추가 **/
             // 사진 경로 가져오기

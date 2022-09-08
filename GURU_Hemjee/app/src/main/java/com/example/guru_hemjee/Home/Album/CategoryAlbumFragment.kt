@@ -180,7 +180,7 @@ class CategoryAlbumFragment : Fragment() {
                 val viewLocation = IntArray(2)
                 val scrollLocation = IntArray(2)
 
-                binding.pictureListLayout.get(radioBtn.id).getLocationOnScreen(viewLocation)
+                binding.pictureListLayout[radioBtn.id].getLocationOnScreen(viewLocation)
                 binding.scrollView.getLocationOnScreen(scrollLocation)
 
                 // 스크롤 이동값 계산
@@ -243,7 +243,7 @@ class CategoryAlbumFragment : Fragment() {
                     // 해당 아이콘이 몇 번째 아이콘인지 뽑아오기
                     var iconNum: Int = iconNameList.indexOf(goalIconPairList[i].second)
                     // 해당 뷰 연결
-                    var view: View = binding.pictureListLayout.get(iconNum)
+                    var view: View = binding.pictureListLayout[iconNum]
 
 //                    //몇 번째 사진 인지. 3개의 사진이 이미 들어갔다면 사진 추가를 하지 않는다.
 //                    if(++picNums[iconNum] >= 4)
@@ -339,7 +339,7 @@ class CategoryAlbumFragment : Fragment() {
 
         // 불러올 사진이 없을 경우 categoryAlbumLayout에 담겨있는 View가 없어 Exception이 발생한다.
         try {
-            binding.pictureListLayout.get(0)
+            binding.pictureListLayout[0]
         }
         // Exception이 발생했을 시
         catch (e: IndexOutOfBoundsException) {
