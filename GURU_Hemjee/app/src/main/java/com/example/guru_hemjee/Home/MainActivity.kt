@@ -54,6 +54,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
+
+        // 상태바 숨기기
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
+        {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }
+        else
+        {
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN )
+        }
+
         setContentView(binding.root)
 
         // 권한을 얻었는지 체크
@@ -78,22 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
         setDetailGoalReportDB()
-
-        // 액션바 숨기기
-        var actionBar: ActionBar? = supportActionBar
-        actionBar?.hide()
-
-        // 상태바 숨기기
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
-        {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }
-        else
-        {
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN )
-        }
 
         // 네비게이션 드로어 생성
         binding.navigationView.setNavigationItemSelectedListener(this)
