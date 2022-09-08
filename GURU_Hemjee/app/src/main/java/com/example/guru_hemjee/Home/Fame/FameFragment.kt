@@ -243,7 +243,7 @@ class FameFragment : Fragment() {
     }
 
     // 클릭 이벤트 함수
-    fun initClickEvent() {
+    private fun initClickEvent() {
         // 대표목표 아이템 클릭 이벤트
         // 화면 이동
         fameListAdapter.onFameItemClickListener = { position ->

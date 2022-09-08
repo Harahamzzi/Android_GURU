@@ -78,7 +78,8 @@ class FameDetailFragment : Fragment() {
 
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
-        cursor = sqlitedb.rawQuery("SELECT * FROM complete_detail_goal_db WHERE big_goal_name = '${fameItem?.title}';", null)
+        cursor = sqlitedb.rawQuery("SELECT * FROM complete_detail_goal_db WHERE big_goal_name = '${fameItem?.title}' " +
+                "AND big_goal_created_time = '${fameItem?.createdDate}';", null)
 
         var fameDetailList = ArrayList<FameDetailItem>()
 
