@@ -19,6 +19,9 @@ import com.example.guru_hemjee.R
 // 기록 시작 버튼 클릭시 뜨는 팝업(세부 목표 선택)
 class RecordSettingDialog(context: Context, bigGoalName: String, colorName: String) {
 
+    // 태그
+    private var TAG = "RecordSettingDialog"
+
     private var context = context
     private var dialog = Dialog(context)    // 부모 액티비티의 context가 들어가도록 함
 
@@ -131,8 +134,15 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
             pop_detailGoalLayout.addView(lineView)
         }
 
-        // 마지막 구분선 제거
-        pop_detailGoalLayout.removeViewAt(pop_detailGoalLayout.childCount - 1)
+        try {
+            // 마지막 구분선 제거
+            pop_detailGoalLayout.removeViewAt(pop_detailGoalLayout.childCount - 1)
+        }
+        catch (e: Exception)
+        {
+            Toast.makeText(context, "저장된 세부목표가 없습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         cursor.close()
         sqlitedb.close()
