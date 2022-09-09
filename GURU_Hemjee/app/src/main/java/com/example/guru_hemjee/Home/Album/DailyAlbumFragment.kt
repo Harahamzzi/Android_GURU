@@ -24,6 +24,7 @@ import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentDailyAlbumBinding
+import kotlinx.android.synthetic.main.popup_bottom_summary.*
 import java.io.File
 import java.lang.IndexOutOfBoundsException
 import java.time.LocalDateTime
@@ -124,6 +125,27 @@ class DailyAlbumFragment : Fragment() {
             binding.albumDailyTopConstraintLayout.bringToFront()
 
             isOpened = !isOpened
+        }
+
+        // 팝업 캘린더 열기 리스너
+        binding.albumDailyMonthTextView.setOnClickListener {
+
+            // 데이터를 가져오기 위한 리스너 설정
+            var mListener: DatePickerDialog.OnDateSetListener = object : DatePickerDialog.OnDateSetListener {
+                override fun onDateSet(datePicker: DatePicker?, year: Int, month: Int, day: Int) {
+                    // 팝업 캘린더에서 선택한 날짜 저장
+                    nowDate = nowDate.withYear(year).withMonth(month + 1).withDayOfMonth(day)
+
+                    Log.d(TAG, "선택한 날짜: ${nowDate.year}. ${nowDate.monthValue}. ${nowDate.dayOfMonth}")
+
+                    onStart()
+                }
+            }
+
+            // 캘린더 띄우기
+            var dialog = DatePickerDialog(requireContext(), R.style.MyDatePickerStyle, mListener, nowDate.year, nowDate.monthValue - 1, 1)
+            dialog.datePicker.maxDate = System.currentTimeMillis()  // 선택할 수 있는 최대 날짜를 오늘로 두기
+            dialog.show()
         }
 
         // 좌측 버튼(이전 달로 이동) 리스너
