@@ -118,6 +118,9 @@ class CategoryAlbumFragment : Fragment() {
 
         /** 아이콘 뽑아오기  **/
 
+        var tempIconNameArrayList = ArrayList<String>()
+        lateinit var tempIconNameList: List<String>
+
         // DB 불러오기
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
@@ -134,15 +137,20 @@ class CategoryAlbumFragment : Fragment() {
                 goalIconPairList.add(goalNameList[i] to cursor.getString(cursor.getColumnIndex("icon")).toString())
 
                 // icon 값 받아와서 저장하기
-                iconNameList.add(cursor.getString(cursor.getColumnIndex("icon")).toString())
+                tempIconNameArrayList.add(cursor.getString(cursor.getColumnIndex("icon")).toString())
             }
         }
-        Log.d(TAG, "icon 중복제거 전: $iconNameList")
+        Log.d(TAG, "icon 중복제거 전: $tempIconNameArrayList")
 
-        if (!iconNameList.isEmpty())
+        if (!tempIconNameArrayList.isEmpty())
         {
             // icon 이름 중복 제거
-            iconNameList = iconNameList.distinct() as ArrayList<String>
+            tempIconNameList = tempIconNameArrayList.distinct()
+
+            for (i in tempIconNameList.indices)
+            {
+                iconNameList.add(tempIconNameList[i])
+            }
 
             Log.d(TAG, "icon 중복제거 후: $iconNameList")
         }
