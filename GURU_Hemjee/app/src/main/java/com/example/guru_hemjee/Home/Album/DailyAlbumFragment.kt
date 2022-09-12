@@ -3,6 +3,8 @@ package com.example.guru_hemjee.Home.Album
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -16,12 +18,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentDailyAlbumBinding
 import kotlinx.android.synthetic.main.popup_bottom_summary.*
@@ -43,6 +47,9 @@ class DailyAlbumFragment : Fragment() {
     private var mBinding: FragmentDailyAlbumBinding? = null
     // 매번 null 체크를 하지 않아도 되도록 함
     private val binding get() = mBinding!!
+
+    // 뒤로가기 콜백
+    private lateinit var callback: OnBackPressedCallback
 
     // DB 관련
     private lateinit var dbManager: DBManager
@@ -74,6 +81,26 @@ class DailyAlbumFragment : Fragment() {
         mBinding = null
 
         super.onDestroyView()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // MainActivity로 바로 이동
+                var tempIntent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(tempIntent)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        
+        callback.remove()
     }
 
     override fun onStart() {
