@@ -335,12 +335,22 @@ class HamsterEditFragment: Fragment() {
             else {
                 Log.d("market", "선택 중인 아이템 클릭!")
 
-                // 선택 해제된 배경으로 변경
-                hamsterItemListAdapter.changeItemBG(itemName, false)
+                // 만약 선택한 아이템이 배경이라면
+                if (itemCategory == "bg") {
+                    // default 배경 선택되도록 하기
+                    val defaultBG = "bg0"
+                    selectedItems.add(defaultBG)
+                    hamsterItemListAdapter.changeItemBG(defaultBG, true)
+                }
+                // 만약 선택한 아이템이 기존 배경이 아니라면
+                if (itemName != "bg0") {
+                    // 선택 해제된 배경으로 변경
+                    hamsterItemListAdapter.changeItemBG(itemName, false)
 
-                // 선택된 아이템 리스트에서 해당 아이템 제거
-                selectedItems.remove(itemName)
-                deselectItems.add(itemName)
+                    // 선택된 아이템 리스트에서 해당 아이템 제거
+                    selectedItems.remove(itemName)
+                    deselectItems.add(itemName)
+                }
             }
             sqlitedb2.close()
 
