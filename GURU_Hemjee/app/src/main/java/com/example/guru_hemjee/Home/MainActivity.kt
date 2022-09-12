@@ -76,9 +76,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sqlitedb.close()
         dbManager.close()
 
-        // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
-        setDetailGoalReportDB()
-
         // 액션바 숨기기
         var actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
@@ -113,9 +110,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        viewPagerIndicator = findViewById(R.id.viewPagerIndicator)
 //        viewPagerIndicator.setViewPager2(viewPager)
 
-        // 배경 및 가구 업데이트
-        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
-
         // 홈 화면 띄우기
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_main, HomeFragment(), "home")
@@ -131,6 +125,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mBinding = null
 
         super.onDestroy()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
+        setDetailGoalReportDB()
+
+        // 배경 및 가구 업데이트
+        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
     }
 
     // 권한 체크를 위한 리스너
