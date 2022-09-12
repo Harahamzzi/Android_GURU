@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
@@ -66,6 +67,10 @@ class TimeRecordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityTimeRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 액션바 숨기기
+        var actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         // 상태바 숨기기
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) // API 30이상
