@@ -311,9 +311,15 @@ class BottomSummaryDialog(context: Context) {
                 }
             }
         }
-        var integer_hour: Long = (totalMilli.toLong() / (1000 * 60 * 60)) % 24
-        var integer_min: Long = (totalMilli.toLong() / (1000 * 60)) % 60
+        var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()
+        var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
         dialog_dailyTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        if (integer_hour == 0 && integer_min == 0){
+            var integer_sec: Int = (totalMilli!!.toLong() / (1000)%60).toInt()
+            dialog_dailyTimeTextView.text = integer_sec.toString() + "초"
+        } else {
+            dialog_dailyTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+        }
 
         // 파이차트 세팅
         var isPieFlag = false
