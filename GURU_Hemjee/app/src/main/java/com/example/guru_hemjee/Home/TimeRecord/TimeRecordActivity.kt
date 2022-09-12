@@ -45,7 +45,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 시간 기록 타이머 관련
     private var timerTask: Timer? = null
-    private var time: Int = 0
+    private var time: BigInteger = 0.toBigInteger()
     private var recordDate: Long = 0L
 
     // 일시정지 상태 플래그
@@ -126,7 +126,7 @@ class TimeRecordActivity: AppCompatActivity() {
         }
 
         // 타이머 초기화
-        time = 0
+        time = 0.toBigInteger()
 
         // 타이머 기록 시작
         countTime()
@@ -241,12 +241,12 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager.close()
 
             // 4. 팝업 표시 후 홈 화면으로 돌아가기
-            rewardPoint = time / 1000 / 60      // 1분당 1포인트 지급
+            rewardPoint = (time / 1000.toBigInteger() / 60.toBigInteger()).toInt()      // 1분당 1포인트 지급
 
             finalPopup("기록 종료", "+$rewardPoint", true)
 
             // 5. 타이머 초기화
-            time = 0
+            time = 0.toBigInteger()
         }
 
         /** 세부 목표 관련 정보 처리 **/
@@ -293,7 +293,7 @@ class TimeRecordActivity: AppCompatActivity() {
                 binding.TimeRecordTimeTextView.text = "$hour : $min : $sec"
             }
 
-            time += 1000  // 시간 증가
+            time += 1000.toBigInteger()  // 시간 증가
         }
     }
 

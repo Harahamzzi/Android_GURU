@@ -1,5 +1,7 @@
 package com.example.guru_hemjee
 
+import java.math.BigInteger
+
 // 각 시간값 관련 변환 클래스
 class TimeConvert {
 
@@ -63,23 +65,30 @@ class TimeConvert {
         }
 
         // 2. 밀리초(ms) -> hh:mm:ss 변환 함수
-        fun msToTimeConvert(ms: Int): String {
+        fun msToTimeConvert(ms: BigInteger): String {
 
-            var hour = ms / 1000 / 60 / 60 % 24
-            var min = ms / 1000 / 60 % 60
-            var sec = ms / 1000 % 60
+            var bigInt1000 = 1000.toBigInteger()
+            var bigInt60 = 60.toBigInteger()
+            var bigInt24 = 24.toBigInteger()
+
+            var hour = ms / bigInt1000 / bigInt60 / bigInt60 % bigInt24
+            var min = ms / bigInt1000 / bigInt60 % bigInt60
+            var sec = ms / bigInt1000 % bigInt60
 
             return timeStrConvert(hour.toString(), min.toString(), sec.toString())
         }
 
         // 3. hh:mm:ss -> 밀리초(ms) 변환 함수
-        fun timeToMsConvert(time: String): Int {
+        fun timeToMsConvert(time: String): BigInteger {
 
-            var hour: Int = time.split(':')[0].toInt()
-            var min: Int = time.split(':')[1].toInt()
-            var sec: Int = time.split(':')[2].toInt()
+            var hour: BigInteger = time.split(':')[0].toBigInteger()
+            var min: BigInteger = time.split(':')[1].toBigInteger()
+            var sec: BigInteger = time.split(':')[2].toBigInteger()
 
-            var result = (hour * 1000 * 60 * 60) + (min * 1000 * 60) + (sec * 1000)
+            var bigInt1000 = 1000.toBigInteger()
+            var bigInt60 = 60.toBigInteger()
+
+            var result: BigInteger = (hour * bigInt1000 * bigInt60 * bigInt60) + (min * bigInt1000 * bigInt60) + (sec * bigInt1000)
 
             return result
         }
