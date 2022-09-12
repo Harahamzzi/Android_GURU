@@ -94,6 +94,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/weeklyBarChart">
@@ -102,7 +104,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
+                    android:layout_height="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/weeklyGoalListLayout" />
@@ -115,6 +117,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="17dp"
+                android:layout_marginBottom="17dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/content_block_background">
 
@@ -134,8 +137,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.github.mikephil.charting.charts.HorizontalBarChart
-                    android:id="@+id/dailyBarChart"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/dailyPieChart"
                     android:layout_width="match_parent"
                     android:layout_height="175dp"
                     android:layout_marginStart="14dp"
@@ -144,22 +147,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dailyTimeTextView">
 
-                </com.github.mikephil.charting.charts.HorizontalBarChart>
+                </com.github.mikephil.charting.charts.PieChart>
 
                 <LinearLayout
                     android:id="@+id/dailyGoalListLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginHorizontal="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dailyBarChart">
+                    app:layout_constraintTop_toBottomOf="@+id/dailyPieChart">
 
                 </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
+                    android:layout_height="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dailyGoalListLayout" />
