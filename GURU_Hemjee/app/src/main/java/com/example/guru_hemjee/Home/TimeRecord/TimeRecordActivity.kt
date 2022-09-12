@@ -13,10 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.bumptech.glide.Glide
-import com.example.guru_hemjee.DBManager
-import com.example.guru_hemjee.FinalOKDialog
-import com.example.guru_hemjee.TimeConvert
-import com.example.guru_hemjee.R
+import com.example.guru_hemjee.*
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import java.lang.Exception
@@ -129,6 +126,10 @@ class TimeRecordActivity: AppCompatActivity() {
             Log.e(TAG, "대표 목표 색상 뽑아오기 실패")
             Log.e(TAG, e.stackTraceToString())
         }
+
+        // 상단 대표목표 세팅
+        DBConvert.colorConvert(binding.TimeRecordIconImageView, bigGoalColor, this@TimeRecordActivity)
+        binding.TimeRecordBigGoalNameTextView.text = bigGoalName
 
         // 타이머 초기화
         time = 0.toBigInteger()
