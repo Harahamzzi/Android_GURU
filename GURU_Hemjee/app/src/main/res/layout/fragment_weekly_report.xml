@@ -66,7 +66,8 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reportWeekly_reportRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -75,44 +76,36 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reportWeekly_reportRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </ScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reportWeekly_selectBigGoalButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/report_goal_select"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="left|center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:text="알고리즘 마스터하기"
-        android:textColor="@color/DarkBrown"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:backgroundTint="@null"
-        app:backgroundTintMode="add"
-        app:icon="@drawable/ic_colorselectionicon"
-        app:iconGravity="start"
-        app:iconSize="16dp"
-        app:iconTint="@color/Black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:fontFamily="@font/noto_sans" />
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/reportWeekly_selectBigGoalButton"-->
+<!--        style="?android:attr/borderlessButtonStyle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="36dp"-->
+<!--        android:layout_marginBottom="17dp"-->
+<!--        android:background="@drawable/report_goal_select"-->
+<!--        android:fontFamily="@font/noto_sans"-->
+<!--        android:gravity="left|center"-->
+<!--        android:insetLeft="0dp"-->
+<!--        android:insetTop="0dp"-->
+<!--        android:insetRight="0dp"-->
+<!--        android:insetBottom="0dp"-->
+<!--        android:maxLines="1"-->
+<!--        android:singleLine="true"-->
+<!--        android:text="알고리즘 마스터하기"-->
+<!--        android:textColor="@color/DarkBrown"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:backgroundTint="@null"-->
+<!--        app:backgroundTintMode="add"-->
+<!--        app:icon="@drawable/ic_colorselectionicon"-->
+<!--        app:iconGravity="start"-->
+<!--        app:iconSize="16dp"-->
+<!--        app:iconTint="@color/Black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:fontFamily="@font/noto_sans" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
