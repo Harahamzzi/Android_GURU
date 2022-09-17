@@ -1,6 +1,8 @@
 package com.example.guru_hemjee.Home.Report
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -9,9 +11,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.TimeConvert
 import com.example.guru_hemjee.databinding.FragmentDailyReportBinding
@@ -34,6 +38,9 @@ class DailyReportFragment : Fragment() {
     // db
     private lateinit var dbManager: DBManager
     private lateinit var sqlite: SQLiteDatabase
+
+    // 뒤로가기 콜백
+    private lateinit var callback: OnBackPressedCallback
 
     // 리포트 데이터
     // 대표목표 이름 목록, 누적 기록 시간 목록, 색상 아이디 값, 세부목표 목록
@@ -69,7 +76,6 @@ class DailyReportFragment : Fragment() {
             requireActivity().supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_main, WeeklyReportFragment())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
         }
 
@@ -123,6 +129,26 @@ class DailyReportFragment : Fragment() {
         var dailyReportAdapter = DailyReportListAdapter(requireContext(), reportDataList)
         binding.reportDailyReportRecyclerView.adapter = dailyReportAdapter
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // MainActivity로 바로 이동
+                var tempIntent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(tempIntent)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        callback.remove()
     }
 
     // 일간 리포트에 들어갈 데이터를 리스트에 저장하고 반환하는 함수
