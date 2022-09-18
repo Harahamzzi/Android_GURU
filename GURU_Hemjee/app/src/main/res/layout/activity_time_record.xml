@@ -114,7 +114,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/TimeRecord_slideLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/main_bottom_sheet_background"
         android:backgroundTint="@color/White"
         android:elevation="5dp">
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="26dp"
             android:fontFamily="@font/noto_sans"
             android:text="남은 목표"
             android:textColor="@color/Black"
@@ -147,11 +147,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/TimeRecord_goalRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintHeight_max="140dp"
+            app:layout_constraintBottom_toTopOf="@+id/TimeRecord_tv2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TimeRecord_tv1" />
@@ -172,11 +172,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/TimeRecord_completeRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintHeight_max="140dp"
+            app:layout_constraintBottom_toTopOf="@+id/TimeRecord_bottomSpace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TimeRecord_tv2" />
