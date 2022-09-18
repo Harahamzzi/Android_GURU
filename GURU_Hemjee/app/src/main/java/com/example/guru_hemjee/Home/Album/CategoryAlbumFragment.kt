@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.get
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
@@ -171,7 +173,21 @@ class CategoryAlbumFragment : Fragment() {
 
             // 아이콘 변경
             var radioBtn: RadioButton = view.findViewById(R.id.iconRadioButton)
-            var drawable: Drawable? = requireContext().getDrawable(DBConvert.iconConvert(iconNameList[i], requireContext()))
+
+            var drawable: Drawable?
+
+            // 라디오 버튼의 경우 resize 버전 전달
+            if (iconNameList[i] == "dumble_icon")
+            {
+                drawable = requireContext().getDrawable(DBConvert.iconConvert("dumble_resize", requireContext()))
+            }
+            else
+            {
+                drawable = requireContext().getDrawable(DBConvert.iconConvert(iconNameList[i], requireContext()))
+            }
+
+//            var bitmap: Bitmap = drawable!!.toBitmap(50, 50)
+//            var resizeDrawable: Drawable = BitmapDrawable(resources, bitmap)
 
             radioBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 
