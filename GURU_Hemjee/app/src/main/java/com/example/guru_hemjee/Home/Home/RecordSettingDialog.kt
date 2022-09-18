@@ -47,6 +47,7 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
     private var bigGoalColorName = colorName
     private var detailGoalNameList = ArrayList<String>()
     private var detailGoalCheckedList = ArrayList<Int>()  // 해당 세부 목표가 체크되었는지 아닌지를 저장함 (1: 체크, 0: 체크X)
+    private var isChecked = false   // 세부목표가 한 번이라도 체크되었다면 true
 
     //db관련
     private lateinit var dbManager: DBManager
@@ -153,28 +154,41 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
         // 취소 버튼
         pop_recordCancelButton.setOnClickListener {
 
-            // 세부 목표 체크 리스트 값 초기화
-            for(i in detailGoalCheckedList.indices)
-            {
-                detailGoalCheckedList[i] = 0
-            }
-
             dialog.dismiss()    // 팝업 창 닫기
         }
 
         // 시작 버튼
         pop_recordStartButton.setOnClickListener {
-            dialog.dismiss()    // 팝업 창 닫기
 
-            // 기록 화면으로 이동할 intent 생성
-            var intent = Intent(context, TimeRecordActivity::class.java)
+            // 선택한 세부목표가 있는지 체크
+            for (i in detailGoalCheckedList.indices)
+            {
+                if (detailGoalCheckedList[i] == 1)
+                {
+                    isChecked = true
+                    break
+                }
+            }
 
-            // 보낼 데이터 넣기
-            intent.putExtra("bigGoalName", bigGoalName)
-            intent.putExtra("detailGoalCheckedList", detailGoalCheckedList)
-            intent.putExtra("detailGoalNameList", detailGoalNameList)
+            // 선택한 세부목표가 있을시
+            if (isChecked)
+            {
+                dialog.dismiss()    // 팝업 창 닫기
 
-            context.startActivity(intent)
+                // 기록 화면으로 이동할 intent 생성
+                var intent = Intent(context, TimeRecordActivity::class.java)
+
+                // 보낼 데이터 넣기
+                intent.putExtra("bigGoalName", bigGoalName)
+                intent.putExtra("detailGoalCheckedList", detailGoalCheckedList)
+                intent.putExtra("detailGoalNameList", detailGoalNameList)
+
+                context.startActivity(intent)
+            }
+            else
+            {
+                Toast.makeText(context, "세부목표를 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
 //        //가져온 대표 목표 제목으로 수정, 대표 목표 색상으로 변경
