@@ -232,6 +232,14 @@ class WeeklyReportFragment : Fragment() {
 
         calendar.time = date // Date
 
+        // 입력받은 날짜가 일요일이라면
+        if (inputDateStr.split('-')[3] == "일")
+        {
+            // 날짜를 하루 전으로 맞춤
+            // 이번주의 주차를 구하기 위함
+            calendar.add(Calendar.DATE, -1)
+        }
+
         // 지난주의 월요일부터 일요일까지의 날짜를 배열에 저장
         var weekList = ArrayList<String>()
         for (i in 2..8) {

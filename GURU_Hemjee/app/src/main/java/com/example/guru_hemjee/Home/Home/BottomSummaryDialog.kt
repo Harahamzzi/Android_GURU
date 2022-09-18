@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -589,10 +590,22 @@ class BottomSummaryDialog(context: Context) {
     }
 
     // 입력받은 날짜 근처의 월요일~일요일(7일) 구하기
-    private fun getWeekDate(moveTime: ZonedDateTime): ArrayList<String> {
+    private fun getWeekDate(inputMoveTime: ZonedDateTime): ArrayList<String> {
+
+        var moveTime = inputMoveTime
+
+        // 입력받은 날짜가 일요일이라면
+        if (moveTime.dayOfWeek.value == 7)
+        {
+            // 해당 날짜를 하루 전으로 맞춤
+            // 이번주의 주차를 구하기 위함
+            moveTime = moveTime.minusDays(1)
+        }
+
         val calendar = Calendar.getInstance()
         val nowDate = SimpleDateFormat("yyyy-MM-dd-E") // 현재 년도, 월, 일
         var totalMoveTime = moveTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E"))
+
         var date = nowDate.parse(totalMoveTime) // ZonedDateTime -> Date
 
         calendar.time = date // Date
@@ -605,6 +618,7 @@ class BottomSummaryDialog(context: Context) {
             val lastDay = nowDate.format(lastDate)
             weekList.add(lastDay)
         }
+
         return weekList
     }
 
