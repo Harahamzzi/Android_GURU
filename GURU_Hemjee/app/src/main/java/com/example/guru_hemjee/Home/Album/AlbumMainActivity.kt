@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -17,6 +18,8 @@ import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityAlbumMainBinding
 import com.example.guru_hemjee.databinding.ActivityMainBinding
+import java.util.*
+import kotlin.concurrent.schedule
 
 // 홈(MainActivity) -> 나의 성취 앨범
 // 나의 성취 앨범 Fragment 화면들을 보여주는 Activity 화면
@@ -86,8 +89,13 @@ class AlbumMainActivity : AppCompatActivity() {
 
                 // 목록 닫기 동작 수행
                 closeFloatingButton()
-                // flag 내리기
-                isFABOpen = false
+
+                binding.fabSub1.bringToFront()
+            }
+            else
+            {
+                // 목록 열기 동작 수행
+                openFloatingButton()
             }
         }
 
@@ -106,8 +114,13 @@ class AlbumMainActivity : AppCompatActivity() {
 
                 // 목록 닫기 동작 수행
                 closeFloatingButton()
-                // flag 내리기
-                isFABOpen = false
+
+                binding.fabSub2.bringToFront()
+            }
+            else
+            {
+                // 목록 열기 동작 수행
+                openFloatingButton()
             }
         }
 
@@ -119,8 +132,7 @@ class AlbumMainActivity : AppCompatActivity() {
             {
                 // 목록 열기 동작 수행
                 openFloatingButton()
-                // flag 올리기
-                isFABOpen = true
+
             }
             // 현재 FAB 목록이 열려있다면
             else
@@ -130,8 +142,8 @@ class AlbumMainActivity : AppCompatActivity() {
 
                 // 목록 닫기 동작 수행
                 closeFloatingButton()
-                // flag 내리기
-                isFABOpen = false
+
+                binding.fabMain.bringToFront()
             }
         }
     }
@@ -173,9 +185,15 @@ class AlbumMainActivity : AppCompatActivity() {
     // Floating Button 목록을 펼쳤을 때의 동작
     private fun openFloatingButton() {
 
+//        binding.fabSub1.show()
+//        binding.fabSub2.show()
+
         // 애니메이션
-        ObjectAnimator.ofFloat(binding.fabSub1, "translationY", -230f).apply { start() }
-        ObjectAnimator.ofFloat(binding.fabSub2, "translationY", -115f).apply { start() }
+        ObjectAnimator.ofFloat(binding.fabSub1, "translationY", -260f).apply { start() }
+        ObjectAnimator.ofFloat(binding.fabSub2, "translationY", -130f).apply { start() }
+
+        // flag 올리기
+        isFABOpen = true
     }
 
     // Floating Button 목록을 닫았을 때의 동작
@@ -184,5 +202,14 @@ class AlbumMainActivity : AppCompatActivity() {
         // 애니메이션
         ObjectAnimator.ofFloat(binding.fabSub1, "translationY", 0f).apply { start() }
         ObjectAnimator.ofFloat(binding.fabSub2, "translationY", 0f).apply { start() }
+
+//        // 최하단 버튼이 맨 위로 온 것처럼 보이게 함
+//        Handler().postDelayed({
+//            binding.fabSub1.hide()
+//            binding.fabSub2.hide()
+//        }, 350L)
+
+        // flag 내리기
+        isFABOpen = false
     }
 }
