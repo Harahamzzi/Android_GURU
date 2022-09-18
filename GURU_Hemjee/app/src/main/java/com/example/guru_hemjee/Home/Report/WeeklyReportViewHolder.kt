@@ -103,17 +103,17 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
         //x축 라벨(요일)추가
         val weekXLables = arrayListOf<String>("월","화","수","목","금","토","일")
         chart.xAxis.apply { // 아래 라벨 x축
-            isEnabled = true // 라벨 표시X
+            isEnabled = true // 라벨 표시
             position = XAxis.XAxisPosition.BOTTOM
             setDrawGridLines(false) // 격자구조X
             valueFormatter = IndexAxisValueFormatter(weekXLables)
         }
         chart.axisLeft.apply { // 왼쪽 y축
-            isEnabled = true // 라벨 표시
-            setDrawLabels(true) // 값 세팅
-            textColor = R.color.Black
-            textSize = 14f
-            axisMinimum = 0.0f
+            isEnabled = false  // 라벨 표시X
+//            setDrawLabels(true) // 값 세팅
+//            textColor = R.color.Black
+//            textSize = 14f
+//            axisMinimum = 0.0f
         }
         chart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X

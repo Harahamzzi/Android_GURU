@@ -481,11 +481,11 @@ class BottomSummaryDialog(context: Context) {
             valueFormatter = IndexAxisValueFormatter(weekXLables)
         }
         dialog_weeklyBarChart.axisLeft.apply { // 왼쪽 y축
-            isEnabled = true // 라벨 표시
-            setDrawLabels(true) // 값 세팅
-            textColor = R.color.Black
-            textSize = 14f
-            axisMinimum = 0.0f
+            isEnabled = false   // 라벨 표시X
+//            setDrawLabels(true) // 값 세팅
+//            textColor = R.color.Black
+//            textSize = 14f
+//            axisMinimum = 0.0f
         }
         dialog_weeklyBarChart.axisRight.apply { // 오른쪽 y축
             isEnabled = false // 라벨 표시X
