@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.guru_hemjee.DBConvert
-import com.example.guru_hemjee.DBManager
-import com.example.guru_hemjee.FunUpDateHamzzi
-import com.example.guru_hemjee.R
+import com.example.guru_hemjee.*
 import com.example.guru_hemjee.databinding.FragmentHomeBinding
+import java.math.BigInteger
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
 // MainActivity -> 홈
@@ -123,18 +123,38 @@ class HomeFragment : Fragment() {
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
 
+        // 씨앗 및 햄스터 이름 갱신
         cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
-
-        // 함께한 시간을 담을 temp 변수
-        var tempTotalTime: String
 
         if(cursor.moveToNext()) {
             binding.homeSeedPointTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString() // 씨앗 갱신
             binding.hamName.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()       // 햄스터 이름 갱신
+        }
 
-            // 함께한 시간 갱신(분리 및 적용)
-            tempTotalTime = cursor.getString(cursor.getColumnIndex("total_time")).toString()
-            binding.totalTime.text = tempTotalTime.split(':')[0] + "시간 " + tempTotalTime.split(':')[1] + "분"
+        // 오늘 함께한 시간 갱신
+        var totalMsTime = BigInteger.ZERO
+        var todayDate = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-E"))
+
+        cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_time_report_db WHERE lock_date LIKE '${todayDate}%'", null)
+
+        while (cursor.moveToNext())
+        {
+            totalMsTime += TimeConvert.timeToMsConvert(cursor.getString(cursor.getColumnIndex("total_report_time")).toString())
+        }
+
+        var totalStrTime = TimeConvert.msToTimeConvert(totalMsTime)
+
+        var hour = totalStrTime.split(':')[0]
+        var min = totalStrTime.split(':')[1]
+        var sec = totalStrTime.split(':')[2]
+
+        if (hour == "00" && min == "00")
+        {
+            binding.totalTime.text = "${sec}초"
+        }
+        else
+        {
+            binding.totalTime.text = "${hour}시간 ${min}분"
         }
 
 //        //잠금 버튼 수정
