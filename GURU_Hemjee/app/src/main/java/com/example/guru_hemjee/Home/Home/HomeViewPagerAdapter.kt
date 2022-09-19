@@ -32,6 +32,9 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
 
+        // 레이아웃 초기화
+        holder.iconListLayout.removeAllViews()
+
         // 대표 목표 이름 바인딩
         holder.goalNameTextView.text = goalName[position]
         // 색상값 바인딩
@@ -116,6 +119,8 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
                 Log.e(TAG, "${e.printStackTrace()}")
             }
         }
+
+        Log.d(TAG, "분리작업 후 iconStringList: $result")
 
         return result
     }
