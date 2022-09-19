@@ -5,7 +5,6 @@
     <dimen name="scroll_center_font_height">35dp</dimen>
 
     <!--홈 view pager의 여백 및 너비 설정을 위한 값-->
-    <dimen name="view_pager_margin">9dp</dimen>
+    <dimen name="view_pager_margin">15dp</dimen>
     <dimen name="view_pager_width">330dp</dimen>
-    <dimen name="view_pager_start_x">41dp</dimen>
 </resources>

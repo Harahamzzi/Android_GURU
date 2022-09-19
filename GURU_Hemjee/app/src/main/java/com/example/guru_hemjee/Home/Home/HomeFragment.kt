@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,9 @@ import kotlin.collections.ArrayList
 // MainActivity -> 홈
 // 햄찌, 잠금 시작 등을 할 수 있는 홈 Fragment 화면
 class HomeFragment : Fragment() {
+
+    // 태그
+    private val TAG = "HomeFragment"
 
     // 뷰 바인딩 변수
     private var mBinding: FragmentHomeBinding? = null
@@ -76,17 +80,19 @@ class HomeFragment : Fragment() {
         // 1개의 페이지를 미리 로드해 두도록 설정
         binding.goalViewPager.offscreenPageLimit = 1
 
-        // 여백 및 너비 설정
-        val pagerMarginPx = resources.getDimensionPixelOffset(R.dimen.view_pager_margin)
-        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.view_pager_width)
-        val screenWidth = resources.displayMetrics.widthPixels  // 스마트폰의 너비 길이를 가져옴
-        val offsetPx = screenWidth - pagerMarginPx - pagerWidth
+        binding.goalViewPager.clipToPadding = false
+        binding.goalViewPager.clipChildren = false
 
-        val startX = resources.getDimensionPixelOffset(R.dimen.view_pager_start_x)
+        // 여백 및 너비 설정
+        val screenWidth = resources.displayMetrics.widthPixels  // 스마트폰의 너비 길이를 가져옴
+        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.view_pager_width)
+        val pagerMarginPx = resources.getDimensionPixelOffset(R.dimen.view_pager_margin)
+
+        val offsetPx = screenWidth - pagerMarginPx - pagerWidth
 
         // 페이지의 시작 X좌표 값을 설정
         binding.goalViewPager.setPageTransformer { page, position ->
-            page.translationX = position * -offsetPx + startX
+            page.translationX = position * -offsetPx + binding.linearLayout4.x
         }
 
         // 데이터 초기화
