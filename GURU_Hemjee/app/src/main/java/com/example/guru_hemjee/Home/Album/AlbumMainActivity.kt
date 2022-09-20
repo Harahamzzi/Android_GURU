@@ -17,7 +17,6 @@ import com.example.guru_hemjee.Home.Home.HomeFragment
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityAlbumMainBinding
-import com.example.guru_hemjee.databinding.ActivityMainBinding
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -187,10 +186,15 @@ class AlbumMainActivity : AppCompatActivity() {
 
 //        binding.fabSub1.show()
 //        binding.fabSub2.show()
+        
+        // 해상도별 값 불러오기
+        var density = resources.displayMetrics.density  // px = dp * density
+        var topY = (91.4 * density).toFloat()
+        var bottomY = (45.7 * density).toFloat()
 
         // 애니메이션
-        ObjectAnimator.ofFloat(binding.fabSub1, "translationY", -260f).apply { start() }
-        ObjectAnimator.ofFloat(binding.fabSub2, "translationY", -130f).apply { start() }
+        ObjectAnimator.ofFloat(binding.fabSub1, "translationY", -topY).apply { start() }
+        ObjectAnimator.ofFloat(binding.fabSub2, "translationY", -bottomY).apply { start() }
 
         // flag 올리기
         isFABOpen = true
