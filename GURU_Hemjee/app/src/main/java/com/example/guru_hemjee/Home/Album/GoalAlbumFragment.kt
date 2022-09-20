@@ -251,8 +251,12 @@ class GoalAlbumFragment : Fragment() {
 
             try {
                 var bitmap: Bitmap = BitmapFactory.decodeFile(path)
-                // 이미지 배율 크기 작업 - 266x256 크기로 재설정함
-                var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, 266, 256, true)
+                // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
+                var density = requireActivity().resources.displayMetrics.density    // px = dp * density
+                var pictureWidth = (101 * density).toInt()
+                var pictureHeight = (97 * density).toInt()
+
+                var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
 
                 var iv = ImageView(requireContext())
                 iv.setImageBitmap(reScaledBitmap)
