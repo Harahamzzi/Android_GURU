@@ -1,6 +1,7 @@
 package com.example.guru_hemjee.Home.Goal
 
 import android.util.Log
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -27,7 +28,8 @@ class BigGoalViewHolder(val binding: ContainerGoalItemRecyclerviewBinding): Recy
 
             // 아이콘 레이아웃 만들기 (아이콘 사이즈, 아이콘의 마진값)
             val iconLayoutParams = LinearLayout.LayoutParams(48, 48)
-            iconLayoutParams.setMargins(0,0,32,0)
+            iconLayoutParams.gravity = Gravity.CENTER
+            iconLayoutParams.marginEnd = 32
 
             // 레이아웃 적용
             for (i in 0 until iconList.size) {
@@ -38,7 +40,7 @@ class BigGoalViewHolder(val binding: ContainerGoalItemRecyclerviewBinding): Recy
                     moreIcon.setColorFilter(ContextCompat.getColor(context, R.color.DarkBrown))
                     DBConvert.colorConvert(moreIcon, bigGoalItem.color, context)
                     val moreIconLayoutParams = LinearLayout.LayoutParams(48, 48)
-                    moreIconLayoutParams.setMargins(-8, 0, 0, 0)
+                    moreIconLayoutParams.marginStart = -8
                     moreIcon.layoutParams = moreIconLayoutParams
                     iconLayout.addView(moreIcon)
                     break
