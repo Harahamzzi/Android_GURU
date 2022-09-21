@@ -434,8 +434,16 @@ class SetupFragment : Fragment() {
             val str_icon = cursor.getString(cursor.getColumnIndex("icon"))
             val int_count = cursor.getInt(cursor.getColumnIndex("count")).toString()
 
+            // 사진 이름 모두 구하기
+            var tempCursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_time_report_db WHERE detail_goal_name = '$str_detailgoal'", null)
+            var photo_name_list = String()
+            while (tempCursor.moveToNext()) {
+                photo_name_list += tempCursor.getString(tempCursor.getColumnIndex("photo_name")) + ','
+            }
+            tempCursor.close()
+
             try { // 값 저장
-                sqlitedb2.execSQL("INSERT INTO complete_detail_goal_db VALUES ('$str_detailgoal', '$str_icon', '$int_count', '$str_biggoal', '$str_big_goal_create_time');")
+                sqlitedb2.execSQL("INSERT INTO complete_detail_goal_db VALUES ('$str_detailgoal', '$str_icon', '$int_count', '$str_biggoal', '$str_big_goal_create_time', '$photo_name_list');")
             } catch (e: Exception) {
                 Log.d("SetupFragemnt", "세부목표 " + e.printStackTrace().toString())
             }

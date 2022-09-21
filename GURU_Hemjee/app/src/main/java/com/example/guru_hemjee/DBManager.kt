@@ -63,7 +63,7 @@ class DBManager(
 
         //완료된 세부 목표 DB
         db!!.execSQL("CREATE TABLE complete_detail_goal_db (detail_goal_name text, icon text, " +
-                "count int, big_goal_name text, big_goal_created_time time," +
+                "count int, big_goal_name text, big_goal_created_time time, photo_name_list text, " +
                 "FOREIGN KEY (big_goal_created_time) REFERENCES complete_big_goal_db(big_goal_created_time) ON DELETE CASCADE);")
 
         //기본 정보 DB

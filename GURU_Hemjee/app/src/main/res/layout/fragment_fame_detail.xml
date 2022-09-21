@@ -125,6 +125,19 @@
                 android:layout_marginEnd="8dp"
                 android:overScrollMode="never"
                 tools:listitem="@layout/container_fame_detail_item_rv"/>
+
+            <!-- 사진 리스트 -->
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/container_fame_detail_photoList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:columnCount="3"
+                app:orientation="horizontal"
+                app:useDefaultMargins="true" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

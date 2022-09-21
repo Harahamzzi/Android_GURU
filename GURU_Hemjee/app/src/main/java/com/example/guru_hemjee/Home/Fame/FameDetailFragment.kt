@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,6 +79,9 @@ class FameDetailFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        // 레이아웃 초기화
+        binding.containerFameDetailPhotoList.removeAllViews()
+
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
         sqlitedb = dbManager.readableDatabase
         cursor = sqlitedb.rawQuery("SELECT * FROM complete_detail_goal_db WHERE big_goal_name = '${fameItem?.title}' " +
@@ -91,6 +97,12 @@ class FameDetailFragment : Fragment() {
                 val str_icon = cursor.getString(cursor.getColumnIndex("icon"))
                 val int_count = cursor.getInt(cursor.getColumnIndex("count"))
 
+                // 사진 목록 보내기
+                if (cursor.getString(cursor.getColumnIndex("photo_name_list")) != "")
+                {
+                    addPictures(cursor.getString(cursor.getColumnIndex("photo_name_list")))
+                }
+
                 fameDetailList.add(FameDetailItem(fameItem?.color, str_icon, str_detail_goal, int_count))
             }
         } catch (e: Exception) {
@@ -105,5 +117,36 @@ class FameDetailFragment : Fragment() {
         cursor.close()
         sqlitedb.close()
         dbManager.close()
+    }
+
+    // 레이아웃에 사진들을 추가하는 함수
+    private fun addPictures(photoNameList: String)
+    {
+        var photoList = photoNameList.split(',')
+
+        for (i in photoList.indices - 1)
+        {
+            try {
+                // 사진 경로 가져오기
+                var path = requireContext().filesDir.toString() + "/picture/" + photoList[i]
+                var bitmap: Bitmap = BitmapFactory.decodeFile(path)
+
+                // 이미지 배율 크기 작업
+                var density = requireActivity().resources.displayMetrics.density    // px = dp * density
+                var pictureWidth = (106 * density).toInt()
+                var pictureHeight = (100 * density).toInt()
+
+                var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
+
+                var iv = ImageView(requireContext())
+                iv.setImageBitmap(reScaledBitmap)
+
+                binding.containerFameDetailPhotoList.addView(iv)
+            }
+            catch (e: Exception) {
+                Log.e("FameDetailFragment", "사진 가져오기 실패")
+                Log.d("FameDetailFragment", "사진 이름: ${photoList[i]}, $i \n ${e.printStackTrace()}")
+            }
+        }
     }
 }
