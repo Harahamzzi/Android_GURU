@@ -15,6 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.guru_hemjee.*
 import com.example.guru_hemjee.Home.Album.AlbumMainActivity
@@ -210,6 +211,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 binding.homeDrawerLayout.openDrawer(GravityCompat.START)
                             }
 
+                            // drawer menu swipe 활성화
+                            binding.homeDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
                             // 배경 및 가구 업데이트
                             FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
 
@@ -268,6 +272,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // 좌측 이미지에 뒤로가기(홈 화면으로 가기) 리스너 달기 실행
         backHomeListener(binding.titleButton)
 
+        // drawer menu swipe 비활성화
+        binding.homeDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
         // 상단바 색 적용
         binding.backgroundLayout.removeAllViews()   // backgroundLayout에 있는 배경과 가구를 모두 제거
         binding.backgroundLayout.setBackgroundResource(R.color.Yellow)
@@ -295,6 +302,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             icon.setOnClickListener {
                 binding.homeDrawerLayout.openDrawer(GravityCompat.START)
             }
+
+            // drawer menu swipe 활성화
+            binding.homeDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
             // 배경 및 가구 업데이트
             FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
