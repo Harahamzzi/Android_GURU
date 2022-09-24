@@ -118,6 +118,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // isHome 플래그 초기화
         isHome = true
+
+        // 배경 및 가구 업데이트
+        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
     }
 
     override fun onDestroy() {
@@ -132,9 +135,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
         setDetailGoalReportDB()
-
-        // 배경 및 가구 업데이트
-        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
     }
 
     // 권한 체크를 위한 리스너
