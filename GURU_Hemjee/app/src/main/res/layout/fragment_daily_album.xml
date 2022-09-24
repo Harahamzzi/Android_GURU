@@ -31,17 +31,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/albumDaily_openImageButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="22dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/open_button_regular"
-            android:scaleType="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--    날짜 목록 열고 닫기 버튼    -->
+<!--        <ImageButton-->
+<!--            android:id="@+id/albumDaily_openImageButton"-->
+<!--            android:layout_width="18dp"-->
+<!--            android:layout_height="18dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginEnd="22dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:src="@drawable/open_button_regular"-->
+<!--            android:scaleType="center"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

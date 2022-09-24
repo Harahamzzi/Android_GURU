@@ -57,8 +57,8 @@ class DailyAlbumFragment : Fragment() {
     private lateinit var todayDate: LocalDateTime   // 오늘 날짜(전체)
     private lateinit var nowDate: LocalDateTime     // 현재 설정된 날짜
 
-    // 그 외
-    private var isOpened = true     // 날짜 목록이 펼쳐졌는지 판단하는 플래그
+//    // 그 외
+//    private var isOpened = true     // 날짜 목록이 펼쳐졌는지 판단하는 플래그
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -115,42 +115,42 @@ class DailyAlbumFragment : Fragment() {
         // 사진 추가(세팅)
         applyDailyPhoto()
 
-        // 날짜 목록 열고 닫기 클릭 리스너
-        binding.albumDailyOpenImageButton.setOnClickListener {
-            // 현재 날짜 목록이 열려있다면
-            if (isOpened)
-            {
-                // 버튼 180도 회전
-                ObjectAnimator.ofFloat(binding.albumDailyOpenImageButton, View.ROTATION, 0f, -180f).apply {
-                    duration = 600
-                    start()
-                }
-
-                // 날짜 목록 닫기 애니메이션 실행
-                ObjectAnimator.ofFloat(binding.albumDailyBottomConstraintLayout, "translationY", -300f).apply {
-                    duration = 600
-                    start()
-                }
-            }
-            else
-            {
-                // 버튼 180도 회전
-                ObjectAnimator.ofFloat(binding.albumDailyOpenImageButton, View.ROTATION, -180f, 0f).apply {
-                    duration = 600
-                    start()
-                }
-
-                // 날짜 목록 열기 애니메이션 실행
-                ObjectAnimator.ofFloat(binding.albumDailyBottomConstraintLayout, "translationY", 0f).apply {
-                    duration = 600
-                    start()
-                }
-            }
-
-            binding.albumDailyTopConstraintLayout.bringToFront()
-
-            isOpened = !isOpened
-        }
+//        // 날짜 목록 열고 닫기 클릭 리스너
+//        binding.albumDailyOpenImageButton.setOnClickListener {
+//            // 현재 날짜 목록이 열려있다면
+//            if (isOpened)
+//            {
+//                // 버튼 180도 회전
+//                ObjectAnimator.ofFloat(binding.albumDailyOpenImageButton, View.ROTATION, 0f, -180f).apply {
+//                    duration = 600
+//                    start()
+//                }
+//
+//                // 날짜 목록 닫기 애니메이션 실행
+//                ObjectAnimator.ofFloat(binding.albumDailyBottomConstraintLayout, "translationY", -300f).apply {
+//                    duration = 600
+//                    start()
+//                }
+//            }
+//            else
+//            {
+//                // 버튼 180도 회전
+//                ObjectAnimator.ofFloat(binding.albumDailyOpenImageButton, View.ROTATION, -180f, 0f).apply {
+//                    duration = 600
+//                    start()
+//                }
+//
+//                // 날짜 목록 열기 애니메이션 실행
+//                ObjectAnimator.ofFloat(binding.albumDailyBottomConstraintLayout, "translationY", 0f).apply {
+//                    duration = 600
+//                    start()
+//                }
+//            }
+//
+//            binding.albumDailyTopConstraintLayout.bringToFront()
+//
+//            isOpened = !isOpened
+//        }
 
         // 팝업 캘린더 열기 리스너
         binding.albumDailyMonthTextView.setOnClickListener {
