@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         isHome = true
 
         // 배경 및 가구 업데이트
-        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
+        FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false)
     }
 
     override fun onDestroy() {
@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             binding.homeDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
                             // 배경 및 가구 업데이트
-                            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
+                            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false)
 
                             // isHome 플래그 올리기
                             isHome = true
@@ -307,7 +307,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             binding.homeDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
             // 배경 및 가구 업데이트
-            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false, false)
+            FunUpDateHamzzi.updateBackground(this@MainActivity, binding.backgroundLayout, false)
 
             // home 화면으로 전환
             transaction.replace(R.id.fragment_main, HomeFragment(), "home")

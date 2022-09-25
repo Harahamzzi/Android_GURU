@@ -104,8 +104,8 @@ class HamsterEditFragment: Fragment() {
 
             // 인벤토리, 아이템 리스트 업데이트
             upDateInventory(currentInventory)
-            FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true, true)
-            FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, true)
+            FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true)
+            FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, binding.myHamsterCapeFrameLayout, true)
 
             // 적용 완료 팝업 이벤트
             val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인",
@@ -215,8 +215,8 @@ class HamsterEditFragment: Fragment() {
         dbManager.close()
 
         // 뷰에 배경 및 옷 반영
-        FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true, true)
-        FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, true)
+        FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true)
+        FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, binding.myHamsterCapeFrameLayout, true)
 
         bringItems.clear()
         selectedItems.addAll(appliedItems) // 현재 사용자가 입고 있는 아이템 목록 추가
@@ -328,8 +328,8 @@ class HamsterEditFragment: Fragment() {
                 //upDateInventory(currentInventory)
                 Log.d("market :: inventory", "인벤토리 함수 실행")
 
-                FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true, true) // 뷰에 이미지 적용
-                FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, true)
+                FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true) // 뷰에 이미지 적용
+                FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, binding.myHamsterCapeFrameLayout, true)
             }
             // 선택 중인 아이템을 클릭했다면(햄스터가 시착중인 아이템을 클릭했다면)
             else {
@@ -366,8 +366,8 @@ class HamsterEditFragment: Fragment() {
             dbManager2.close()
 
             deselectItems.clear()
-            FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true, true) // 뷰에 이미지 적용
-            FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, true)
+            FunUpDateHamzzi.updateBackground(requireContext(), binding.myHamsterBGFrameLayout, true) // 뷰에 이미지 적용
+            FunUpDateHamzzi.updateCloth(requireContext(), binding.myHamsterClothFrameLayout, binding.myHamsterBottomClothFrameLayout, binding.myHamsterCapeFrameLayout, true)
         }
 
         // 이전 코드

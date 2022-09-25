@@ -22,7 +22,7 @@ class FunUpDateHamzzi {
 
         // 배경 및 가구 업데이트
         @SuppressLint("Range")
-        fun updateBackground(context: Context, bgLayout: FrameLayout, isList: Boolean, isMarket: Boolean) {
+        fun updateBackground(context: Context, bgLayout: FrameLayout, isMarket: Boolean) {
 
             //배경 & 가구 설정
             bgLayout.removeAllViews()

@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.guru_hemjee.*
-import com.example.guru_hemjee.Home.MyHamsterManage.HamsterEditFragment
 import com.example.guru_hemjee.databinding.FragmentSeedMarketBinding
 
 // 씨앗 상점 페이지
@@ -218,7 +217,7 @@ class SeedMarketFragment : Fragment() {
         dbManager.close()
 
         // 배경 및 옷 설정
-        FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
+        FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true)
         FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
         bringItems.clear()
@@ -244,7 +243,7 @@ class SeedMarketFragment : Fragment() {
             binding.marketSeedPriceTextView.setTextColor(Color.BLACK)
             upDateInventory(currentInventory)
 
-            FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
+            FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true)
             FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
         }
     }
@@ -353,7 +352,7 @@ class SeedMarketFragment : Fragment() {
                     binding.marketSeedPriceTextView.text = "0"
                     upDateInventory(currentInventory)
 
-                    FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
+                    FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true)
                     FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
                 }
             }
@@ -485,7 +484,7 @@ class SeedMarketFragment : Fragment() {
                 //upDateInventory(currentInventory)
                 Log.d("market :: inventory", "인벤토리 함수 실행")
 
-                FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
+                FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true) // 뷰에 이미지 적용
                 FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
             }
@@ -515,7 +514,7 @@ class SeedMarketFragment : Fragment() {
 
             deselectItems.clear()
             priceReset() // 가격 초기화
-            FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
+            FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true) // 뷰에 이미지 적용
             FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
             /** **/
