@@ -15,9 +15,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
+import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentFameDetailBinding
 
 class FameDetailFragment : Fragment() {
@@ -32,6 +36,9 @@ class FameDetailFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback // 뒤로가기 처리 콜백
 
     private var fameItem: FameItem? = null
+
+    private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
+    private var pictureSize = 1          // 사진 크기
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -132,16 +139,38 @@ class FameDetailFragment : Fragment() {
                 var bitmap: Bitmap = BitmapFactory.decodeFile(path)
 
                 // 이미지 배율 크기 작업
-                var density = requireActivity().resources.displayMetrics.density    // px = dp * density
-                var pictureWidth = (106 * density).toInt()
-                var pictureHeight = (100 * density).toInt()
+//                var density = requireActivity().resources.displayMetrics.density    // px = dp * density
+//                var pictureWidth = (106 * density).toInt()
+//                var pictureHeight = (100 * density).toInt()
 
-                var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
+                var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureSize, pictureSize, true)
 
                 var iv = ImageView(requireContext())
                 iv.setImageBitmap(reScaledBitmap)
 
-                binding.containerFameDetailPhotoList.addView(iv)
+                // 사진 Layout width 사이즈 구하기(최초 1회 실행)
+                if (isFirst)    // 현재 최초 실행이라면
+                {
+                    iv.visibility = View.INVISIBLE
+                    binding.containerFameDetailPhotoList.addView(iv)  // 해당 레이아웃에 사진 추가
+
+                    binding.containerFameDetailPhotoList.post(object : Runnable {
+                        override fun run() {
+                            // 현재 최초 실행이라면
+                            if (isFirst)
+                            {
+                                pictureSize = ((binding.containerFameDetailPhotoList.width) / 3.2 + 0.5).toInt()
+
+                                isFirst = false
+                                onStart()
+                            }
+                        }
+                    })
+                }
+                else
+                {
+                    binding.containerFameDetailPhotoList.addView(iv)  // 해당 레이아웃에 사진 추가
+                }
             }
             catch (e: Exception) {
                 Log.e("FameDetailFragment", "사진 가져오기 실패")
