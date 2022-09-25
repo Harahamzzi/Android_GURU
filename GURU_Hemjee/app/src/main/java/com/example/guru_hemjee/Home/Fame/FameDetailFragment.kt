@@ -131,9 +131,12 @@ class FameDetailFragment : Fragment() {
     {
         var photoList = photoNameList.split(',')
 
-        for (i in photoList.indices - 1)
+        for (i in photoList.indices)
         {
             try {
+                if (photoList[i] == "")
+                    break
+
                 // 사진 경로 가져오기
                 var path = requireContext().filesDir.toString() + "/picture/" + photoList[i]
                 var bitmap: Bitmap = BitmapFactory.decodeFile(path)
