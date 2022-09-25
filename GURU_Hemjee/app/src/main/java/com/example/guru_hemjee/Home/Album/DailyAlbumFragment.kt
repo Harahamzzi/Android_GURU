@@ -19,7 +19,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
@@ -57,8 +60,10 @@ class DailyAlbumFragment : Fragment() {
     private lateinit var todayDate: LocalDateTime   // 오늘 날짜(전체)
     private lateinit var nowDate: LocalDateTime     // 현재 설정된 날짜
 
-//    // 그 외
+    // 그 외
 //    private var isOpened = true     // 날짜 목록이 펼쳐졌는지 판단하는 플래그
+    private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
+    private var pictureWidthSize = 1     // 사진 너비
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -373,7 +378,8 @@ class DailyAlbumFragment : Fragment() {
 
                     // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
                     var density = requireActivity().resources.displayMetrics.density    // px = dp * density
-                    var pictureWidth = (101 * density).toInt()
+//                    var pictureWidth = (101 * density).toInt()
+                    var pictureWidth = pictureWidthSize
                     var pictureHeight = (97 * density).toInt()
 
                     Log.d(TAG, "사진 크기: $pictureWidth X $pictureHeight")
@@ -399,9 +405,34 @@ class DailyAlbumFragment : Fragment() {
                         return@setOnLongClickListener true
                     }
 
-                    // 해당 레이아웃에 사진 추가
                     var dailyPictureLayout: GridLayout = view.findViewById(R.id.container_dailyPictures_GridLayout)
-                    dailyPictureLayout.addView(iv)
+
+                    // 사진 Layout width 사이즈 구하기(최초 1회 실행)
+                    if (isFirst)    // 현재 최초 실행이라면
+                    {
+                        iv.visibility = View.INVISIBLE
+                        dailyPictureLayout.addView(iv)  // 해당 레이아웃에 사진 추가
+
+                        var constraintLayout: ConstraintLayout = view.findViewById(R.id.constraintLayout)
+
+                        constraintLayout.post(object : Runnable {
+                            override fun run() {
+                                // 현재 최초 실행이라면
+                                if (isFirst)
+                                {
+                                    Log.d(TAG, "run 너비: ${constraintLayout.width}")
+                                    pictureWidthSize = ((constraintLayout.width - dailyPictureLayout.marginStart - dailyPictureLayout.marginEnd) / 3 + 0.5).toInt()
+
+                                    isFirst = false
+                                    onStart()
+                                }
+                            }
+                        })
+                    }
+                    else
+                    {
+                        dailyPictureLayout.addView(iv)  // 해당 레이아웃에 사진 추가
+                    }
                 }
                 catch (e: Exception) {
                     Log.e(TAG, "일간 사진 로드/세팅 실패 \n${e.printStackTrace()}")

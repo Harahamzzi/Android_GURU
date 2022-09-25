@@ -16,7 +16,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBConvert
@@ -46,6 +49,10 @@ class GoalAlbumFragment : Fragment() {
     // 데이터값 관련
     private var goalNameList = ArrayList<String>()  // 대표목표 이름 목록
     private var colorNameList = ArrayList<String>() // 색상 이름 목록
+
+    // 그 외
+    private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
+    private var pictureWidthSize = 1     // 사진 너비
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -253,7 +260,8 @@ class GoalAlbumFragment : Fragment() {
                 var bitmap: Bitmap = BitmapFactory.decodeFile(path)
                 // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
                 var density = requireActivity().resources.displayMetrics.density    // px = dp * density
-                var pictureWidth = (101 * density).toInt()
+//                var pictureWidth = (101 * density).toInt()
+                var pictureWidth = pictureWidthSize
                 var pictureHeight = (97 * density).toInt()
 
                 var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
@@ -277,9 +285,34 @@ class GoalAlbumFragment : Fragment() {
                     return@setOnLongClickListener true
                 }
 
-                // 해당 레이아웃에 사진 추가
                 var goalAlbumLayout: GridLayout = view.findViewById(R.id.container_goalPictures_GridLayout)
-                goalAlbumLayout.addView(iv)
+
+                // 사진 Layout width 사이즈 구하기(최초 1회 실행)
+                if (isFirst)    // 현재 최초 실행이라면
+                {
+                    iv.visibility = View.INVISIBLE
+                    goalAlbumLayout.addView(iv) // 해당 레이아웃에 사진 추가
+
+                    var constraintLayout: ConstraintLayout = view.findViewById(R.id.constraintLayout3)
+
+                    constraintLayout.post(object : Runnable {
+                        override fun run() {
+                            // 현재 최초 실행이라면
+                            if (isFirst)
+                            {
+                                Log.d(TAG, "run 너비: ${constraintLayout.width}")
+                                pictureWidthSize = ((constraintLayout.width - goalAlbumLayout.marginStart - goalAlbumLayout.marginEnd) / 3 + 0.5).toInt()
+
+                                isFirst = false
+                                onStart()
+                            }
+                        }
+                    })
+                }
+                else
+                {
+                    goalAlbumLayout.addView(iv) // 해당 레이아웃에 사진 추가
+                }
             }
             catch (e: Exception) {
                 Log.e(TAG, "목표별 사진 로드/세팅 실패 \n${e.printStackTrace()}")

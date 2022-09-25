@@ -17,8 +17,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.get
+import androidx.core.view.marginEnd
+import androidx.core.view.marginStart
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBConvert
@@ -48,6 +51,10 @@ class CategoryAlbumFragment : Fragment() {
     private var goalIconPairList = ArrayList<Pair<String, String>>()  // 세부목표 이름, icon 이름 쌍을 저장
     private var iconNameList = ArrayList<String>()                        // icon 이름을 저장
 //    private var picNums = ArrayList<Int>()                      // 사진 개수를 저장
+
+    // 그 외
+    private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
+    private var pictureWidthSize = 1     // 사진 너비
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -302,7 +309,8 @@ class CategoryAlbumFragment : Fragment() {
                         var bitmap: Bitmap = BitmapFactory.decodeFile(path)
                         // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
                         var density = requireActivity().resources.displayMetrics.density    // px = dp * density
-                        var pictureWidth = (101 * density).toInt()
+//                        var pictureWidth = (101 * density).toInt()
+                        var pictureWidth = pictureWidthSize
                         var pictureHeight = (97 * density).toInt()
 
                         var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
@@ -326,9 +334,34 @@ class CategoryAlbumFragment : Fragment() {
                             return@setOnLongClickListener true
                         }
 
-                        // 해당 레이아웃에 사진 추가
                         var categoty: GridLayout = view.findViewById(R.id.container_categoryPictures_GridLayout)
-                        categoty.addView(iv)
+
+                        // 사진 Layout width 사이즈 구하기(최초 1회 실행)
+                        if (isFirst)    // 현재 최초 실행이라면
+                        {
+                            iv.visibility = View.INVISIBLE
+                            categoty.addView(iv)    // 해당 레이아웃에 사진 추가
+
+                            var constraintLayout: ConstraintLayout = view.findViewById(R.id.constraintLayout2)
+
+                            constraintLayout.post(object : Runnable {
+                                override fun run() {
+                                    // 현재 최초 실행이라면
+                                    if (isFirst)
+                                    {
+                                        Log.d(TAG, "run 너비: ${constraintLayout.width}")
+                                        pictureWidthSize = ((constraintLayout.width - categoty.marginStart - categoty.marginEnd) / 3 + 0.5).toInt()
+
+                                        isFirst = false
+                                        onStart()
+                                    }
+                                }
+                            })
+                        }
+                        else
+                        {
+                            categoty.addView(iv)    // 해당 레이아웃에 사진 추가
+                        }
                     }
                     catch (e: Exception) {
                         Log.e(TAG, "카테고리별 사진 로드/세팅 실패 \n${e.printStackTrace()}")
