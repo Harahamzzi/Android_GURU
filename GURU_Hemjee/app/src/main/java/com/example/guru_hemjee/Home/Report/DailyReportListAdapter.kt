@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.databinding.ContainerDailyReportBinding
-import java.math.BigInteger
 import java.util.ArrayList
 
 // 일간 리포트의 리포트 Recycler view 어댑터

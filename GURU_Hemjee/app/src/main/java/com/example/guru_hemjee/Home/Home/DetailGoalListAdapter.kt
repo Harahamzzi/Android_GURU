@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.Home.Goal.DetailGoalItem
 import com.example.guru_hemjee.R
 
 // 잠금 시간 및 목표 설정/확인을 할 때 보이는 세부 목록 리스트를 생성하는 어댑터

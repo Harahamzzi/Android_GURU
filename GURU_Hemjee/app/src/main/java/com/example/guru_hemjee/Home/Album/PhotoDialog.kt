@@ -3,7 +3,6 @@ package com.example.guru_hemjee.Home.Album
 import android.app.Dialog
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.graphics.PorterDuff
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.guru_hemjee.DBConvert

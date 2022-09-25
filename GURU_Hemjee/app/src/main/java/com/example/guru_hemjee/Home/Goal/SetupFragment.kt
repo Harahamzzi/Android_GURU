@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
 import com.example.guru_hemjee.Home.MainActivity
