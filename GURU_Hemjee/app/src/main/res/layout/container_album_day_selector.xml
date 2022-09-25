@@ -6,7 +6,7 @@
 
     android:id="@+id/dayRadioButton"
     android:layout_width="31dp"
-    android:layout_height="31dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/album_icon_bg_selector"
     android:button="@null"
     android:text="25"

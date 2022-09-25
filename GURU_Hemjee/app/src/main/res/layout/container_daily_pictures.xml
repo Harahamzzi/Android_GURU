@@ -16,6 +16,7 @@
         android:textFontWeight="700"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:includeFontPadding="false"
         android:layout_marginTop="6dp"
         app:layout_constraintBottom_toTopOf="@+id/container_dailyPictures_dayOfWeekTextView"
         app:layout_constraintEnd_toEndOf="@+id/container_dailyPictures_dayOfWeekTextView"
@@ -32,6 +33,7 @@
         android:textColor="@color/Black"
         android:textFontWeight="400"
         android:textSize="8sp"
+        android:layout_marginStart="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_dailyPictures_dayTextView" />
 
