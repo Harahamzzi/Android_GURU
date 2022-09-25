@@ -37,7 +37,6 @@ class BigGoalViewHolder(val binding: ContainerGoalItemRecyclerviewBinding): Recy
                 if (i == 6) {
                     val moreIcon = ImageView(context)
                     moreIcon.setImageResource(R.drawable.ic_sebumenu)
-                    moreIcon.setColorFilter(ContextCompat.getColor(context, R.color.DarkBrown))
                     DBConvert.colorConvert(moreIcon, bigGoalItem.color, context)
                     val moreIconLayoutParams = LinearLayout.LayoutParams(48, 48)
                     moreIconLayoutParams.marginStart = -8
