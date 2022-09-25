@@ -17,13 +17,12 @@ class DetailGoalViewHolder(val binding: ContainerDetailGoalItemRecyclerviewBindi
             // 세부목표 icon 색상 저장
             var iconColor = 0
             when (detailGoalItem?.color) {
-                "Orange" -> R.color.Orange
-                "BrightYellow" -> R.color.BrightYellow
-                "Yellow" -> iconColor = R.color.Yellow
+                "Scarlet" -> iconColor = R.color.Scarlet
+                "Orange" -> iconColor = R.color.Orange
+                "NoteYellow" -> iconColor = R.color.NoteYellow
                 "Apricot" -> iconColor = R.color.Apricot
                 "DarkBrown" -> iconColor = R.color.DarkBrown
                 "SeedBrown" -> iconColor = R.color.SeedBrown
-                "NoteYellow" -> iconColor = R.color.NoteYellow
                 "LightGreen" -> iconColor = R.color.LightGreen
                 "Green" -> iconColor = R.color.Green
                 "LightBlue" -> iconColor = R.color.LightBlue

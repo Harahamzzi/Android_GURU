@@ -80,22 +80,22 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/pop_biggoal_color_orange_rbtn"
+                android:id="@+id/pop_biggoal_color_scarlet_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/shape_radio_checked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
-                android:buttonTint="@color/Orange" />
+                android:buttonTint="@color/Scarlet" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/pop_biggoal_color_yellow_rbtn"
+                android:id="@+id/pop_biggoal_color_orange_rbtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/shape_radio_unchecked"
                 android:button="@drawable/ic_add_biggoal_radio_btn"
-                android:buttonTint="@color/Yellow" />
+                android:buttonTint="@color/Orange" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/pop_biggoal_color_noteyellow_rbtn"

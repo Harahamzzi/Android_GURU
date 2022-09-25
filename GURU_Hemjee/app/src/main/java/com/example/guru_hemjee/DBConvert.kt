@@ -30,13 +30,12 @@ class DBConvert {
         // 이미지뷰 색상 값 적용 함수
         fun colorConvert(view: ImageView, color: String?, context: Context) {
             when (color) {
+                "Scarlet" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Scarlet))
                 "Orange" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Orange))
-                "BrightYellow" -> view.setColorFilter(ContextCompat.getColor(context, R.color.BrightYellow))
-                "Yellow" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Yellow))
+                "NoteYellow" -> view.setColorFilter(ContextCompat.getColor(context, R.color.NoteYellow))
                 "Apricot" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Apricot))
                 "DarkBrown" -> view.setColorFilter(ContextCompat.getColor(context, R.color.DarkBrown))
                 "SeedBrown" -> view.setColorFilter(ContextCompat.getColor(context, R.color.SeedBrown))
-                "NoteYellow" -> view.setColorFilter(ContextCompat.getColor(context, R.color.NoteYellow))
                 "LightGreen" -> view.setColorFilter(ContextCompat.getColor(context, R.color.LightGreen))
                 "Green" -> view.setColorFilter(ContextCompat.getColor(context, R.color.Green))
                 "LightBlue" -> view.setColorFilter(ContextCompat.getColor(context, R.color.LightBlue))
@@ -49,40 +48,38 @@ class DBConvert {
         // 라디오버튼 색상 값 적용 함수
         fun radioColorConvert(rBtn: RadioButton, color: String?, context: Context) {
             when (color) {
-                "Orange" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Orange))
-                "BrightYellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.BrightYellow))
-                "Yellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Yellow))
-                "Apricot" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Apricot))
-                "DarkBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.DarkBrown))
-                "SeedBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.SeedBrown))
-                "NoteYellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.NoteYellow))
-                "LightGreen" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightGreen))
-                "Green" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Green))
-                "LightBlue" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightBlue))
-                "Blue" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Blue))
-                "Purple" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Purple))
-                "Pink" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Pink))
-                "Gray" -> rBtn.backgroundTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+                "Scarlet" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Scarlet))
+                "Orange" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Orange))
+                "NoteYellow" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.NoteYellow))
+                "Apricot" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Apricot))
+                "DarkBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.DarkBrown))
+                "SeedBrown" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.SeedBrown))
+                "LightGreen" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.LightGreen))
+                "Green" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Green))
+                "LightBlue" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.LightBlue))
+                "Blue" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Blue))
+                "Purple" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Purple))
+                "Pink" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Pink))
+                "Gray" -> rBtn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Gray))
             }
         }
 
         // 라디오버튼 색상 값 적용 함수2
         fun radioButtonColorConvert(rBtn: RadioButton, color: String?, context: Context) {
             when (color) {
-                "Orange" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Orange))
-                "BrightYellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.BrightYellow))
-                "Yellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Yellow))
-                "Apricot" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Apricot))
-                "DarkBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.DarkBrown))
-                "SeedBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.SeedBrown))
-                "NoteYellow" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.NoteYellow))
-                "LightGreen" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightGreen))
-                "Green" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Green))
-                "LightBlue" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.LightBlue))
-                "Blue" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Blue))
-                "Purple" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Purple))
-                "Pink" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Pink))
-                "Gray" -> rBtn.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.Gray))
+                "Scarlet" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Scarlet))
+                "Orange" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Orange))
+                "NoteYellow" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.NoteYellow))
+                "Apricot" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Apricot))
+                "DarkBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.DarkBrown))
+                "SeedBrown" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.SeedBrown))
+                "LightGreen" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.LightGreen))
+                "Green" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Green))
+                "LightBlue" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.LightBlue))
+                "Blue" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Blue))
+                "Purple" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Purple))
+                "Pink" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Pink))
+                "Gray" -> rBtn.buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.Gray))
             }
         }
 

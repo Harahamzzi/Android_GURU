@@ -32,8 +32,8 @@ class BigGoalSetupDialog(
     private lateinit var rGroup1: RadioGroup // 색상 라디오그룹1
     private lateinit var rGroup2: RadioGroup // 색상 라디오그룹2
 
-    private lateinit var orangeRBtn: RadioButton // 색상 라디오 버튼
-    private lateinit var yellowRBtn: RadioButton
+    private lateinit var scarletRBtn: RadioButton // 색상 라디오 버튼
+    private lateinit var orangeRBtn: RadioButton
     private lateinit var noteYellowRBtn: RadioButton
     private lateinit var apricotRBtn: RadioButton
     private lateinit var seedBrownRBtn: RadioButton
@@ -69,8 +69,8 @@ class BigGoalSetupDialog(
         rGroup1 = dialog.findViewById(R.id.pop_biggoal_color_rgroup1)
         rGroup2 = dialog.findViewById(R.id.pop_biggoal_color_rgroup2)
 
+        scarletRBtn = dialog.findViewById(R.id.pop_biggoal_color_scarlet_rbtn)
         orangeRBtn = dialog.findViewById(R.id.pop_biggoal_color_orange_rbtn)
-        yellowRBtn = dialog.findViewById(R.id.pop_biggoal_color_yellow_rbtn)
         noteYellowRBtn = dialog.findViewById(R.id.pop_biggoal_color_noteyellow_rbtn)
         apricotRBtn = dialog.findViewById(R.id.pop_biggoal_color_apricot_rbtn)
         seedBrownRBtn = dialog.findViewById(R.id.pop_biggoal_color_seedbrown_rbtn)
@@ -86,26 +86,26 @@ class BigGoalSetupDialog(
         cancelBtn = dialog.findViewById(R.id.pop_biggoal_cancel_btn)
 
         // 기존에 저장된 값이 없는 경우, 기본값 설정
-        orangeRBtn.isChecked = true
-        newColor = "Orange"
+        scarletRBtn.isChecked = true
+        newColor = "Scarlet"
 
         // 기존에 저장된 값이 있는 경우(값 수정일 경우) 대표목표와 색상 적용하기
         if (code == 1) {
             titleTv.text = "대표목표 수정"
             titleEdt.setText(initTitle)
 
-            // 기존에 선택되어 있는 오랜지색 라디오버튼 초기화
+            // 기존에 선택되어 있는 다홍색 라디오버튼 초기화
             rGroup1.clearCheck()
-            orangeRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
+            scarletRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
 
             when (initColor) {
+                "Scarlet" -> {
+                    scarletRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
+                    newColor = "Scarlet"
+                }
                 "Orange" -> {
                     orangeRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
                     newColor = "Orange"
-                }
-                "Yellow" -> {
-                    yellowRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
-                    newColor = "Yellow"
                 }
                 "NoteYellow" -> {
                     noteYellowRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
@@ -154,19 +154,19 @@ class BigGoalSetupDialog(
         rGroup1.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 // 그룹에 클릭된 버튼 초기화 및 션택한 라디오버튼 클릭 표시
+                R.id.pop_biggoal_color_scarlet_rbtn -> {
+                    rGroup1.clearCheck()
+                    rGroup2.clearCheck()
+                    unCheckedRadioBtn()
+                    scarletRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
+                    newColor = "Scarlet"
+                }
                 R.id.pop_biggoal_color_orange_rbtn -> {
                     rGroup1.clearCheck()
                     rGroup2.clearCheck()
                     unCheckedRadioBtn()
                     orangeRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
                     newColor = "Orange"
-                }
-                R.id.pop_biggoal_color_yellow_rbtn -> {
-                    rGroup1.clearCheck()
-                    rGroup2.clearCheck()
-                    unCheckedRadioBtn()
-                    yellowRBtn.setBackgroundResource(R.drawable.shape_radio_checked)
-                    newColor = "Yellow"
                 }
                 R.id.pop_biggoal_color_noteyellow_rbtn -> {
                     rGroup1.clearCheck()
@@ -356,7 +356,7 @@ class BigGoalSetupDialog(
     // 라디오버튼 리소스 초기화
     private fun unCheckedRadioBtn() {
         orangeRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
-        yellowRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
+        scarletRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
         noteYellowRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
         apricotRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
         seedBrownRBtn.setBackgroundResource(R.drawable.shape_radio_unchecked)
