@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.get
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
@@ -54,7 +52,7 @@ class CategoryAlbumFragment : Fragment() {
 
     // 그 외
     private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
-    private var pictureWidthSize = 1     // 사진 너비
+    private var pictureSize = 1     // 사진 너비
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -307,13 +305,14 @@ class CategoryAlbumFragment : Fragment() {
 
                     try {
                         var bitmap: Bitmap = BitmapFactory.decodeFile(path)
-                        // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
-                        var density = requireActivity().resources.displayMetrics.density    // px = dp * density
-//                        var pictureWidth = (101 * density).toInt()
-                        var pictureWidth = pictureWidthSize
-                        var pictureHeight = (97 * density).toInt()
 
-                        var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
+//                        // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
+//                        var density = requireActivity().resources.displayMetrics.density    // px = dp * density
+//                        var pictureWidth = (101 * density).toInt()
+//                        var pictureHeight = (97 * density).toInt()
+
+                        // 이미지 배율 크기 작업
+                        var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureSize, pictureSize, true)
 
                         var iv = ImageView(requireContext())
                         iv.setImageBitmap(reScaledBitmap)
@@ -350,7 +349,7 @@ class CategoryAlbumFragment : Fragment() {
                                     if (isFirst)
                                     {
                                         Log.d(TAG, "run 너비: ${constraintLayout.width}")
-                                        pictureWidthSize = ((constraintLayout.width - categoty.marginStart - categoty.marginEnd) / 3 + 0.5).toInt()
+                                        pictureSize = ((constraintLayout.width - categoty.marginStart - categoty.marginEnd) / 3 + 0.5).toInt()
 
                                         isFirst = false
                                         onStart()

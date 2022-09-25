@@ -20,9 +20,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.get
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
+import androidx.core.view.*
 import androidx.gridlayout.widget.GridLayout
 import com.example.guru_hemjee.AlertDialog
 import com.example.guru_hemjee.DBManager
@@ -63,7 +61,7 @@ class DailyAlbumFragment : Fragment() {
     // 그 외
 //    private var isOpened = true     // 날짜 목록이 펼쳐졌는지 판단하는 플래그
     private var isFirst = true           // 최초 실행인지 아닌지 판단하는 플래그
-    private var pictureWidthSize = 1     // 사진 너비
+    private var pictureSize = 1          // 사진 크기
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -376,15 +374,15 @@ class DailyAlbumFragment : Fragment() {
                 try {
                     var bitmap: Bitmap = BitmapFactory.decodeFile(path)
 
-                    // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
-                    var density = requireActivity().resources.displayMetrics.density    // px = dp * density
+//                    // 이미지 배율 크기 작업 - 대략 266x256 pixel 크기가 나오도록 재설정함
+//                    var density = requireActivity().resources.displayMetrics.density    // px = dp * density
 //                    var pictureWidth = (101 * density).toInt()
-                    var pictureWidth = pictureWidthSize
-                    var pictureHeight = (97 * density).toInt()
+//                    var pictureHeight = (97 * density).toInt()
 
-                    Log.d(TAG, "사진 크기: $pictureWidth X $pictureHeight")
+                    Log.d(TAG, "사진 크기: $pictureSize X $pictureSize")
 
-                    var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureWidth, pictureHeight, true)
+                    // 이미지 배율 크기 작업
+                    var reScaledBitmap = Bitmap.createScaledBitmap(bitmap, pictureSize, pictureSize, true)
 
                     var iv = ImageView(requireContext())
                     iv.setImageBitmap(reScaledBitmap)
@@ -421,7 +419,7 @@ class DailyAlbumFragment : Fragment() {
                                 if (isFirst)
                                 {
                                     Log.d(TAG, "run 너비: ${constraintLayout.width}")
-                                    pictureWidthSize = ((constraintLayout.width - dailyPictureLayout.marginStart - dailyPictureLayout.marginEnd) / 3 + 0.5).toInt()
+                                    pictureSize = ((constraintLayout.width - dailyPictureLayout.marginStart - dailyPictureLayout.marginEnd) / 3 + 0.5).toInt()
 
                                     isFirst = false
                                     onStart()
