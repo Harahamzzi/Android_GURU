@@ -5,20 +5,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.*
 import androidx.appcompat.app.ActionBar
-import androidx.fragment.app.FragmentManager
-import com.example.guru_hemjee.Home.Home.HomeFragment
 import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ActivityAlbumMainBinding
-import java.util.*
-import kotlin.concurrent.schedule
 
 // 홈(MainActivity) -> 나의 성취 앨범
 // 나의 성취 앨범 Fragment 화면들을 보여주는 Activity 화면

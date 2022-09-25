@@ -11,7 +11,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.bumptech.glide.Glide
 import com.example.guru_hemjee.*
 import com.example.guru_hemjee.databinding.ActivityTimeRecordBinding

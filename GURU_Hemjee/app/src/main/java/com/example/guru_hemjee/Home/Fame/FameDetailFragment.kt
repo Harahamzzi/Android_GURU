@@ -13,15 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginEnd
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.guru_hemjee.DBConvert
 import com.example.guru_hemjee.DBManager
-import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.FragmentFameDetailBinding
 
 class FameDetailFragment : Fragment() {

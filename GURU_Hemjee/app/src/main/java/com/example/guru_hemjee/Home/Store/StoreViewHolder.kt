@@ -1,11 +1,8 @@
 package com.example.guru_hemjee.Home.Store
 
 import android.content.Context
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.Home.MainActivity
 import com.example.guru_hemjee.R
 import com.example.guru_hemjee.databinding.ContainerMarketItemBinding
 

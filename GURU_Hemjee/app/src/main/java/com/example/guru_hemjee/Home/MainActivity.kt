@@ -2,7 +2,6 @@ package com.example.guru_hemjee.Home
 
 import android.Manifest
 import android.content.Intent
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.widget.Toast

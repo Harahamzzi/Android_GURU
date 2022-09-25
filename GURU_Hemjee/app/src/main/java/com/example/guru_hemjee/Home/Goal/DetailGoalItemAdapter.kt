@@ -2,9 +2,7 @@ package com.example.guru_hemjee.Home.Goal
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guru_hemjee.MyApplication.Companion.applicationContext
 import com.example.guru_hemjee.databinding.ContainerDetailGoalItemRecyclerviewBinding
 
 // 아코디언 메뉴의 세부목표 어댑터
