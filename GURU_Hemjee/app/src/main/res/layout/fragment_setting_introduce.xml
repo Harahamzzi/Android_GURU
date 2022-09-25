@@ -70,7 +70,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="다니엘" />
+                android:text="이다은" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Daniel" />
+                android:text="Daeun Lee" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +97,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="루덴" />
+                android:text="이윤지" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Luden" />
+                android:text="Yoonji Lee" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +124,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="비비" />
+                android:text="최서연" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="ViVi" />
+                android:text="Seoyeon Choi" />
         </LinearLayout>
 
         <LinearLayout
@@ -151,7 +151,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="지니" />
+                android:text="최소원" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -161,7 +161,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Jinny" />
+                android:text="Sowon Choi" />
         </LinearLayout>
 
         <ImageView
@@ -213,7 +213,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="비비" />
+                android:text="이윤지" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="ViVi" />
+                android:text="Yoonji Lee" />
         </LinearLayout>
 
         <LinearLayout
@@ -240,7 +240,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="지니" />
+                android:text="최소원" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -250,7 +250,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Jinny" />
+                android:text="Sowon Choi" />
         </LinearLayout>
 
         <ImageView
@@ -302,7 +302,7 @@
                 android:textFontWeight="400"
                 android:textColor="@color/Black"
                 android:textSize="14dp"
-                android:text="다니엘" />
+                android:text="이다은" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -312,7 +312,7 @@
                 android:textFontWeight="300"
                 android:textColor="@color/Black"
                 android:textSize="8dp"
-                android:text="Daniel" />
+                android:text="Daeun Lee" />
         </LinearLayout>
 
         <ImageView
