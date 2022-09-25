@@ -196,6 +196,7 @@ class FameFragment : Fragment() {
                 // 최다 앨범상 뷰에 적용하기
                 try {
                     var originCount = 0
+                    var originTitle: String? = ""
                     var albumCount = 0
                     var albumTitle: String? = ""
 
@@ -207,10 +208,11 @@ class FameFragment : Fragment() {
 
                         if (albumCount >= originCount) {
                             originCount = albumCount
+                            originTitle = albumTitle
                         }
                     }
 
-                    binding.fameLongAlbumGoalTitleTv.text = albumTitle
+                    binding.fameLongAlbumGoalTitleTv.text = originTitle
                     binding.fameLongAlbumGoalNumTv.text = originCount.toString()
                 } catch (e: Exception) {
                     Log.d("FameFragment", "리스트에 값이 없음 " + e.printStackTrace())
