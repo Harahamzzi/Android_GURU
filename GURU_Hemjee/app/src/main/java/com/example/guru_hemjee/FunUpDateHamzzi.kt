@@ -55,11 +55,12 @@ class FunUpDateHamzzi {
 
         // 옷 및 장신구 업데이트
         @SuppressLint("Range", "Recycle")
-        fun updateCloth(context: Context, clothLayout: FrameLayout, bottomLayout: FrameLayout, isMarket: Boolean) {
+        fun updateCloth(context: Context, clothLayout: FrameLayout, bottomLayout: FrameLayout, capeLayout: FrameLayout, isMarket: Boolean) {
 
             // 의상 초기화
             clothLayout.removeAllViews()
             bottomLayout.removeAllViews()
+            capeLayout.removeAllViews()
 
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
@@ -78,16 +79,25 @@ class FunUpDateHamzzi {
                 val category = cursor.getString(cursor.getColumnIndex("category")) // 카테고리
                 val itemName = cursor.getString(cursor.getColumnIndex("item_name"))
 
-                // 카테고리가 하의라면
-                if (category == "bottom") {
-                    val imageView = ImageView(context)
-                    imageView.setImageResource(id)
-                    bottomLayout.addView(imageView)
-                }
-                else {
-                    val imageView = ImageView(context)
-                    imageView.setImageResource(id)
-                    clothLayout.addView(imageView)
+                when {
+                    // 카테고리가 하의라면
+                    category == "bottom" -> {
+                        val imageView = ImageView(context)
+                        imageView.setImageResource(id)
+                        bottomLayout.addView(imageView)
+                    }
+                    // 아이템이 망토라면
+                    itemName.contains("cape") -> {
+                        val imageView = ImageView(context)
+                        imageView.setImageResource(id)
+                        capeLayout.addView(imageView)
+                    }
+                    // 카테고리가 상의라면
+                    else -> {
+                        val imageView = ImageView(context)
+                        imageView.setImageResource(id)
+                        clothLayout.addView(imageView)
+                    }
                 }
             }
             sqlitedb.close()

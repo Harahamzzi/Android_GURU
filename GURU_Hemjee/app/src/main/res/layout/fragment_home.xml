@@ -40,6 +40,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <!-- 햄찌의 망토만 입힐 영역 -->
+    <FrameLayout
+        android:id="@+id/home_capeFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <!-- 햄찌의 하의를 입힐 영역 -->
     <FrameLayout
         android:id="@+id/home_bottomClothFrameLayout"

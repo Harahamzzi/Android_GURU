@@ -31,6 +31,12 @@
             android:layout_height="match_parent"
             android:src="@drawable/my_hamzzi"/>
 
+        <!-- 햄찌의 망토만 입힐 영역 -->
+        <FrameLayout
+            android:id="@+id/myHamster_capeFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!-- 햄찌의 하의를 입힐 영역 -->
         <FrameLayout
             android:id="@+id/myHamster_bottomClothFrameLayout"

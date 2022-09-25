@@ -219,7 +219,7 @@ class SeedMarketFragment : Fragment() {
 
         // 배경 및 옷 설정
         FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
-        FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+        FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
         bringItems.clear()
         selectedItems.addAll(appliedItems) // 현재 사용자가 입고 있는 아이템 목록 추가
@@ -245,7 +245,7 @@ class SeedMarketFragment : Fragment() {
             upDateInventory(currentInventory)
 
             FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
-            FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+            FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
         }
     }
 
@@ -354,7 +354,7 @@ class SeedMarketFragment : Fragment() {
                     upDateInventory(currentInventory)
 
                     FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true)
-                    FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+                    FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
                 }
             }
         })
@@ -486,7 +486,7 @@ class SeedMarketFragment : Fragment() {
                 Log.d("market :: inventory", "인벤토리 함수 실행")
 
                 FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
-                FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+                FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
             }
             // 선택 중인 아이템을 클릭했다면(햄스터가 시착중인 아이템을 클릭했다면)
@@ -516,7 +516,7 @@ class SeedMarketFragment : Fragment() {
             deselectItems.clear()
             priceReset() // 가격 초기화
             FunUpDateHamzzi.updateBackground(requireContext(), binding.marketBGFrameLayout, true, true) // 뷰에 이미지 적용
-            FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, true)
+            FunUpDateHamzzi.updateCloth(requireContext(), binding.marketClothFrameLayout, binding.marketBottomClothFrameLayout, binding.marketCapeFrameLayout, true)
 
             /** **/
 
