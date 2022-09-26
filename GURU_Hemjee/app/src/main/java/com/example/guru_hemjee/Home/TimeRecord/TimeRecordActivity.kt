@@ -42,7 +42,8 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 시간 기록 타이머 관련
     private var timerTask: Timer? = null
-    private var time: BigInteger = 0.toBigInteger()
+    private var time: BigInteger = BigInteger.ZERO      // 타이머에 들어가는 시간
+    private var beforeTime: Long = 0L                   // 화면이 잠시 종료될 때의 시간
     private var recordDate: Long = 0L
 
     // 일시정지 상태 플래그
@@ -131,7 +132,7 @@ class TimeRecordActivity: AppCompatActivity() {
         binding.TimeRecordBigGoalNameTextView.text = bigGoalName
 
         // 타이머 초기화
-        time = 0.toBigInteger()
+        time = BigInteger.ZERO
 
         // 타이머 기록 시작
         countTime()
@@ -272,6 +273,32 @@ class TimeRecordActivity: AppCompatActivity() {
 
         // 세부 목표 동적 생성
         addDetailGoalView()
+    }
+
+    // 화면이 백그라운드로 들어갈 때 실행
+    override fun onPause() {
+        super.onPause()
+
+        // 타이머가 돌아가는 중이었다면
+        if (!isPause)
+        {
+            // 화면이 잠시 닫힐 때(백그라운드 돌입)의 시간 저장하기
+            beforeTime = System.currentTimeMillis()
+        }
+    }
+
+    // 백그라운드에서 포그라운드로 전환될 때 호출되는 콜백
+    override fun onRestart() {
+        super.onRestart()
+
+        // 타이머가 돌아가는 중이었다면
+        if (!isPause)
+        {
+            var presentTime = System.currentTimeMillis()
+
+            // 시간 기록 더하기
+            time += (presentTime - beforeTime).toBigInteger()
+        }
     }
 
     override fun onBackPressed() {
