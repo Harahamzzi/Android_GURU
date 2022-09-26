@@ -4,7 +4,7 @@
         android:id="@+id/action_goalAndTime"
         android:orderInCategory="1"
         android:icon="@drawable/timer_icon"
-        android:title="목표/잠금 시간 설정" />
+        android:title="목표 설정" />
     <item
         android:id="@+id/action_report"
         android:orderInCategory="2"
