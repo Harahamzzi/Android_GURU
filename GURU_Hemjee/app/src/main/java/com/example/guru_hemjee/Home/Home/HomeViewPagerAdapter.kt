@@ -51,17 +51,8 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
         // 2. 아이콘 레이아웃에 넣기
         for(i in iconList.indices)
         {
-            // 이미지 뷰 생성 및 이미지 설정 & 색상 적용
-            var iv = ImageView(context)
-            iv.setImageResource(iconList[i])
-            iv.layoutParams = iconLayoutParams
-            DBConvert.colorConvert(iv, iconColorID[position], context)
-
-            // 아이콘 이미지 추가
-            holder.iconListLayout.addView(iv)
-
-            // 현재 네 번째 아이콘을 추가한 상태라면
-            if(i >= 3)
+            // 현재 다섯 번째 아이콘을 추가할 차례라면
+            if(i >= 4)
             {
                 // 생략 이미지 넣고 break
                 var tIv = ImageView(context)
@@ -76,6 +67,15 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
 
                 break;
             }
+
+            // 이미지 뷰 생성 및 이미지 설정 & 색상 적용
+            var iv = ImageView(context)
+            iv.setImageResource(iconList[i])
+            iv.layoutParams = iconLayoutParams
+            DBConvert.colorConvert(iv, iconColorID[position], context)
+
+            // 아이콘 이미지 추가
+            holder.iconListLayout.addView(iv)
         }
 
         // 버튼 클릭 리스너 바인딩
