@@ -92,7 +92,8 @@ class BottomSummaryDialog(context: Context) {
         dialog_dailyGoalListLayout.removeAllViews()
         dialog_weeklyGoalListLayout.removeAllViews()
 
-
+        // 오늘 날짜로 세팅
+        todayDateTextView.text = todayDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
 
         /** 데이터 세팅 **/
         // 대표목표 리포트 db에 저장된 값 읽어오기(대표목표 값, 대표목표 총 수행 시간, 잠금 날짜)
