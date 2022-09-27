@@ -24,12 +24,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_colorselectionicon" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
+            android:layout_marginTop="12dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="12dp"
             app:layout_constraintStart_toEndOf="@id/goalItem_color_iv"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/goalItem_open_btn"
@@ -45,16 +47,22 @@
                 android:text="대표 목표 이름"
                 android:textColor="@color/Black"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <!-- 아이콘 리스트-->
             <LinearLayout
                 android:id="@+id/goalItem_icon_LLayout"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="3dp"
-                android:orientation="horizontal" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/goalItem_bigGoal_tv"
+                app:layout_constraintStart_toStartOf="@id/goalItem_bigGoal_tv"
+                app:layout_constraintEnd_toEndOf="@id/goalItem_bigGoal_tv"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/goalItem_open_btn"
