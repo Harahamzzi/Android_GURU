@@ -282,6 +282,9 @@ class TimeRecordActivity: AppCompatActivity() {
         // 타이머가 돌아가는 중이었다면
         if (!isPause)
         {
+            // 타이머 멈춤
+            timerTask?.cancel()
+
             // 화면이 잠시 닫힐 때(백그라운드 돌입)의 시간 저장하기
             beforeTime = System.currentTimeMillis()
         }
@@ -294,9 +297,11 @@ class TimeRecordActivity: AppCompatActivity() {
         // 타이머가 돌아가는 중이었다면
         if (!isPause)
         {
-            var presentTime = System.currentTimeMillis()
+            // 타이머 재작동
+            countTime()
 
             // 시간 기록 더하기
+            var presentTime = System.currentTimeMillis()
             time += (presentTime - beforeTime).toBigInteger()
         }
     }
