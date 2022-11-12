@@ -84,186 +84,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
-        android:id="@+id/tutorial_20ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial20" />
-
-    <ImageButton
-        android:id="@+id/tutorial_19ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial19" />
-
-    <ImageButton
-        android:id="@+id/tutorial_18ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial18" />
-
-    <ImageButton
-        android:id="@+id/tutorial_17ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial17" />
-
-    <ImageButton
-        android:id="@+id/tutorial_16ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial16" />
-
-    <ImageButton
-        android:id="@+id/tutorial_15ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial15" />
-
-    <ImageButton
-        android:id="@+id/tutorial_14ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial14" />
-
-    <ImageButton
-        android:id="@+id/tutorial_13ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial13" />
-
-    <ImageButton
-        android:id="@+id/tutorial_12ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial12" />
-
-    <ImageButton
-        android:id="@+id/tutorial_11ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial11" />
-
-    <ImageButton
-        android:id="@+id/tutorial_10ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial10" />
-
-    <ImageButton
-        android:id="@+id/tutorial_9ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial9" />
-
-    <ImageButton
-        android:id="@+id/tutorial_8ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial8" />
-
-    <ImageButton
-        android:id="@+id/tutorial_7ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial7" />
-
-    <ImageButton
-        android:id="@+id/tutorial_6ImageButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/BrightYellow"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial6" />
-
-    <ImageButton
         android:id="@+id/tutorial_5ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -273,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial5" />
+        app:srcCompat="@drawable/img_tutorial_6" />
 
     <ImageButton
         android:id="@+id/tutorial_4ImageButton"
@@ -285,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial4" />
+        app:srcCompat="@drawable/img_tutorial_5" />
 
     <ImageButton
         android:id="@+id/tutorial_3ImageButton"
@@ -297,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial3" />
+        app:srcCompat="@drawable/img_tutorial_4" />
 
     <ImageButton
         android:id="@+id/tutorial_2ImageButton"
@@ -309,7 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial2" />
+        app:srcCompat="@drawable/img_tutorial_3" />
 
     <ImageButton
         android:id="@+id/tutorial_1ImageButton"
@@ -321,7 +141,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tutorial1" />
+        app:srcCompat="@drawable/img_tutorial_2" />
 
     <ImageView
         android:id="@+id/tutorial_startImageView"
@@ -331,6 +151,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/start_bg" />
+        app:srcCompat="@drawable/img_tutorial_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
