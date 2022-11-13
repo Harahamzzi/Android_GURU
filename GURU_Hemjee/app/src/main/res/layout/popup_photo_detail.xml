@@ -20,7 +20,7 @@
         android:scaleType="centerInside"
         android:maxWidth="320dp"
         android:maxHeight="400dp"
-        app:srcCompat="@drawable/tutorial11" />
+        app:srcCompat="@drawable/img_tutorial_4" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
