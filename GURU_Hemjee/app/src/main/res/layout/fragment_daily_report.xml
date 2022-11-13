@@ -20,10 +20,10 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="18dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,22 +33,25 @@
             android:id="@+id/reportDaily_dailyButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
+            android:layout_marginStart="2dp"
             android:background="@drawable/report_top_button_on"
             android:fontFamily="@font/noto_sans"
             android:text="일간"
             android:textColor="@color/White"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_gravity="center"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/reportDaily_weeklyButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/report_top_button_off"
             android:fontFamily="@font/noto_sans"
             android:text="주간"
             android:textColor="@color/Black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_gravity="center"/>
 
         <Space
             android:layout_width="wrap_content"
