@@ -36,7 +36,7 @@ class TutorialActivity: AppCompatActivity() {
 
         // 튜토리얼 이미지 차례로 띄우기
         val imageButton = ArrayList<ImageButton>()
-        for (i in 1..5) {
+        for (i in 1..6) {
             imageButton.add(findViewById(resources.getIdentifier("tutorial_${i}ImageButton", "id", packageName)))
             imageButton[i-1].setOnClickListener {
                 it.visibility = View.INVISIBLE

@@ -84,7 +84,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
-        android:id="@+id/tutorial_5ImageButton"
+        android:id="@+id/tutorial_6ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/TutorialBrown"
@@ -96,7 +96,7 @@
         app:srcCompat="@drawable/img_tutorial_6" />
 
     <ImageButton
-        android:id="@+id/tutorial_4ImageButton"
+        android:id="@+id/tutorial_5ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/TutorialBrown"
@@ -108,7 +108,7 @@
         app:srcCompat="@drawable/img_tutorial_5" />
 
     <ImageButton
-        android:id="@+id/tutorial_3ImageButton"
+        android:id="@+id/tutorial_4ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/TutorialBrown"
@@ -120,7 +120,7 @@
         app:srcCompat="@drawable/img_tutorial_4" />
 
     <ImageButton
-        android:id="@+id/tutorial_2ImageButton"
+        android:id="@+id/tutorial_3ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/TutorialBrown"
@@ -132,7 +132,7 @@
         app:srcCompat="@drawable/img_tutorial_3" />
 
     <ImageButton
-        android:id="@+id/tutorial_1ImageButton"
+        android:id="@+id/tutorial_2ImageButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/TutorialBrown"
@@ -142,6 +142,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_tutorial_2" />
+
+    <ImageButton
+        android:id="@+id/tutorial_1ImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/TutorialBrown"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_tutorial_1" />
 
     <ImageView
         android:id="@+id/tutorial_startImageView"
