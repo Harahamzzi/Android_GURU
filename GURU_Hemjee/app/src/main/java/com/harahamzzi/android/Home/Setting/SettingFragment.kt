@@ -57,8 +57,11 @@ class SettingFragment : Fragment() {
             // 이메일 앱 켜기
             var emailIntent = Intent(Intent.ACTION_SEND)
 
-            emailIntent.setType("plain/text")
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, "harahamzzi2022@gmail.com")
+            emailIntent.type = "plain/text"
+
+            var receiveEmail: Array<String> = arrayOf("harahamzzi2022@gmail.com")
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, receiveEmail)  // 받는 사람 설정
+            emailIntent.setPackage("com.google.android.gm")         // Gmail 실행되도록 함
 
             startActivity(emailIntent)
         }
