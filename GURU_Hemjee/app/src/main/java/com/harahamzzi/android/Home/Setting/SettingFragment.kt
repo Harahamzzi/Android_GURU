@@ -1,12 +1,16 @@
 package com.harahamzzi.android.Home.Setting
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.harahamzzi.android.DBManager
 import com.harahamzzi.android.R
 import com.harahamzzi.android.databinding.FragmentSettingBinding
 
@@ -18,6 +22,11 @@ class SettingFragment : Fragment() {
     private var mBinding: FragmentSettingBinding? = null
     // 매번 null 체크를 하지 않아도 되도록 함
     private val binding get() = mBinding!!
+
+    // DB 관련
+    private lateinit var dbManager: DBManager
+    private lateinit var sqlitedb: SQLiteDatabase
+    private lateinit var cursor: Cursor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,8 +42,24 @@ class SettingFragment : Fragment() {
         super.onDestroyView()
     }
 
+    @SuppressLint("Range")
     override fun onStart() {
         super.onStart()
+
+        // 상단 텍스트 햄찌 이름 적용
+        dbManager = DBManager(requireContext(), "hamster_db", null, 1)
+        sqlitedb = dbManager.readableDatabase
+
+        cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+        if (cursor.moveToNext())
+        {
+            binding.settingHamzziNameTextView.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()
+        }
+
+        cursor.close()
+        sqlitedb.close()
+        dbManager.close()
 
         var transaction = requireActivity().supportFragmentManager.beginTransaction()
 

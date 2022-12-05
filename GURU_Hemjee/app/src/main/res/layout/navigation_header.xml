@@ -7,16 +7,28 @@
     android:background="@drawable/navigation_drawer_background">
 
     <TextView
-        android:id="@+id/helloTextView"
+        android:id="@+id/header_helloNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:text="햄찌 주인님, 안녕하세요."
+        android:text="햄찌"
         android:textColor="@color/Black"
         android:textSize="15sp"
         android:fontFamily="@font/noto_sans"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/helloTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text=" 주인님, 안녕하세요."
+        android:textColor="@color/Black"
+        android:textSize="15sp"
+        android:fontFamily="@font/noto_sans"
+        app:layout_constraintStart_toEndOf="@id/header_helloNameTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

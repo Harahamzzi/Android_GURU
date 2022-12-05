@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.google.android.material.navigation.NavigationView
 import com.harahamzzi.android.*
 import com.harahamzzi.android.databinding.FragmentHomeBinding
 import java.math.BigInteger
@@ -133,7 +135,13 @@ class HomeFragment : Fragment() {
 
         if(cursor.moveToNext()) {
             binding.homeSeedPointTextView.text = cursor.getString(cursor.getColumnIndex("seed")).toString() // 씨앗 갱신
-            binding.hamName.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()       // 햄스터 이름 갱신
+            binding.hamName.text = cursor.getString(cursor.getColumnIndex("hamster_name")).toString()       // 홈 화면 햄스터 이름 갱신
+
+            // 네비게이션 헤더 접근
+            var navView: NavigationView = requireActivity().findViewById(R.id.navigationView)
+            var navHeaderView: View = navView.getHeaderView(0)
+            var navNameTextView: TextView = navHeaderView.findViewById(R.id.header_helloNameTextView)
+            navNameTextView.text = binding.hamName.text                                                     // 햄버거 메뉴 햄스터 이름 갱신
         }
 
         // 오늘 함께한 시간 갱신
