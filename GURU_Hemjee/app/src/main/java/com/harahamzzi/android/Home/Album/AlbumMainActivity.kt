@@ -146,6 +146,20 @@ class AlbumMainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onBackPressed() {
+
+        // 만일 버튼 목록이 열려있다면
+        if (isFABOpen)
+        {
+            // 닫기 동작 수행
+            closeFloatingButton()
+        }
+        else
+        {
+            super.onBackPressed()
+        }
+    }
+
     // Floating Button을 눌렀을 때 해당 페이지로 이동하게 하는 메소드
     private fun goSelectedAlbum(btnName: String) {
 
