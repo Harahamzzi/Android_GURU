@@ -155,8 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         TedPermission.create()
             .setPermissionListener(permissionListener)
             .setDeniedMessage("앱에서 요구하는 권한 설정이 필요합니다.\n[권한]에서 허용으로 설정해주세요.")
-            .setPermissions(Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.FOREGROUND_SERVICE,
-                            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE)
             .check()
     }
