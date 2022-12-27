@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.harahamzzi.android.R
 
+// 설정 - 개발진 소개 페이지
 class SettingIntroduceFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
