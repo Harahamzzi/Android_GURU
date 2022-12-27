@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.harahamzzi.android.R
 
+// 설정 - 공지사항 페이지
 class SettingNoticeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
