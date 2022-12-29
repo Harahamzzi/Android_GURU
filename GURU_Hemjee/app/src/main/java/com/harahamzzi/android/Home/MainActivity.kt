@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.widget.Toast
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
@@ -137,83 +138,238 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setDetailGoalReportDB()
 
         // 아이템 가격 변경
-        val dbManager = DBManager(this, "hamster_db", null, 1)
-        val sqlitedb = dbManager.writableDatabase
+        try {
+            sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_pink', 360, 'clo', 'upper', 'bg_clo_upper_360_pink', 'market_clo_upper_360_pink', 0, 0, 0)")
+        } catch(e: Exception) {
+            Log.d("MainActivity :: 오류", "이미 있는 행입니다.")
+            Log.d("MainActivity :: 오류", e.printStackTrace().toString())
+        }
 
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 300 AND bg_pic = 'bg_bg_300' AND market_pic = 'market_bg_300' WHERE item_name = 'bg1';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 500 AND bg_pic = 'bg_bg_500' AND market_pic = 'market_bg_500' WHERE item_name = 'bg_airport';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 AND bg_pic = 'bg_bg_700' AND market_pic = 'market_bg_700' WHERE item_name = 'bg_line';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 900 AND bg_pic = 'bg_bg_900' AND market_pic = 'market_bg_900' WHERE item_name = 'bg_desert';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 1100 AND bg_pic = 'bg_bg_1100' AND market_pic = 'market_bg_1100' WHERE item_name = 'bg_sunset';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 1400 AND bg_pic = 'bg_bg_1400' AND market_pic = 'market_bg_1400' WHERE item_name = 'bg_sun';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_furni_190_darkyellow' AND market_pic = 'market_furni_190_darkyellow' WHERE item_name = 'furni_lamp_darkyellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_furni_190_green' AND market_pic = 'market_furni_190_green' WHERE item_name = 'furni_lamp_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_furni_190_lightyellow' AND market_pic = 'market_furni_190_lightyellow' WHERE item_name = 'furni_lamp_lightyellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_furni_190_orange' AND market_pic = 'market_furni_190_orange' WHERE item_name = 'furni_lamp_orange';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 AND bg_pic = 'bg_furni_260_darkyellow' AND market_pic = 'market_furni_260_darkyellow' WHERE item_name = 'furni_biglamp_darkyellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 AND bg_pic = 'bg_furni_260_green' AND market_pic = 'market_furni_260_green' WHERE item_name = 'furni_biglamp_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 AND bg_pic = 'bg_furni_260_lightyellow' AND market_pic = 'market_furni_260_lightyellow' WHERE item_name = 'furni_biglamp_lightyellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 AND bg_pic = 'bg_furni_260_orange' AND market_pic = 'market_furni_260_orange' WHERE item_name = 'furni_biglamp_orange';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 AND bg_pic = 'bg_furni_430_blue' AND market_pic = 'market_furni_430_blue' WHERE item_name = 'furni_plant_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 AND bg_pic = 'bg_furni_430_darkpurple' AND market_pic = 'market_furni_430_darkpurple' WHERE item_name = 'furni_plant_darkpurple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 AND bg_pic = 'bg_furni_430_green' AND market_pic = 'market_furni_430_green' WHERE item_name = 'furni_plant_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 AND bg_pic = 'bg_furni_430_purple' AND market_pic = 'market_furni_430_purple' WHERE item_name = 'furni_plant_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 AND bg_pic = 'bg_furni_490_blue' AND market_pic = 'market_furni_490_blue' WHERE item_name = 'furni_chair_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 AND bg_pic = 'bg_furni_490_green' AND market_pic = 'market_furni_490_green' WHERE item_name = 'furni_chair_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 AND bg_pic = 'bg_furni_490_yellow' AND market_pic = 'market_furni_490_yellow' WHERE item_name = 'furni_chair_yellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 AND bg_pic = 'bg_furni_620_brown' AND market_pic = 'market_furni_620_brown' WHERE item_name = 'furni_mirror_brown';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 AND bg_pic = 'bg_furni_620_gray' AND market_pic = 'market_furni_620_gray' WHERE item_name = 'furni_mirror_gray';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 AND bg_pic = 'bg_furni_620_red' AND market_pic = 'market_furni_620_red' WHERE item_name = 'furni_mirror_red';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 AND bg_pic = 'bg_furni_700_green' AND market_pic = 'market_furni_700_green' WHERE item_name = 'furni_shelf_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 AND bg_pic = 'bg_furni_700_purple' AND market_pic = 'market_furni_700_purple' WHERE item_name = 'furni_shelf_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 AND bg_pic = 'bg_furni_700_yellow' AND market_pic = 'market_furni_700_yellow' WHERE item_name = 'furni_shelf_yellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 AND bg_pic = 'bg_furni_720_green' AND market_pic = 'market_furni_720_green' WHERE item_name = 'furni_sofa_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 AND bg_pic = 'bg_furni_720_pink' AND market_pic = 'market_furni_720_pink' WHERE item_name = 'furni_sofa_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 AND bg_pic = 'bg_furni_720_red' AND market_pic = 'market_furni_720_red' WHERE item_name = 'furni_sofa_red';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_black' AND market_pic = 'market_clo_hair_190_black' WHERE item_name = 'clo_cap_black';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_blue' AND market_pic = 'market_clo_hair_190_blue' WHERE item_name = 'clo_cap_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_red' AND market_pic = 'market_clo_hair_190_red' WHERE item_name = 'clo_cap_red';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_white' AND market_pic = 'market_clo_hair_190_white' WHERE item_name = 'clo_cap_white';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_green' AND market_pic = 'market_clo_hair_190_green' WHERE item_name = 'clo_band_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_pink' AND market_pic = 'market_clo_hair_190_pink' WHERE item_name = 'clo_band_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_hair_190_white2' AND market_pic = 'market_clo_hair_190_white2' WHERE item_name = 'clo_band_white';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_hair_360_blue' AND market_pic = 'market_clo_hair_360_blue' WHERE item_name = 'clo_earmuffs_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_hair_360_orange' AND market_pic = 'market_clo_hair_360_orange' WHERE item_name = 'clo_earmuffs_orange';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_hair_360_purple' AND market_pic = 'market_clo_hair_360_purple' WHERE item_name = 'clo_earmuffs_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_hair_360_white' AND market_pic = 'market_clo_hair_360_white' WHERE item_name = 'clo_earmuffs_white';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 AND bg_pic = 'bg_clo_hair_530_blue' AND market_pic = 'market_clo_hair_530_blue' WHERE item_name = 'clo_flower_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 AND bg_pic = 'bg_clo_hair_530_pink' AND market_pic = 'market_clo_hair_530_pink' WHERE item_name = 'clo_flower_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 AND bg_pic = 'bg_clo_hair_530_green' AND market_pic = 'market_clo_hair_530_green' WHERE item_name = 'clo_sunglass_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 AND bg_pic = 'bg_clo_hair_530_purple' AND market_pic = 'market_clo_hair_530_purple' WHERE item_name = 'clo_sunglass_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 AND bg_pic = 'bg_clo_hair_530_yellow' AND market_pic = 'market_clo_hair_530_yellow' WHERE item_name = 'clo_sunglass_yellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_upper_220_black' AND market_pic = 'market_clo_upper_220_black' WHERE item_name = 'clo_running_black';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_upper_220_green' AND market_pic = 'market_clo_upper_220_green' WHERE item_name = 'clo_running_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_upper_220_red' AND market_pic = 'market_clo_upper_220_red' WHERE item_name = 'clo_running_red';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_upper_220_white' AND market_pic = 'market_clo_upper_220_white' WHERE item_name = 'clo_running_white';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_upper_220_yellow' AND market_pic = 'market_clo_upper_220_yellow' WHERE item_name = 'clo_running_yellow';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_upper_360_black' AND market_pic = 'market_clo_upper_360_black' WHERE item_name = 'clo_train_running_black';")
-        sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_pink', 360, 'clo', 'upper', 'bg_clo_upper_360_pink', 'market_clo_upper_360_pink', 0, 0, 0)")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 AND bg_pic = 'bg_clo_upper_360_green' AND market_pic = 'market_clo_upper_360_green' WHERE item_name = 'clo_train_running_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 510 AND bg_pic = 'bg_clo_upper_510_blue' AND market_pic = 'market_clo_upper_510_blue' WHERE item_name = 'clo_shirt_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 510 AND bg_pic = 'bg_clo_upper_510_pink' AND market_pic = 'market_clo_upper_510_pink' WHERE item_name = 'clo_shirt_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 550 AND bg_pic = 'bg_clo_upper_550_blue' AND market_pic = 'market_clo_upper_550_blue' WHERE item_name = 'clo_vest_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 550 AND bg_pic = 'bg_clo_upper_550_purple' AND market_pic = 'market_clo_upper_550_purple' WHERE item_name = 'clo_vest_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 AND bg_pic = 'bg_clo_upper_600_green' AND market_pic = 'market_clo_upper_600_green' WHERE item_name = 'clo_cape_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 AND bg_pic = 'bg_clo_upper_600_orange' AND market_pic = 'market_clo_upper_600_orange' WHERE item_name = 'clo_cape_orange';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 AND bg_pic = 'bg_clo_upper_600_pink' AND market_pic = 'market_clo_upper_600_pink' WHERE item_name = 'clo_cape_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 AND bg_pic = 'bg_clo_upper_600_red' AND market_pic = 'market_clo_upper_600_red' WHERE item_name = 'clo_cape_red';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_bottom_190_black' AND market_pic = 'market_clo_bottom_190_black' WHERE item_name = 'clo_running_bottom_black';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_bottom_190_blue' AND market_pic = 'market_clo_bottom_190_blue' WHERE item_name = 'clo_running_bottom_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_bottom_190_purple' AND market_pic = 'market_clo_bottom_190_purple' WHERE item_name = 'clo_running_bottom_purple';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 AND bg_pic = 'bg_clo_bottom_190_white' AND market_pic = 'market_clo_bottom_190_white' WHERE item_name = 'clo_running_bottom_white';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_bottom_220_black' AND market_pic = 'market_clo_bottom_220_black' WHERE item_name = 'clo_train_running_bottom_black';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_bottom_220_pink' AND market_pic = 'market_clo_bottom_220_pink' WHERE item_name = 'clo_train_running_bottom_pink';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_bottom_220_green' AND market_pic = 'market_clo_bottom_220_green' WHERE item_name = 'clo_train_running_bottom_green';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_bottom_220_blue' AND market_pic = 'market_clo_bottom_220_blue' WHERE item_name = 'clo_skirt_blue';")
-        sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 AND bg_pic = 'bg_clo_bottom_220_purple' AND market_pic = 'market_clo_bottom_220_purple' WHERE item_name = 'clo_skirt_purple';")
+        try {
+            val dbManager = DBManager(this, "hamster_db", null, 1)
+            val sqlitedb = dbManager.writableDatabase
 
-        dbManager.close()
-        sqlitedb.close()
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_300' AND market_pic = 'market_bg_300' WHERE item_name = 'bg1';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 300 WHERE item_name = 'bg1';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_500' AND market_pic = 'market_bg_500' WHERE item_name = 'bg_airport';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 500 WHERE item_name = 'bg_airport';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_700' AND market_pic = 'market_bg_700' WHERE item_name = 'bg_line';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 WHERE item_name = 'bg_line';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_900' AND market_pic = 'market_bg_900' WHERE item_name = 'bg_desert';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 900 WHERE item_name = 'bg_desert';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_1100' AND market_pic = 'market_bg_1100' WHERE item_name = 'bg_sunset';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 1100 WHERE item_name = 'bg_sunset';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_bg_1400' AND market_pic = 'market_bg_1400' WHERE item_name = 'bg_sun';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 1400 WHERE item_name = 'bg_sun';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_190_darkyellow' AND market_pic = 'market_furni_190_darkyellow' WHERE item_name = 'furni_lamp_darkyellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'furni_lamp_darkyellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_190_green' AND market_pic = 'market_furni_190_green' WHERE item_name = 'furni_lamp_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'furni_lamp_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_190_lightyellow' AND market_pic = 'market_furni_190_lightyellow' WHERE item_name = 'furni_lamp_lightyellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'furni_lamp_lightyellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_190_orange' AND market_pic = 'market_furni_190_orange' WHERE item_name = 'furni_lamp_orange';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'furni_lamp_orange';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_260_darkyellow' AND market_pic = 'market_furni_260_darkyellow' WHERE item_name = 'furni_biglamp_darkyellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 WHERE item_name = 'furni_biglamp_darkyellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_260_green' AND market_pic = 'market_furni_260_green' WHERE item_name = 'furni_biglamp_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 WHERE item_name = 'furni_biglamp_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_260_lightyellow' AND market_pic = 'market_furni_260_lightyellow' WHERE item_name = 'furni_biglamp_lightyellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 WHERE item_name = 'furni_biglamp_lightyellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_260_orange' AND market_pic = 'market_furni_260_orange' WHERE item_name = 'furni_biglamp_orange';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 260 WHERE item_name = 'furni_biglamp_orange';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_430_blue' AND market_pic = 'market_furni_430_blue' WHERE item_name = 'furni_plant_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 WHERE item_name = 'furni_plant_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_430_darkpurple' AND market_pic = 'market_furni_430_darkpurple' WHERE item_name = 'furni_plant_darkpurple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 WHERE item_name = 'furni_plant_darkpurple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_430_green' AND market_pic = 'market_furni_430_green' WHERE item_name = 'furni_plant_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 WHERE item_name = 'furni_plant_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_430_purple' AND market_pic = 'market_furni_430_purple' WHERE item_name = 'furni_plant_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 430 WHERE item_name = 'furni_plant_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_490_blue' AND market_pic = 'market_furni_490_blue' WHERE item_name = 'furni_chair_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 WHERE item_name = 'furni_chair_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 AND bg_pic = 'bg_furni_490_green' AND market_pic = 'market_furni_490_green' WHERE item_name = 'furni_chair_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 WHERE item_name = 'furni_chair_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_490_yellow' AND market_pic = 'market_furni_490_yellow' WHERE item_name = 'furni_chair_yellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 490 WHERE item_name = 'furni_chair_yellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_620_brown' AND market_pic = 'market_furni_620_brown' WHERE item_name = 'furni_mirror_brown';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 WHERE item_name = 'furni_mirror_brown';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_620_gray' AND market_pic = 'market_furni_620_gray' WHERE item_name = 'furni_mirror_gray';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 WHERE item_name = 'furni_mirror_gray';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_620_red' AND market_pic = 'market_furni_620_red' WHERE item_name = 'furni_mirror_red';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 620 WHERE item_name = 'furni_mirror_red';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_700_green' AND market_pic = 'market_furni_700_green' WHERE item_name = 'furni_shelf_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 WHERE item_name = 'furni_shelf_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_700_purple' AND market_pic = 'market_furni_700_purple' WHERE item_name = 'furni_shelf_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 WHERE item_name = 'furni_shelf_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_700_yellow' AND market_pic = 'market_furni_700_yellow' WHERE item_name = 'furni_shelf_yellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 700 WHERE item_name = 'furni_shelf_yellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_720_green' AND market_pic = 'market_furni_720_green' WHERE item_name = 'furni_sofa_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 WHERE item_name = 'furni_sofa_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_720_pink' AND market_pic = 'market_furni_720_pink' WHERE item_name = 'furni_sofa_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 WHERE item_name = 'furni_sofa_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_furni_720_red' AND market_pic = 'market_furni_720_red' WHERE item_name = 'furni_sofa_red';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 720 WHERE item_name = 'furni_sofa_red';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_black' AND market_pic = 'market_clo_hair_190_black' WHERE item_name = 'clo_cap_black';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_cap_black';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_blue' AND market_pic = 'market_clo_hair_190_blue' WHERE item_name = 'clo_cap_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_cap_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_red' AND market_pic = 'market_clo_hair_190_red' WHERE item_name = 'clo_cap_red';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_cap_red';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_white' AND market_pic = 'market_clo_hair_190_white' WHERE item_name = 'clo_cap_white';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_cap_white';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_green' AND market_pic = 'market_clo_hair_190_green' WHERE item_name = 'clo_band_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_band_green';")
+
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_pink' AND market_pic = 'market_clo_hair_190_pink' WHERE item_name = 'clo_band_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_band_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_190_white2' AND market_pic = 'market_clo_hair_190_white2' WHERE item_name = 'clo_band_white';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_band_white';")
+
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_360_blue' AND market_pic = 'market_clo_hair_360_blue' WHERE item_name = 'clo_earmuffs_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_earmuffs_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_360_orange' AND market_pic = 'market_clo_hair_360_orange' WHERE item_name = 'clo_earmuffs_orange';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_earmuffs_orange';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_360_purple' AND market_pic = 'market_clo_hair_360_purple' WHERE item_name = 'clo_earmuffs_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_earmuffs_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_360_white' AND market_pic = 'market_clo_hair_360_white' WHERE item_name = 'clo_earmuffs_white';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_earmuffs_white';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_530_blue' AND market_pic = 'market_clo_hair_530_blue' WHERE item_name = 'clo_flower_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 WHERE item_name = 'clo_flower_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_530_pink' AND market_pic = 'market_clo_hair_530_pink' WHERE item_name = 'clo_flower_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 WHERE item_name = 'clo_flower_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_530_green' AND market_pic = 'market_clo_hair_530_green' WHERE item_name = 'clo_sunglass_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 WHERE item_name = 'clo_sunglass_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_530_purple' AND market_pic = 'market_clo_hair_530_purple' WHERE item_name = 'clo_sunglass_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 WHERE item_name = 'clo_sunglass_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_hair_530_yellow' AND market_pic = 'market_clo_hair_530_yellow' WHERE item_name = 'clo_sunglass_yellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 530 WHERE item_name = 'clo_sunglass_yellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_running_black';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_220_black' AND market_pic = 'market_clo_upper_220_black' WHERE item_name = 'clo_running_black';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_220_green' AND market_pic = 'market_clo_upper_220_green' WHERE item_name = 'clo_running_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_running_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_220_red' AND market_pic = 'market_clo_upper_220_red' WHERE item_name = 'clo_running_red';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_running_red';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_220_white' AND market_pic = 'market_clo_upper_220_white' WHERE item_name = 'clo_running_white';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_running_white';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_220_yellow' AND market_pic = 'market_clo_upper_220_yellow' WHERE item_name = 'clo_running_yellow';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_running_yellow';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_360_black' AND market_pic = 'market_clo_upper_360_black' WHERE item_name = 'clo_train_running_black';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_train_running_black';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_360_pink' AND market_pic = 'market_clo_upper_360_pink' WHERE item_name = 'clo_train_running_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_train_running_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_360_green' AND market_pic = 'market_clo_upper_360_green' WHERE item_name = 'clo_train_running_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 360 WHERE item_name = 'clo_train_running_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_510_blue' AND market_pic = 'market_clo_upper_510_blue' WHERE item_name = 'clo_shirt_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 510 WHERE item_name = 'clo_shirt_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_510_pink' AND market_pic = 'market_clo_upper_510_pink' WHERE item_name = 'clo_shirt_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 510 WHERE item_name = 'clo_shirt_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_550_blue' AND market_pic = 'market_clo_upper_550_blue' WHERE item_name = 'clo_vest_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 550 WHERE item_name = 'clo_vest_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_550_purple' AND market_pic = 'market_clo_upper_550_purple' WHERE item_name = 'clo_vest_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 550 WHERE item_name = 'clo_vest_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_600_green' AND market_pic = 'market_clo_upper_600_green' WHERE item_name = 'clo_cape_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 WHERE item_name = 'clo_cape_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_600_orange' AND market_pic = 'market_clo_upper_600_orange' WHERE item_name = 'clo_cape_orange';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 WHERE item_name = 'clo_cape_orange';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = bg_pic = 'bg_clo_upper_600_pink' AND market_pic = 'market_clo_upper_600_pink' WHERE item_name = 'clo_cape_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 WHERE item_name = 'clo_cape_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_upper_600_red' AND market_pic = 'market_clo_upper_600_red' WHERE item_name = 'clo_cape_red';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 600 WHERE item_name = 'clo_cape_red';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_190_black' AND market_pic = 'market_clo_bottom_190_black' WHERE item_name = 'clo_running_bottom_black';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_running_bottom_black';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_190_blue' AND market_pic = 'market_clo_bottom_190_blue' WHERE item_name = 'clo_running_bottom_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_running_bottom_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_190_purple' AND market_pic = 'market_clo_bottom_190_purple' WHERE item_name = 'clo_running_bottom_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_running_bottom_purple';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_190_white' AND market_pic = 'market_clo_bottom_190_white' WHERE item_name = 'clo_running_bottom_white';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 190 WHERE item_name = 'clo_running_bottom_white';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_220_black' AND market_pic = 'market_clo_bottom_220_black' WHERE item_name = 'clo_train_running_bottom_black';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_train_running_bottom_black';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_220_pink' AND market_pic = 'market_clo_bottom_220_pink' WHERE item_name = 'clo_train_running_bottom_pink';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_train_running_bottom_pink';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_220_green' AND market_pic = 'market_clo_bottom_220_green' WHERE item_name = 'clo_train_running_bottom_green';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_train_running_bottom_green';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_220_blue' AND market_pic = 'market_clo_bottom_220_blue' WHERE item_name = 'clo_skirt_blue';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_skirt_blue';")
+
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET bg_pic = 'bg_clo_bottom_220_purple' AND market_pic = 'market_clo_bottom_220_purple' WHERE item_name = 'clo_skirt_purple';")
+            sqlitedb.execSQL("UPDATE hamster_deco_info_db SET price = 220 WHERE item_name = 'clo_skirt_purple';")
+
+            dbManager.close()
+            sqlitedb.close()
+        } catch (e: Exception) {
+            Toast.makeText(applicationContext, "데이터 로딩에 실패했습니다", Toast.LENGTH_SHORT).show()
+            Log.d("MainActivity :: 오류", e.printStackTrace().toString())
+        }
     }
 
     // 권한 체크를 위한 리스너
