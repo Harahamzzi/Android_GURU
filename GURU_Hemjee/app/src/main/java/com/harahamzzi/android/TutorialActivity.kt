@@ -107,6 +107,7 @@ class TutorialActivity: AppCompatActivity() {
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_running_white', 220, 'clo', 'upper', 'bg_clo_upper_220_white', 'market_clo_upper_220_white', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_running_yellow', 220, 'clo', 'upper', 'bg_clo_upper_220_yellow', 'market_clo_upper_220_yellow', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_black', 360, 'clo', 'upper', 'bg_clo_upper_360_black', 'market_clo_upper_360_black', 0, 0, 0)")
+                sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_pink', 360, 'clo', 'upper', 'bg_clo_upper_360_pink', 'market_clo_upper_360_pink', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_green', 360, 'clo', 'upper', 'bg_clo_upper_360_green', 'market_clo_upper_360_green', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_shirt_blue', 510, 'clo', 'upper', 'bg_clo_upper_510_blue', 'market_clo_upper_510_blue', 0, 0, 0)")
                 sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_shirt_pink', 510, 'clo', 'upper', 'bg_clo_upper_510_pink', 'market_clo_upper_510_pink', 0, 0, 0)")
