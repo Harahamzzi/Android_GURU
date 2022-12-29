@@ -34,7 +34,32 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/noto_sans"
+                android:text="씨앗상점 내 꾸미기 아이템들의 가격을\n전체적으로 인하했습니다.\n이용에 참고 부탁드립니다.\n감사합니다."
+                android:textColor="@color/Black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/noto_sans"
+                android:text="2022.12.29"
+                android:textColor="@color/DarkGray"
+                android:textSize="10sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/Gray"
+                android:src="@drawable/line_horizontal" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -46,7 +71,6 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -56,7 +80,6 @@
                 android:textSize="10sp" />
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/Gray"
