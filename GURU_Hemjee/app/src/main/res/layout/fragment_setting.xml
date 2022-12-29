@@ -275,7 +275,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/noto_sans"
             android:gravity="center|right"
-            android:text="1.0.3 v"
+            android:text="1.0.4 v"
             android:textSize="14dp"
             android:textFontWeight="400"
             android:textColor="@color/Black" />
