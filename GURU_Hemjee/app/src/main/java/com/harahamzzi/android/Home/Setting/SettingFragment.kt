@@ -116,5 +116,18 @@ class SettingFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
+        // 오픈소스 라이브러리 탭 클릭 리스너
+        binding.settingOpenSourceLinearLayout.setOnClickListener {
+
+            // 타이틀 텍스트 바꾸기
+            var title: TextView? = activity?.findViewById(R.id.titleTextView)
+            title?.text = "오픈소스 라이브러리"
+
+            // 오픈소스 라이브러리 Fragment 페이지로 이동
+            transaction.replace(R.id.fragment_main, SettingOpenSourceFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 }

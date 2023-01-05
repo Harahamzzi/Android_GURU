@@ -46,4 +46,10 @@
         <!-- 취소/확인 버튼 색상 -->
         <item name="colorOnPrimary">@color/Black</item>
     </style>
+
+    <!-- 하이퍼링크 색상 -->
+    <style name="urlColorCustom">
+        <item name="colorAccent">@color/Blue</item>
+    </style>
+
 </resources>

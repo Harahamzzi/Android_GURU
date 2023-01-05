@@ -244,6 +244,45 @@
             android:background="@color/Gray"
             android:src="@drawable/line_horizontal" />
 
+        <LinearLayout
+            android:id="@+id/setting_openSourceLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_book_24"
+                app:srcCompat="@drawable/ic_book_24"
+                app:tint="@color/Black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/noto_sans"
+                android:text="오픈소스 라이브러리"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/next_button" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/Gray"
+            android:src="@drawable/line_horizontal" />
+
     </LinearLayout>
 
     <LinearLayout
