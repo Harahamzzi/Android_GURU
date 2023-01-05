@@ -58,14 +58,17 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/dotsIndicator_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:fontFamily="@font/noto_sans"
                     android:layout_weight="1"
                     android:singleLine="true"
                     android:text="https://github.com/tommybuonomo/dotsindicator"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
@@ -119,14 +122,17 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/circleProgressBar_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:singleLine="true"
                     android:layout_weight="1"
                     android:text="https://github.com/dinuscxj/CircleProgressBar"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
@@ -180,14 +186,17 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/mpAndroidChart_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:singleLine="true"
                     android:layout_weight="1"
                     android:text="https://github.com/PhilJay/MPAndroidChart"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
@@ -241,14 +250,17 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/tedPermission_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:singleLine="true"
                     android:layout_weight="1"
                     android:text="https://github.com/ParkSangGwon/TedPermission"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
@@ -302,14 +314,17 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/androidSlidingUpPanel_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:singleLine="true"
                     android:layout_weight="1"
                     android:text="https://github.com/umano/AndroidSlidingUpPanel"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
@@ -363,13 +378,16 @@
                     android:textSize="14dp"/>
 
                 <TextView
+                    android:id="@+id/glide_url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:theme="@style/urlColorCustom"
                     android:singleLine="true"
                     android:text="https://github.com/bumptech/glide"
                     android:textAllCaps="false"
-                    android:textColor="@color/Blue"
                     android:textFontWeight="600"
                     android:textSize="14dp" />
 
