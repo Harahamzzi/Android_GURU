@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/White"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.Setting.SettingOpenSourceFragment">
+
+    <ImageView
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:src="@drawable/solid_main_app_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomAppBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--1. DotsIndicator-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton1"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DotsIndicator ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="https://github.com/tommybuonomo/dotsindicator"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/dots_indicator_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+
+            <!--2. CircleProgressBar-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CircleProgressBar ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:text="https://github.com/dinuscxj/CircleProgressBar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/circle_progress_bar_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+
+            <!--3. MPAndroidChart-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MPAndroidChart ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:text="https://github.com/PhilJay/MPAndroidChart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/mp_android_chart_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+
+            <!--4. TedPermission-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TedPermission ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:text="https://github.com/ParkSangGwon/TedPermission"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/ted_permission_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+
+            <!--5. AndroidSlidingUpPanel-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton5"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AndroidSlidingUpPanel ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    android:text="https://github.com/umano/AndroidSlidingUpPanel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/android_sliding_up_panel_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+
+            <!--6. Glide-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton6"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_play"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Glide ("
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:singleLine="true"
+                    android:text="https://github.com/bumptech/glide"
+                    android:textAllCaps="false"
+                    android:textColor="@color/Blue"
+                    android:textFontWeight="600"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=")"
+                    android:fontFamily="@font/noto_sans"
+                    android:textFontWeight="600"
+                    android:textColor="@color/Black"
+                    android:textSize="14dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:background="@color/LightGray"
+                android:text="@string/glide_license"
+                android:fontFamily="@font/noto_sans"
+                android:textFontWeight="400"
+                android:textColor="@color/Black"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
