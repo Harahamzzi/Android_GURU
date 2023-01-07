@@ -46,7 +46,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     // (폰) 뒤로가기 클릭시 앱 종료 알림을 위한 변수
     private var backPressedTime: Long = 0
-    private var isHome = false
+
+    companion object {
+        var isHome = false  // 현재 홈 화면인지 판별
+    }
 
     //튜토리얼 관련
     private lateinit var dbManager: DBManager

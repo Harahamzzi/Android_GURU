@@ -4,14 +4,22 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.harahamzzi.android.*
+import com.harahamzzi.android.Home.Goal.SetupFragment
+import com.harahamzzi.android.Home.MainActivity
 import com.harahamzzi.android.databinding.FragmentHomeBinding
+import java.lang.Exception
 import java.math.BigInteger
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -110,14 +118,81 @@ class HomeFragment : Fragment() {
         // 1-2. 생성된 데이터가 없을 시에는 빈 박스 보이기
         if (bigGoalNameList.isEmpty())
         {
-            binding.emptyTextView.visibility = View.VISIBLE
+            binding.emptyLayout.visibility = View.VISIBLE
         }
         else
         {
-            binding.emptyTextView.visibility = View.GONE
+            binding.emptyLayout.visibility = View.GONE
 
             // 2. 어댑터 생성
             binding.goalViewPager.adapter = HomeViewPagerAdapter(requireContext(), bigGoalNameList, iconColorNameList, iconIDList)
+        }
+
+        /** 빈 박스 내의 버튼 설정 **/
+        binding.addGoalButton.setOnClickListener {
+
+            var transaction = requireActivity().supportFragmentManager.beginTransaction()
+
+            // 타이틀 텍스트 바꾸기
+            var titleText: TextView? = activity?.findViewById(R.id.titleTextView)
+            titleText?.text = "목표 설정"
+
+            // 타이틀 디자인 변경
+            var titleImage: ImageView? = activity?.findViewById(R.id.titleImageView)
+            titleImage?.visibility = View.INVISIBLE
+            titleText?.visibility = View.VISIBLE
+
+            // 상단바 색 적용
+            var backgroundLayout: FrameLayout? = activity?.findViewById(R.id.backgroundLayout)
+            backgroundLayout?.removeAllViews()
+            backgroundLayout?.setBackgroundResource(R.color.Yellow)
+
+            // drawer menu swipe 비활성화
+            var drawerLayout: DrawerLayout? = activity?.findViewById(R.id.home_drawerLayout)
+            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+            // 툴바 좌측 버튼 변경
+            var titleButton: ImageView? = activity?.findViewById(R.id.titleButton)
+            titleButton?.setImageResource(R.drawable.ic_outline_west_24)
+            titleButton?.setOnClickListener {
+                // 뒤로가기(홈 화면으로 가기) 수행
+                titleText?.visibility = View.INVISIBLE
+                titleText?.text = ""
+                titleImage?.visibility = View.VISIBLE
+
+                // 툴바 좌측 버튼 햄버거로 변경
+                titleButton.setImageResource(R.drawable.menu_icon)
+                titleButton.setOnClickListener {
+                    drawerLayout?.openDrawer(GravityCompat.START)
+                }
+
+                // drawer menu swipe 활성화
+                drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
+                try {
+                    // 배경 및 가구 업데이트
+                    FunUpDateHamzzi.updateBackground(requireContext(), backgroundLayout!!, false)
+                }
+                catch (e: Exception) {
+                    Log.e(TAG, "툴바 좌측 버튼 클릭 -> 배경 및 가구 업데이트 오류")
+                }
+
+                // home 화면으로 전환
+                var transaction = requireActivity().supportFragmentManager.beginTransaction()
+
+                transaction.replace(R.id.fragment_main, HomeFragment(), "home")
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+                MainActivity.isHome = true
+            }
+
+            // 목표 설정 Fragment 페이지로 이동
+            transaction.replace(R.id.fragment_main, SetupFragment(), "setUp")
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+            MainActivity.isHome = false
         }
 
         /** 하단 요약본 페이지 버튼 설정 **/
