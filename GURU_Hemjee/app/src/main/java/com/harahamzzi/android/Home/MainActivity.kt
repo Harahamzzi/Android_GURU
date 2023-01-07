@@ -139,7 +139,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 아이템 가격 변경
         try {
+            val dbManager = DBManager(this, "hamster_db", null, 1)
+            val sqlitedb = dbManager.writableDatabase
+
             sqlitedb.execSQL("INSERT INTO hamster_deco_info_db VALUES('clo_train_running_pink', 360, 'clo', 'upper', 'bg_clo_upper_360_pink', 'market_clo_upper_360_pink', 0, 0, 0)")
+
+            dbManager.close()
+            sqlitedb.close()
         } catch(e: Exception) {
             Log.d("MainActivity :: 오류", "이미 있는 행입니다.")
             Log.d("MainActivity :: 오류", e.printStackTrace().toString())
