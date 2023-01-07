@@ -265,13 +265,13 @@ class BigGoalSetupDialog(
             dbManager = DBManager(context, "hamster_db", null, 1)
             sqlitedb = dbManager.readableDatabase
             Log.d("BigGoalSetupDialog", "대표목표 : $newBigGoal 색상 : $newColor")
-            var cursor = sqlitedb.rawQuery("SELECT big_goal_name FROM big_goal_db WHERE big_goal_name = '${newBigGoal}' AND color = '${newColor}';",null)
+            var cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${newBigGoal}' AND color = '${newColor}';",null)
             if (cursor.moveToNext()) {
                 isAllOverlap = true
             }
             cursor.close()
 
-            cursor = sqlitedb.rawQuery("SELECT big_goal_name FROM big_goal_db WHERE big_goal_name = '${newBigGoal}';",null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE big_goal_name = '${newBigGoal}';",null)
             if (cursor.moveToNext()) {
                 isTitleOverlap = true
             }
