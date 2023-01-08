@@ -50,23 +50,6 @@ class HomeFragment : Fragment() {
     // 팝업 관련
     private lateinit var bottomDialog:BottomSummaryDialog   // 하단 요약본 페이지
 
-//    //시작 버튼
-//    private lateinit var home_startButton: Button
-//
-//    //잠금 수정 버튼
-//    private lateinit var home_goalSelectButton: MaterialButton
-//    private var bigGoalName: String = ""
-//    private var bigGoalColor: Int = 0
-//
-//    //잠금 시간 안내
-//    private var time = "00:00:00"
-//    private lateinit var home_goalTimeTextView: TextView
-//
-//    //햄찌 관련
-//    private lateinit var home_BGFrameLayout: FrameLayout
-//    private lateinit var home_clothFrameLayout: FrameLayout
-//    private lateinit var hamName: String
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -245,38 +228,6 @@ class HomeFragment : Fragment() {
             binding.totalTime.text = "${hour}시간 ${min}분"
         }
 
-//        //잠금 버튼 수정
-//        home_goalSelectButton = requireView().findViewById(R.id.home_goalSelectButton)
-//        dbManager = DBManager(context, "hamster_db", null, 1)
-//        sqlitedb = dbManager.readableDatabase
-//        cursor= sqlitedb.rawQuery("SELECT * FROM big_goal_db",null)
-//        var isThereBigGoal = false
-//        if(cursor.moveToNext()){
-//            bigGoalName = cursor.getString(cursor.getColumnIndex("big_goal_name"))
-//            bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
-//            time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time"))
-//
-//            home_goalSelectButton.text = bigGoalName
-//            home_goalSelectButton.setTextColor(resources.getColor(R.color.Black))
-//            home_goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
-//
-//            isThereBigGoal = true
-//        }
-//        cursor.close()
-//        sqlitedb.close()
-//        dbManager.close()
-//
-//        if(!isThereBigGoal){
-//            bigGoalName = "목표를 생성해주세요"
-//            bigGoalColor = R.color.Gray
-//            home_goalSelectButton.text = bigGoalName
-//            home_goalSelectButton.setTextColor(bigGoalColor)
-//            home_goalSelectButton.setIconTintResource(R.color.Gray)
-//        }
-//        home_goalSelectButton.setOnClickListener {
-//            showLockSettingPopUp()
-//        }
-//
         //메인 화면 햄찌 설정(선처리)
         var preselectedItems = ArrayList<String>()
         dbManager = DBManager(requireContext(), "hamster_db", null, 1)
@@ -299,22 +250,6 @@ class HomeFragment : Fragment() {
         }
 
         FunUpDateHamzzi.updateCloth(requireContext(), binding.homeClothFrameLayout, binding.homeBottomClothFrameLayout, binding.homeCapeFrameLayout, false)
-//
-//        //잠금 시간 안내
-//        home_goalTimeTextView = requireView().findViewById(R.id.home_goalTimeTextView)
-//        home_goalTimeTextView.text = (time.split(':')[0]+"시 " + time.split(':')[1] + "분 "
-//                + time.split(':')[2]+"초")
-//
-//        //lock 화면 연결
-//        home_startButton = requireView().findViewById(R.id.home_startButton)
-//        home_startButton.setOnClickListener {
-//            if(!isThereBigGoal)   {
-//                Toast.makeText(context, "목표를 생성해주세요!", Toast.LENGTH_SHORT).show()
-//            } else {
-//                showSettingConfirmPopUp()
-//                home_hamsterTalkTextView.callOnClick()
-//            }
-//        }
 
         cursor.close()
         sqlitedb.close()
@@ -371,58 +306,4 @@ class HomeFragment : Fragment() {
         sqlitedb.close()
         dbManager.close()
     }
-
-//    //잠금 시작
-//    private fun showSettingConfirmPopUp() {
-//        val dialog = LockSettingConfirmDialog(requireContext(),bigGoalName,bigGoalColor,time)
-//        dialog.myDig()
-//
-//        dialog.setOnClickedListener(object : LockSettingConfirmDialog.ButtonClickListener{
-//            override fun onClicked(isLock: Boolean) {
-//                if(isLock){
-//                    // 잠금 서비스 실행
-//                    LockScreenUtil.active()
-//
-////                    var intent = Intent(requireActivity(), LockActivity::class.java)
-////
-////                    // 유저 정보 보내기
-////                    intent.putExtra("seed", home_seedPointTextView.text)
-////                    intent.putExtra("hamsterName", hamName)
-////
-////                    // 대표 목표 이름 보내기
-////                    intent.putExtra("bigGoalName", home_goalSelectButton.text)
-////
-////                    // 타이머 시간 데이터 보내기
-////                    intent.putExtra("hour", time.split(':')[0])
-////                    intent.putExtra("min", time.split(':')[1])
-////                    intent.putExtra("sec", time.split(':')[2])
-////
-////                    startActivity(intent)
-//
-//                }
-//            }
-//        })
-//    }
-
-//    //잠금 설정
-//    private fun showLockSettingPopUp() {
-//        val dialog = LockSettingDialog(requireContext(), bigGoalName, bigGoalColor, time)
-//        //dialog.lockSetting()
-//
-//        dialog.setOnClickedListener(object : LockSettingDialog.ButtonClickListener{
-//            override fun onClicked(isChanged: Boolean, bigGoalTitle: String, changedBigGoalColor: Int, getTime: String) {
-//                if(isChanged){
-//                    bigGoalName = bigGoalTitle
-//                    home_goalSelectButton.text = bigGoalTitle
-//                    bigGoalColor = changedBigGoalColor
-//                    home_goalSelectButton.iconTint = ColorStateList.valueOf(bigGoalColor)
-//                    if(getTime != "00:00:00"){
-//                        time = getTime
-//                    }
-//                    var timeArray = time.split(':')
-//                    home_goalTimeTextView.text = timeArray[0] + "시 " + timeArray[1]+"분 " + timeArray[2]+"초"
-//                }
-//            }
-//        })
-//    }
 }

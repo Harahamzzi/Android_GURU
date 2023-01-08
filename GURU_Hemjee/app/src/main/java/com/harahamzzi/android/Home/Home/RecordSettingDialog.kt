@@ -7,11 +7,15 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import com.harahamzzi.android.DBConvert
 import com.harahamzzi.android.DBManager
+import com.harahamzzi.android.Home.Goal.DetailGoalSetupDialog
 import com.harahamzzi.android.Home.TimeRecord.TimeRecordActivity
 import com.harahamzzi.android.R
 
@@ -30,16 +34,6 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
 
     // 세부 목표 목록 레이아웃
     private lateinit var pop_detailGoalLayout: LinearLayout
-
-//    //대표 목표 수정 버튼
-//    private lateinit var pop_lockSettingGoalColorImageView: ImageView
-//    private lateinit var pop_goalTitleTextView: TextView
-//    private lateinit var pop_changeGoalButton: TextView
-
-//    //시간 관련
-//    private lateinit var pop_hourTimeEditText: EditText
-//    private lateinit var pop_minTimeEditText: EditText
-//    private lateinit var pop_secTimeEditText: EditText
 
     //기본 정보 관련
     private var bigGoalName = bigGoalName
@@ -62,6 +56,61 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
         pop_recordCancelButton = dialog.findViewById(R.id.pop_record_cancelButton) // 취소 버튼
         pop_recordStartButton = dialog.findViewById(R.id.pop_record_startButton)   // 시작 버튼
         pop_detailGoalLayout = dialog.findViewById(R.id.detailGoalLayout)               // 세부 목표 목록 레이아웃
+
+        /** 팝업 내용물(세부목표&추가버튼) 동적 생성 **/
+        createContent()
+
+        /** 취소 & 시작 버튼 리스너 **/
+        // 취소 버튼
+        pop_recordCancelButton.setOnClickListener {
+
+            dialog.dismiss()    // 팝업 창 닫기
+        }
+
+        // 시작 버튼
+        pop_recordStartButton.setOnClickListener {
+
+            // 선택한 세부목표가 있는지 체크
+            for (i in detailGoalCheckedList.indices)
+            {
+                if (detailGoalCheckedList[i] == 1)
+                {
+                    isChecked = true
+                    break
+                }
+            }
+
+            // 선택한 세부목표가 있을시
+            if (isChecked)
+            {
+                dialog.dismiss()    // 팝업 창 닫기
+
+                // 기록 화면으로 이동할 intent 생성
+                var intent = Intent(context, TimeRecordActivity::class.java)
+
+                // 보낼 데이터 넣기
+                intent.putExtra("bigGoalName", bigGoalName)
+                intent.putExtra("detailGoalCheckedList", detailGoalCheckedList)
+                intent.putExtra("detailGoalNameList", detailGoalNameList)
+
+                context.startActivity(intent)
+            }
+            else
+            {
+                Toast.makeText(context, "세부목표를 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 배경색 투명화
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 팝업 띄우기
+        dialog.show()
+    }
+
+    // 세부목표 목록 & 목표 추가 버튼을 동적 생성하는 함수
+    @SuppressLint("Range")
+    private fun createContent() {
 
         /** 세부 목표 리스트 View 동적 생성 **/
         // 세부 목표 리스트 View 동적 생성을 위한 DB 변수
@@ -129,191 +178,46 @@ class RecordSettingDialog(context: Context, bigGoalName: String, colorName: Stri
             var lineView = View(context)
             lineView.layoutParams = lineParams
             lineView.alpha = 0.1F
-            lineView.setBackgroundColor(R.color.black)
+            lineView.setBackgroundColor(context.resources.getColor(R.color.black))
 
             pop_detailGoalLayout.addView(lineView)
-        }
-
-        try {
-            // 마지막 구분선 제거
-            pop_detailGoalLayout.removeViewAt(pop_detailGoalLayout.childCount - 1)
-        }
-        catch (e: Exception)
-        {
-            Toast.makeText(context, "저장된 세부목표가 없습니다.", Toast.LENGTH_SHORT).show()
-            return
         }
 
         cursor.close()
         sqlitedb.close()
         dbManager.close()
 
+        // 6. 세부목표 추가 아이콘 추가
+        var addButton = ImageView(context)
+        addButton.setImageResource(R.drawable.ic_add_circle_outline_black_24dp)
+        addButton.setColorFilter(R.color.Gray, PorterDuff.Mode.SRC_IN)
+        addButton.setOnClickListener {
+            // 세부 목표 추가 팝업 띄우기
+            val dialog = DetailGoalSetupDialog(context, 0, bigGoalName, bigGoalColorName)
+            dialog.detailGoalSetup()
 
-        /** 취소 & 시작 버튼 리스너 **/
-        // 취소 버튼
-        pop_recordCancelButton.setOnClickListener {
+            dialog.setOnClickedListener(object : DetailGoalSetupDialog.ButtonClickListener {
+                override fun onClick(isChanged: Boolean, code: Int, title: String?, icon: String?, color: String?, initTitle: String?, initBigGoal: String?) {
 
-            dialog.dismiss()    // 팝업 창 닫기
-        }
-
-        // 시작 버튼
-        pop_recordStartButton.setOnClickListener {
-
-            // 선택한 세부목표가 있는지 체크
-            for (i in detailGoalCheckedList.indices)
-            {
-                if (detailGoalCheckedList[i] == 1)
-                {
-                    isChecked = true
-                    break
+                    // 확인 버튼 클릭시
+                    if (isChanged && code == 0)
+                    {
+                        // 레이아웃 재구성
+                        pop_detailGoalLayout.removeAllViews()
+                        createContent()
+                    }
                 }
-            }
-
-            // 선택한 세부목표가 있을시
-            if (isChecked)
-            {
-                dialog.dismiss()    // 팝업 창 닫기
-
-                // 기록 화면으로 이동할 intent 생성
-                var intent = Intent(context, TimeRecordActivity::class.java)
-
-                // 보낼 데이터 넣기
-                intent.putExtra("bigGoalName", bigGoalName)
-                intent.putExtra("detailGoalCheckedList", detailGoalCheckedList)
-                intent.putExtra("detailGoalNameList", detailGoalNameList)
-
-                context.startActivity(intent)
-            }
-            else
-            {
-                Toast.makeText(context, "세부목표를 선택해주세요.", Toast.LENGTH_SHORT).show()
-            }
+            })
         }
+        // 파라미터 생성 및 초기화
+        var addBtnParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        addBtnParams.setMargins(0, 24, 0, 0)
+        addBtnParams.gravity = Gravity.CENTER
+        addButton.layoutParams = addBtnParams
 
-//        //가져온 대표 목표 제목으로 수정, 대표 목표 색상으로 변경
-//        pop_lockSettingGoalColorImageView = dialog.findViewById(R.id.pop_lockSettingGoalColorImageView)
-//        pop_goalTitleTextView = dialog.findViewById(R.id.pop_goalTitleTextView)
-//        pop_goalTitleTextView.text = bigGoalTitle
-//        pop_lockSettingGoalColorImageView.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
-//
-//        //기본 시간 설정
-//        pop_hourTimeEditText = dialog.findViewById<EditText>(R.id.pop_hourTimeEditText)
-//        pop_minTimeEditText = dialog.findViewById<EditText>(R.id.pop_minTimeEditText)
-//        pop_secTimeEditText = dialog.findViewById<EditText>(R.id.pop_secTimeEditText)
-//        timeHintSet()
-//
-//        //상세 목표 리스트
-//        pop_lockSettingDetailGoalRecyclerView = dialog.findViewById(R.id.pop_lockSettingDetailGoalRecyclerView)
-//        upDateGoalList(bigGoalTitle, bigGoalColor)
-//
-//        //대표 목표 수정
-//        pop_changeGoalButton = dialog.findViewById(R.id.pop_changeGoalButton)
-//        pop_changeGoalButton.setOnClickListener {
-//            //대표 목표 수정을 위한 팝업 연결
-//            val subDialog = GoalSelectDialog(context, bigGoalTitle, "목표 변경", false)
-//            subDialog.goalSelectPop()
-//
-//            //해당 팝업에서 받아온 정보로 데이터 갱신
-//            subDialog.setOnClickedListener(object : GoalSelectDialog.ButtonClickListener{
-//                override fun onClicked(changedBigGoalTitle: String) {
-//                    bigGoalTitle = changedBigGoalTitle
-//                    pop_goalTitleTextView.text = changedBigGoalTitle
-//
-//                    var dbManager = DBManager(context, "hamster_db", null, 1)
-//                    var sqlitedb = dbManager.readableDatabase
-//                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM big_goal_db WHERE " +
-//                            "big_goal_name = '$bigGoalTitle'",null)
-//                    if (cursor.moveToNext()){
-//                        bigGoalColor = cursor.getInt(cursor.getColumnIndex("color"))
-//                        time = cursor.getString(cursor.getColumnIndex("big_goal_lock_time"))
-//                        timeArray = time.split(':')
-//                        timeHintSet()
-//                        pop_lockSettingGoalColorImageView.setColorFilter(bigGoalColor)
-//                    }
-//                    cursor.close()
-//                    sqlitedb.close()
-//                    dbManager.close()
-//
-//                    upDateGoalList(bigGoalTitle, bigGoalColor)
-//                }
-//            })
-//        }
-
-
-//        //설정 취소 버튼
-//        pop_lockCancelImageButton = dialog.findViewById(R.id.pop_lockCancelImageButton)
-//        pop_lockCancelImageButton.setOnClickListener {
-//            onClickListener.onClicked(false, "목표를 생성해주세요",
-//                context.resources.getColor(R.color.Gray),"")
-//            dialog.dismiss()
-//        }
-//
-//        //설정 확인 버튼
-//        pop_settingOkImageButton = dialog.findViewById(R.id.pop_settingOkImageButton)
-//        pop_settingOkImageButton.setOnClickListener {
-//            //시간 갱신
-//            if(pop_hourTimeEditText.text.toString() != "" || pop_minTimeEditText.text.toString() != ""
-//                || pop_secTimeEditText.text.toString() != ""){
-//                if((pop_hourTimeEditText.text.toString() != "" && pop_hourTimeEditText.text.toString().toInt() > 23) ||
-//                    (pop_minTimeEditText.text.toString() != "" && pop_minTimeEditText.text.toString().toInt() > 59)||
-//                    (pop_secTimeEditText.text.toString() != "" && pop_secTimeEditText.text.toString().toInt() > 59))
-//                    Toast.makeText(context, "올바른 시간을 입력해주세요!", Toast.LENGTH_SHORT).show()
-//                else{
-//                    time = FunTimeConvert.timeConvert(pop_hourTimeEditText.text.toString(),
-//                        pop_minTimeEditText.text.toString(), pop_secTimeEditText.text.toString())
-//
-//                    onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
-//                    dialog.dismiss()
-//                }
-//            } else {
-//                onClickListener.onClicked(true, bigGoalTitle, bigGoalColor, time)
-//                dialog.dismiss()
-//            }
-//
-//        }
-
-        // 배경색 투명화
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        // 팝업 띄우기
-        dialog.show()
-    }
-
-//    //세부 목표 리스트 표시
-//    @SuppressLint("Range")
-//    private fun upDateGoalList(bigGoalName: String, bigGoalColor: Int){
-//        //대표 목표가 있을 경우("목표를 생성해주세요"는 대표 목표가 없을 때 받아옴)
-//        if(bigGoalName != "목표를 생성해주세요"){
-//            val items = ArrayList<DetailGoalListItem>()
-//            val detailGoalListAdapter = DetailGoalListAdapter(context, items)
-//            pop_lockSettingDetailGoalRecyclerView.adapter = detailGoalListAdapter
-//
-//            var dbManager = DBManager(context, "hamster_db", null, 1)
-//            var sqlitedb = dbManager.readableDatabase
-//            var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM detail_goal_db WHERE " +
-//                    "big_goal_name = '$bigGoalName'", null)
-//
-//            while(cursor.moveToNext()){
-//                val goalName = cursor.getString(cursor.getColumnIndex("detail_goal_name"))
-//                val iconPic = cursor.getInt(cursor.getColumnIndex("icon"))
-//
-//                items.addAll(listOf(DetailGoalListItem(iconPic, bigGoalColor, goalName)))
-//                detailGoalListAdapter.notifyDataSetChanged()
-//            }
-//
-//            cursor.close()
-//            sqlitedb.close()
-//            dbManager.close()
-//        }
-//    }
-
-    interface ButtonClickListener {
-        fun onClicked(isChanged: Boolean, bigGoalTitle: String, bigGoalColor: Int, getTime: String)
-    }
-
-    private lateinit var onClickListener: ButtonClickListener
-
-    fun setOnClickedListener(listener: ButtonClickListener) {
-        onClickListener = listener
+        pop_detailGoalLayout.addView(addButton)
     }
 }
