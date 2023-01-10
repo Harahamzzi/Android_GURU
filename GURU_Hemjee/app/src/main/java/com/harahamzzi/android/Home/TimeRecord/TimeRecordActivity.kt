@@ -340,7 +340,7 @@ class TimeRecordActivity: AppCompatActivity() {
         sqlitedb = dbManager.readableDatabase
 
         // 파일명이 적혀있지 않고, 현재 활성화 되지 않은 세부목표 삭제
-        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL AND is_active = 0")
+        sqlitedb.execSQL("DELETE FROM detail_goal_time_report_db WHERE photo_name IS NULL")
 
         sqlitedb.close()
         dbManager.close()
