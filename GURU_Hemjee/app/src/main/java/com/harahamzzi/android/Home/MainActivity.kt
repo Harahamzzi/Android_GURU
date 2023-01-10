@@ -767,6 +767,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         editor.putString("recordDate", "0")
         editor.putString("recordedTime", "0")
         editor.putString("beforeTime", "0")
+        editor.putBoolean("isPause", false)
 
         editor.apply()
     }

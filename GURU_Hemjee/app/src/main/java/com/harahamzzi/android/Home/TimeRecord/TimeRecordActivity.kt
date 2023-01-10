@@ -143,7 +143,6 @@ class TimeRecordActivity: AppCompatActivity() {
             countTime()
 
             // 기록 시작 날짜 저장
-            var spf: SharedPreferences = getSharedPreferences("RecordTime", MODE_PRIVATE)
             var editor: SharedPreferences.Editor = spf.edit()
 
             editor.putString("recordDate", System.currentTimeMillis().toString())
@@ -180,6 +179,9 @@ class TimeRecordActivity: AppCompatActivity() {
                 {
                     // 일시정지 버튼 이미지 변경
                     binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_play)
+
+                    // 플래그 설정
+                    isPause = true
                 }
             }
             catch (e: Exception) {
@@ -333,6 +335,9 @@ class TimeRecordActivity: AppCompatActivity() {
 
             editor.putString("beforeTime", System.currentTimeMillis().toString())   // 화면이 잠시 닫힐 때(백그라운드 돌입)의 시각
         }
+
+        // 플래그 값 저장
+        editor.putBoolean("isPause", isPause)
 
         editor.apply()
     }
