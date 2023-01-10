@@ -489,36 +489,6 @@ class TimeRecordActivity: AppCompatActivity() {
                     }
 
                     tempCursor.close()
-
-//                // detailGoalListContainer에 세부 목표 뷰(container_defail_goal.xml) inflate 하기
-//                var view: View = layoutInflater.inflate(R.layout.container_record_detail_goal, Lock_detailGoalLinearLayout, false)
-//
-//                // icon 변경
-//                var icon: ImageView = view.findViewById(R.id.detailGoalIconImageView)
-//                var iconResource: Int = cursor.getInt(cursor.getColumnIndex("icon"))
-//                icon.setImageResource(iconResource)
-//
-//                // icon의 색을 대표 목표의 색으로 변경
-//                icon.setColorFilter(bigGoalColor, PorterDuff.Mode.SRC_IN)
-//
-//                // 세부 목표 이름 변경
-//                var textView: TextView = view.findViewById(R.id.detailGoalTextView)
-//                textView.width = 500
-//                textView.setSingleLine()
-//                textView.ellipsize = TextUtils.TruncateAt.END
-//                textView.setText(cursor.getString(cursor.getColumnIndex("detail_goal_name")).toString())
-//
-//                // 버튼에 리스너 달기
-//                var button: ImageButton = view.findViewById(R.id.lockDetialmageButton)
-//                button.setOnClickListener {
-//                    // Camera Activity로 이동
-//                    var intent = Intent(this, CameraActivity::class.java)
-//                    intent.putExtra("detailGoalName", textView.text)    // 세부 목표 이름 보내기
-//                    startActivity(intent)
-//                }
-//
-//                // 위젯 추가
-//                Lock_detailGoalLinearLayout.addView(view)
                 }
 
                 cursor.close()
