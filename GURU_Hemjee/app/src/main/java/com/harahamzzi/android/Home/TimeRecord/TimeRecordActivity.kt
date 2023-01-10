@@ -149,6 +149,14 @@ class TimeRecordActivity: AppCompatActivity() {
             editor.putString("recordDate", System.currentTimeMillis().toString())
 
             editor.apply()
+
+            /** 세부 목표 관련 정보 처리 **/
+
+            // 세부 목표 리포트 DB 데이터 정리
+            clearDetailGoal()
+
+            // 세부 목표 기록 DB 데이터 생성
+            insertDetailGoalData()
         }
         else    // 이미 기록 시작 후 다른 화면으로 갔다가 다시 돌아온 거라면
         {
@@ -295,14 +303,6 @@ class TimeRecordActivity: AppCompatActivity() {
             // 5. 타이머 초기화
             time = 0.toBigInteger()
         }
-
-        /** 세부 목표 관련 정보 처리 **/
-
-        // 세부 목표 리포트 DB 데이터 정리
-        clearDetailGoal()
-
-        // 세부 목표 기록 DB 데이터 생성
-        insertDetailGoalData()
     }
 
     override fun onResume() {
