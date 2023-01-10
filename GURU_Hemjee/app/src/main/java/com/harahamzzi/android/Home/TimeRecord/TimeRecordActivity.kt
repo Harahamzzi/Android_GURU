@@ -1,6 +1,7 @@
 package com.harahamzzi.android.Home.TimeRecord
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
@@ -39,12 +40,11 @@ class TimeRecordActivity: AppCompatActivity() {
     //DB 관련
     private lateinit var dbManager: DBManager
     private lateinit var sqlitedb: SQLiteDatabase
+    private lateinit var spf: SharedPreferences     // 백그라운드 돌입 전까지의 누적 시간을 저장하기 위함
 
     // 시간 기록 타이머 관련
     private var timerTask: Timer? = null
     private var time: BigInteger = BigInteger.ZERO      // 타이머에 들어가는 시간
-    private var beforeTime: Long = 0L                   // 화면이 잠시 종료될 때의 시간
-    private var recordDate: Long = 0L
 
     // 일시정지 상태 플래그
     private var isPause: Boolean = false
@@ -131,14 +131,54 @@ class TimeRecordActivity: AppCompatActivity() {
         DBConvert.colorConvert(binding.TimeRecordIconImageView, bigGoalColor, this@TimeRecordActivity)
         binding.TimeRecordBigGoalNameTextView.text = bigGoalName
 
-        // 타이머 초기화
-        time = BigInteger.ZERO
+        // 타이머 설정
+        spf = getSharedPreferences("RecordTime", MODE_PRIVATE)
 
-        // 타이머 기록 시작
-        countTime()
+        if (spf.getString("recordedTime", "0").equals("0"))  // 만일 지금이 처음 기록을 시작한 거라면
+        {
+            // 타이머 초기화
+            time = BigInteger.ZERO
 
-        // 기록 시작 날짜 저장
-        recordDate = System.currentTimeMillis()
+            // 타이머 기록 시작
+            countTime()
+
+            // 기록 시작 날짜 저장
+            var spf: SharedPreferences = getSharedPreferences("RecordTime", MODE_PRIVATE)
+            var editor: SharedPreferences.Editor = spf.edit()
+
+            editor.putString("recordDate", System.currentTimeMillis().toString())
+
+            editor.apply()
+        }
+        else    // 이미 기록 시작 후 다른 화면으로 갔다가 다시 돌아온 거라면
+        {
+            try {
+                var recordedTime = spf.getString("recordedTime", "")!!.toLong() // 누적시간 가져오기
+                var beforeTime = spf.getString("beforeTime", "")!!.toLong()     // 백그라운드 돌입시 시각 가져오기
+
+                // 누적 시간 설정
+                time = recordedTime.toBigInteger()
+
+                if (!(spf.getBoolean("isPause", false)))    // 타이머가 멈춰있지 않았다면
+                {
+                    // 이후 흐른 시간 더하기
+                    var presentTime = System.currentTimeMillis()
+                    time += (presentTime - beforeTime).toBigInteger()
+
+                    // 타이머 기록 시작
+                    countTime()
+                }
+                else    // 타이머가 멈춰있었다면
+                {
+                    // 일시정지 버튼 이미지 변경
+                    binding.TimeRecordPauseButton.setImageResource(R.drawable.ic_play)
+                }
+            }
+            catch (e: Exception) {
+                Log.e(TAG, "시간 설정 오류 발생")
+                e.printStackTrace()
+            }
+        }
 
         // 클릭 리스너
         // 일시정지 버튼
@@ -179,6 +219,7 @@ class TimeRecordActivity: AppCompatActivity() {
                 sqlitedb = dbManager.writableDatabase
 
                 // SimpleDateFormat 이용, 해당 형식으로 기록한 날짜 저장
+                var recordDate = spf.getString("recordDate", "0")!!.toLong()
                 var resultDate = SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss").format(Date(recordDate))
 
                 // 밀리초 -> hh:mm:ss 형태로 변환
@@ -279,15 +320,21 @@ class TimeRecordActivity: AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        // 시간 데이터 저장하기
+        var editor: SharedPreferences.Editor = spf.edit()
+
+        editor.putString("recordedTime", time.toString())   // 누적 기록 시간
+
         // 타이머가 돌아가는 중이었다면
         if (!isPause)
         {
             // 타이머 멈춤
             timerTask?.cancel()
 
-            // 화면이 잠시 닫힐 때(백그라운드 돌입)의 시간 저장하기
-            beforeTime = System.currentTimeMillis()
+            editor.putString("beforeTime", System.currentTimeMillis().toString())   // 화면이 잠시 닫힐 때(백그라운드 돌입)의 시각
         }
+
+        editor.apply()
     }
 
     // 백그라운드에서 포그라운드로 전환될 때 호출되는 콜백
@@ -300,9 +347,16 @@ class TimeRecordActivity: AppCompatActivity() {
             // 타이머 재작동
             countTime()
 
-            // 시간 기록 더하기
-            var presentTime = System.currentTimeMillis()
-            time += (presentTime - beforeTime).toBigInteger()
+            try {
+                // 시간 기록 더하기
+                var beforeTime = spf.getString("beforeTime", "")!!.toLong()
+                var presentTime = System.currentTimeMillis()
+                time += (presentTime - beforeTime).toBigInteger()
+            }
+            catch (e: Exception) {
+                Log.e(TAG, "백그라운드 돌입 시 시간 합산 오류")
+                e.printStackTrace()
+            }
         }
     }
 
