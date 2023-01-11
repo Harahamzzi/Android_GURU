@@ -2,6 +2,7 @@ package com.harahamzzi.android.Home
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.widget.Toast
@@ -139,6 +140,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         // 세부 목표 리포트 DB에서 필요없는 데이터 제거 및 초기화
         setDetailGoalReportDB()
+        // shared preferences 내의 데이터 초기화
+        setSharedPreferencesDB()
 
         // 아이템 가격 변경
         try {
@@ -753,6 +756,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         
         sqlitedb.close()
         dbManager.close()
+    }
+
+    // shared preferences 내의 데이터를 초기화하는 함수
+    private fun setSharedPreferencesDB() {
+        var spf: SharedPreferences = getSharedPreferences("RecordTime", MODE_PRIVATE)
+        var editor: SharedPreferences.Editor = spf.edit()
+
+        // 각 데이터를 0으로 초기화
+        editor.putString("recordDate", "0")
+        editor.putString("recordedTime", "0")
+        editor.putString("beforeTime", "0")
+        editor.putBoolean("isPause", false)
+
+        editor.apply()
     }
 
     // 상단의 툴바의 색상을 바꾸는 함수(팝업용)
