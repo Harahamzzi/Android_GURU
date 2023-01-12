@@ -144,6 +144,7 @@
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
         android:id="@+id/emptyLayout"
         android:layout_width="330dp"
         android:layout_height="90dp"
