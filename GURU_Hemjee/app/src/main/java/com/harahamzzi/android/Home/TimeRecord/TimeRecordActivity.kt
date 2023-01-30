@@ -56,9 +56,6 @@ class TimeRecordActivity: AppCompatActivity() {
     private var detailGoalCheckedList = ArrayList<Int>()    // 세부 목표 활성화 여부가 담긴 리스트(1: true, 0: false)
     private var detailGoalCheckedNameList = ArrayList<String>() // 활성화된 세부 목표 이름 목록
 
-    // 기록 종료시 보상으로 지급될 씨앗
-    private var rewardPoint: Int = 0
-
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -288,7 +285,40 @@ class TimeRecordActivity: AppCompatActivity() {
                 Log.e(TAG, e.stackTraceToString())
             }
 
-            // 3. is_active == 1인 세부목표들 0으로 변경(활성화->비활성화)
+            /** 씨앗 개수 업데이트 **/
+            // 3. 씨앗 보상 지급 (1분당 1포인트 지급)
+            var rewardPoint: Int = (time / 1000.toBigInteger() / 60.toBigInteger()).toInt() // 보상 씨앗
+            var updatePoint = rewardPoint // db에 적용할 씨앗(현재 갖고 있는 씨앗 + 보상 씨앗)
+
+            try {
+                // 현재 씨앗 개수 가져오기
+                dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
+                sqlitedb = dbManager.readableDatabase
+                cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
+
+                if (cursor.moveToNext())
+                {
+                    updatePoint += cursor.getInt(cursor.getColumnIndex("seed"))
+                }
+
+                cursor.close()
+                sqlitedb.close()
+                dbManager.close()
+
+                // 획득한 씨앗 갱신
+                dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
+                sqlitedb = dbManager.writableDatabase
+
+                sqlitedb.execSQL("UPDATE basic_info_db SET seed = $updatePoint")
+                sqlitedb.close()
+                dbManager.close()
+            }
+            catch (e: Exception) {
+                Log.e(TAG, "씨앗 보상 지급 오류")
+                Log.e(TAG, e.stackTraceToString())
+            }
+
+            // 4. is_active == 1인 세부목표들 0으로 변경(활성화->비활성화)
             dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
             sqlitedb = dbManager.writableDatabase
 
@@ -297,12 +327,10 @@ class TimeRecordActivity: AppCompatActivity() {
             sqlitedb.close()
             dbManager.close()
 
-            // 4. 팝업 표시 후 홈 화면으로 돌아가기
-            rewardPoint = (time / 1000.toBigInteger() / 60.toBigInteger()).toInt()      // 1분당 1포인트 지급
-
+            // 5. 팝업 표시 후 홈 화면으로 돌아가기
             finalPopup("기록 종료", "+$rewardPoint", true)
 
-            // 5. 타이머 초기화
+            // 6. 타이머 초기화
             time = 0.toBigInteger()
         }
     }
@@ -522,29 +550,7 @@ class TimeRecordActivity: AppCompatActivity() {
             @SuppressLint("Range")
             override fun onClicked(isConfirm: Boolean) {
                 if(isConfirm){
-                    /** 기록 종료시 수행할 작업 **/
-
-                    // 현재 씨앗 개수 가져오기
-                    dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
-                    sqlitedb = dbManager.readableDatabase
-                    var cursor: Cursor = sqlitedb.rawQuery("SELECT * FROM basic_info_db", null)
-
-                    if (cursor.moveToNext())
-                    {
-                        rewardPoint += cursor.getInt(cursor.getColumnIndex("seed"))
-                    }
-
-                    cursor.close()
-                    sqlitedb.close()
-                    dbManager.close()
-
-                    // 획득한 씨앗 갱신
-                    dbManager = DBManager(this@TimeRecordActivity, "hamster_db", null, 1)
-                    sqlitedb = dbManager.writableDatabase
-
-                    sqlitedb.execSQL("UPDATE basic_info_db SET seed = $rewardPoint")
-                    sqlitedb.close()
-                    dbManager.close()
+                    /** 기록 종료 **/
 
                     // 현재 액티비티 닫기
                     finish()
