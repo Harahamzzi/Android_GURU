@@ -142,10 +142,8 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
         var totalMilli: BigInteger = BigInteger.ZERO // 총 전체 잠금 시간
 
         for (i in item.bigGoalDataList.indices) {
-            for (j in item.weeklyDateList.indices) {
-                if (item.bigGoalDataList[i]["lock_date"] == item.weeklyDateList[j]) // 잠금 날짜가 같다면 총 시간 저장
-                    totalMilli += item.bigGoalDataList[i]["total_lock_time"]!!.toBigInteger()
-            }
+            //  총 시간 저장
+            totalMilli += item.bigGoalDataList[i]["total_lock_time"]!!.toBigInteger()
         }
 
         var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()

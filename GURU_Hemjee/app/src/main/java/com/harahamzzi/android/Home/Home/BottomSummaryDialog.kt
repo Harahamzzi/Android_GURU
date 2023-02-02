@@ -72,6 +72,9 @@ class BottomSummaryDialog(context: Context) {
     fun showPopup() {
         dialog.setContentView(R.layout.popup_bottom_summary)
 
+        // 플래그 초기화
+        isBigGoalInitialised = false
+
         // 오늘 날짜 불러오기
         todayDate = LocalDateTime.now()
 
