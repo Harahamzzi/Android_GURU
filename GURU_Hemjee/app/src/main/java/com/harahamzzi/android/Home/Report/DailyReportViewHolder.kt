@@ -51,11 +51,11 @@ class DailyReportViewHolder(private val context: Context, binding: ContainerDail
         // 시간, 분이 0이라면
         if (splitTime[0] == "00" && splitTime[1] == "00")
         {
-                timeTextView.text = "${splitTime[2]}초"
+                timeTextView.text = "${splitTime[2].toInt()}초"
         }
         else
         {
-            timeTextView.text = "${splitTime[0]}시간 ${splitTime[1]}분"
+            timeTextView.text = "${splitTime[0].toInt()}시간 ${splitTime[1].toInt()}분"
         }
 
         /** 목표 목록 생성 **/
@@ -86,11 +86,11 @@ class DailyReportViewHolder(private val context: Context, binding: ContainerDail
             var (hour: String, min: String, sec: String) = splitTime
 
             if (hour == "00" && min == "00") {
-                biglGoalTimeview.text = "${sec}초"
+                biglGoalTimeview.text = "${sec.toInt()}초"
             } else if (hour == "00") {
-                biglGoalTimeview.text = "${min}분"
+                biglGoalTimeview.text = "${min.toInt()}분"
             } else {
-                biglGoalTimeview.text = "${hour}시간 ${min}분"
+                biglGoalTimeview.text = "${hour.toInt()}시간 ${min.toInt()}분"
             }
 
             var milliTime: BigInteger = item.bigGoalTimeList[i] // 대표목표의 총 잠금시간(=밀리초)
