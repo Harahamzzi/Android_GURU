@@ -146,8 +146,8 @@ class BottomSummaryDialog(context: Context) {
                         bigGoalArrayList[i]["lock_date"] == date1[0]) {
 
                         bigGoalArrayList[i]["total_lock_time"] =
-                            (bigGoalArrayList[i]["total_lock_time"]?.toInt()
-                                ?.plus(ms_time.toInt())).toString()
+                            (bigGoalArrayList[i]["total_lock_time"]?.toBigInteger()
+                                ?.plus(ms_time.toBigInteger())).toString()
                         isFlag = true
                         break
                     }
@@ -315,14 +315,17 @@ class BottomSummaryDialog(context: Context) {
                 }
             }
         }
-        var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()
-        var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
-        dialog_dailyTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
-        if (integer_hour == 0 && integer_min == 0){
-            var integer_sec: Int = (totalMilli!!.toLong() / (1000)%60).toInt()
-            dialog_dailyTimeTextView.text = integer_sec.toString() + "초"
+
+        var resultStrTime: String = TimeConvert.msToTimeConvert(totalMilli)
+
+        var intHour: Int = resultStrTime.split(":")[0].toInt()
+        var intMin: Int = resultStrTime.split(":")[1].toInt()
+
+        if (intHour == 0 && intMin == 0){
+            var intSec: Int = resultStrTime.split(":")[2].toInt()
+            dialog_dailyTimeTextView.text = "${intSec}초"
         } else {
-            dialog_dailyTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+            dialog_dailyTimeTextView.text = "${intHour}시간 ${intMin}분"
         }
 
         // 파이차트 세팅
@@ -360,14 +363,17 @@ class BottomSummaryDialog(context: Context) {
                     bigGoalColor.setColorFilter(bigGoalArrayList[i]["color"]!!.toInt(), PorterDuff.Mode.SRC_IN)
                     bigGoalTitleTextView.text = bigGoalArrayList[i]["big_goal_name"]
 
-                    var totalMilli = bigGoalArrayList[i]["total_lock_time"]
-                    var integer_hour: Int = ((totalMilli!!.toLong() / (1000 * 60 * 60)) % 24).toInt()
-                    var integer_min: Int = ((totalMilli!!.toLong() / (1000 * 60)) % 60).toInt()
-                    if (integer_hour == 0 && integer_min == 0){
-                        var integer_sec: Int = (totalMilli!!.toLong() / (1000)%60).toInt()
-                        bigGoalTimeTextView.text = integer_sec.toString() + "초"
+                    var totalMilli = bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
+                    var resultStrTime: String = TimeConvert.msToTimeConvert(totalMilli)
+
+                    var intHour: Int = resultStrTime.split(":")[0].toInt()
+                    var intMin: Int = resultStrTime.split(":")[1].toInt()
+
+                    if (intHour == 0 && intMin == 0){
+                        var intSec: Int = resultStrTime.split(":")[2].toInt()
+                        bigGoalTimeTextView.text = "${intSec}초"
                     } else {
-                        bigGoalTimeTextView.text = integer_hour.toString() + "시간 " + integer_min.toString() + "분"
+                        bigGoalTimeTextView.text = "${intHour}시간 ${intMin}분"
                     }
 
                     // 레이아웃에 객체 추가
@@ -515,13 +521,16 @@ class BottomSummaryDialog(context: Context) {
             }
         }
 
-        var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()
-        var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
-        if (integer_hour == 0 && integer_min == 0) {
-            var integer_sec: Int = (totalMilli.toLong() / (1000)%60).toInt()
-            dialog_weeklyTimeTextView.text = "${integer_sec}초"
+        var resultStrTime: String = TimeConvert.msToTimeConvert(totalMilli)
+
+        var intHour: Int = resultStrTime.split(":")[0].toInt()
+        var intMin: Int = resultStrTime.split(":")[1].toInt()
+
+        if (intHour == 0 && intMin == 0) {
+            var intSec: Int = resultStrTime.split(":")[2].toInt()
+            dialog_weeklyTimeTextView.text = "${intSec}초"
         } else {
-            dialog_weeklyTimeTextView.text = "${integer_hour}시간 ${integer_min}분"
+            dialog_weeklyTimeTextView.text = "${intHour}시간 ${intMin}분"
         }
 
         // 스택바 차트 세팅
@@ -544,7 +553,7 @@ class BottomSummaryDialog(context: Context) {
 
         // 동적 뷰를 활용한 대표목표 및 세부목표 리스트 만들기
         var bigGoalName = ArrayList<String>()
-        var bigGoalTime = ArrayList<Long>()
+        var bigGoalTime = ArrayList<BigInteger>()
         var bigGoalColor = ArrayList<Int>()
 
         if (isBigGoalInitialised) {
@@ -554,10 +563,10 @@ class BottomSummaryDialog(context: Context) {
                         if (!bigGoalName.contains(bigGoalArrayList[i]["big_goal_name"])) {
                             bigGoalName.add(bigGoalArrayList[i]["big_goal_name"].toString())
                             bigGoalColor.add(bigGoalArrayList[i]["color"]!!.toInt())
-                            bigGoalTime.add(bigGoalArrayList[i]["total_lock_time"]!!.toLong())
+                            bigGoalTime.add(bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger())
                         } else {
                             var index = bigGoalName.indexOf(bigGoalArrayList[i]["big_goal_name"])
-                            bigGoalTime[index] = bigGoalTime[index] + bigGoalArrayList[i]["total_lock_time"]!!.toLong()
+                            bigGoalTime[index] = bigGoalTime[index] + bigGoalArrayList[i]["total_lock_time"]!!.toBigInteger()
                         }
                     }
                 }
@@ -578,13 +587,17 @@ class BottomSummaryDialog(context: Context) {
             bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
             bigGoalColorImg.setColorFilter(bigGoalColor[i])
             bigGoalTextview.text = bigGoalName[i]
-            var hour: Int = ((bigGoalTime[i] / (1000 * 60 * 60)) % 24).toInt()
-            var min: Int = ((bigGoalTime[i] / (1000 * 60)) % 60).toInt()
-            if (hour == 0 && min == 0) {
-                var sec: Int = ((bigGoalTime[i] / (1000)) % 60).toInt()
+
+            var resultStrTime: String = TimeConvert.msToTimeConvert(bigGoalTime[i])
+
+            var intHour: Int = resultStrTime.split(":")[0].toInt()
+            var intMin: Int = resultStrTime.split(":")[1].toInt()
+
+            if (intHour == 0 && intMin == 0) {
+                var sec: Int = resultStrTime.split(":")[2].toInt()
                 biglGoalTimeview.text = "${sec}초"
             } else {
-                biglGoalTimeview.text = "${hour}시간 ${min}분"
+                biglGoalTimeview.text = "${intHour}시간 ${intMin}분"
             }
 
             // 레이아웃에 객체 추가

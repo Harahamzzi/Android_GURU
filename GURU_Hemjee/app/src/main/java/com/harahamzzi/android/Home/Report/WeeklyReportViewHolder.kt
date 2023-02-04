@@ -16,10 +16,13 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.harahamzzi.android.TimeConvert
 import java.math.BigInteger
 
 // 주간 리포트의 리포트 Recycler view 뷰 홀더
 class WeeklyReportViewHolder(private val context: Context, binding: ContainerWeeklyReportBinding): RecyclerView.ViewHolder(binding.root) {
+
+    private val TAG: String = "WeeklyReportViewHolder"
 
     val dateTextView: TextView = binding.containerReportWeeklyDateTextView
     val timeTextView: TextView = binding.containerReportWeeklyTimeTextView
@@ -146,13 +149,17 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
             totalMilli += item.bigGoalDataList[i]["total_lock_time"]!!.toBigInteger()
         }
 
-        var integer_hour: Int = ((totalMilli.toLong() / (1000 * 60 * 60)) % 24).toInt()
-        var integer_min: Int = ((totalMilli.toLong() / (1000 * 60)) % 60).toInt()
-        if (integer_hour == 0 && integer_min == 0){
-            var integer_sec: Int = (totalMilli.toLong() / (1000)%60).toInt()
-            timeTextView.text = "${integer_sec}초"
+        var resultStrTime: String = TimeConvert.msToTimeConvert(totalMilli)
+
+        var intHour: Int = resultStrTime.split(":")[0].toInt()
+        var intMin: Int = resultStrTime.split(":")[1].toInt()
+
+        // 총 누적 시간 세팅
+        if (intHour == 0 && intMin == 0) {
+            var intSec: Int = resultStrTime.split(":")[2].toInt()
+            timeTextView.text = "${intSec}초"
         } else {
-            timeTextView.text = "${integer_hour}시간 ${integer_min}분"
+            timeTextView.text = "${intHour}시간 ${intMin}분"
         }
 
 
@@ -161,7 +168,7 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
 
         // 동적 뷰를 활용한 대표목표 및 세부목표 리스트 만들기
         var bigGoalName = ArrayList<String>()
-        var bigGoalTime = ArrayList<Long>()
+        var bigGoalTime = ArrayList<BigInteger>()
         var bigGoalColor = ArrayList<Int>()
 
         for (i in item.bigGoalDataList.indices) {
@@ -170,10 +177,10 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
                     if(!bigGoalName.contains(item.bigGoalDataList[i]["big_goal_name"])){
                         bigGoalName.add(item.bigGoalDataList[i]["big_goal_name"].toString())
                         bigGoalColor.add(item.bigGoalDataList[i]["color"]!!.toInt())
-                        bigGoalTime.add(item.bigGoalDataList[i]["total_lock_time"]!!.toLong())
+                        bigGoalTime.add(item.bigGoalDataList[i]["total_lock_time"]!!.toBigInteger())
                     } else {
                         var index = bigGoalName.indexOf(item.bigGoalDataList[i]["big_goal_name"])
-                        bigGoalTime[index] = bigGoalTime[index] + item.bigGoalDataList[i]["total_lock_time"]!!.toLong()
+                        bigGoalTime[index] = bigGoalTime[index] + item.bigGoalDataList[i]["total_lock_time"]!!.toBigInteger()
                     }
                 }
             }
@@ -192,10 +199,13 @@ class WeeklyReportViewHolder(private val context: Context, binding: ContainerWee
             bigGoalColorImg.setImageResource(R.drawable.ic_colorselectionicon)
             bigGoalColorImg.setColorFilter(bigGoalColor[i], PorterDuff.Mode.SRC_IN)
             bigGoalTextview.text = bigGoalName[i]
-            var hour: Int = ((bigGoalTime[i] / (1000 * 60 * 60)) % 24).toInt()
-            var min: Int = ((bigGoalTime[i] / (1000 * 60)) % 60).toInt()
+
+            var bigGoalStrTime: String = TimeConvert.msToTimeConvert(bigGoalTime[i])
+            var hour: Int = bigGoalStrTime.split(":")[0].toInt()
+            var min: Int = bigGoalStrTime.split(":")[1].toInt()
+
             if(hour == 0 && min == 0){
-                var sec: Int = ((bigGoalTime[i] / (1000)) % 60).toInt()
+                var sec: Int = bigGoalStrTime.split(":")[2].toInt()
                 biglGoalTimeview.text = sec.toString() + "초"
             } else {
                 biglGoalTimeview.text = hour.toString() + "시간 " + min.toString() + "분"

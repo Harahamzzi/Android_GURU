@@ -301,12 +301,11 @@ class WeeklyReportFragment : Fragment() {
                     var i = 0
                     while (i < tempBigGoalDataList.size) {
                         if (tempBigGoalDataList[i]["big_goal_name"] == str_big_goal &&
-                                tempBigGoalDataList[i]["color"] == int_color.toString() &&
                                 tempBigGoalDataList[i]["lock_date"] == date1[0]) {
 
                             tempBigGoalDataList[i]["total_lock_time"] =
-                                    (tempBigGoalDataList[i]["total_lock_time"]?.toInt()
-                                            ?.plus(ms_time.toInt())).toString()
+                                    (tempBigGoalDataList[i]["total_lock_time"]?.toBigInteger()
+                                            ?.plus(ms_time.toBigInteger())).toString()
                             isFlag = true
                             break
                         }

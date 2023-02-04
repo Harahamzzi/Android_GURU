@@ -69,9 +69,8 @@ class TimeConvert {
 
             var bigInt1000 = 1000.toBigInteger()
             var bigInt60 = 60.toBigInteger()
-            var bigInt24 = 24.toBigInteger()
 
-            var hour = ms / bigInt1000 / bigInt60 / bigInt60 % bigInt24
+            var hour = ms / bigInt1000 / bigInt60 / bigInt60
             var min = ms / bigInt1000 / bigInt60 % bigInt60
             var sec = ms / bigInt1000 % bigInt60
 
