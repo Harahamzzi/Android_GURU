@@ -20,8 +20,8 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
 
     //팝업의 위젯
     private lateinit var pop_finalOkTitleTextView: TextView //팝업 제목
-    private lateinit var pop_okButton: Button //확인 버튼(씨앗)
     private lateinit var pop_plainOkButton: Button //확인 버튼(택스트)
+    private lateinit var pop_seedImageView: ImageView   // 타이틀의 씨앗 이미지
     private lateinit var pop_okPopMainImageView: ImageView //햄찌 확인 이미지
 
     //팝업 표시
@@ -35,8 +35,8 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
 
         //위젯 연결
         pop_finalOkTitleTextView = dialog.findViewById(R.id.pop_finalOkTitleTextView)
-        pop_okButton = dialog.findViewById(R.id.pop_okButton)
         pop_plainOkButton = dialog.findViewById(R.id.pop_plainOkButton)
+        pop_seedImageView = dialog.findViewById(R.id.seedImage)
         pop_okPopMainImageView = dialog.findViewById(R.id.pop_okPopMainImageView)
 
         //주어진 사진 표시
@@ -45,23 +45,20 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
         }
 
         //확인 버튼
+        pop_plainOkButton.text = okString
+
+        pop_plainOkButton.setOnClickListener{
+            onClickListener.onClicked(true)
+            dialog.dismiss()
+        }
+
+        // 타이틀
         pop_finalOkTitleTextView.text = title
+
         if(isNeedDrawable){
-            pop_plainOkButton.visibility = View.GONE
-            pop_okButton.text = okString
-
-            pop_okButton.setOnClickListener {
-                onClickListener.onClicked(true)
-                dialog.dismiss()
-            }
+            pop_seedImageView.visibility = View.VISIBLE
         } else {
-            pop_okButton.visibility = View.GONE
-            pop_plainOkButton.text = okString
-
-            pop_plainOkButton.setOnClickListener{
-                onClickListener.onClicked(true)
-                dialog.dismiss()
-            }
+            pop_seedImageView.visibility = View.GONE
         }
     }
 

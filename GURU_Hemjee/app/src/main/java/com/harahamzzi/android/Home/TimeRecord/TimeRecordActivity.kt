@@ -328,7 +328,7 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager.close()
 
             // 5. 팝업 표시 후 홈 화면으로 돌아가기
-            finalPopup("기록 종료", "+$rewardPoint", true)
+            finalPopup("$rewardPoint 모았습니다", "기록 종료", true)
 
             // 6. 타이머 초기화
             time = 0.toBigInteger()

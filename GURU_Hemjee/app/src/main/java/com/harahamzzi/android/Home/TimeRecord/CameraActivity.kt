@@ -249,7 +249,7 @@ class CameraActivity : AppCompatActivity() {
         updateDetailGoalDB(fileName)
 
         // 목표 달성 팝업창
-        finalPopup("목표 달성!", "+10", true)
+        finalPopup("10 획득", "닫기", true)
     }
 
     // 세부목표 관련 DB 데이터 업데이트

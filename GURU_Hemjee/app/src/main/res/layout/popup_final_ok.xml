@@ -5,18 +5,40 @@
     android:layout_width="270dp"
     android:layout_height="351dp">
 
-    <TextView
-        android:id="@+id/pop_finalOkTitleTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="팝업 제목"
-        android:textColor="@color/Black"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/seedImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/seed_resize" />
+
+        <TextView
+            android:id="@+id/pop_finalOkTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans"
+            android:text="팝업 제목"
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/seedImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <ImageView
         android:id="@+id/pop_okPopMainImageView"
@@ -28,24 +50,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pop_finalOkTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/titleLayout"
         app:srcCompat="@drawable/complete_hamzzi" />
-
-    <Button
-        android:id="@+id/pop_okButton"
-        android:layout_width="90dp"
-        android:layout_height="27dp"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/ok_button_bg"
-        android:drawableLeft="@drawable/seed_resize"
-        android:fontFamily="@font/noto_sans"
-        android:padding="0dp"
-        android:text="-10          "
-        android:textColor="@color/Black"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/pop_plainOkButton"
