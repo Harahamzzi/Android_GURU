@@ -31,20 +31,6 @@
         app:layout_constraintTop_toBottomOf="@+id/pop_finalOkTitleTextView"
         app:srcCompat="@drawable/complete_hamzzi" />
 
-    <TextView
-        android:id="@+id/pop_okPopHamsterTalkTextView"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="17dp"
-        android:fontFamily="@font/noto_sans"
-        android:gravity="center"
-        android:textColor="@color/Black"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pop_okPopMainImageView" />
-
     <Button
         android:id="@+id/pop_okButton"
         android:layout_width="90dp"

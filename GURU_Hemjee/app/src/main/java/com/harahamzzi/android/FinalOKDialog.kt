@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 // 최종 확인 Dialog를 띄우기 위한 클래스
-class FinalOKDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val picSource: Int?, val talkText: String?) {
+class FinalOKDialog(context: Context, title: String, okString: String, isNeedDrawable: Boolean, val picSource: Int?) {
     private val dialog = Dialog(context)
 
     //팝업 제목, 확인 버튼 글자, 씨앗 표시 유무
@@ -22,7 +22,6 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
     private lateinit var pop_finalOkTitleTextView: TextView //팝업 제목
     private lateinit var pop_okButton: Button //확인 버튼(씨앗)
     private lateinit var pop_plainOkButton: Button //확인 버튼(택스트)
-    private lateinit var pop_okPopHamsterTalkTextView: TextView //햄찌말(말풍선의 말)
     private lateinit var pop_okPopMainImageView: ImageView //햄찌 확인 이미지
 
     //팝업 표시
@@ -38,17 +37,11 @@ class FinalOKDialog(context: Context, title: String, okString: String, isNeedDra
         pop_finalOkTitleTextView = dialog.findViewById(R.id.pop_finalOkTitleTextView)
         pop_okButton = dialog.findViewById(R.id.pop_okButton)
         pop_plainOkButton = dialog.findViewById(R.id.pop_plainOkButton)
-        pop_okPopHamsterTalkTextView = dialog.findViewById(R.id.pop_okPopHamsterTalkTextView)
         pop_okPopMainImageView = dialog.findViewById(R.id.pop_okPopMainImageView)
 
         //주어진 사진 표시
         if(picSource != null){
             pop_okPopMainImageView.setImageResource(picSource)
-        }
-
-        //햄찌 말풍선 수정
-        if(talkText != null){
-            pop_okPopHamsterTalkTextView.text = talkText
         }
 
         //확인 버튼

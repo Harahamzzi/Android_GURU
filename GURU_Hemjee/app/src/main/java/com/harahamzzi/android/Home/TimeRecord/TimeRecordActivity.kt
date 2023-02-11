@@ -543,7 +543,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi, null)
+        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi)
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {

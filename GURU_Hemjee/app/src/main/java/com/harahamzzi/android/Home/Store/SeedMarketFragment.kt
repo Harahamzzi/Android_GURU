@@ -396,7 +396,7 @@ class SeedMarketFragment : Fragment() {
             when {
                  newPrice > binding.marketSeedTextView.text.toString().toInt() -> {
                     val dialog = FinalOKDialog(requireContext(), "해바라기 씨 부족!", "확인",
-                        false, R.drawable.popup_low_balance, null)
+                        false, R.drawable.popup_low_balance)
                     dialog.alertDialog()
                     dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener{
                         override fun onClicked(isConfirm: Boolean) {
@@ -618,7 +618,7 @@ class SeedMarketFragment : Fragment() {
 
                     // 구매 확인 완료 팝업 띄우기
                     val popUpDialog = FinalOKDialog(requireContext(),"구매 확인", "확인",
-                        false, R.drawable.popup_confirm_buy, null)
+                        false, R.drawable.popup_confirm_buy)
                     popUpDialog.alertDialog()
 
                     popUpDialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
