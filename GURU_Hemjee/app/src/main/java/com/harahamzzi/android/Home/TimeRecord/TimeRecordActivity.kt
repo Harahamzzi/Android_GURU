@@ -328,7 +328,7 @@ class TimeRecordActivity: AppCompatActivity() {
             dbManager.close()
 
             // 5. 팝업 표시 후 홈 화면으로 돌아가기
-            finalPopup("기록 종료", "+$rewardPoint", true)
+            finalPopup("${rewardPoint}개 모았습니다", "기록 종료", true)
 
             // 6. 타이머 초기화
             time = 0.toBigInteger()
@@ -543,7 +543,7 @@ class TimeRecordActivity: AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi, null)
+        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi)
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {

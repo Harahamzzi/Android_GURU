@@ -249,7 +249,7 @@ class CameraActivity : AppCompatActivity() {
         updateDetailGoalDB(fileName)
 
         // 목표 달성 팝업창
-        finalPopup("목표 달성!", "+10", true)
+        finalPopup("10개 획득", "닫기", true)
     }
 
     // 세부목표 관련 DB 데이터 업데이트
@@ -314,7 +314,7 @@ class CameraActivity : AppCompatActivity() {
 
     // 마지막 팝업 창(목표 달성!)
     private fun finalPopup(title: String, okString: String, isNeedDrawable: Boolean) {
-        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi, null)
+        val dialog = FinalOKDialog(this, title, okString, isNeedDrawable, R.drawable.complete_hamzzi)
         dialog.alertDialog()
 
         dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {

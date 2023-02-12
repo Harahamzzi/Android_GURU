@@ -109,7 +109,7 @@ class HamsterEditFragment: Fragment() {
 
             // 적용 완료 팝업 이벤트
             val dialog = FinalOKDialog(requireContext(), "적용 완료", "확인",
-                false, R.drawable.popup_applyed, null)
+                false, R.drawable.popup_applyed)
             dialog.alertDialog()
             dialog.setOnClickedListener(object : FinalOKDialog.ButtonClickListener {
                 override fun onClicked(isConfirm: Boolean) {
