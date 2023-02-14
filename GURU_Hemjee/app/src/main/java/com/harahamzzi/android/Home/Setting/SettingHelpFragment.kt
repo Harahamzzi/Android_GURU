@@ -37,6 +37,13 @@ class SettingHelpFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        // 데이터 초기화
+        for (i in imageNameList.indices)
+        {
+            imageNameList.removeFirst()
+        }
+        descriptionList = emptyList()
+
         // 이미지 파일명 넣기
         for (i in 1..6) // 6개
         {
