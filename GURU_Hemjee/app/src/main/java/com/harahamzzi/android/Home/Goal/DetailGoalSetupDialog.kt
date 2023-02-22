@@ -372,7 +372,7 @@ class DetailGoalSetupDialog(
                 // 세부목표를 수정하는 경우
                 else if (code == 1) {
                     // 아이콘만 수정했다면
-                    if (initTitle == newDetailGoal && initIcon != newIcon) {
+                    if (isTitleOverlap && initIcon != newIcon) {
                         sqlitedb = dbManager.writableDatabase
                         sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
                         sqlitedb.close()
@@ -382,7 +382,7 @@ class DetailGoalSetupDialog(
                         Toast.makeText(context, "세부 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                     }
                     // 세부목표만 수정했다면
-                    else if (initTitle != newDetailGoal && initIcon == newIcon) {
+                    else if (!isTitleOverlap && initIcon == newIcon) {
                         sqlitedb = dbManager.writableDatabase
                         sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
                         sqlitedb.close()
@@ -392,7 +392,7 @@ class DetailGoalSetupDialog(
                         Toast.makeText(context, "세부 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
                     }
                     // 세부목표와 아이콘 모두 수정했다면
-                    else if (initTitle != newDetailGoal && initIcon != newIcon) {
+                    else if (!isTitleOverlap && initIcon != newIcon) {
                         sqlitedb = dbManager.writableDatabase
                         sqlitedb.execSQL("UPDATE detail_goal_db SET icon = '$newIcon' WHERE detail_goal_name = '$initTitle';")
                         sqlitedb.execSQL("UPDATE detail_goal_db SET detail_goal_name = '$newDetailGoal' WHERE detail_goal_name = '$initTitle';")
@@ -401,6 +401,9 @@ class DetailGoalSetupDialog(
                         onClickListener.onClick(true, 1, newDetailGoal, newIcon, initColor, initTitle, initBigGoal)
                         dialog.dismiss()
                         Toast.makeText(context, "세부 목표를 수정했습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(context, "이미 같은 목표가 존재합니다", Toast.LENGTH_SHORT).show()
                     }
                 }
                 dbManager.close()
