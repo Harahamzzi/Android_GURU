@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.harahamzzi.android.DBConvert
 import com.harahamzzi.android.R
-import kotlinx.android.synthetic.main.container_main_goal_select.view.*
 
 // 홈 화면의 대표 목표 선택 목록을 위한 View Pager Adapter
 class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, iconColorNameList: ArrayList<String>, iconIDList: ArrayList<String>): RecyclerView.Adapter<HomeViewPagerAdapter.PagerViewHolder>() {
@@ -89,10 +89,10 @@ class HomeViewPagerAdapter(context: Context, goalNameList: ArrayList<String>, ic
     inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder
         (LayoutInflater.from(parent.context).inflate(R.layout.container_main_goal_select, parent, false)) {
 
-        val goalNameTextView = itemView.goalNameTextView
-        val iconColorImageView = itemView.colorIconImageView
-        val iconListLayout = itemView.iconListLayout
-        val startButton = itemView.startButtonImageView
+        val goalNameTextView: TextView = itemView.findViewById(R.id.goalNameTextView)
+        val iconColorImageView: ImageView = itemView.findViewById(R.id.colorIconImageView)
+        val iconListLayout: LinearLayout = itemView.findViewById(R.id.iconListLayout)
+        val startButton: ImageView = itemView.findViewById(R.id.startButtonImageView)
     }
 
     // 해당 포지션의 아이콘 값 리스트를 ArrayList<int>형으로 추출하는 함수
